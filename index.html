@@ -61,19 +61,20 @@
         .reels-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
         .reel-card {
-            width: 124px;
-            height: 208px;
+            width: 126px;
+            height: 212px;
             flex-shrink: 0;
             border-radius: 1.25rem;
             overflow: hidden;
             position: relative;
             cursor: pointer;
             border: 2px solid #e2e8f0;
-            transition: transform 0.25s ease, border-color 0.25s ease;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
         }
         .reel-card:hover {
-            transform: scale(1.04);
+            transform: translateY(-4px) scale(1.02);
             border-color: #38bdf8;
+            box-shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.2);
         }
 
         /* 2 FILAS DE AUSPICIANTES EN SECUENCIA CONTINUA */
@@ -117,10 +118,10 @@
 </head>
 <body class="font-sans text-slate-800 antialiased min-h-screen flex flex-col relative transition-colors duration-300">
 
-    <!-- TOAST DE NOTIFICACIÓN VISUAL ELEGANTE (SIN ALERTS) -->
-    <div id="appToast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 bg-slate-900/95 text-white px-5 py-3 rounded-2xl shadow-2xl border border-emerald-500/40 text-xs font-bold transition-all duration-300 transform opacity-0 translate-y-4 pointer-events-none">
+    <!-- TOAST DE NOTIFICACIÓN VISUAL ELEGANTE -->
+    <div id="appToast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2.5 bg-slate-900/95 text-white px-5 py-3 rounded-2xl shadow-2xl border border-emerald-500/40 text-xs font-bold transition-all duration-300 transform opacity-0 translate-y-4 pointer-events-none">
         <i id="appToastIcon" class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>
-        <span id="appToastMessage">Acción completada</span>
+        <span id="appToastMessage">Acción completada con éxito</span>
     </div>
 
     <!-- TOP BAR -->
@@ -130,7 +131,7 @@
                 <span><i class="fa-solid fa-location-dot text-sky-400 mr-1"></i> <span id="topLocationText">El Coca, Orellana - Ecuador</span></span>
                 <span id="topEmailDisplay" class="hidden md:inline"><i class="fa-solid fa-envelope text-sky-400 mr-1"></i> alianzaestrategica2026@gmail.com</span>
                 <span id="cloudStatusBadge" class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] px-2 py-0.5 rounded-full font-semibold flex items-center gap-1">
-                    <i class="fa-solid fa-cloud"></i> <span id="cloudStatusText">Nube Conectada</span>
+                    <i class="fa-solid fa-cloud"></i> <span id="cloudStatusText">Nube Sincronizada</span>
                 </span>
             </div>
             <div class="flex items-center gap-2 sm:gap-2.5">
@@ -156,7 +157,7 @@
         </div>
     </div>
 
-    <!-- BANNER DE USUARIO ACTIVO (LÍDER COMERCIAL / EQUIPO DE AGENTES) -->
+    <!-- BANNER DE USUARIO ACTIVO (CONTROL DE PRIVILEGIOS POR ROL) -->
     <div id="userPanelBanner" class="bg-amber-500 text-slate-900 px-4 py-3 hidden shadow-md border-b border-amber-600 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
             <div class="flex items-center gap-2 font-bold text-xs md:text-sm" id="userBannerStatus"></div>
@@ -164,7 +165,7 @@
         </div>
     </div>
 
-    <!-- HEADER ESTILO PERFIL DE FACEBOOK -->
+    <!-- HEADER ESTILO PERFIL DE FACEBOOK (TÍTULO Y PRESENTACIÓN ALINEADOS) -->
     <section class="max-w-7xl mx-auto w-full px-4 pt-4">
         <div class="theme-card-bg rounded-3xl shadow-sm border border-slate-200 overflow-hidden relative transition-colors">
             <!-- PORTADA -->
@@ -172,6 +173,7 @@
                 <img id="coverImgDisplay" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80" alt="Portada" class="w-full h-full object-cover">
                 <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-black/20"></div>
                 
+                <!-- BOTÓN EXCLUSIVO ADMINISTRADOR PRINCIPAL: CAMBIAR PORTADA -->
                 <label id="quickCoverUploadLabel" class="hidden absolute top-4 right-4 bg-black/60 hover:bg-black/80 text-white px-3 py-2 rounded-xl text-xs font-bold backdrop-blur-md transition shadow cursor-pointer">
                     <i class="fa-solid fa-camera mr-1"></i> Cambiar Portada
                     <input type="file" accept="image/*" class="hidden" onchange="uploadSingleImageDirectly(this, 'cover')">
@@ -184,6 +186,7 @@
                     <div class="flex flex-col sm:flex-row items-center sm:items-end gap-4 text-center sm:text-left">
                         <div class="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full border-4 border-white shadow-2xl overflow-hidden bg-white flex-shrink-0 group">
                             <img id="profileLogoImg" src="https://lh3.googleusercontent.com/d/1X6tUqZ2z3c8vN-xYqZp8W1V_X7mRzS" alt="Perfil" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Alianza+Estrategica&background=0284c7&color=fff';">
+                            <!-- BOTÓN EXCLUSIVO ADMINISTRADOR PRINCIPAL: CAMBIAR FOTO PERFIL -->
                             <label id="quickProfileUploadLabel" class="hidden absolute inset-0 bg-black/50 hover:bg-black/70 text-white text-xs font-bold items-center justify-center flex-col cursor-pointer transition">
                                 <i class="fa-solid fa-camera text-xl mb-1"></i>
                                 <span>Cambiar Foto</span>
@@ -196,7 +199,7 @@
                                 <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight leading-none" id="profileCompanyTitle">
                                     ALIANZA ESTRATÉGICA <span class="text-sky-600">S.A.S.</span>
                                 </h1>
-                                <i class="fa-solid fa-circle-check text-sky-500 text-lg" title="Empresa Verificada"></i>
+                                <i class="fa-solid fa-circle-check text-sky-500 text-lg" title="Empresa Constituida y Verificada"></i>
                             </div>
                             <p class="text-xs sm:text-sm text-sky-600 font-bold mt-1.5" id="profileMotto">Excelencia Jurídica, Confianza Profesional</p>
                             <p class="text-xs text-slate-500 mt-1" id="profileSubtitle">
@@ -205,7 +208,7 @@
                         </div>
                     </div>
 
-                    <!-- BOTONES DE CONTACTO BLINDADOS CON SEGURIDAD -->
+                    <!-- BOTONES DE CONTACTO -->
                     <div class="flex flex-wrap items-center justify-center gap-2 pt-2">
                         <button onclick="openModal('infoMenuModal')" class="bg-slate-800 hover:bg-slate-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow transition flex items-center gap-1.5">
                             <i class="fa-solid fa-circle-info text-sky-400"></i> Sobre Nosotros
@@ -228,18 +231,18 @@
         </div>
     </section>
 
-    <!-- HISTORIAS Y REELS DESTACADOS (FORMATO 9:16 CON REPRODUCCIÓN AUTOMÁTICA Y CADUCIDAD SEMANAL) -->
+    <!-- HISTORIAS Y REELS DESTACADOS (FORMATO 9:16 - REPRODUCCIÓN AUTOMÁTICA EN BUCLE) -->
     <section class="max-w-7xl mx-auto w-full px-4 pt-6">
         <div class="theme-card-bg rounded-3xl shadow-sm p-4 border border-slate-200">
             <div class="flex items-center justify-between mb-3 px-1">
                 <span class="text-xs font-extrabold uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
                     <i class="fa-solid fa-clapperboard text-rose-500"></i> Historias & Reels Destacados
                 </span>
-                <span class="text-[11px] text-slate-400 font-medium">Recorridos en video • Caducidad 7 días</span>
+                <span class="text-[11px] text-slate-400 font-medium">Caducidad semanal automática (7 días)</span>
             </div>
 
             <div class="reels-scrollbar flex items-center gap-3 overflow-x-auto pb-2" id="reelsScrollContainer">
-                <!-- BOTÓN CREAR REEL (ADMINISTRADOR) -->
+                <!-- BOTÓN CREAR REEL (EXCLUSIVO ADMINISTRADOR PRINCIPAL) -->
                 <div id="addReelCardBtn" onclick="openModal('addReelModal')" class="reel-card bg-slate-50 border-2 border-dashed border-rose-300 hidden flex-col items-center justify-center text-center p-2 hover:bg-rose-50 transition">
                     <div class="w-10 h-10 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center mb-2 shadow-sm">
                         <i class="fa-solid fa-camera text-base"></i>
@@ -247,16 +250,16 @@
                     <span class="text-[11px] font-bold text-rose-700 leading-tight">+ Subir Reel</span>
                     <span class="text-[9px] text-slate-400 mt-0.5">Galería / Embed</span>
                 </div>
-                <!-- LISTA PÚBLICA DE REELS -->
+                <!-- LISTA DE REELS PÚBLICA -->
                 <div id="reelsList" class="flex items-center gap-3"></div>
             </div>
         </div>
     </section>
 
-    <!-- CARRUSEL Y VIDEO INFORMATIVO CORPORATIVO -->
+    <!-- CARRUSEL Y VIDEO INFORMATIVO CORPORATIVO (CERO PANTALLAS NEGRAS) -->
     <section class="max-w-7xl mx-auto w-full px-4 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
         
-        <!-- CARRUSEL SECUENCIAL DE OPORTUNIDADES (DESPLAZAMIENTO FLUIDO CADA 3.5 SEGUNDOS) -->
+        <!-- CARRUSEL SECUENCIAL DE OPORTUNIDADES -->
         <div class="lg:col-span-7 theme-card-bg rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col justify-between">
             <div class="p-3.5 border-b border-slate-100 flex items-center justify-between">
                 <span class="text-xs font-bold uppercase tracking-wider text-sky-700 flex items-center gap-2">
@@ -266,9 +269,7 @@
             </div>
 
             <div class="relative w-full h-64 sm:h-80 md:h-96 overflow-hidden bg-slate-900" id="carouselContainer">
-                <div id="carouselSlide" class="w-full h-full relative cursor-pointer" onclick="clickCarouselCurrentSlide()">
-                    <!-- IMAGEN Y DETALLES INYECTADOS POR JS -->
-                </div>
+                <div id="carouselSlide" class="w-full h-full relative cursor-pointer" onclick="clickCarouselCurrentSlide()"></div>
 
                 <button onclick="prevSlide()" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white w-9 h-9 rounded-full flex items-center justify-center transition z-10">
                     <i class="fa-solid fa-chevron-left text-sm"></i>
@@ -286,7 +287,7 @@
             </div>
         </div>
 
-        <!-- VIDEO INFORMATIVO CORPORATIVO ROBUSTO (CERO PANTALLAS NEGRAS) -->
+        <!-- VIDEO INFORMATIVO CORPORATIVO (REPRODUCTOR NATIVO CON AUTOPLAY AL 50% O EMBED) -->
         <div class="lg:col-span-5 theme-card-bg rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col justify-between relative">
             <div class="p-3.5 border-b border-slate-100 flex items-center justify-between">
                 <span class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-2">
@@ -296,9 +297,7 @@
             </div>
 
             <div class="p-4 flex-1 flex flex-col justify-center bg-slate-950 relative">
-                <div class="relative w-full aspect-video rounded-xl overflow-hidden bg-black shadow-inner flex items-center justify-center" id="videoPlayerBox">
-                    <!-- REPRODUCTOR COMPATIBLE INYECTADO POR JS -->
-                </div>
+                <div class="relative w-full aspect-video rounded-xl overflow-hidden bg-black shadow-inner flex items-center justify-center" id="videoPlayerBox"></div>
                 <!-- BOTÓN FLOTANTE CONTROL RÁPIDO DE AUDIO -->
                 <button id="toggleAudioBtn" onclick="toggleCorporateAudio()" class="absolute bottom-6 right-6 bg-slate-900/85 hover:bg-slate-900 text-white text-xs px-3 py-1.5 rounded-lg shadow-lg backdrop-blur-md border border-white/20 flex items-center gap-1.5 transition z-10">
                     <i class="fa-solid fa-volume-high text-amber-400" id="audioIcon"></i> <span id="audioText">Activar Sonido (50%)</span>
@@ -339,7 +338,7 @@
         <!-- GRID DE PRODUCTOS -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="inventoryGrid"></div>
 
-        <!-- SECCIÓN DE RESPALDO LEGAL Y EQUIPO COMERCIAL (SEGURIDAD REFORZADA) -->
+        <!-- SECCIÓN DE RESPALDO LEGAL Y EQUIPO COMERCIAL -->
         <section class="mt-16 theme-card-bg rounded-3xl shadow-sm p-6 md:p-8 border border-slate-200">
             <div class="text-center max-w-2xl mx-auto mb-10">
                 <span class="bg-amber-100 text-amber-900 border border-amber-300 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider inline-block mb-2">
@@ -430,7 +429,7 @@
             </div>
         </section>
 
-        <!-- AUSPICIANTES EN 2 FILAS EN SECUENCIA (10 ARRIBA Y 10 ABAJO - IMÁGENES SEGURAS) -->
+        <!-- AUSPICIANTES EN 2 FILAS EN SECUENCIA CONTINUA (SIN LOGOS ROTOS) -->
         <section class="mt-16 theme-card-bg rounded-3xl shadow-sm p-6 border border-slate-200 overflow-hidden">
             <div class="flex flex-wrap items-center justify-between mb-4 px-2">
                 <div>
@@ -438,14 +437,14 @@
                     <h3 class="text-lg md:text-xl font-bold text-slate-900 mt-1" id="sponsorsTitleDisplay">Auspiciantes, Aliados y Entidades</h3>
                 </div>
                 <div class="flex items-center gap-2">
-                    <span id="sponsorCounterBadge" class="text-xs text-slate-500 font-semibold">20 entidades activas</span>
+                    <span id="sponsorCounterBadge" class="text-xs text-slate-500 font-semibold"></span>
                     <button onclick="openBrandEditModal()" id="editSponsorsQuickBtn" class="hidden bg-slate-900 text-white text-xs px-2.5 py-1.5 rounded-lg font-bold hover:bg-slate-800 transition shadow">
                         <i class="fa-solid fa-plus mr-1"></i> Gestionar Auspiciantes (20)
                     </button>
                 </div>
             </div>
 
-            <!-- CONTENEDOR DE DOS FILAS EN MOVIMIENTO -->
+            <!-- CONTENEDOR DE DOS FILAS EN MOVIMIENTO CONTINUO -->
             <div class="space-y-3 bg-slate-50/80 p-3 rounded-2xl border border-slate-100 overflow-hidden">
                 <div class="relative w-full overflow-hidden flex items-center min-h-[56px]">
                     <div class="marquee-row-1 flex items-center gap-4" id="marqueeTrackRow1"></div>
@@ -717,8 +716,8 @@
                 <div>
                     <label class="block font-semibold text-slate-700 mb-1">Tipo de Cuenta:</label>
                     <select id="userType" class="w-full border border-slate-300 rounded-lg p-2.5 outline-none font-semibold text-sky-700">
-                        <option value="ADMIN">Administrador Principal (Líder Comercial)</option>
-                        <option value="AGENT">Equipo de Agentes de Intermediación</option>
+                        <option value="ADMIN">Administrador Principal (Gerente)</option>
+                        <option value="AGENT">Equipo de Agentes Comerciales</option>
                     </select>
                 </div>
                 <div>
@@ -736,13 +735,13 @@
         </div>
     </div>
 
-    <!-- MODAL MAESTRO EXCLUSIVO ADMINISTRADOR PRINCIPAL (PRECARGA TOTAL & PERSISTENCIA) -->
+    <!-- MODAL MAESTRO EXCLUSIVO ADMINISTRADOR PRINCIPAL (GERENTE) -->
     <div id="editBrandModal" class="modal-overlay fixed inset-0 bg-slate-900/70 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-3xl w-full max-h-[92vh] overflow-y-auto modal-scroll p-6 shadow-2xl relative" onclick="event.stopPropagation()">
             <button onclick="closeModal('editBrandModal')" class="absolute top-4 right-4 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full w-8 h-8 flex items-center justify-center font-bold">✕</button>
             
-            <h3 class="text-xl font-extrabold text-slate-900 mb-1"><i class="fa-solid fa-crown text-amber-500 mr-2"></i> Panel de Control Maestro (Líder Comercial)</h3>
-            <p class="text-xs text-slate-500 mb-4">Todos los datos actuales están precargados. Puede modificar cualquier campo sin perder el resto.</p>
+            <h3 class="text-xl font-extrabold text-slate-900 mb-1"><i class="fa-solid fa-crown text-amber-500 mr-2"></i> Panel de Control Maestro (Gerente)</h3>
+            <p class="text-xs text-slate-500 mb-4">Control total de diseño, colores, textos, video corporativo, abogado y auspiciantes.</p>
 
             <form onsubmit="handleSaveBrand(event)" class="space-y-5 text-xs md:text-sm">
                 
@@ -772,7 +771,7 @@
                     </div>
                 </div>
 
-                <!-- 2. EDITOR MAESTRO DE TEXTOS (LENGUAJE SEGURO) -->
+                <!-- 2. EDITOR MAESTRO DE TEXTOS -->
                 <div class="bg-sky-50 p-4 rounded-2xl border border-sky-200 space-y-3">
                     <h4 class="font-bold text-sky-950 text-xs uppercase flex items-center gap-1.5">
                         <i class="fa-solid fa-pen-nib text-sky-600"></i> 2. Editor de Textos, Títulos y Descripción
@@ -838,7 +837,7 @@
                     </div>
                 </div>
 
-                <!-- 4. VIDEO CORPORATIVO (MULTI-OPCIÓN ROBUSTA) -->
+                <!-- 4. VIDEO CORPORATIVO -->
                 <div class="bg-rose-50 p-4 rounded-xl border border-rose-200 space-y-3">
                     <h4 class="font-bold text-rose-950 text-xs uppercase flex items-center gap-1">
                         <i class="fa-solid fa-video text-rose-600"></i> 4. Video Informativo Corporativo
@@ -898,7 +897,7 @@
         </div>
     </div>
 
-    <!-- MODAL REGISTRAR NUEVA CAPTACIÓN -->
+    <!-- MODAL REGISTRAR NUEVA CAPTACIÓN (ADMINISTRADOR Y AGENTES) -->
     <div id="addItemModal" class="modal-overlay fixed inset-0 bg-slate-900/70 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-xl w-full max-h-[92vh] overflow-y-auto modal-scroll p-6 shadow-2xl relative" onclick="event.stopPropagation()">
             <button onclick="closeModal('addItemModal')" class="absolute top-4 right-4 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full w-8 h-8 flex items-center justify-center font-bold">✕</button>
@@ -1020,7 +1019,7 @@
         </div>
     </div>
 
-    <!-- MODAL EDITAR PRODUCTO -->
+    <!-- MODAL EDITAR PRODUCTO (EXCLUSIVO ADMINISTRADOR PRINCIPAL) -->
     <div id="editItemModal" class="modal-overlay fixed inset-0 bg-slate-900/70 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-xl w-full max-h-[92vh] overflow-y-auto modal-scroll p-6 shadow-2xl relative" onclick="event.stopPropagation()">
             <button onclick="closeModal('editItemModal')" class="absolute top-4 right-4 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full w-8 h-8 flex items-center justify-center font-bold">✕</button>
@@ -1147,7 +1146,7 @@
                 .replace(/'/g, "&#039;");
         }
 
-        // SISTEMA ELEGANTE DE TOAST NOTIFICATIONS (SIN ALERTAS MOLESTAS)
+        // SISTEMA ELEGANTE DE TOAST NOTIFICATIONS
         function showToast(message, isSuccess = true) {
             const toast = document.getElementById('appToast');
             const msg = document.getElementById('appToastMessage');
@@ -1192,7 +1191,7 @@
         }
 
         // MOTOR INDEXEDDB DE RESPALDO PARA ASSETS PESADOS
-        const DB_NAME = 'AlianzaEstrategicaDB_v16';
+        const DB_NAME = 'AlianzaEstrategicaDB_v17';
         const DB_VERSION = 1;
         const STORE_NAME = 'app_media';
 
@@ -1265,12 +1264,12 @@
         }
 
         // =========================================================================
-        // PARSEADOR UNIVERSAL DE VIDEOS / EMBEDS (YOUTUBE, SHORTS, DRIVE, DIRECTO)
+        // PARSEADOR UNIVERSAL DE VIDEOS / EMBEDS (SIN PANTALLAS NEGRAS)
         // =========================================================================
         function parseMediaToHtml(url, isReel = false, isMuted = true) {
             if (!url) return null;
 
-            // 1. YouTube o YouTube Shorts
+            // 1. YouTube estándar o YouTube Shorts
             const ytMatch = url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|shorts\/)([^#\&\?]*).*/);
             if (ytMatch && ytMatch[2].length === 11) {
                 const id = ytMatch[2];
@@ -1342,7 +1341,7 @@
         ];
 
         // CONFIGURACIÓN CORPORATIVA GLOBAL
-        let brandConfig = JSON.parse(localStorage.getItem('alianza_brand_v16')) || {
+        let brandConfig = JSON.parse(localStorage.getItem('alianza_brand_v17')) || {
             bgMain: '#f8fafc',
             cardBg: '#ffffff',
             navBg: '#0f172a',
@@ -1441,7 +1440,7 @@
             }
         ];
 
-        let inventory = JSON.parse(localStorage.getItem('alianza_inventory_v16')) || defaultInventory;
+        let inventory = JSON.parse(localStorage.getItem('alianza_inventory_v17')) || defaultInventory;
         let currentUserRole = localStorage.getItem('alianza_user_role') || 'GUEST';
         let currentCategory = 'ALL';
         let currentSlideIndex = 0;
@@ -1509,7 +1508,7 @@
                         brandConfig.reels = validReels;
                     }
 
-                    localStorage.setItem('alianza_brand_v16', JSON.stringify(brandConfig));
+                    localStorage.setItem('alianza_brand_v17', JSON.stringify(brandConfig));
                     applyBrandConfig();
                     renderSponsorsMarquee();
                     renderReels();
@@ -1524,7 +1523,7 @@
                     const cloudList = [];
                     snapshot.forEach(d => cloudList.push(d.data()));
                     inventory = cloudList;
-                    localStorage.setItem('alianza_inventory_v16', JSON.stringify(inventory));
+                    localStorage.setItem('alianza_inventory_v17', JSON.stringify(inventory));
                     renderGrid();
                     rebuildCarouselList();
                 } else {
@@ -1641,6 +1640,7 @@
                     mediaPreview = `<img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover">`;
                 }
 
+                // Botón de eliminación rápida exclusiva para Administrador Principal (Gerente)
                 const deleteReelBtn = currentUserRole === 'ADMIN' ? `
                     <button type="button" onclick="deleteReelDirectly(event, ${idx})" class="absolute top-2 right-2 bg-red-600/90 hover:bg-red-700 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs shadow z-20" title="Eliminar Reel">
                         ✕
@@ -1733,7 +1733,7 @@
             if (!brandConfig.reels) brandConfig.reels = [];
             brandConfig.reels.unshift(newReel);
 
-            localStorage.setItem('alianza_brand_v16', JSON.stringify(brandConfig));
+            localStorage.setItem('alianza_brand_v17', JSON.stringify(brandConfig));
 
             if (firestoreDB) {
                 try {
@@ -1756,7 +1756,7 @@
 
             if (confirm('¿Confirma que desea eliminar este Reel?')) {
                 brandConfig.reels.splice(index, 1);
-                localStorage.setItem('alianza_brand_v16', JSON.stringify(brandConfig));
+                localStorage.setItem('alianza_brand_v17', JSON.stringify(brandConfig));
 
                 if (firestoreDB) {
                     try {
@@ -1849,7 +1849,7 @@
                     title: 'Operaciones transparentes en ALIANZA ESTRATÉGICA S.A.S.',
                     desc: 'Intermediación formal y saneamiento notarial.'
                 };
-                localStorage.setItem('alianza_brand_v16', JSON.stringify(brandConfig));
+                localStorage.setItem('alianza_brand_v17', JSON.stringify(brandConfig));
                 setupVideoPlayer();
                 showToast('¡Video cargado y guardado con éxito!');
             };
@@ -1870,7 +1870,7 @@
                 const base64 = await compressImage(file, 400, 0.7);
                 brandConfig.sponsors.push(base64);
             }
-            localStorage.setItem('alianza_brand_v16', JSON.stringify(brandConfig));
+            localStorage.setItem('alianza_brand_v17', JSON.stringify(brandConfig));
             renderSponsorsModalPreview();
             renderSponsorsMarquee();
             showToast('Logotipos cargados con éxito');
@@ -1880,7 +1880,7 @@
         function removeSponsorLogo(idx) {
             brandConfig.sponsors.splice(idx, 1);
             if (brandConfig.sponsors.length === 0) brandConfig.sponsors = defaultSponsors;
-            localStorage.setItem('alianza_brand_v16', JSON.stringify(brandConfig));
+            localStorage.setItem('alianza_brand_v17', JSON.stringify(brandConfig));
             renderSponsorsModalPreview();
             renderSponsorsMarquee();
             showToast('Logotipo removido');
@@ -2075,7 +2075,7 @@
             document.getElementById('footerFb2').href = brandConfig.fb2Url;
         }
 
-        // PRECARGA COMPLETA AL ABRIR PANEL MAESTRO (NUNCA CAMPOS EN BLANCO)
+        // PRECARGA COMPLETA AL ABRIR PANEL MAESTRO (GERENTE)
         function openBrandEditModal() {
             document.getElementById('cfgBgMain').value = brandConfig.bgMain || '#f8fafc';
             document.getElementById('cfgCardBg').value = brandConfig.cardBg || '#ffffff';
@@ -2143,7 +2143,7 @@
             if (!brandConfig.sponsors || brandConfig.sponsors.length === 0) brandConfig.sponsors = defaultSponsors;
 
             // 1. Guardado automático persistente en LocalStorage
-            localStorage.setItem('alianza_brand_v16', JSON.stringify(brandConfig));
+            localStorage.setItem('alianza_brand_v17', JSON.stringify(brandConfig));
 
             // 2. Sincronización en la Nube Firestore
             if (firestoreDB) {
@@ -2195,7 +2195,7 @@
                 brandConfig.logoUrl = base64;
                 document.getElementById('profileLogoImg').src = base64;
             }
-            localStorage.setItem('alianza_brand_v16', JSON.stringify(brandConfig));
+            localStorage.setItem('alianza_brand_v17', JSON.stringify(brandConfig));
             
             if (firestoreDB) {
                 const patch = {};
@@ -2211,7 +2211,7 @@
             const base64 = await compressImage(file, 1000, 0.75);
             brandConfig.lawyerCardUrl = base64;
             document.getElementById('lawyerCardImg').src = base64;
-            localStorage.setItem('alianza_brand_v16', JSON.stringify(brandConfig));
+            localStorage.setItem('alianza_brand_v17', JSON.stringify(brandConfig));
             
             if (firestoreDB) {
                 await firestoreDB.collection('alianza_settings').doc('appData').update({
@@ -2221,6 +2221,9 @@
             showToast('¡Tarjeta del Abogado actualizada y sincronizada!');
         }
 
+        // =========================================================================
+        // CONTROL ESTRICTO DE ROLES: GERENTE (ADMIN) VS AGENTES VS PÚBLICO
+        // =========================================================================
         function checkUserState() {
             const banner = document.getElementById('userPanelBanner');
             const statusDiv = document.getElementById('userBannerStatus');
@@ -2233,6 +2236,7 @@
             const addReelCardBtn = document.getElementById('addReelCardBtn');
 
             if (currentUserRole === 'ADMIN') {
+                // ROL ADMINISTRADOR PRINCIPAL (GERENTE): CONTROL TOTAL ABSOLUTO
                 banner.classList.remove('hidden');
                 quickCoverLabel.classList.remove('hidden');
                 quickProfileLabel.classList.remove('hidden');
@@ -2246,7 +2250,7 @@
                     addReelCardBtn.classList.add('flex');
                 }
 
-                statusDiv.innerHTML = `<i class="fa-solid fa-crown text-slate-900 text-lg mr-1"></i> MODO ADMINISTRADOR (Líder Comercial) - Control Total`;
+                statusDiv.innerHTML = `<i class="fa-solid fa-crown text-slate-900 text-lg mr-1"></i> ADMINISTRADOR PRINCIPAL (Gerente) - Control Total`;
                 actionsDiv.innerHTML = `
                     <button onclick="openAddNewItemModal()" class="bg-slate-900 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-slate-800 transition shadow">
                         <i class="fa-solid fa-plus mr-1"></i> Añadir Activo
@@ -2255,15 +2259,16 @@
                         <i class="fa-solid fa-clapperboard mr-1"></i> + Subir Reel
                     </button>
                     <button onclick="openBrandEditModal()" class="bg-sky-900 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-sky-800 transition shadow">
-                        <i class="fa-solid fa-sliders mr-1"></i> Colores, Textos & Abogado
+                        <i class="fa-solid fa-sliders mr-1"></i> Panel Maestro & Diseño
                     </button>
                     <button onclick="logoutUser()" class="bg-white text-slate-900 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-slate-100 transition shadow">
                         Cerrar Sesión
                     </button>
                 `;
-                loginBtn.innerHTML = '<i class="fa-solid fa-user-shield mr-1"></i> Sesión Activa';
+                loginBtn.innerHTML = '<i class="fa-solid fa-user-shield mr-1"></i> Gerente Activo';
                 loginBtn.className = 'bg-amber-600 text-slate-900 px-2.5 py-1 rounded text-xs font-bold transition ml-1 shadow-sm';
             } else if (currentUserRole === 'AGENT') {
+                // ROL AGENTES COMERCIALES: SOLO SUBIR NUEVAS CAPTACIONES (NO EDITAR NI BORRAR EXISTENTES)
                 banner.classList.remove('hidden');
                 quickCoverLabel.classList.add('hidden');
                 quickProfileLabel.classList.add('hidden');
@@ -2271,10 +2276,10 @@
                 editSponsorsQuickBtn.classList.add('hidden');
                 if(addReelCardBtn) addReelCardBtn.classList.add('hidden');
 
-                statusDiv.innerHTML = `<i class="fa-solid fa-id-badge text-lg text-slate-900"></i> EQUIPO DE AGENTES - Captaciones & Comisiones`;
+                statusDiv.innerHTML = `<i class="fa-solid fa-id-badge text-lg text-slate-900"></i> AGENTE COMERCIAL - Subida de Nuevas Captaciones`;
                 actionsDiv.innerHTML = `
                     <button onclick="openAddNewItemModal()" class="bg-slate-900 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-slate-800 transition shadow">
-                        <i class="fa-solid fa-plus mr-1"></i> Registrar Captación
+                        <i class="fa-solid fa-plus mr-1"></i> Registrar Nueva Captación
                     </button>
                     <button onclick="logoutUser()" class="bg-white text-slate-900 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-slate-100 transition shadow">
                         Cerrar Sesión
@@ -2283,6 +2288,7 @@
                 loginBtn.innerHTML = '<i class="fa-solid fa-id-badge mr-1"></i> Agente Activo';
                 loginBtn.className = 'bg-emerald-600 text-white px-2.5 py-1 rounded text-xs font-bold transition ml-1 shadow-sm';
             } else {
+                // VISITANTES / PÚBLICO GENERAL: CERO BOTONES ADMINISTRATIVOS
                 banner.classList.add('hidden');
                 quickCoverLabel.classList.add('hidden');
                 quickProfileLabel.classList.add('hidden');
@@ -2327,7 +2333,7 @@
                 checkUserState();
                 renderGrid();
                 renderReels();
-                showToast('¡Bienvenido Administrador Principal!');
+                showToast('¡Bienvenido Administrador Principal (Gerente)! Control total activado.');
             } else if (type === 'AGENT' && user === 'agente.intermediacion' && pass === 'agente.intermediacion') {
                 currentUserRole = 'AGENT';
                 localStorage.setItem('alianza_user_role', 'AGENT');
@@ -2335,7 +2341,7 @@
                 checkUserState();
                 renderGrid();
                 renderReels();
-                showToast('¡Bienvenido Equipo de Agentes!');
+                showToast('¡Bienvenido Agente Comercial! Habilitada la subida de captaciones.');
             } else {
                 showToast('Credenciales incorrectas', false);
             }
@@ -2392,7 +2398,7 @@
             };
 
             inventory.unshift(newItem);
-            localStorage.setItem('alianza_inventory_v16', JSON.stringify(inventory));
+            localStorage.setItem('alianza_inventory_v17', JSON.stringify(inventory));
 
             if (firestoreDB) {
                 try {
@@ -2408,7 +2414,11 @@
         }
 
         function openEditItemModal(id) {
-            if (currentUserRole !== 'ADMIN') return;
+            // RESTRICCIÓN ESTRICTA: SOLO EL ADMINISTRADOR PRINCIPAL PUEDE EDITAR
+            if (currentUserRole !== 'ADMIN') {
+                showToast('Acceso denegado: Solo el Gerente puede modificar productos.', false);
+                return;
+            }
             const item = inventory.find(i => i.id === id);
             if (!item) return;
 
@@ -2448,7 +2458,7 @@
             item.hasOffer = hasOffer;
             item.offerText = hasOffer ? document.getElementById('editItemOfferText').value.trim() : '';
 
-            localStorage.setItem('alianza_inventory_v16', JSON.stringify(inventory));
+            localStorage.setItem('alianza_inventory_v17', JSON.stringify(inventory));
 
             if (firestoreDB) {
                 try {
@@ -2463,13 +2473,14 @@
         }
 
         async function deleteItem(id) {
+            // RESTRICCIÓN ESTRICTA: SOLO EL ADMINISTRADOR PRINCIPAL PUEDE BORRAR
             if (currentUserRole !== 'ADMIN') {
-                showToast('Acceso restringido al Administrador', false);
+                showToast('Acceso denegado: Solo el Gerente puede eliminar activos.', false);
                 return;
             }
             if (confirm(`¿Confirma eliminar permanentemente el activo ${id}?`)) {
                 inventory = inventory.filter(item => item.id !== id);
-                localStorage.setItem('alianza_inventory_v16', JSON.stringify(inventory));
+                localStorage.setItem('alianza_inventory_v17', JSON.stringify(inventory));
 
                 if (firestoreDB) {
                     try {
@@ -2521,6 +2532,7 @@
             const cleanWa = brandConfig.waPhone.replace(/^0/, '');
 
             filtered.forEach(item => {
+                // ACCIONES EXCLUSIVAS DEL ADMINISTRADOR PRINCIPAL (GERENTE)
                 const adminActionButtons = currentUserRole === 'ADMIN' ? `
                     <div class="absolute top-3 right-3 flex items-center gap-1.5 z-10">
                         <button onclick="openEditItemModal('${escapeHtml(item.id)}')" class="bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold p-2 rounded-lg shadow transition" title="Modificar Producto">
@@ -2629,7 +2641,7 @@ ${offerLine}⚖️ RESPALDO JURÍDICO: Contrato formal y verificación legal por
             });
         }
 
-        // MODAL FICHA TÉCNICA (PRIVACIDAD TOTAL DE COMISIONES)
+        // MODAL FICHA TÉCNICA (PRIVACIDAD TOTAL DE COMISIONES Y CONTRATOS)
         function openItemModal(id) {
             const item = inventory.find(i => i.id === id);
             if (!item) return;
@@ -2656,7 +2668,7 @@ ${offerLine}⚖️ RESPALDO JURÍDICO: Contrato formal y verificación legal por
                 </div>
             ` : '';
 
-            // PRIVACIDAD TOTAL: ESTE BLOQUE SOLO APARECE SI ES ADMIN O AGENTE
+            // PRIVACIDAD TOTAL: ESTE BLOQUE SOLO APARECE SI ES ADMIN O AGENTE AUTENTICADO
             let privateInternalSection = '';
             if (currentUserRole === 'ADMIN' || currentUserRole === 'AGENT') {
                 const contractPhotos = item.contractPhotos || [];
@@ -2682,6 +2694,7 @@ ${offerLine}⚖️ RESPALDO JURÍDICO: Contrato formal y verificación legal por
             const isSold = item.status && item.status.includes('Vendido');
             const statusLabel = isSold ? '🔴 VENDIDO' : '🟢 DISPONIBLE AHORA';
 
+            // BOTÓN MODIFICAR SOLO VISIBLE PARA EL ADMINISTRADOR PRINCIPAL (GERENTE)
             const adminEditButtonInModal = currentUserRole === 'ADMIN' ? `
                 <button onclick="openEditItemModal('${escapeHtml(item.id)}')" class="bg-amber-500 hover:bg-amber-600 text-slate-900 px-3 py-1 rounded-md text-xs font-bold transition flex items-center gap-1 shadow">
                     <i class="fa-solid fa-pen-to-square"></i> Modificar
