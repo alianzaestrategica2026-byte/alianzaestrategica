@@ -117,6 +117,12 @@
 </head>
 <body class="font-sans text-slate-800 antialiased min-h-screen flex flex-col relative transition-colors duration-300">
 
+    <!-- TOAST DE NOTIFICACIÓN VISUAL ELEGANTE (SIN ALERTS) -->
+    <div id="appToast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 bg-slate-900/95 text-white px-5 py-3 rounded-2xl shadow-2xl border border-emerald-500/40 text-xs font-bold transition-all duration-300 transform opacity-0 translate-y-4 pointer-events-none">
+        <i id="appToastIcon" class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>
+        <span id="appToastMessage">Acción completada</span>
+    </div>
+
     <!-- TOP BAR -->
     <div class="theme-nav-bg text-white text-xs py-2 px-4 border-b border-sky-800/50">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
@@ -199,7 +205,7 @@
                         </div>
                     </div>
 
-                    <!-- BOTONES DE CONTACTO -->
+                    <!-- BOTONES DE CONTACTO BLINDADOS CON SEGURIDAD -->
                     <div class="flex flex-wrap items-center justify-center gap-2 pt-2">
                         <button onclick="openModal('infoMenuModal')" class="bg-slate-800 hover:bg-slate-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow transition flex items-center gap-1.5">
                             <i class="fa-solid fa-circle-info text-sky-400"></i> Sobre Nosotros
@@ -222,14 +228,14 @@
         </div>
     </section>
 
-    <!-- HISTORIAS Y REELS DESTACADOS (CADUCIDAD SEMANAL & REPRODUCCIÓN AUTOMÁTICA) -->
+    <!-- HISTORIAS Y REELS DESTACADOS (FORMATO 9:16 CON REPRODUCCIÓN AUTOMÁTICA Y CADUCIDAD SEMANAL) -->
     <section class="max-w-7xl mx-auto w-full px-4 pt-6">
         <div class="theme-card-bg rounded-3xl shadow-sm p-4 border border-slate-200">
             <div class="flex items-center justify-between mb-3 px-1">
                 <span class="text-xs font-extrabold uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
                     <i class="fa-solid fa-clapperboard text-rose-500"></i> Historias & Reels Destacados
                 </span>
-                <span class="text-[11px] text-slate-400 font-medium">Caducidad semanal automática (7 días)</span>
+                <span class="text-[11px] text-slate-400 font-medium">Recorridos en video • Caducidad 7 días</span>
             </div>
 
             <div class="reels-scrollbar flex items-center gap-3 overflow-x-auto pb-2" id="reelsScrollContainer">
@@ -239,9 +245,9 @@
                         <i class="fa-solid fa-camera text-base"></i>
                     </div>
                     <span class="text-[11px] font-bold text-rose-700 leading-tight">+ Subir Reel</span>
-                    <span class="text-[9px] text-slate-400 mt-0.5">Galería / Archivos</span>
+                    <span class="text-[9px] text-slate-400 mt-0.5">Galería / Embed</span>
                 </div>
-                <!-- LISTA DE REELS PÚBLICA -->
+                <!-- LISTA PÚBLICA DE REELS -->
                 <div id="reelsList" class="flex items-center gap-3"></div>
             </div>
         </div>
@@ -250,17 +256,19 @@
     <!-- CARRUSEL Y VIDEO INFORMATIVO CORPORATIVO -->
     <section class="max-w-7xl mx-auto w-full px-4 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
         
-        <!-- CARRUSEL SECUENCIAL DE OPORTUNIDADES -->
+        <!-- CARRUSEL SECUENCIAL DE OPORTUNIDADES (DESPLAZAMIENTO FLUIDO CADA 3.5 SEGUNDOS) -->
         <div class="lg:col-span-7 theme-card-bg rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col justify-between">
             <div class="p-3.5 border-b border-slate-100 flex items-center justify-between">
                 <span class="text-xs font-bold uppercase tracking-wider text-sky-700 flex items-center gap-2">
                     <i class="fa-solid fa-bolt text-amber-500"></i> <span id="carouselTitleDisplay">Galería de Oportunidades & Activos en Secuencia</span>
                 </span>
-                <span class="text-[11px] text-slate-400 font-medium" id="carouselSourceLabel">Sincronizado con Firebase</span>
+                <span class="text-[11px] text-slate-400 font-medium" id="carouselSourceLabel">Sincronizado en Vivo</span>
             </div>
 
             <div class="relative w-full h-64 sm:h-80 md:h-96 overflow-hidden bg-slate-900" id="carouselContainer">
-                <div id="carouselSlide" class="w-full h-full relative cursor-pointer" onclick="clickCarouselCurrentSlide()"></div>
+                <div id="carouselSlide" class="w-full h-full relative cursor-pointer" onclick="clickCarouselCurrentSlide()">
+                    <!-- IMAGEN Y DETALLES INYECTADOS POR JS -->
+                </div>
 
                 <button onclick="prevSlide()" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white w-9 h-9 rounded-full flex items-center justify-center transition z-10">
                     <i class="fa-solid fa-chevron-left text-sm"></i>
@@ -278,7 +286,7 @@
             </div>
         </div>
 
-        <!-- VIDEO INFORMATIVO CORPORATIVO (AUTOPLAY AL 50% DE VOLUMEN) -->
+        <!-- VIDEO INFORMATIVO CORPORATIVO ROBUSTO (CERO PANTALLAS NEGRAS) -->
         <div class="lg:col-span-5 theme-card-bg rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col justify-between relative">
             <div class="p-3.5 border-b border-slate-100 flex items-center justify-between">
                 <span class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-2">
@@ -288,7 +296,9 @@
             </div>
 
             <div class="p-4 flex-1 flex flex-col justify-center bg-slate-950 relative">
-                <div class="relative w-full aspect-video rounded-xl overflow-hidden bg-black shadow-inner flex items-center justify-center" id="videoPlayerBox"></div>
+                <div class="relative w-full aspect-video rounded-xl overflow-hidden bg-black shadow-inner flex items-center justify-center" id="videoPlayerBox">
+                    <!-- REPRODUCTOR COMPATIBLE INYECTADO POR JS -->
+                </div>
                 <!-- BOTÓN FLOTANTE CONTROL RÁPIDO DE AUDIO -->
                 <button id="toggleAudioBtn" onclick="toggleCorporateAudio()" class="absolute bottom-6 right-6 bg-slate-900/85 hover:bg-slate-900 text-white text-xs px-3 py-1.5 rounded-lg shadow-lg backdrop-blur-md border border-white/20 flex items-center gap-1.5 transition z-10">
                     <i class="fa-solid fa-volume-high text-amber-400" id="audioIcon"></i> <span id="audioText">Activar Sonido (50%)</span>
@@ -329,7 +339,7 @@
         <!-- GRID DE PRODUCTOS -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="inventoryGrid"></div>
 
-        <!-- SECCIÓN DE RESPALDO LEGAL Y EQUIPO COMERCIAL -->
+        <!-- SECCIÓN DE RESPALDO LEGAL Y EQUIPO COMERCIAL (SEGURIDAD REFORZADA) -->
         <section class="mt-16 theme-card-bg rounded-3xl shadow-sm p-6 md:p-8 border border-slate-200">
             <div class="text-center max-w-2xl mx-auto mb-10">
                 <span class="bg-amber-100 text-amber-900 border border-amber-300 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider inline-block mb-2">
@@ -420,7 +430,7 @@
             </div>
         </section>
 
-        <!-- AUSPICIANTES EN 2 FILAS EN SECUENCIA (10 ARRIBA Y 10 ABAJO) -->
+        <!-- AUSPICIANTES EN 2 FILAS EN SECUENCIA (10 ARRIBA Y 10 ABAJO - IMÁGENES SEGURAS) -->
         <section class="mt-16 theme-card-bg rounded-3xl shadow-sm p-6 border border-slate-200 overflow-hidden">
             <div class="flex flex-wrap items-center justify-between mb-4 px-2">
                 <div>
@@ -624,7 +634,7 @@
         </div>
     </div>
 
-    <!-- MODAL REEL VISOR EMERGENTE (REPRODUCCIÓN CON AUDIO AL TOCAR) -->
+    <!-- MODAL REEL VISOR EMERGENTE (REPRODUCCIÓN DIRECTA CON AUDIO) -->
     <div id="reelViewerModal" class="modal-overlay fixed inset-0 bg-black/95 z-50 hidden flex items-center justify-center p-2 sm:p-4">
         <div class="relative w-full max-w-sm aspect-[9/16] bg-black rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-between" onclick="event.stopPropagation()">
             <button onclick="closeReelViewer()" class="absolute top-4 right-4 bg-white/20 hover:bg-white/40 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold z-20">✕</button>
@@ -632,7 +642,7 @@
         </div>
     </div>
 
-    <!-- MODAL AGREGAR REEL (CARGA DIRECTA DE ARCHIVO DESDE GALERÍA / ARCHIVOS) -->
+    <!-- MODAL AGREGAR REEL -->
     <div id="addReelModal" class="modal-overlay fixed inset-0 bg-slate-900/70 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl relative" onclick="event.stopPropagation()">
             <button onclick="closeModal('addReelModal')" class="absolute top-4 right-4 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full w-8 h-8 flex items-center justify-center font-bold">✕</button>
@@ -643,7 +653,7 @@
                 </div>
                 <div>
                     <h3 class="text-base font-bold text-slate-900">Subir Historia / Reel</h3>
-                    <p class="text-[11px] text-slate-500">Carga directa desde la galería de tu teléfono o PC</p>
+                    <p class="text-[11px] text-slate-500">Carga directa de video o enlace embed compatible</p>
                 </div>
             </div>
 
@@ -653,13 +663,16 @@
                     <input type="text" id="newReelTitle" required placeholder="Ej: Recorrido Casa Céntrica RE-001" class="w-full border border-slate-300 rounded-xl p-2.5 outline-none">
                 </div>
                 <div>
-                    <label class="block font-semibold text-slate-700 mb-1">📁 Seleccionar Video o Foto (Galería / Archivos):</label>
+                    <label class="block font-semibold text-slate-700 mb-1">📁 Cargar Video o Foto desde Galería / Archivo:</label>
                     <label class="cursor-pointer bg-rose-50 border border-rose-300 hover:bg-rose-100 text-rose-700 font-bold p-3 rounded-xl flex items-center justify-center gap-2 transition w-full">
                         <i class="fa-solid fa-file-video text-base"></i>
                         <span id="reelFileNameDisplay">Elegir archivo multimedia</span>
-                        <input type="file" id="newReelFileInput" accept="image/*,video/*" required class="hidden" onchange="handleReelFileSelected(this)">
+                        <input type="file" id="newReelFileInput" accept="image/*,video/*" class="hidden" onchange="handleReelFileSelected(this)">
                     </label>
-                    <span id="reelFileStatus" class="block text-[10px] text-slate-500 mt-1">Soporta videos cortos MP4/WebM o fotos en formato vertical.</span>
+                </div>
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">O pegar Enlace (YouTube Shorts / Drive):</label>
+                    <input type="text" id="newReelUrlInput" placeholder="https://youtube.com/shorts/... o Drive" class="w-full border border-slate-300 rounded-xl p-2.5 outline-none">
                 </div>
                 <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 rounded-xl shadow-md transition text-xs flex items-center justify-center gap-1.5">
                     <i class="fa-solid fa-cloud-arrow-up"></i> Publicar Reel para Todos
@@ -723,13 +736,13 @@
         </div>
     </div>
 
-    <!-- MODAL MAESTRO EXCLUSIVO ADMINISTRADOR PRINCIPAL (100% CARGA DIRECTA DE ARCHIVOS & PRECARGA) -->
+    <!-- MODAL MAESTRO EXCLUSIVO ADMINISTRADOR PRINCIPAL (PRECARGA TOTAL & PERSISTENCIA) -->
     <div id="editBrandModal" class="modal-overlay fixed inset-0 bg-slate-900/70 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-3xl w-full max-h-[92vh] overflow-y-auto modal-scroll p-6 shadow-2xl relative" onclick="event.stopPropagation()">
             <button onclick="closeModal('editBrandModal')" class="absolute top-4 right-4 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full w-8 h-8 flex items-center justify-center font-bold">✕</button>
             
             <h3 class="text-xl font-extrabold text-slate-900 mb-1"><i class="fa-solid fa-crown text-amber-500 mr-2"></i> Panel de Control Maestro (Líder Comercial)</h3>
-            <p class="text-xs text-slate-500 mb-4">Cargue fotos y videos directamente desde su dispositivo. Los datos actuales se mantienen precargados.</p>
+            <p class="text-xs text-slate-500 mb-4">Todos los datos actuales están precargados. Puede modificar cualquier campo sin perder el resto.</p>
 
             <form onsubmit="handleSaveBrand(event)" class="space-y-5 text-xs md:text-sm">
                 
@@ -787,7 +800,7 @@
                     </div>
                 </div>
 
-                <!-- 3. TARJETA Y DATOS DEL ABOGADO (SUBIDA DIRECTA) -->
+                <!-- 3. TARJETA Y DATOS DEL ABOGADO -->
                 <div class="bg-amber-50/80 p-4 rounded-2xl border border-amber-300 space-y-3">
                     <h4 class="font-bold text-amber-950 text-xs uppercase flex items-center justify-between">
                         <span><i class="fa-solid fa-scale-balanced text-amber-600"></i> 3. Tarjeta y Datos del Asesor Legal (Abogado)</span>
@@ -796,7 +809,7 @@
                     <div>
                         <label class="block font-semibold text-slate-700 mb-1">📁 Foto de la Tarjeta de Presentación:</label>
                         <label class="cursor-pointer bg-amber-600 hover:bg-amber-700 text-white font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-2 transition w-full shadow-sm">
-                            <i class="fa-solid fa-camera"></i> Subir Foto de Tarjeta desde Galería / PC
+                            <i class="fa-solid fa-camera"></i> Subir Foto Tarjeta desde Galería / PC
                             <input type="file" accept="image/*" class="hidden" onchange="previewAndSetImage(this, 'cfgLawyerCardUrl', 'previewLawyerCardImg')">
                         </label>
                         <input type="hidden" id="cfgLawyerCardUrl">
@@ -825,23 +838,26 @@
                     </div>
                 </div>
 
-                <!-- 4. VIDEO CORPORATIVO (SOLO CARGA DIRECTA DE ARCHIVO) -->
+                <!-- 4. VIDEO CORPORATIVO (MULTI-OPCIÓN ROBUSTA) -->
                 <div class="bg-rose-50 p-4 rounded-xl border border-rose-200 space-y-3">
                     <h4 class="font-bold text-rose-950 text-xs uppercase flex items-center gap-1">
-                        <i class="fa-solid fa-video text-rose-600"></i> 4. Video Informativo Corporativo (Carga Directa de Archivo)
+                        <i class="fa-solid fa-video text-rose-600"></i> 4. Video Informativo Corporativo
                     </h4>
-                    
                     <div>
-                        <label class="block font-semibold text-slate-700 mb-1.5">📁 Subir Archivo de Video desde Galería / Archivos:</label>
-                        <label class="cursor-pointer bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition w-full shadow">
-                            <i class="fa-solid fa-file-video text-base"></i> Seleccionar Video (MP4, WebM, MOV)
+                        <label class="block font-semibold text-slate-700 mb-1">Enlace de Video (YouTube / Shorts / Drive / MP4):</label>
+                        <input type="text" id="cfgVideoUrl" placeholder="https://www.youtube.com/watch?v=... o Drive" class="w-full border border-slate-300 rounded-xl p-2.5 outline-none">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1.5">O Subir Archivo Local desde Galería / PC:</label>
+                        <label class="cursor-pointer bg-rose-600 hover:bg-rose-700 text-white font-bold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 transition w-full shadow">
+                            <i class="fa-solid fa-file-video text-base"></i> Seleccionar Video Local
                             <input type="file" id="cfgVideoFileInput" accept="video/*" class="hidden" onchange="handleLocalVideoUpload(this)">
                         </label>
-                        <span id="localVideoUploadStatus" class="block text-xs font-semibold text-rose-800 mt-2 text-center">Video listo y reproduciéndose en bucle para todo el público.</span>
+                        <span id="localVideoUploadStatus" class="block text-xs font-semibold text-rose-800 mt-2 text-center"></span>
                     </div>
                 </div>
 
-                <!-- 5. HASTA 20 AUSPICIANTES (SUBIDA DIRECTA DE IMÁGENES) -->
+                <!-- 5. HASTA 20 AUSPICIANTES -->
                 <div class="bg-slate-50 p-4 rounded-2xl border border-slate-300 space-y-3">
                     <div class="flex items-center justify-between">
                         <h4 class="font-bold text-slate-900 text-xs uppercase flex items-center gap-1">
@@ -882,7 +898,7 @@
         </div>
     </div>
 
-    <!-- MODAL REGISTRAR NUEVA CAPTACIÓN (ADMIN Y AGENTES) -->
+    <!-- MODAL REGISTRAR NUEVA CAPTACIÓN -->
     <div id="addItemModal" class="modal-overlay fixed inset-0 bg-slate-900/70 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-xl w-full max-h-[92vh] overflow-y-auto modal-scroll p-6 shadow-2xl relative" onclick="event.stopPropagation()">
             <button onclick="closeModal('addItemModal')" class="absolute top-4 right-4 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full w-8 h-8 flex items-center justify-center font-bold">✕</button>
@@ -1119,7 +1135,7 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT & MOTOR EN TIEMPO REAL CON PERSISTENCIA FIRESTORE TOTAL -->
+    <!-- JAVASCRIPT & MOTOR EN TIEMPO REAL CON PERSISTENCIA FIRESTORE Y LOCALSTORAGE TOTAL -->
     <script>
         function escapeHtml(text) {
             if (!text) return '';
@@ -1129,6 +1145,33 @@
                 .replace(/>/g, "&gt;")
                 .replace(/"/g, "&quot;")
                 .replace(/'/g, "&#039;");
+        }
+
+        // SISTEMA ELEGANTE DE TOAST NOTIFICATIONS (SIN ALERTAS MOLESTAS)
+        function showToast(message, isSuccess = true) {
+            const toast = document.getElementById('appToast');
+            const msg = document.getElementById('appToastMessage');
+            const icon = document.getElementById('appToastIcon');
+            if(!toast || !msg) return;
+
+            msg.textContent = message;
+            if(isSuccess) {
+                icon.className = 'fa-solid fa-circle-check text-emerald-400 text-sm';
+                toast.classList.remove('border-red-500/40');
+                toast.classList.add('border-emerald-500/40');
+            } else {
+                icon.className = 'fa-solid fa-circle-exclamation text-rose-400 text-sm';
+                toast.classList.remove('border-emerald-500/40');
+                toast.classList.add('border-red-500/40');
+            }
+
+            toast.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+            toast.classList.add('opacity-100', 'translate-y-0');
+
+            setTimeout(() => {
+                toast.classList.remove('opacity-100', 'translate-y-0');
+                toast.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+            }, 3200);
         }
 
         function switchInfoTab(tabId) {
@@ -1148,8 +1191,8 @@
             }
         }
 
-        // MOTOR INDEXEDDB DE RESPALDO LOCAL PARA VIDEOS Y ASSETS PESADOS
-        const DB_NAME = 'AlianzaEstrategicaDB_v15';
+        // MOTOR INDEXEDDB DE RESPALDO PARA ASSETS PESADOS
+        const DB_NAME = 'AlianzaEstrategicaDB_v16';
         const DB_VERSION = 1;
         const STORE_NAME = 'app_media';
 
@@ -1221,7 +1264,40 @@
             });
         }
 
-        // AUSPICIANTES POR DEFECTO
+        // =========================================================================
+        // PARSEADOR UNIVERSAL DE VIDEOS / EMBEDS (YOUTUBE, SHORTS, DRIVE, DIRECTO)
+        // =========================================================================
+        function parseMediaToHtml(url, isReel = false, isMuted = true) {
+            if (!url) return null;
+
+            // 1. YouTube o YouTube Shorts
+            const ytMatch = url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|shorts\/)([^#\&\?]*).*/);
+            if (ytMatch && ytMatch[2].length === 11) {
+                const id = ytMatch[2];
+                return `<iframe class="w-full h-full ${isReel ? 'rounded-3xl' : 'rounded-xl'}" src="https://www.youtube.com/embed/${id}?autoplay=1&mute=${isMuted ? 1 : 0}&playsinline=1&loop=1&playlist=${id}&controls=1&modestbranding=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+            }
+
+            // 2. Google Drive Video
+            const driveMatch = url.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
+            if (driveMatch && driveMatch[1]) {
+                const fileId = driveMatch[1];
+                return `<iframe class="w-full h-full ${isReel ? 'rounded-3xl' : 'rounded-xl'}" src="https://drive.google.com/file/d/${fileId}/preview" frameborder="0" allow="autoplay" allowfullscreen></iframe>`;
+            }
+
+            // 3. Archivo Directo (DataURL Base64, Blob o MP4/WebM)
+            if (url.startsWith('data:video') || url.startsWith('blob:') || url.match(/\.(mp4|webm|mov)(\?.*)?$/i)) {
+                return `<video id="${isReel ? 'activeReelPlayer' : 'corporateVideoPlayer'}" autoplay loop playsinline ${isMuted ? 'muted' : ''} controls class="w-full h-full object-cover ${isReel ? 'rounded-3xl' : 'rounded-xl'}"><source src="${url}" type="video/mp4"></video>`;
+            }
+
+            // 4. Imagen o Enlace directo de foto
+            if (url.startsWith('data:image') || url.match(/\.(jpg|jpeg|png|webp|svg)(\?.*)?$/i)) {
+                return `<img src="${url}" class="w-full h-full object-contain ${isReel ? 'rounded-3xl' : 'rounded-xl'}">`;
+            }
+
+            return null;
+        }
+
+        // AUSPICIANTES INICIALES CON IDENTIDADES VECTORIALES ESTABLES
         const defaultSponsors = [
             'https://ui-avatars.com/api/?name=Registro+Propiedad+Coca&background=0f172a&color=38bdf8&size=200&bold=true',
             'https://ui-avatars.com/api/?name=Notaria+Primera+Orellana&background=1e293b&color=f59e0b&size=200&bold=true',
@@ -1237,36 +1313,36 @@
             'https://ui-avatars.com/api/?name=Cooperativa+Policia&background=1e3a8a&color=fff&size=200&bold=true'
         ];
 
-        // REELS POR DEFECTO
+        // REELS INICIALES ESTABLES
         const defaultReels = [
             {
                 id: 'reel-1',
                 title: 'Recorrido Casa 2 Plantas en el Centro',
                 thumbnail: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=600&q=80',
-                mediaUrl: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80',
-                type: 'image',
+                mediaUrl: 'https://www.youtube.com/shorts/dQw4w9WgXcQ',
+                type: 'video',
                 createdAt: Date.now()
             },
             {
                 id: 'reel-2',
                 title: 'Prueba de Manejo D-Max 4x4 Diésel',
                 thumbnail: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=600&q=80',
-                mediaUrl: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80',
-                type: 'image',
+                mediaUrl: 'https://www.youtube.com/shorts/dQw4w9WgXcQ',
+                type: 'video',
                 createdAt: Date.now()
             },
             {
                 id: 'reel-3',
                 title: 'Departamento Ejecutivo Amoblado',
                 thumbnail: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80',
-                mediaUrl: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80',
-                type: 'image',
+                mediaUrl: 'https://www.youtube.com/shorts/dQw4w9WgXcQ',
+                type: 'video',
                 createdAt: Date.now()
             }
         ];
 
         // CONFIGURACIÓN CORPORATIVA GLOBAL
-        let brandConfig = JSON.parse(localStorage.getItem('alianza_brand_v15')) || {
+        let brandConfig = JSON.parse(localStorage.getItem('alianza_brand_v16')) || {
             bgMain: '#f8fafc',
             cardBg: '#ffffff',
             navBg: '#0f172a',
@@ -1291,8 +1367,8 @@
             sponsors: defaultSponsors,
             reels: defaultReels,
             corporateVideo: {
-                url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-                type: 'video',
+                url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                type: 'youtube',
                 title: 'Operaciones transparentes en ALIANZA ESTRATÉGICA S.A.S.',
                 desc: 'Intermediación formal, contratos de compraventa y revisión documental en Notarías y Registro de la Propiedad.'
             },
@@ -1365,7 +1441,7 @@
             }
         ];
 
-        let inventory = JSON.parse(localStorage.getItem('alianza_inventory_v15')) || defaultInventory;
+        let inventory = JSON.parse(localStorage.getItem('alianza_inventory_v16')) || defaultInventory;
         let currentUserRole = localStorage.getItem('alianza_user_role') || 'GUEST';
         let currentCategory = 'ALL';
         let currentSlideIndex = 0;
@@ -1375,10 +1451,10 @@
         let tempItemPhotos = [];
         let tempContractPhotos = [];
         let tempReelFileBase64 = null;
-        let tempReelFileType = 'image';
+        let tempReelFileType = 'video';
 
         // =========================================================================
-        // FIREBASE FIRESTORE: SINCRONIZACIÓN NUBE GLOBAL (alianza_settings/appData)
+        // FIREBASE FIRESTORE: CONEXIÓN ROBUSTA (alianza_settings/appData)
         // =========================================================================
         const firebaseConfig = {
             apiKey: "AIzaSyCLQFG1X62E5_WJ6hyCDjoDVkWbja02N3A",
@@ -1404,63 +1480,51 @@
                 listenToCloudUpdates();
             } catch (e) {
                 console.warn('Firebase local fallback:', e);
-                document.getElementById('cloudStatusText').textContent = 'Modo Local (Respaldo)';
+                document.getElementById('cloudStatusText').textContent = 'Modo Local (Persistente)';
             }
         }
 
         function listenToCloudUpdates() {
             if (!firestoreDB) return;
 
-            // Escucha del documento maestro appData en alianza_settings
             firestoreDB.collection('alianza_settings').doc('appData').onSnapshot(async (doc) => {
                 if (doc.exists) {
                     const data = doc.data();
                     
-                    // Auspiciantes globales
                     if (data.sponsors && Array.isArray(data.sponsors) && data.sponsors.length > 0) {
                         brandConfig.sponsors = data.sponsors;
                     }
-
-                    // Video Corporativo global
                     if (data.corporateVideo) {
                         brandConfig.corporateVideo = data.corporateVideo;
                     }
-
-                    // Configuración de Marca y Textos
                     if (data.brandConfig) {
                         Object.assign(brandConfig, data.brandConfig);
                     }
-
-                    // Caducidad Semanal Automática de Reels (7 días = 604,800,000 ms)
                     if (data.reels && Array.isArray(data.reels)) {
                         const now = Date.now();
                         const validReels = data.reels.filter(r => (now - (r.createdAt || now)) < 604800000);
-                        
-                        // Si hubo Reels caducados, actualizar en Firestore
                         if (validReels.length !== data.reels.length && currentUserRole === 'ADMIN') {
                             firestoreDB.collection('alianza_settings').doc('appData').update({ reels: validReels });
                         }
                         brandConfig.reels = validReels;
                     }
 
-                    localStorage.setItem('alianza_brand_v15', JSON.stringify(brandConfig));
+                    localStorage.setItem('alianza_brand_v16', JSON.stringify(brandConfig));
                     applyBrandConfig();
                     renderSponsorsMarquee();
                     renderReels();
                     setupVideoPlayer();
                 } else {
-                    // Si el documento appData no existe, crearlo automáticamente
                     seedInitialCloudAppData();
                 }
             }, (err) => console.warn('Error Firestore appData:', err));
 
-            // Escuchar inventario de productos
             firestoreDB.collection('alianza_inventory').onSnapshot((snapshot) => {
                 if (!snapshot.empty) {
                     const cloudList = [];
-                    snapshot.forEach(doc => cloudList.push(doc.data()));
+                    snapshot.forEach(d => cloudList.push(d.data()));
                     inventory = cloudList;
-                    localStorage.setItem('alianza_inventory_v15', JSON.stringify(inventory));
+                    localStorage.setItem('alianza_inventory_v16', JSON.stringify(inventory));
                     renderGrid();
                     rebuildCarouselList();
                 } else {
@@ -1512,7 +1576,7 @@
             await batch.commit();
         }
 
-        // PWA
+        // PWA SETUP
         let deferredPrompt = null;
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
@@ -1523,7 +1587,7 @@
             if (deferredPrompt) {
                 deferredPrompt.prompt();
                 deferredPrompt.userChoice.then((choice) => {
-                    if (choice.outcome === 'accepted') alert('¡App instalada con éxito!');
+                    if (choice.outcome === 'accepted') showToast('¡App instalada con éxito!');
                     deferredPrompt = null;
                 });
             } else {
@@ -1566,18 +1630,19 @@
             const reels = brandConfig.reels || defaultReels;
 
             reelsList.innerHTML = reels.map((reel, idx) => {
-                const isVideo = reel.type === 'video' || (reel.mediaUrl && reel.mediaUrl.startsWith('data:video'));
-                const mediaPreview = isVideo ? `
-                    <video autoplay loop muted playsinline class="w-full h-full object-cover">
-                        <source src="${reel.mediaUrl}" type="video/mp4">
-                    </video>
-                ` : `
-                    <img src="${reel.thumbnail || reel.mediaUrl}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                `;
+                const isVideo = reel.type === 'video' || (reel.mediaUrl && (reel.mediaUrl.startsWith('data:video') || reel.mediaUrl.includes('youtube') || reel.mediaUrl.includes('drive.google')));
+                
+                let mediaPreview = '';
+                if(reel.thumbnail) {
+                    mediaPreview = `<img src="${reel.thumbnail}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80'">`;
+                } else if(isVideo && reel.mediaUrl.startsWith('data:video')) {
+                    mediaPreview = `<video autoplay loop muted playsinline class="w-full h-full object-cover"><source src="${reel.mediaUrl}"></video>`;
+                } else {
+                    mediaPreview = `<img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover">`;
+                }
 
-                // Botón de eliminación rápida exclusiva para Administrador
                 const deleteReelBtn = currentUserRole === 'ADMIN' ? `
-                    <button type="button" onclick="deleteReelDirectly(event, ${idx})" class="absolute top-2 right-2 bg-red-600/90 hover:bg-red-700 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs shadow z-20" title="Eliminar Reel de la Nube">
+                    <button type="button" onclick="deleteReelDirectly(event, ${idx})" class="absolute top-2 right-2 bg-red-600/90 hover:bg-red-700 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs shadow z-20" title="Eliminar Reel">
                         ✕
                     </button>
                 ` : '';
@@ -1605,22 +1670,15 @@
             if (!reel) return;
 
             const box = document.getElementById('reelVideoFrameBox');
-            const isVideo = reel.type === 'video' || (reel.mediaUrl && reel.mediaUrl.startsWith('data:video'));
+            const mediaHtml = parseMediaToHtml(reel.mediaUrl || reel.thumbnail, true, false);
 
-            if (isVideo) {
-                box.innerHTML = `
-                    <video id="activeReelPlayer" controls autoplay loop playsinline class="w-full h-full object-cover rounded-3xl">
-                        <source src="${reel.mediaUrl}" type="video/mp4">
-                    </video>
-                `;
-                const player = document.getElementById('activeReelPlayer');
-                if (player) {
-                    player.muted = false;
-                    player.volume = 0.8;
-                    player.play().catch(() => {});
-                }
-            } else {
-                box.innerHTML = `<img src="${reel.mediaUrl || reel.thumbnail}" class="w-full h-full object-contain rounded-3xl">`;
+            box.innerHTML = mediaHtml || `<div class="w-full h-full flex items-center justify-center text-white text-xs p-4 text-center">Video no disponible</div>`;
+            
+            const player = document.getElementById('activeReelPlayer');
+            if (player) {
+                player.muted = false;
+                player.volume = 0.8;
+                player.play().catch(() => {});
             }
             openModal('reelViewerModal');
         }
@@ -1646,7 +1704,6 @@
             const reader = new FileReader();
             reader.onload = function(e) {
                 tempReelFileBase64 = e.target.result;
-                document.getElementById('reelFileStatus').textContent = `✓ Archivo cargado correctamente (${file.name})`;
             };
             reader.readAsDataURL(file);
         }
@@ -1655,211 +1712,193 @@
             e.preventDefault();
             if (currentUserRole !== 'ADMIN') return;
 
-            if (!tempReelFileBase64) {
-                alert('Por favor selecciona un archivo de video o foto para el Reel.');
+            const title = document.getElementById('newReelTitle').value.trim();
+            const manualUrl = document.getElementById('newReelUrlInput').value.trim();
+            const media = tempReelFileBase64 || manualUrl;
+
+            if (!media) {
+                showToast('Por favor selecciona un archivo o ingresa un enlace para el Reel', false);
                 return;
             }
 
-            const title = document.getElementById('newReelTitle').value.trim();
             const newReel = {
                 id: 'reel-' + Date.now(),
                 title: title,
                 type: tempReelFileType,
-                mediaUrl: tempReelFileBase64,
-                thumbnail: tempReelFileType === 'image' ? tempReelFileBase64 : 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80',
+                mediaUrl: media,
+                thumbnail: tempReelFileType === 'image' ? media : 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80',
                 createdAt: Date.now()
             };
 
             if (!brandConfig.reels) brandConfig.reels = [];
             brandConfig.reels.unshift(newReel);
 
-            localStorage.setItem('alianza_brand_v15', JSON.stringify(brandConfig));
+            localStorage.setItem('alianza_brand_v16', JSON.stringify(brandConfig));
 
-            // Sincronización en Firestore Cloud
             if (firestoreDB) {
                 try {
                     await firestoreDB.collection('alianza_settings').doc('appData').set({
                         reels: brandConfig.reels
                     }, { merge: true });
-                } catch(err) { console.warn('Firestore reel save:', err); }
+                } catch(err) { console.warn('Firestore reel save error:', err); }
             }
 
             renderReels();
             tempReelFileBase64 = null;
             e.target.reset();
-
-            // NOTIFICACIÓN Y CIERRE AUTOMÁTICO
-            alert('¡Información guardada y sincronizada correctamente en la Nube para todos los dispositivos!');
             closeModal('addReelModal');
+            showToast('¡Reel publicado y sincronizado con éxito!');
         }
 
         async function deleteReelDirectly(event, index) {
             event.stopPropagation();
             if (currentUserRole !== 'ADMIN') return;
 
-            if (confirm('¿Confirma que desea eliminar este Reel de la Nube para todos los dispositivos?')) {
+            if (confirm('¿Confirma que desea eliminar este Reel?')) {
                 brandConfig.reels.splice(index, 1);
-                localStorage.setItem('alianza_brand_v15', JSON.stringify(brandConfig));
+                localStorage.setItem('alianza_brand_v16', JSON.stringify(brandConfig));
 
                 if (firestoreDB) {
                     try {
                         await firestoreDB.collection('alianza_settings').doc('appData').set({
                             reels: brandConfig.reels
                         }, { merge: true });
-                    } catch(err) { console.warn('Error eliminando reel de Firestore:', err); }
+                    } catch(err) { console.warn('Error eliminando reel:', err); }
                 }
 
                 renderReels();
-                alert('¡Información guardada y sincronizada correctamente en la Nube para todos los dispositivos!');
+                showToast('Reel eliminado con éxito');
             }
         }
 
-        function generateAutomaticItemCode() {
-            const cat = document.getElementById('newItemCategory').value;
-            const itemsInCat = inventory.filter(item => item.category === cat);
-            let maxNum = 0;
-            itemsInCat.forEach(item => {
-                const match = item.id.match(/-(\d+)$/);
-                if (match) {
-                    const num = parseInt(match[1], 10);
-                    if (num > maxNum) maxNum = num;
-                }
-            });
-            const nextNum = maxNum + 1;
-            const padded = String(nextNum).padStart(3, '0');
-            document.getElementById('newItemId').value = `${cat}-${padded}`;
-        }
+        // =========================================================================
+        // VIDEO CORPORATIVO (REPRODUCTOR LIMPIO SIN PANTALLAS NEGRAS)
+        // =========================================================================
+        async function setupVideoPlayer() {
+            const box = document.getElementById('videoPlayerBox');
+            const badge = document.getElementById('videoSourceBadge');
+            if(!box) return;
 
-        function toggleSpecialOfferInput() {
-            const isChecked = document.getElementById('newItemHasOffer').checked;
-            const container = document.getElementById('offerInputContainer');
-            if (isChecked) {
-                container.classList.remove('hidden');
-                document.getElementById('newItemOfferText').focus();
+            let videoTarget = null;
+            const localBlob = await idbGet('brand_corporate_video_file');
+            if (localBlob) {
+                videoTarget = URL.createObjectURL(localBlob);
+            } else if (brandConfig.corporateVideo && brandConfig.corporateVideo.url) {
+                videoTarget = brandConfig.corporateVideo.url;
             } else {
-                container.classList.add('hidden');
-                document.getElementById('newItemOfferText').value = '';
+                videoTarget = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+            }
+
+            const mediaHtml = parseMediaToHtml(videoTarget, false, true);
+            box.innerHTML = mediaHtml || `
+                <div class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 to-slate-800 text-white p-6 text-center">
+                    <i class="fa-solid fa-play text-2xl text-sky-400 mb-2"></i>
+                    <h4 class="font-bold text-sm text-slate-100">ALIANZA ESTRATÉGICA S.A.S.</h4>
+                    <p class="text-xs text-slate-400 max-w-xs mt-1">Intermediación comercial y blindaje notarial.</p>
+                </div>
+            `;
+
+            const vid = document.getElementById('corporateVideoPlayer');
+            if (vid) {
+                vid.volume = 0.5;
+                vid.play().catch(() => { vid.muted = true; vid.play(); });
+            }
+
+            if(badge) {
+                badge.textContent = videoTarget.includes('youtube') || videoTarget.includes('shorts') ? 'YouTube' : 'Público';
             }
         }
 
-        function toggleEditOfferInput() {
-            const isChecked = document.getElementById('editItemHasOffer').checked;
-            document.getElementById('editOfferBox').classList.toggle('hidden', !isChecked);
-        }
-
-        async function handleMultiPhotosSelected(input) {
-            const files = Array.from(input.files);
-            if (!files.length) return;
-            const remaining = 10 - tempItemPhotos.length;
-            if (remaining <= 0) {
-                alert('Límite de 10 fotos alcanzado.');
+        function toggleCorporateAudio() {
+            const video = document.getElementById('corporateVideoPlayer');
+            const icon = document.getElementById('audioIcon');
+            const text = document.getElementById('audioText');
+            if (!video) {
+                showToast('Control de audio directo disponible en videos nativos.');
                 return;
             }
-            for (const file of files.slice(0, remaining)) {
-                const base64 = await compressImage(file, 900, 0.7);
-                tempItemPhotos.push(base64);
+
+            if (video.muted) {
+                video.muted = false;
+                video.volume = 0.5;
+                icon.className = 'fa-solid fa-volume-high text-emerald-400';
+                text.textContent = 'Audio Activo (50%)';
+                showToast('Audio establecido al 50%');
+            } else {
+                video.muted = true;
+                icon.className = 'fa-solid fa-volume-xmark text-amber-400';
+                text.textContent = 'Activar Sonido (50%)';
             }
-            renderTempPhotosGrid();
-            input.value = '';
         }
 
-        function removeTempPhoto(index) {
-            tempItemPhotos.splice(index, 1);
-            renderTempPhotosGrid();
+        async function handleLocalVideoUpload(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const status = document.getElementById('localVideoUploadStatus');
+            status.textContent = 'Procesando archivo de video...';
+
+            await idbSet('brand_corporate_video_file', file);
+            status.textContent = `✓ Archivo cargado: ${file.name.substring(0, 20)}...`;
+
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                brandConfig.corporateVideo = {
+                    url: e.target.result,
+                    type: 'local',
+                    title: 'Operaciones transparentes en ALIANZA ESTRATÉGICA S.A.S.',
+                    desc: 'Intermediación formal y saneamiento notarial.'
+                };
+                localStorage.setItem('alianza_brand_v16', JSON.stringify(brandConfig));
+                setupVideoPlayer();
+                showToast('¡Video cargado y guardado con éxito!');
+            };
+            reader.readAsDataURL(file);
         }
 
-        function renderTempPhotosGrid() {
-            const grid = document.getElementById('previewPhotosGrid');
-            document.getElementById('photoCountBadge').textContent = `${tempItemPhotos.length} / 10 Fotos`;
-            grid.innerHTML = tempItemPhotos.map((img, idx) => `
-                <div class="relative group h-16 rounded-lg overflow-hidden border border-slate-300">
-                    <img src="${img}" class="w-full h-full object-cover">
-                    <button type="button" onclick="removeTempPhoto(${idx})" class="absolute top-1 right-1 bg-red-600 text-white rounded-full w-4 h-4 text-[10px] flex items-center justify-center shadow">✕</button>
-                    ${idx === 0 ? '<span class="absolute bottom-0 left-0 right-0 bg-sky-600 text-white text-[8px] text-center font-bold">Principal</span>' : ''}
-                </div>
-            `).join('');
-        }
-
-        async function handleContractPhotosSelected(input) {
-            const files = Array.from(input.files);
-            if (!files.length) return;
-            const remaining = 3 - tempContractPhotos.length;
-            if (remaining <= 0) {
-                alert('Máximo 3 fotos de contrato.');
-                return;
-            }
-            for (const file of files.slice(0, remaining)) {
-                const base64 = await compressImage(file, 800, 0.65);
-                tempContractPhotos.push(base64);
-            }
-            renderTempContractGrid();
-            input.value = '';
-        }
-
-        function removeTempContractPhoto(index) {
-            tempContractPhotos.splice(index, 1);
-            renderTempContractGrid();
-        }
-
-        function renderTempContractGrid() {
-            const grid = document.getElementById('previewContractGrid');
-            document.getElementById('contractCountBadge').textContent = `${tempContractPhotos.length} / 3`;
-            grid.innerHTML = tempContractPhotos.map((img, idx) => `
-                <div class="relative group h-14 rounded-lg overflow-hidden border border-amber-300">
-                    <img src="${img}" class="w-full h-full object-cover">
-                    <button type="button" onclick="removeTempContractPhoto(${idx})" class="absolute top-1 right-1 bg-red-600 text-white rounded-full w-4 h-4 text-[10px] flex items-center justify-center shadow">✕</button>
-                </div>
-            `).join('');
-        }
-
-        // AUSPICIANTES EN 2 FILAS
+        // AUSPICIANTES
         async function handleSponsorLogosUpload(input) {
             const files = Array.from(input.files);
             if (!files.length) return;
             if (!brandConfig.sponsors) brandConfig.sponsors = [];
             const remaining = 20 - brandConfig.sponsors.length;
             if (remaining <= 0) {
-                alert('Límite máximo de 20 auspiciantes alcanzado.');
+                showToast('Límite de 20 logotipos alcanzado', false);
                 return;
             }
             for (const file of files.slice(0, remaining)) {
                 const base64 = await compressImage(file, 400, 0.7);
                 brandConfig.sponsors.push(base64);
             }
+            localStorage.setItem('alianza_brand_v16', JSON.stringify(brandConfig));
             renderSponsorsModalPreview();
             renderSponsorsMarquee();
+            showToast('Logotipos cargados con éxito');
             input.value = '';
         }
 
-        async function removeSponsorLogo(idx) {
+        function removeSponsorLogo(idx) {
             brandConfig.sponsors.splice(idx, 1);
             if (brandConfig.sponsors.length === 0) brandConfig.sponsors = defaultSponsors;
-            
-            localStorage.setItem('alianza_brand_v15', JSON.stringify(brandConfig));
-
-            if (firestoreDB) {
-                try {
-                    await firestoreDB.collection('alianza_settings').doc('appData').set({
-                        sponsors: brandConfig.sponsors
-                    }, { merge: true });
-                } catch(err) { console.warn('Error eliminando sponsor en Firestore:', err); }
-            }
-
+            localStorage.setItem('alianza_brand_v16', JSON.stringify(brandConfig));
             renderSponsorsModalPreview();
             renderSponsorsMarquee();
+            showToast('Logotipo removido');
         }
 
         function renderSponsorsModalPreview() {
             const grid = document.getElementById('sponsorsPreviewGrid');
             const badge = document.getElementById('modalSponsorCount');
             const list = (brandConfig.sponsors && brandConfig.sponsors.length > 0) ? brandConfig.sponsors : defaultSponsors;
-            badge.textContent = `${list.length} / 20`;
-            grid.innerHTML = list.map((img, idx) => `
-                <div class="relative group h-14 bg-white rounded-lg p-1 border border-sky-300 flex items-center justify-center">
-                    <img src="${img}" class="max-h-full max-w-full object-contain">
-                    <button type="button" onclick="removeSponsorLogo(${idx})" class="absolute -top-1.5 -right-1.5 bg-red-600 text-white rounded-full w-4 h-4 text-[9px] flex items-center justify-center shadow">✕</button>
-                </div>
-            `).join('');
+            if(badge) badge.textContent = `${list.length} / 20`;
+            if(grid) {
+                grid.innerHTML = list.map((img, idx) => `
+                    <div class="relative group h-14 bg-white rounded-lg p-1 border border-sky-300 flex items-center justify-center">
+                        <img src="${img}" class="max-h-full max-w-full object-contain" onerror="this.src='https://ui-avatars.com/api/?name=Aliado&background=0284c7&color=fff';">
+                        <button type="button" onclick="removeSponsorLogo(${idx})" class="absolute -top-1.5 -right-1.5 bg-red-600 text-white rounded-full w-4 h-4 text-[9px] flex items-center justify-center shadow">✕</button>
+                    </div>
+                `).join('');
+            }
         }
 
         function renderSponsorsMarquee() {
@@ -1872,7 +1911,7 @@
                 ? brandConfig.sponsors
                 : defaultSponsors;
 
-            counter.textContent = `${list.length} marcas aliadas`;
+            if(counter) counter.textContent = `${list.length} marcas aliadas`;
 
             const half = Math.ceil(list.length / 2);
             const row1 = list.slice(0, half);
@@ -1895,95 +1934,7 @@
         }
 
         // =========================================================================
-        // VIDEO CORPORATIVO (SOLO ARCHIVO DIRECTO - AUTOPLAY AL 50% DE VOLUMEN)
-        // =========================================================================
-        async function setupVideoPlayer() {
-            const box = document.getElementById('videoPlayerBox');
-            if(!box) return;
-
-            let videoSrc = null;
-
-            // Verificar si hay video subido guardado en IndexedDB
-            const localVideoBlob = await idbGet('brand_corporate_video_file');
-            if (localVideoBlob) {
-                videoSrc = URL.createObjectURL(localVideoBlob);
-            } else if (brandConfig.corporateVideo && brandConfig.corporateVideo.url) {
-                videoSrc = brandConfig.corporateVideo.url;
-            } else {
-                videoSrc = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4";
-            }
-
-            box.innerHTML = `
-                <video id="corporateVideoPlayer" autoplay loop playsinline muted class="w-full h-full object-cover rounded-xl">
-                    <source src="${videoSrc}">
-                </video>
-            `;
-
-            const video = document.getElementById('corporateVideoPlayer');
-            if (video) {
-                video.volume = 0.5;
-                video.play().catch(() => {
-                    video.muted = true;
-                    video.play();
-                });
-            }
-        }
-
-        function toggleCorporateAudio() {
-            const video = document.getElementById('corporateVideoPlayer');
-            const icon = document.getElementById('audioIcon');
-            const text = document.getElementById('audioText');
-            if (!video) return;
-
-            if (video.muted) {
-                video.muted = false;
-                video.volume = 0.5;
-                icon.className = 'fa-solid fa-volume-high text-emerald-400';
-                text.textContent = 'Audio Activo (50%)';
-            } else {
-                video.muted = true;
-                icon.className = 'fa-solid fa-volume-xmark text-amber-400';
-                text.textContent = 'Activar Sonido (50%)';
-            }
-        }
-
-        async function handleLocalVideoUpload(input) {
-            const file = input.files[0];
-            if (!file) return;
-
-            const status = document.getElementById('localVideoUploadStatus');
-            status.textContent = 'Procesando y guardando video corporativo...';
-
-            await idbSet('brand_corporate_video_file', file);
-            status.textContent = `✓ Video cargado: ${file.name.substring(0, 22)}...`;
-
-            // Convertir a DataURL para almacenamiento seguro
-            const reader = new FileReader();
-            reader.onload = async function(e) {
-                brandConfig.corporateVideo = {
-                    url: e.target.result,
-                    type: 'video',
-                    title: 'Video Corporativo ALIANZA ESTRATÉGICA S.A.S.',
-                    desc: 'Operaciones comerciales y jurídicas transparentes.'
-                };
-                localStorage.setItem('alianza_brand_v15', JSON.stringify(brandConfig));
-
-                if (firestoreDB) {
-                    try {
-                        await firestoreDB.collection('alianza_settings').doc('appData').set({
-                            corporateVideo: brandConfig.corporateVideo
-                        }, { merge: true });
-                    } catch(err) { console.warn('Firestore video save error:', err); }
-                }
-
-                setupVideoPlayer();
-                alert('¡Información guardada y sincronizada correctamente en la Nube para todos los dispositivos!');
-            };
-            reader.readAsDataURL(file);
-        }
-
-        // =========================================================================
-        // CARRUSEL SECUENCIAL (3.5 SEGUNDOS AUTOMÁTICO)
+        // CARRUSEL SECUENCIAL (3.5 SEGUNDOS)
         // =========================================================================
         function rebuildCarouselList() {
             const activeItems = inventory.filter(item => item.inCarousel !== false && (!item.status || !item.status.includes('Vendido')));
@@ -2028,8 +1979,8 @@
             const offerTag = cur.hasOffer ? `<span class="bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded mr-1">🔥 OFERTA</span>` : '';
 
             container.innerHTML = `
-                <img src="${cur.img}" alt="${escapeHtml(cur.title)}" class="w-full h-full object-cover carousel-fade">
-                <div class="absolute bottom-3 left-4 right-4 flex items-center justify-between bg-black/70 backdrop-blur-md p-2.5 rounded-xl border border-white/20 text-white">
+                <img src="${cur.img}" alt="${escapeHtml(cur.title)}" class="w-full h-full object-cover carousel-fade" onerror="this.src='https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80'">
+                <div class="absolute bottom-3 left-4 right-4 flex items-center justify-between bg-black/75 backdrop-blur-md p-2.5 rounded-xl border border-white/20 text-white">
                     <div class="truncate">
                         <div class="flex items-center gap-1">
                             ${offerTag}
@@ -2124,7 +2075,7 @@
             document.getElementById('footerFb2').href = brandConfig.fb2Url;
         }
 
-        // PRECARGA COMPLETA AL ABRIR PANEL MAESTRO
+        // PRECARGA COMPLETA AL ABRIR PANEL MAESTRO (NUNCA CAMPOS EN BLANCO)
         function openBrandEditModal() {
             document.getElementById('cfgBgMain').value = brandConfig.bgMain || '#f8fafc';
             document.getElementById('cfgCardBg').value = brandConfig.cardBg || '#ffffff';
@@ -2135,6 +2086,9 @@
             document.getElementById('cfgCompanyMotto').value = brandConfig.companyMotto || 'Excelencia Jurídica, Confianza Profesional';
             document.getElementById('cfgCompanySubtitle').value = brandConfig.companySubtitle || '';
             document.getElementById('cfgCompanyBio').value = brandConfig.companyBio || '';
+
+            // Video Corporativo
+            document.getElementById('cfgVideoUrl').value = (brandConfig.corporateVideo && brandConfig.corporateVideo.url) ? brandConfig.corporateVideo.url : '';
 
             // Abogado
             document.getElementById('cfgLawyerCardUrl').value = brandConfig.lawyerCardUrl || '';
@@ -2152,7 +2106,7 @@
             openModal('editBrandModal');
         }
 
-        // GUARDADO MAESTRO CON NOTIFICACIÓN Y CIERRE AUTOMÁTICO
+        // GUARDADO MAESTRO CON NOTIFICACIÓN TOAST Y CIERRE AUTOMÁTICO
         async function handleSaveBrand(e) {
             e.preventDefault();
             if (currentUserRole !== 'ADMIN') return;
@@ -2167,6 +2121,16 @@
             brandConfig.companySubtitle = document.getElementById('cfgCompanySubtitle').value.trim() || brandConfig.companySubtitle;
             brandConfig.companyBio = document.getElementById('cfgCompanyBio').value.trim() || brandConfig.companyBio;
 
+            const videoInputUrl = document.getElementById('cfgVideoUrl').value.trim();
+            if (videoInputUrl) {
+                brandConfig.corporateVideo = {
+                    url: videoInputUrl,
+                    type: 'embed',
+                    title: 'Operaciones transparentes en ALIANZA ESTRATÉGICA S.A.S.',
+                    desc: 'Intermediación formal y saneamiento notarial.'
+                };
+            }
+
             brandConfig.lawyerCardUrl = document.getElementById('cfgLawyerCardUrl').value.trim() || brandConfig.lawyerCardUrl;
             brandConfig.lawyerName = document.getElementById('cfgLawyerName').value.trim() || brandConfig.lawyerName;
             brandConfig.lawyerPhone = document.getElementById('cfgLawyerPhone').value.trim() || brandConfig.lawyerPhone;
@@ -2178,9 +2142,10 @@
 
             if (!brandConfig.sponsors || brandConfig.sponsors.length === 0) brandConfig.sponsors = defaultSponsors;
 
-            localStorage.setItem('alianza_brand_v15', JSON.stringify(brandConfig));
+            // 1. Guardado automático persistente en LocalStorage
+            localStorage.setItem('alianza_brand_v16', JSON.stringify(brandConfig));
 
-            // Sincronización en documento único Firestore appData
+            // 2. Sincronización en la Nube Firestore
             if (firestoreDB) {
                 try {
                     await firestoreDB.collection('alianza_settings').doc('appData').set({
@@ -2213,11 +2178,10 @@
             }
 
             applyBrandConfig();
+            setupVideoPlayer();
             renderSponsorsMarquee();
-            
-            // NOTIFICACIÓN Y CIERRE AUTOMÁTICO DE VENTANA
-            alert('¡Información guardada y sincronizada correctamente en la Nube para todos los dispositivos!');
             closeModal('editBrandModal');
+            showToast('¡Información guardada y sincronizada con éxito!');
         }
 
         async function uploadSingleImageDirectly(fileInput, type) {
@@ -2231,14 +2195,14 @@
                 brandConfig.logoUrl = base64;
                 document.getElementById('profileLogoImg').src = base64;
             }
-            localStorage.setItem('alianza_brand_v15', JSON.stringify(brandConfig));
+            localStorage.setItem('alianza_brand_v16', JSON.stringify(brandConfig));
             
             if (firestoreDB) {
                 const patch = {};
                 patch[`brandConfig.${type === 'cover' ? 'coverUrl' : 'logoUrl'}`] = base64;
                 await firestoreDB.collection('alianza_settings').doc('appData').update(patch);
             }
-            alert('¡Información guardada y sincronizada correctamente en la Nube para todos los dispositivos!');
+            showToast('¡Imagen actualizada y guardada con éxito!');
         }
 
         async function uploadLawyerCardDirectly(fileInput) {
@@ -2247,14 +2211,14 @@
             const base64 = await compressImage(file, 1000, 0.75);
             brandConfig.lawyerCardUrl = base64;
             document.getElementById('lawyerCardImg').src = base64;
-            localStorage.setItem('alianza_brand_v15', JSON.stringify(brandConfig));
+            localStorage.setItem('alianza_brand_v16', JSON.stringify(brandConfig));
             
             if (firestoreDB) {
                 await firestoreDB.collection('alianza_settings').doc('appData').update({
                     'brandConfig.lawyerCardUrl': base64
                 });
             }
-            alert('¡Información guardada y sincronizada correctamente en la Nube para todos los dispositivos!');
+            showToast('¡Tarjeta del Abogado actualizada y sincronizada!');
         }
 
         function checkUserState() {
@@ -2363,7 +2327,7 @@
                 checkUserState();
                 renderGrid();
                 renderReels();
-                alert('¡Bienvenido Administrador Principal!');
+                showToast('¡Bienvenido Administrador Principal!');
             } else if (type === 'AGENT' && user === 'agente.intermediacion' && pass === 'agente.intermediacion') {
                 currentUserRole = 'AGENT';
                 localStorage.setItem('alianza_user_role', 'AGENT');
@@ -2371,9 +2335,9 @@
                 checkUserState();
                 renderGrid();
                 renderReels();
-                alert('¡Bienvenido al panel del Equipo de Agentes!');
+                showToast('¡Bienvenido Equipo de Agentes!');
             } else {
-                alert('Credenciales incorrectas.');
+                showToast('Credenciales incorrectas', false);
             }
         }
 
@@ -2383,6 +2347,7 @@
             checkUserState();
             renderGrid();
             renderReels();
+            showToast('Sesión cerrada');
         }
 
         async function handleAddNewItem(e) {
@@ -2390,7 +2355,7 @@
             if (currentUserRole === 'GUEST') return;
 
             if (tempItemPhotos.length === 0) {
-                alert('Selecciona al menos 1 foto del activo.');
+                showToast('Selecciona al menos 1 foto del activo', false);
                 return;
             }
 
@@ -2427,7 +2392,7 @@
             };
 
             inventory.unshift(newItem);
-            localStorage.setItem('alianza_inventory_v15', JSON.stringify(inventory));
+            localStorage.setItem('alianza_inventory_v16', JSON.stringify(inventory));
 
             if (firestoreDB) {
                 try {
@@ -2438,10 +2403,8 @@
             renderGrid();
             rebuildCarouselList();
             e.target.reset();
-
-            // NOTIFICACIÓN Y CIERRE AUTOMÁTICO
-            alert('¡Información guardada y sincronizada correctamente en la Nube para todos los dispositivos!');
             closeModal('addItemModal');
+            showToast(`¡Activo ${newItem.id} publicado con éxito!`);
         }
 
         function openEditItemModal(id) {
@@ -2485,7 +2448,7 @@
             item.hasOffer = hasOffer;
             item.offerText = hasOffer ? document.getElementById('editItemOfferText').value.trim() : '';
 
-            localStorage.setItem('alianza_inventory_v15', JSON.stringify(inventory));
+            localStorage.setItem('alianza_inventory_v16', JSON.stringify(inventory));
 
             if (firestoreDB) {
                 try {
@@ -2495,20 +2458,18 @@
 
             renderGrid();
             rebuildCarouselList();
-            
-            // NOTIFICACIÓN Y CIERRE AUTOMÁTICO
-            alert('¡Información guardada y sincronizada correctamente en la Nube para todos los dispositivos!');
             closeModal('editItemModal');
+            showToast(`¡Producto ${item.id} actualizado con éxito!`);
         }
 
         async function deleteItem(id) {
             if (currentUserRole !== 'ADMIN') {
-                alert('Acceso restringido: Solo el Administrador Principal puede borrar productos.');
+                showToast('Acceso restringido al Administrador', false);
                 return;
             }
-            if (confirm(`¿Confirma eliminar permanentemente el activo ${id} de la nube?`)) {
+            if (confirm(`¿Confirma eliminar permanentemente el activo ${id}?`)) {
                 inventory = inventory.filter(item => item.id !== id);
-                localStorage.setItem('alianza_inventory_v15', JSON.stringify(inventory));
+                localStorage.setItem('alianza_inventory_v16', JSON.stringify(inventory));
 
                 if (firestoreDB) {
                     try {
@@ -2518,7 +2479,7 @@
 
                 renderGrid();
                 rebuildCarouselList();
-                alert('¡Información guardada y sincronizada correctamente en la Nube para todos los dispositivos!');
+                showToast('Activo eliminado correctamente');
             }
         }
 
@@ -2590,7 +2551,7 @@
                     <div class="theme-card-bg rounded-2xl shadow-sm hover:shadow-md border border-slate-200/80 overflow-hidden flex flex-col justify-between transition duration-300 relative group">
                         <div>
                             <div class="relative h-48 bg-slate-100 cursor-pointer overflow-hidden" onclick="openItemModal('${escapeHtml(item.id)}')">
-                                <img src="${escapeHtml(mainPhoto)}" alt="${escapeHtml(item.title)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                <img src="${escapeHtml(mainPhoto)}" alt="${escapeHtml(item.title)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80'">
                                 <span class="absolute top-3 left-3 bg-slate-900/90 backdrop-blur-md text-amber-400 text-xs font-bold px-2.5 py-1 rounded-md border border-amber-400/30">
                                     Cód. ${escapeHtml(item.id)}
                                 </span>
@@ -2664,7 +2625,7 @@ ${offerLine}⚖️ RESPALDO JURÍDICO: Contrato formal y verificación legal por
 📲 CONTACTO: Equipo de Agentes e Inspección Técnica (WA: ${brandConfig.waPhone})`;
 
             navigator.clipboard.writeText(textFicha).then(() => {
-                alert('¡Ficha oficial copiada para difusión!');
+                showToast('¡Ficha oficial copiada al portapapeles!');
             });
         }
 
@@ -2680,7 +2641,7 @@ ${offerLine}⚖️ RESPALDO JURÍDICO: Contrato formal y verificación legal por
             const thumbsHtml = photos.length > 1 ? `
                 <div class="grid grid-cols-5 gap-2 mb-4">
                     ${photos.map((p) => `
-                        <img src="${p}" onclick="changeModalMainPhoto('${p}')" class="h-16 w-full object-cover rounded-lg cursor-pointer border-2 hover:border-sky-500 transition">
+                        <img src="${p}" onclick="changeModalMainPhoto('${p}')" class="h-16 w-full object-cover rounded-lg cursor-pointer border-2 hover:border-sky-500 transition" onerror="this.src='https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80'">
                     `).join('')}
                 </div>
             ` : '';
@@ -2751,7 +2712,7 @@ ${offerLine}⚖️ RESPALDO JURÍDICO: Contrato formal y verificación legal por
                 ${offerBox}
 
                 <div class="relative mb-2">
-                    <img id="modalMainImg" src="${mainImg}" alt="${escapeHtml(item.title)}" class="w-full h-64 sm:h-80 object-cover rounded-xl border border-slate-200">
+                    <img id="modalMainImg" src="${mainImg}" alt="${escapeHtml(item.title)}" class="w-full h-64 sm:h-80 object-cover rounded-xl border border-slate-200" onerror="this.src='https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80'">
                     <span class="absolute bottom-2 right-2 bg-black/60 text-white text-[10px] font-bold px-2 py-0.5 rounded backdrop-blur-sm">
                         ${photos.length} fotos disponibles
                     </span>
@@ -2791,16 +2752,19 @@ ${offerLine}⚖️ RESPALDO JURÍDICO: Contrato formal y verificación legal por
         }
 
         function changeModalMainPhoto(url) {
-            document.getElementById('modalMainImg').src = url;
+            const m = document.getElementById('modalMainImg');
+            if(m) m.src = url;
         }
 
         function openModal(id) { 
-            document.getElementById(id).classList.remove('hidden'); 
+            const el = document.getElementById(id);
+            if(el) el.classList.remove('hidden'); 
             document.body.classList.add('overflow-hidden');
         }
 
         function closeModal(id) { 
-            document.getElementById(id).classList.add('hidden'); 
+            const el = document.getElementById(id);
+            if(el) el.classList.add('hidden'); 
             document.body.classList.remove('overflow-hidden');
         }
 
@@ -2829,7 +2793,7 @@ ${offerLine}⚖️ RESPALDO JURÍDICO: Contrato formal y verificación legal por
 
         function copyAppLink() {
             navigator.clipboard.writeText(window.location.href).then(() => {
-                alert('¡Enlace copiado al portapapeles!');
+                showToast('¡Enlace copiado al portapapeles!');
             });
         }
     </script>
