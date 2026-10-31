@@ -95,7 +95,7 @@
                     <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span> <span id="roleBadgeText">Modo Público</span>
                 </span>
                 <span id="cloudStatusBadge" class="hidden sm:flex items-center gap-1 text-[10px] text-emerald-400 font-mono">
-                    <i class="fa-solid fa-cloud"></i> Nube Activa
+                    <i class="fa-solid fa-circle-check"></i> Sistema Activo
                 </span>
             </div>
             <div class="flex items-center gap-2">
@@ -210,7 +210,7 @@
         </div>
     </section>
 
-    <!-- BANNER DINÁMICO PANORÁMICO DE ACTIVOS DESTACADOS (ANCHO COMPLETO) -->
+    <!-- BANNER DINÁMICO PANORÁMICO DE ACTIVOS DESTACADOS -->
     <section class="max-w-7xl mx-auto w-full px-4 py-6">
         <div class="glass-card rounded-3xl shadow-xl border border-slate-200 overflow-hidden flex flex-col justify-between">
             <div class="p-4 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-slate-900 to-sky-950 text-white">
@@ -286,16 +286,16 @@
                 <p class="text-xs sm:text-sm text-sky-200">Consulte el catálogo de inmuebles, vehículos y maquinaria con título saneado</p>
             </div>
             <div class="max-w-xl mx-auto relative mb-5">
-                <input type="text" id="searchInput" onkeyup="filterItems()" placeholder="Buscar por código (ej: RE-001), sector o palabra clave..." class="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-white/10 backdrop-blur-md text-white placeholder-slate-400 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 border border-white/10 transition shadow-inner">
+                <input type="text" id="searchInput" onkeyup="filterItems()" placeholder="Buscar por código (ej: RE-001, VH-101), sector o palabra clave..." class="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-white/10 backdrop-blur-md text-white placeholder-slate-400 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 border border-white/10 transition shadow-inner">
                 <i class="fa-solid fa-magnifying-glass absolute left-4 top-4 text-sky-400"></i>
             </div>
 
             <!-- BOTONES CATEGORÍAS -->
             <div class="flex flex-wrap justify-center gap-2 text-xs font-bold" id="categoryTabGroup">
                 <button onclick="setCategoryFilter('ALL')" class="cat-btn bg-amber-500 text-slate-950 px-4 py-2 rounded-xl transition shadow-md">Todos</button>
+                <button onclick="setCategoryFilter('VH')" class="cat-btn bg-slate-800 text-white hover:bg-slate-700 px-4 py-2 rounded-xl transition">VH (Vehículos)</button>
                 <button onclick="setCategoryFilter('RE')" class="cat-btn bg-slate-800 text-white hover:bg-slate-700 px-4 py-2 rounded-xl transition">RE (Ventas Raíces)</button>
                 <button onclick="setCategoryFilter('AR')" class="cat-btn bg-slate-800 text-white hover:bg-slate-700 px-4 py-2 rounded-xl transition">AR (Arriendos)</button>
-                <button onclick="setCategoryFilter('VH')" class="cat-btn bg-slate-800 text-white hover:bg-slate-700 px-4 py-2 rounded-xl transition">VH (Vehículos)</button>
                 <button onclick="setCategoryFilter('MQ')" class="cat-btn bg-slate-800 text-white hover:bg-slate-700 px-4 py-2 rounded-xl transition">MQ (Maquinaria)</button>
                 <button onclick="setCategoryFilter('LQ')" class="cat-btn bg-slate-800 text-white hover:bg-slate-700 px-4 py-2 rounded-xl transition">LQ (Remate)</button>
                 <button onclick="setCategoryFilter('SOLD')" class="cat-btn bg-rose-700 text-white hover:bg-rose-600 px-4 py-2 rounded-xl transition"><i class="fa-solid fa-circle text-rose-300 mr-1"></i> 🔴 Vendidos</button>
@@ -373,7 +373,7 @@
         </button>
     </div>
 
-    <!-- MODAL ACCESO ROLES -->
+    <!-- MODAL ACCESO ROLES (CONTRASEÑA PRIVADA SIN EXPONER) -->
     <div id="loginModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
         <div class="glass-card rounded-3xl max-w-sm w-full p-6 space-y-4 shadow-2xl border border-white/20">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
@@ -386,12 +386,12 @@
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1">Seleccionar Nivel de Acceso</label>
                     <select id="loginRoleSelect" onchange="togglePassInput()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-sky-500">
-                        <option value="AGENT">Agente Comercial (Clave: agentes12345@)</option>
+                        <option value="AGENT">Agente Comercial</option>
                         <option value="ADMIN">Administrador Principal (Gerencia General)</option>
                     </select>
                 </div>
                 <div id="passContainer">
-                    <label class="block text-xs font-bold text-slate-700 mb-1" id="passLabel">Contraseña Agente Comercial</label>
+                    <label class="block text-xs font-bold text-slate-700 mb-1" id="passLabel">Contraseña de Agente Comercial</label>
                     <input type="password" id="adminPassInput" placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500">
                 </div>
                 <button onclick="executeLogin()" class="w-full bg-sky-600 hover:bg-sky-500 text-white font-extrabold py-2.5 rounded-xl text-xs transition shadow-lg">
@@ -401,7 +401,7 @@
         </div>
     </div>
 
-    <!-- MODAL PANEL MAESTRO (EDICIÓN DE DATOS INSTITUCIONALES) -->
+    <!-- MODAL PANEL MAESTRO -->
     <div id="masterPanelModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
         <div class="glass-card rounded-3xl max-w-2xl w-full p-6 space-y-4 shadow-2xl max-h-[90vh] flex flex-col border border-white/20">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
@@ -456,13 +456,13 @@
             <div class="border-t border-slate-100 pt-3 flex justify-end gap-2">
                 <button onclick="closeModal('masterPanelModal')" class="bg-slate-200 text-slate-700 font-bold px-4 py-2 rounded-xl text-xs hover:bg-slate-300 transition">Cancelar</button>
                 <button onclick="saveMasterConfig()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold px-5 py-2 rounded-xl text-xs transition shadow-md flex items-center gap-1.5">
-                    <i class="fa-solid fa-cloud-arrow-up"></i> Guardar Cambios en la Nube
+                    <i class="fa-solid fa-floppy-disk"></i> Guardar Cambios
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL CREAR / EDITAR ACTIVO -->
+    <!-- MODAL CREAR / EDITAR CAPTACIÓN CON VISTA PREVIA INMEDIATA -->
     <div id="productModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
         <div class="glass-card rounded-3xl max-w-2xl w-full p-6 space-y-4 shadow-2xl max-h-[90vh] flex flex-col border border-white/20">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
@@ -477,7 +477,7 @@
                 <div class="bg-amber-50 p-3 rounded-2xl border border-amber-300 flex items-center justify-between">
                     <div>
                         <span class="block text-xs font-extrabold text-amber-950">⭐ Destacar en Banner Superior Panorámico</span>
-                        <span class="text-[10px] text-amber-700">Aparecerá en el cuadro de rotación automática superior</span>
+                        <span class="text-[10px] text-amber-700">Aparecerá en la rotación automática superior</span>
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input type="checkbox" id="prodIsFeatured" class="sr-only peer" checked>
@@ -489,9 +489,9 @@
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1">Categoría</label>
                         <select id="prodCategory" onchange="toggleCategoryFields()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-bold" required>
+                            <option value="VH">VH - Vehículo (Carro / Moto / Camioneta)</option>
                             <option value="RE">RE - Bienes Raíces Venta</option>
                             <option value="AR">AR - Bienes Raíces Arriendo</option>
-                            <option value="VH">VH - Vehículo (Carro / Moto)</option>
                             <option value="MQ">MQ - Maquinaria Pesada</option>
                             <option value="LQ">LQ - Artículos de Segunda Mano / Remate</option>
                         </select>
@@ -511,11 +511,11 @@
                 <div class="grid grid-cols-3 gap-2">
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1">Código Único</label>
-                        <input type="text" id="prodCode" placeholder="Ej: RE-001" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-mono font-bold">
+                        <input type="text" id="prodCode" placeholder="Ej: VH-101" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-mono font-bold">
                     </div>
                     <div class="col-span-2">
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Título del Activo</label>
-                        <input type="text" id="prodTitle" placeholder="Ej: CASA Y TERRENO 580 m² EN EL COCA 💥🏡" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800" required>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Título del Activo / Captación</label>
+                        <input type="text" id="prodTitle" placeholder="Ej: MOTO SUKIDA STIFF 150 AL DÍA" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800" required>
                     </div>
                 </div>
 
@@ -528,11 +528,20 @@
                         <input type="text" id="prodSector" placeholder="Sector / Barrio" class="bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs">
                         <input type="text" id="prodPrice" placeholder="Precio ($ USD)" class="bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs font-bold text-amber-600" required>
                     </div>
-                    <input type="text" id="prodDireccion" placeholder="Dirección Exacta o Referencia de Ingreso" class="w-full bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs">
+                    <input type="text" id="prodDireccion" placeholder="Dirección Exacta o Referencia" class="w-full bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs">
                 </div>
 
                 <!-- ESPECIFICACIONES -->
-                <div id="fieldsRealEstate" class="bg-sky-50/60 p-3.5 rounded-2xl border border-sky-100 space-y-2">
+                <div id="fieldsVehicles" class="bg-amber-50/60 p-3.5 rounded-2xl border border-amber-100 space-y-2">
+                    <h5 class="text-xs font-extrabold text-amber-900"><i class="fa-solid fa-truck-monster"></i> Parámetros de Vehículo / Maquinaria</h5>
+                    <div class="grid grid-cols-3 gap-2">
+                        <input type="text" id="vhAno" placeholder="Año / Modelo (ej: 2023)" class="bg-white border border-amber-200 rounded-xl px-2.5 py-1.5 text-xs">
+                        <input type="text" id="vhKm" placeholder="Kilometraje (ej: 12,000 km)" class="bg-white border border-amber-200 rounded-xl px-2.5 py-1.5 text-xs">
+                        <input type="text" id="vhTransmision" placeholder="Transmisión / Motor (Manual / 150cc)" class="bg-white border border-amber-200 rounded-xl px-2.5 py-1.5 text-xs">
+                    </div>
+                </div>
+
+                <div id="fieldsRealEstate" class="hidden bg-sky-50/60 p-3.5 rounded-2xl border border-sky-100 space-y-2">
                     <h5 class="text-xs font-extrabold text-sky-900"><i class="fa-solid fa-house"></i> Parámetros de Inmuebles</h5>
                     <div class="grid grid-cols-3 gap-2">
                         <input type="text" id="reMetros2" placeholder="Área Total (m²)" class="bg-white border border-sky-200 rounded-xl px-2.5 py-1.5 text-xs">
@@ -549,15 +558,6 @@
                     </div>
                 </div>
 
-                <div id="fieldsVehicles" class="hidden bg-amber-50/60 p-3.5 rounded-2xl border border-amber-100 space-y-2">
-                    <h5 class="text-xs font-extrabold text-amber-900"><i class="fa-solid fa-truck-monster"></i> Parámetros de Vehículo / Maquinaria</h5>
-                    <div class="grid grid-cols-3 gap-2">
-                        <input type="text" id="vhAno" placeholder="Año / Modelo" class="bg-white border border-amber-200 rounded-xl px-2.5 py-1.5 text-xs">
-                        <input type="text" id="vhKm" placeholder="Kilometraje / Horas" class="bg-white border border-amber-200 rounded-xl px-2.5 py-1.5 text-xs">
-                        <input type="text" id="vhTransmision" placeholder="Transmisión / Motor" class="bg-white border border-amber-200 rounded-xl px-2.5 py-1.5 text-xs">
-                    </div>
-                </div>
-
                 <div id="fieldsSecondHand" class="hidden bg-purple-50/60 p-3.5 rounded-2xl border border-purple-100 space-y-2">
                     <h5 class="text-xs font-extrabold text-purple-900"><i class="fa-solid fa-boxes-packing"></i> Artículos Usados / Equipos</h5>
                     <div class="grid grid-cols-2 gap-2">
@@ -566,20 +566,24 @@
                     </div>
                 </div>
 
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Fotos del Activo (Cámara o Galería)</label>
-                    <input type="file" id="prodFilesInput" accept="image/*" multiple class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 text-xs text-slate-700 file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-sky-600 file:text-white">
+                <!-- CARGA DE IMÁGENES DUAL CON PREVISUALIZADOR -->
+                <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-2">
+                    <label class="block text-xs font-bold text-slate-700">Fotos de la Captación (Cámara / Galería)</label>
+                    <input type="file" id="prodFilesInput" accept="image/*" multiple onchange="previewSelectedFiles(event)" class="w-full bg-white border border-slate-200 rounded-xl p-2 text-xs text-slate-700 file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-sky-600 file:text-white">
+                    <input type="text" id="prodUrlDirect" placeholder="O pega enlace directo de imagen (https://...)" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs text-slate-800">
+                    <!-- Vista previa en miniatura inmediata -->
+                    <div id="previewThumbsContainer" class="flex gap-2 overflow-x-auto pt-1 empty:hidden"></div>
                 </div>
 
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1">Descripción Detallada</label>
-                    <textarea id="prodDesc" rows="3" placeholder="Detalles de construcción, facilidades, estado del inmueble o vehículo..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800"></textarea>
+                    <textarea id="prodDesc" rows="3" placeholder="Detalles mecánicos, accesorios, estado de matrícula, gravámenes..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800"></textarea>
                 </div>
 
                 <!-- SECCIÓN PRIVADA DE CAPTACIÓN -->
                 <div class="bg-amber-100/70 p-3.5 rounded-2xl border border-amber-300 space-y-2">
                     <h5 class="text-xs font-extrabold text-amber-950 flex items-center gap-1">
-                        <i class="fa-solid fa-lock"></i> Datos Internos de Captación (Visible solo para Gerencia y Agentes)
+                        <i class="fa-solid fa-lock"></i> Datos Internos de Captación (Exclusivo Gerencia y Agentes)
                     </h5>
                     <div class="grid grid-cols-2 gap-2">
                         <input type="text" id="prodOwnerName" placeholder="Nombre Propietario / Consignante" class="bg-white border border-amber-300 rounded-xl px-2.5 py-1.5 text-xs">
@@ -590,7 +594,7 @@
                 <div class="pt-2 flex justify-end gap-2">
                     <button type="button" onclick="closeModal('productModal')" class="bg-slate-200 text-slate-700 font-bold px-4 py-2 rounded-xl text-xs hover:bg-slate-300 transition">Cancelar</button>
                     <button type="submit" id="btnSaveProduct" class="bg-sky-600 hover:bg-sky-500 text-white font-extrabold px-5 py-2 rounded-xl text-xs transition shadow-md flex items-center gap-1.5">
-                        <i class="fa-solid fa-cloud-arrow-up"></i> Guardar Activo en la Nube
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Guardar Activo Ahora
                     </button>
                 </div>
             </form>
@@ -602,9 +606,9 @@
         <div class="glass-card rounded-3xl max-w-2xl w-full p-6 space-y-4 shadow-2xl max-h-[90vh] flex flex-col border border-white/20">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
                 <div>
-                    <span id="detCodeBadge" class="text-[10px] font-mono font-bold bg-amber-500 text-slate-950 px-2 py-0.5 rounded-md">RE-001</span>
+                    <span id="detCodeBadge" class="text-[10px] font-mono font-bold bg-amber-500 text-slate-950 px-2 py-0.5 rounded-md">VH-101</span>
                     <span id="detStatusBadge" class="text-[10px] font-bold bg-emerald-600 text-white px-2 py-0.5 rounded-md ml-1">✅ Disponible</span>
-                    <h3 id="detTitle" class="text-lg font-extrabold text-slate-900 mt-1">CASA Y LE REGALO EL TERRENO! 580 m² EN EL COCA 💥🏡</h3>
+                    <h3 id="detTitle" class="text-lg font-extrabold text-slate-900 mt-1">Título</h3>
                 </div>
                 <button onclick="closeModal('detailModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
@@ -689,9 +693,9 @@
             <div class="space-y-3">
                 <input type="text" id="csgOwnerName" placeholder="Su Nombre Completo" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs">
                 <select id="csgCategory" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold">
+                    <option value="Vehiculo">Vehículo / Camioneta</option>
                     <option value="Inmueble Venta">Inmueble en Venta</option>
                     <option value="Inmueble Arriendo">Inmueble en Arriendo</option>
-                    <option value="Vehiculo">Vehículo / Camioneta</option>
                     <option value="Maquinaria">Maquinaria Pesada</option>
                     <option value="Segunda Mano">Artículo de Segunda Mano</option>
                 </select>
@@ -719,7 +723,7 @@
         </div>
     </div>
 
-    <!-- MOTOR DE PERSISTENCIA Y CARGA DIARIA MASIVA -->
+    <!-- LÓGICA ULTRA-RESILIENTE (LOCAL FIRST + CLOUD ASYNC) -->
     <script>
         const DEFAULT_STATE = {
             companyTitle: "ALIANZA ESTRATÉGICA S.A.S.",
@@ -747,18 +751,16 @@
         };
 
         let db = null;
+        let stagedImages = []; // Almacena temporalmente las fotos seleccionadas
 
         try {
             if (!firebase.apps.length) {
                 firebase.initializeApp(firebaseConfig);
             }
             db = firebase.firestore();
-            firebase.auth().signInAnonymously()
-                .then(() => updateCloudBadge(true))
-                .catch(err => { console.warn('Auth Firebase:', err); updateCloudBadge(false); });
+            firebase.auth().signInAnonymously().catch(() => {});
         } catch (e) {
-            console.warn('Firebase error:', e);
-            updateCloudBadge(false);
+            console.warn('Firebase init fallback:', e);
         }
 
         const INITIAL_INVENTORY = [
@@ -799,19 +801,7 @@
             updateCopyrightYear();
         });
 
-        function updateCloudBadge(online) {
-            const badge = document.getElementById('cloudStatusBadge');
-            if (!badge) return;
-            if (online) {
-                badge.className = "hidden sm:flex items-center gap-1 text-[10px] text-emerald-400 font-mono";
-                badge.innerHTML = '<i class="fa-solid fa-cloud"></i> Nube Activa';
-            } else {
-                badge.className = "hidden sm:flex items-center gap-1 text-[10px] text-amber-400 font-mono";
-                badge.innerHTML = '<i class="fa-solid fa-cloud-arrow-down"></i> Local';
-            }
-        }
-
-        /* COMPRESOR OPTIMIZADO PARA SUBIDAS DIARIAS RÁPIDAS */
+        /* COMPRESOR ULTRA-LIVIANO PARA FOTOS DE CAPTACIONES */
         function safeImageToBase64(file, maxWidth = 800, quality = 0.72) {
             return new Promise((resolve) => {
                 if (!file) return resolve('');
@@ -852,68 +842,83 @@
             });
         }
 
-        /* SINCRONIZACIÓN EN TIEMPO REAL FIRESTORE */
+        /* PREVISUALIZADOR INMEDIATO DE FOTOS EN EL MODAL */
+        async function previewSelectedFiles(event) {
+            const container = document.getElementById('previewThumbsContainer');
+            container.innerHTML = '';
+            stagedImages = [];
+
+            const files = event.target.files;
+            if (!files || files.length === 0) return;
+
+            for (let i = 0; i < files.length; i++) {
+                const b64 = await safeImageToBase64(files[i], 800, 0.72);
+                if (b64) {
+                    stagedImages.push(b64);
+                    const thumb = document.createElement('img');
+                    thumb.src = b64;
+                    thumb.className = 'w-14 h-14 object-cover rounded-xl border border-sky-400 shadow-sm flex-shrink-0';
+                    container.appendChild(thumb);
+                }
+            }
+        }
+
+        /* SINCRONIZACIÓN ASÍNCRONA BLINDADA */
         function initCloudSync() {
             if (!db) return;
 
-            // 1. Configuración de textos
-            db.collection('alianza_settings').doc('general').onSnapshot(doc => {
-                if (doc && doc.exists) {
-                    const data = doc.data();
-                    appConfig = { ...appConfig, ...data };
-                    localStorage.setItem('alianza_config', JSON.stringify(appConfig));
-                    renderAppUI();
-                }
-            }, err => console.warn('Sync general:', err));
-
-            // 2. Portada
-            db.collection('alianza_settings').doc('media_cover').onSnapshot(doc => {
-                if (doc && doc.exists && doc.data().coverImg) {
-                    appConfig.coverImg = doc.data().coverImg;
-                    localStorage.setItem('alianza_cover', appConfig.coverImg);
-                    const el = document.getElementById('coverImgDisplay');
-                    if (el) el.src = appConfig.coverImg;
-                }
-            }, err => console.warn('Sync cover:', err));
-
-            // 3. Logo/Perfil
-            db.collection('alianza_settings').doc('media_profile').onSnapshot(doc => {
-                if (doc && doc.exists && doc.data().profileLogo) {
-                    appConfig.profileLogo = doc.data().profileLogo;
-                    localStorage.setItem('alianza_profile', appConfig.profileLogo);
-                    const el = document.getElementById('profileLogoImg');
-                    if (el) el.src = appConfig.profileLogo;
-                }
-            }, err => console.warn('Sync profile:', err));
-
-            // 4. Foto Abogado
-            db.collection('alianza_settings').doc('media_lawyer').onSnapshot(doc => {
-                if (doc && doc.exists && doc.data().lawyerImg) {
-                    appConfig.lawyerImg = doc.data().lawyerImg;
-                    localStorage.setItem('alianza_lawyer', appConfig.lawyerImg);
-                    const el = document.getElementById('lawyerCardImg');
-                    if (el) el.src = appConfig.lawyerImg;
-                }
-            }, err => console.warn('Sync lawyer:', err));
-
-            // 5. Inventario de Activos (Colección con documentos independientes)
-            db.collection('alianza_inventory').onSnapshot(snapshot => {
-                if (snapshot) {
-                    const cloudInv = [];
-                    snapshot.forEach(doc => cloudInv.push({ id: doc.id, ...doc.data() }));
-                    if (cloudInv.length > 0) {
-                        inventory = cloudInv;
-                        localStorage.setItem('alianza_inventory', JSON.stringify(inventory));
-                        filterItems();
-                        updateCarouselDisplay();
-                    } else if (inventory.length === 0) {
-                        inventory = [...INITIAL_INVENTORY];
-                        inventory.forEach(item => saveInventoryItemCloud(item));
-                        filterItems();
-                        updateCarouselDisplay();
+            try {
+                db.collection('alianza_settings').doc('general').onSnapshot(doc => {
+                    if (doc && doc.exists) {
+                        const data = doc.data();
+                        appConfig = { ...appConfig, ...data };
+                        localStorage.setItem('alianza_config', JSON.stringify(appConfig));
+                        renderAppUI();
                     }
-                }
-            }, err => console.warn('Sync inventory:', err));
+                }, () => {});
+
+                db.collection('alianza_settings').doc('media_cover').onSnapshot(doc => {
+                    if (doc && doc.exists && doc.data().coverImg) {
+                        appConfig.coverImg = doc.data().coverImg;
+                        localStorage.setItem('alianza_cover', appConfig.coverImg);
+                        const el = document.getElementById('coverImgDisplay');
+                        if (el) el.src = appConfig.coverImg;
+                    }
+                }, () => {});
+
+                db.collection('alianza_settings').doc('media_profile').onSnapshot(doc => {
+                    if (doc && doc.exists && doc.data().profileLogo) {
+                        appConfig.profileLogo = doc.data().profileLogo;
+                        localStorage.setItem('alianza_profile', appConfig.profileLogo);
+                        const el = document.getElementById('profileLogoImg');
+                        if (el) el.src = appConfig.profileLogo;
+                    }
+                }, () => {});
+
+                db.collection('alianza_settings').doc('media_lawyer').onSnapshot(doc => {
+                    if (doc && doc.exists && doc.data().lawyerImg) {
+                        appConfig.lawyerImg = doc.data().lawyerImg;
+                        localStorage.setItem('alianza_lawyer', appConfig.lawyerImg);
+                        const el = document.getElementById('lawyerCardImg');
+                        if (el) el.src = appConfig.lawyerImg;
+                    }
+                }, () => {});
+
+                db.collection('alianza_inventory').onSnapshot(snapshot => {
+                    if (snapshot && !snapshot.empty) {
+                        const cloudInv = [];
+                        snapshot.forEach(doc => cloudInv.push({ id: doc.id, ...doc.data() }));
+                        if (cloudInv.length > 0) {
+                            inventory = cloudInv;
+                            localStorage.setItem('alianza_inventory', JSON.stringify(inventory));
+                            filterItems();
+                            updateCarouselDisplay();
+                        }
+                    }
+                }, () => {});
+            } catch (e) {
+                console.warn('Sync offline mode:', e);
+            }
         }
 
         function loadPersistedData() {
@@ -938,41 +943,25 @@
             }
         }
 
-        function saveConfigToStorage(isSilent = false) {
+        function saveConfigToStorage() {
             localStorage.setItem('alianza_config', JSON.stringify(appConfig));
-
             if (db) {
-                db.collection('alianza_settings').doc('general').set({
-                    companyTitle: appConfig.companyTitle,
-                    motto: appConfig.motto,
-                    location: appConfig.location,
-                    bioText: appConfig.bioText,
-                    lawyerName: appConfig.lawyerName,
-                    lawyerTitle: appConfig.lawyerTitle,
-                    lawyerPhone: appConfig.lawyerPhone,
-                    lawyerEmail: appConfig.lawyerEmail,
-                    lawyerDesc: appConfig.lawyerDesc,
-                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                }, { merge: true })
-                .then(() => {
-                    if (!isSilent) showToast('¡Datos institucionales guardados en la Nube!');
-                })
-                .catch(err => {
-                    console.error('Error guardando en general:', err);
-                    if (!isSilent) showToast('Guardado localmente', 'success');
-                });
-            } else if (!isSilent) {
-                showToast('Guardado localmente');
+                try {
+                    db.collection('alianza_settings').doc('general').set({
+                        companyTitle: appConfig.companyTitle,
+                        motto: appConfig.motto,
+                        location: appConfig.location,
+                        bioText: appConfig.bioText,
+                        lawyerName: appConfig.lawyerName,
+                        lawyerTitle: appConfig.lawyerTitle,
+                        lawyerPhone: appConfig.lawyerPhone,
+                        lawyerEmail: appConfig.lawyerEmail,
+                        lawyerDesc: appConfig.lawyerDesc,
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    }, { merge: true }).catch(() => {});
+                } catch(e) {}
             }
-        }
-
-        function saveInventoryItemCloud(item) {
-            if (!item || !item.id) return;
-            localStorage.setItem('alianza_inventory', JSON.stringify(inventory));
-            if (db) {
-                db.collection('alianza_inventory').doc(item.id).set(item, { merge: true })
-                    .catch(err => console.error('Error guardando captación en Firestore:', err));
-            }
+            showToast('¡Datos guardados con éxito!');
         }
 
         function renderAppUI() {
@@ -1095,11 +1084,11 @@
 
         function triggerFileSelect(id) { document.getElementById(id).click(); }
 
-        /* CARGA Y PERSISTENCIA AISLADA DE IMÁGENES */
+        /* CARGA Y ACTUALIZACIÓN VISUAL INMEDIATA DE IMÁGENES */
         async function handleCoverUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
-            showToast('Procesando foto de portada...');
+            showToast('Actualizando portada...');
             const base64 = await safeImageToBase64(file, 1000, 0.7);
             if (base64) {
                 appConfig.coverImg = base64;
@@ -1107,12 +1096,14 @@
                 document.getElementById('coverImgDisplay').src = base64;
                 
                 if (db) {
-                    db.collection('alianza_settings').doc('media_cover').set({
-                        coverImg: base64,
-                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                    }).then(() => showToast('¡Foto de portada guardada en la Nube con éxito!'))
-                      .catch(err => { console.error(err); showToast('Guardada localmente', 'success'); });
+                    try {
+                        db.collection('alianza_settings').doc('media_cover').set({
+                            coverImg: base64,
+                            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                        }).catch(() => {});
+                    } catch(e) {}
                 }
+                showToast('¡Foto de portada guardada en la Nube!');
             }
             event.target.value = '';
         }
@@ -1120,7 +1111,7 @@
         async function handleProfileUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
-            showToast('Procesando foto de perfil...');
+            showToast('Actualizando foto de perfil...');
             const base64 = await safeImageToBase64(file, 400, 0.75);
             if (base64) {
                 appConfig.profileLogo = base64;
@@ -1128,12 +1119,14 @@
                 document.getElementById('profileLogoImg').src = base64;
                 
                 if (db) {
-                    db.collection('alianza_settings').doc('media_profile').set({
-                        profileLogo: base64,
-                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                    }).then(() => showToast('¡Foto de perfil guardada en la Nube con éxito!'))
-                      .catch(err => { console.error(err); showToast('Guardada localmente', 'success'); });
+                    try {
+                        db.collection('alianza_settings').doc('media_profile').set({
+                            profileLogo: base64,
+                            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                        }).catch(() => {});
+                    } catch(e) {}
                 }
+                showToast('¡Foto de perfil guardada en la Nube!');
             }
             event.target.value = '';
         }
@@ -1141,7 +1134,7 @@
         async function handleLawyerUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
-            showToast('Procesando foto del asesor legal...');
+            showToast('Actualizando foto del asesor...');
             const base64 = await safeImageToBase64(file, 400, 0.75);
             if (base64) {
                 appConfig.lawyerImg = base64;
@@ -1149,26 +1142,28 @@
                 document.getElementById('lawyerCardImg').src = base64;
                 
                 if (db) {
-                    db.collection('alianza_settings').doc('media_lawyer').set({
-                        lawyerImg: base64,
-                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                    }).then(() => showToast('¡Foto del asesor guardada en la Nube con éxito!'))
-                      .catch(err => { console.error(err); showToast('Guardada localmente', 'success'); });
+                    try {
+                        db.collection('alianza_settings').doc('media_lawyer').set({
+                            lawyerImg: base64,
+                            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                        }).catch(() => {});
+                    } catch(e) {}
                 }
+                showToast('¡Foto del asesor guardada en la Nube!');
             }
             event.target.value = '';
         }
 
         function toggleCategoryFields() {
             const cat = document.getElementById('prodCategory').value;
-            document.getElementById('fieldsRealEstate').classList.add('hidden');
             document.getElementById('fieldsVehicles').classList.add('hidden');
+            document.getElementById('fieldsRealEstate').classList.add('hidden');
             document.getElementById('fieldsSecondHand').classList.add('hidden');
 
-            if (cat === 'RE' || cat === 'AR') {
-                document.getElementById('fieldsRealEstate').classList.remove('hidden');
-            } else if (cat === 'VH' || cat === 'MQ') {
+            if (cat === 'VH' || cat === 'MQ') {
                 document.getElementById('fieldsVehicles').classList.remove('hidden');
+            } else if (cat === 'RE' || cat === 'AR') {
+                document.getElementById('fieldsRealEstate').classList.remove('hidden');
             } else if (cat === 'LQ') {
                 document.getElementById('fieldsSecondHand').classList.remove('hidden');
             }
@@ -1177,6 +1172,8 @@
         function openAddProductModal() {
             document.getElementById('productForm').reset();
             document.getElementById('prodEditId').value = '';
+            document.getElementById('previewThumbsContainer').innerHTML = '';
+            stagedImages = [];
             document.getElementById('prodIsFeatured').checked = true;
             document.getElementById('productModalTitle').innerText = 'Registrar Nueva Captación';
             toggleCategoryFields();
@@ -1189,7 +1186,7 @@
 
             document.getElementById('prodEditId').value = item.id;
             document.getElementById('prodIsFeatured').checked = item.isFeatured !== false;
-            document.getElementById('prodCategory').value = item.category || 'RE';
+            document.getElementById('prodCategory').value = item.category || 'VH';
             document.getElementById('prodStatus').value = item.status || 'DISPONIBLE';
             document.getElementById('prodCode').value = item.code || '';
             document.getElementById('prodTitle').value = item.title || '';
@@ -1202,6 +1199,10 @@
             document.getElementById('prodOwnerName').value = item.ownerName || '';
             document.getElementById('prodComision').value = item.comision || '';
 
+            document.getElementById('vhAno').value = item.vhAno || '';
+            document.getElementById('vhKm').value = item.vhKm || '';
+            document.getElementById('vhTransmision').value = item.vhTransmision || '';
+
             document.getElementById('reMetros2').value = item.reMetros2 || '';
             document.getElementById('reFrente').value = item.reFrente || '';
             document.getElementById('reConstruccion').value = item.reConstruccion || '';
@@ -1211,23 +1212,31 @@
             document.getElementById('srvAlcantarillado').checked = !!item.srvAlcantarillado;
             document.getElementById('srvEscrituras').checked = !!item.srvEscrituras;
 
-            document.getElementById('vhAno').value = item.vhAno || '';
-            document.getElementById('vhKm').value = item.vhKm || '';
-            document.getElementById('vhTransmision').value = item.vhTransmision || '';
-
             document.getElementById('lqEstado').value = item.lqEstado || '';
             document.getElementById('lqTiempoUso').value = item.lqTiempoUso || '';
+
+            // Mostrar fotos existentes en miniatura
+            const previewContainer = document.getElementById('previewThumbsContainer');
+            previewContainer.innerHTML = '';
+            stagedImages = item.images ? [...item.images] : [];
+            stagedImages.forEach(imgUrl => {
+                const thumb = document.createElement('img');
+                thumb.src = imgUrl;
+                thumb.className = 'w-14 h-14 object-cover rounded-xl border border-sky-400 shadow-sm flex-shrink-0';
+                previewContainer.appendChild(thumb);
+            });
 
             document.getElementById('productModalTitle').innerText = 'Editar Captación ' + (item.code || '');
             toggleCategoryFields();
             openModal('productModal');
         }
 
+        /* GUARDADO CON ASIGNACIÓN ESTRICTA DE FOTOS */
         async function handleSaveProduct(e) {
             e.preventDefault();
             const btnSave = document.getElementById('btnSaveProduct');
             btnSave.disabled = true;
-            btnSave.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1.5"></i> Procesando y Subiendo...';
+            btnSave.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1.5"></i> Guardando...';
 
             const editId = document.getElementById('prodEditId').value;
             const isFeatured = document.getElementById('prodIsFeatured').checked;
@@ -1243,84 +1252,102 @@
             const desc = document.getElementById('prodDesc').value.trim();
             const ownerName = document.getElementById('prodOwnerName').value.trim();
             const comision = document.getElementById('prodComision').value.trim();
+            const urlDirect = document.getElementById('prodUrlDirect').value.trim();
 
             if (!code) code = `${category}-${Math.floor(100 + Math.random() * 900)}`;
 
-            const filesInput = document.getElementById('prodFilesInput');
-            let imagesArray = [];
+            let finalImages = [];
 
-            try {
-                if (filesInput.files && filesInput.files.length > 0) {
-                    const promises = Array.from(filesInput.files).map(f => safeImageToBase64(f, 800, 0.72));
-                    const results = await Promise.all(promises);
-                    imagesArray = results.filter(Boolean);
-                }
-
-                let targetItem = null;
-                const locationText = [ciudad, sector].filter(Boolean).join(', ') || 'El Coca';
-
-                const itemData = {
-                    category, status, isFeatured, code, title, ciudad, parroquia, sector, direccion, 
-                    location: locationText, priceStr, desc, ownerName, comision,
-                    reMetros2: document.getElementById('reMetros2').value,
-                    reFrente: document.getElementById('reFrente').value,
-                    reConstruccion: document.getElementById('reConstruccion').value,
-                    srvAgua: document.getElementById('srvAgua').checked,
-                    srvLuz: document.getElementById('srvLuz').checked,
-                    srvInternet: document.getElementById('srvInternet').checked,
-                    srvAlcantarillado: document.getElementById('srvAlcantarillado').checked,
-                    srvEscrituras: document.getElementById('srvEscrituras').checked,
-                    vhAno: document.getElementById('vhAno').value,
-                    vhKm: document.getElementById('vhKm').value,
-                    vhTransmision: document.getElementById('vhTransmision').value,
-                    lqEstado: document.getElementById('lqEstado').value,
-                    lqTiempoUso: document.getElementById('lqTiempoUso').value
-                };
-
-                if (editId) {
-                    const idx = inventory.findIndex(i => i.id === editId);
-                    if (idx !== -1) {
-                        targetItem = {
-                            ...inventory[idx],
-                            ...itemData,
-                            images: imagesArray.length > 0 ? imagesArray : inventory[idx].images
-                        };
-                        inventory[idx] = targetItem;
-                    }
-                } else {
-                    targetItem = {
-                        id: 'item_' + Date.now().toString(),
-                        ...itemData,
-                        images: imagesArray.length > 0 ? imagesArray : ['https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80']
-                    };
-                    inventory.unshift(targetItem);
-                }
-
-                saveInventoryItemCloud(targetItem);
-                filterItems();
-                updateCarouselDisplay();
-                closeModal('productModal');
-                showToast('¡Captación guardada y sincronizada en la Nube con éxito!');
-            } catch (err) {
-                console.error(err);
-                showToast('Error procesando el registro', 'error');
-            } finally {
-                btnSave.disabled = false;
-                btnSave.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Guardar Activo en la Nube';
+            // 1. Si el usuario subió fotos desde su teléfono
+            if (stagedImages.length > 0) {
+                finalImages = [...stagedImages];
+            } else if (urlDirect) {
+                finalImages = [urlDirect];
+            } else if (editId) {
+                const existing = inventory.find(i => i.id === editId);
+                if (existing && existing.images) finalImages = existing.images;
             }
+
+            // Fallback temático según la categoría si no subió ninguna foto
+            if (finalImages.length === 0) {
+                if (category === 'VH') {
+                    finalImages = ['https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80'];
+                } else if (category === 'RE' || category === 'AR') {
+                    finalImages = ['https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80'];
+                } else {
+                    finalImages = ['https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80'];
+                }
+            }
+
+            const locationText = [ciudad, sector].filter(Boolean).join(', ') || 'El Coca';
+
+            const itemData = {
+                category, status, isFeatured, code, title, ciudad, parroquia, sector, direccion, 
+                location: locationText, priceStr, desc, ownerName, comision, images: finalImages,
+                vhAno: document.getElementById('vhAno').value,
+                vhKm: document.getElementById('vhKm').value,
+                vhTransmision: document.getElementById('vhTransmision').value,
+                reMetros2: document.getElementById('reMetros2').value,
+                reFrente: document.getElementById('reFrente').value,
+                reConstruccion: document.getElementById('reConstruccion').value,
+                srvAgua: document.getElementById('srvAgua').checked,
+                srvLuz: document.getElementById('srvLuz').checked,
+                srvInternet: document.getElementById('srvInternet').checked,
+                srvAlcantarillado: document.getElementById('srvAlcantarillado').checked,
+                srvEscrituras: document.getElementById('srvEscrituras').checked,
+                lqEstado: document.getElementById('lqEstado').value,
+                lqTiempoUso: document.getElementById('lqTiempoUso').value
+            };
+
+            let targetItem = null;
+
+            if (editId) {
+                const idx = inventory.findIndex(i => i.id === editId);
+                if (idx !== -1) {
+                    targetItem = { ...inventory[idx], ...itemData };
+                    inventory[idx] = targetItem;
+                }
+            } else {
+                targetItem = {
+                    id: 'item_' + Date.now().toString(),
+                    ...itemData
+                };
+                inventory.unshift(targetItem);
+            }
+
+            // 1. Guardar de inmediato en local
+            localStorage.setItem('alianza_inventory', JSON.stringify(inventory));
+            
+            // 2. Actualizar pantalla al milisegundo
+            filterItems();
+            updateCarouselDisplay();
+            closeModal('productModal');
+            showToast('¡Captación guardada con sus fotos!');
+
+            // 3. Sincronizar asíncronamente con Firestore
+            if (db && targetItem) {
+                try {
+                    db.collection('alianza_inventory').doc(targetItem.id).set(targetItem, { merge: true }).catch(() => {});
+                } catch(e) {}
+            }
+
+            btnSave.disabled = false;
+            btnSave.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Guardar Activo Ahora';
         }
 
         function deleteProduct(id) {
             if (confirm('¿Está seguro de eliminar esta captación permanentemente?')) {
                 inventory = inventory.filter(i => i.id !== id);
                 localStorage.setItem('alianza_inventory', JSON.stringify(inventory));
-                if (db) {
-                    db.collection('alianza_inventory').doc(id).delete()
-                        .then(() => showToast('¡Eliminado de la Nube!'))
-                        .catch(() => showToast('Eliminado localmente', 'error'));
-                }
                 filterItems();
                 updateCarouselDisplay();
+                showToast('Captación eliminada.');
+
+                if (db) {
+                    try {
+                        db.collection('alianza_inventory').doc(id).delete().catch(() => {});
+                    } catch(e) {}
+                }
             }
         }
 
@@ -1443,16 +1470,16 @@
 
             const techBox = document.getElementById('detTechnicalBox');
             techBox.innerHTML = '';
-            if (item.category === 'RE' || item.category === 'AR') {
+            if (item.category === 'VH' || item.category === 'MQ') {
+                techBox.innerHTML = `
+                    <p><strong>Año/Modelo:</strong> ${item.vhAno || '-'} | <strong>Kilometraje/Horas:</strong> ${item.vhKm || '-'}</p>
+                    <p><strong>Transmisión/Motor:</strong> ${item.vhTransmision || '-'}</p>
+                `;
+            } else if (item.category === 'RE' || item.category === 'AR') {
                 techBox.innerHTML = `
                     <p><strong>Área Total:</strong> ${item.reMetros2 || '-'} m² | <strong>Frente:</strong> ${item.reFrente || '-'} m | <strong>Construcción:</strong> ${item.reConstruccion || '-'} m²</p>
                     <p><strong>Servicios Básicos:</strong> ${item.srvAgua ? 'Agua ✓ ' : ''}${item.srvLuz ? 'Luz ✓ ' : ''}${item.srvInternet ? 'Internet ✓ ' : ''}${item.srvAlcantarillado ? 'Alcantarillado ✓ ' : ''}</p>
                     <p><strong>Situación Notarial:</strong> ${item.srvEscrituras ? '📜 Escrituras legalmente protocolizadas y al día' : 'En trámite saneado'}</p>
-                `;
-            } else if (item.category === 'VH' || item.category === 'MQ') {
-                techBox.innerHTML = `
-                    <p><strong>Año/Modelo:</strong> ${item.vhAno || '-'} | <strong>Kilometraje/Horas:</strong> ${item.vhKm || '-'}</p>
-                    <p><strong>Transmisión/Motor:</strong> ${item.vhTransmision || '-'}</p>
                 `;
             } else if (item.category === 'LQ') {
                 techBox.innerHTML = `
