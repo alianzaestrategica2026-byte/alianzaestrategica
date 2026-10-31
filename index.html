@@ -39,11 +39,21 @@
                     },
                     animation: {
                         'marquee': 'marquee 25s linear infinite',
+                        'bounce-subtle': 'bounceSubtle 2s infinite',
+                        'pulse-glow': 'pulseGlow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
                     },
                     keyframes: {
                         marquee: {
                             '0%': { transform: 'translateX(0%)' },
                             '100%': { transform: 'translateX(-50%)' }
+                        },
+                        bounceSubtle: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-4px)' }
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: 1, filter: 'drop-shadow(0 0 8px rgba(56, 189, 248, 0.6))' },
+                            '50%': { opacity: 0.6, filter: 'drop-shadow(0 0 2px rgba(56, 189, 248, 0.2))' }
                         }
                     }
                 }
@@ -315,28 +325,38 @@
         </div>
     </section>
 
-    <!-- MARKETPLACE Y FILTROS -->
+    <!-- MARKETPLACE Y FILTROS CON RESEÑA VISUAL SEÑALÉTICA -->
     <main class="max-w-7xl mx-auto px-4 py-4 flex-1 w-full">
-        <!-- BUSCADOR -->
-        <div class="bg-gradient-to-r from-slate-900 via-sky-950 to-slate-900 rounded-3xl p-6 mb-8 text-white shadow-xl border border-sky-900/40">
-            <div class="max-w-2xl mx-auto text-center mb-5">
+        <!-- BUSCADOR CON SEÑALÉTICA INTERACTIVA GUIADA -->
+        <div class="bg-gradient-to-r from-slate-900 via-sky-950 to-slate-900 rounded-3xl p-6 mb-8 text-white shadow-xl border border-sky-900/40 relative overflow-hidden">
+            <div class="max-w-2xl mx-auto text-center mb-4">
                 <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-1.5">Marketplace de Bienes & Activos</h2>
                 <p class="text-xs sm:text-sm text-sky-200">Consulte el catálogo verificado de ALIANZA ESTRATÉGICA S.A.S.</p>
+                
+                <!-- RESEÑA VISUAL PARPADEANTE / SEÑALÉTICA GUÍA -->
+                <div class="mt-3 inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/20 via-sky-500/20 to-amber-500/20 border border-amber-400/50 px-3.5 py-1.5 rounded-full text-xs font-extrabold text-amber-300 shadow-lg animate-bounce-subtle">
+                    <span class="flex h-2 w-2 relative">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+                    </span>
+                    <span>👇 ¡Encuentra tu activo aquí! Escribe o toca una categoría abajo</span>
+                </div>
             </div>
-            <div class="max-w-xl mx-auto relative mb-5">
-                <input type="text" id="searchInput" onkeyup="filterItems()" placeholder="Buscar por código (ej: RE-001, VH-001), sector o palabra..." class="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-white/10 backdrop-blur-md text-white placeholder-slate-400 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 border border-white/10 transition shadow-inner">
+
+            <div class="max-w-xl mx-auto relative mb-4">
+                <input type="text" id="searchInput" onkeyup="filterItems()" placeholder="Buscar por código (ej: RE-001, VH-001), sector o palabra clave..." class="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-white/10 backdrop-blur-md text-white placeholder-slate-400 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 border border-sky-400/30 transition shadow-inner animate-pulse-glow">
                 <i class="fa-solid fa-magnifying-glass absolute left-4 top-4 text-sky-400"></i>
             </div>
 
-            <!-- BOTONES CATEGORÍAS -->
+            <!-- BOTONES CATEGORÍAS CON GUÍA VISUAL -->
             <div class="flex flex-wrap justify-center gap-2 text-xs font-bold" id="categoryTabGroup">
-                <button onclick="setCategoryFilter('ALL')" class="cat-btn bg-amber-500 text-slate-950 px-4 py-2 rounded-xl transition shadow-md">Todos</button>
-                <button onclick="setCategoryFilter('VH')" class="cat-btn bg-slate-800 text-white hover:bg-slate-700 px-4 py-2 rounded-xl transition">VH (Vehículos)</button>
-                <button onclick="setCategoryFilter('RE')" class="cat-btn bg-slate-800 text-white hover:bg-slate-700 px-4 py-2 rounded-xl transition">RE (Ventas Raíces)</button>
-                <button onclick="setCategoryFilter('AR')" class="cat-btn bg-slate-800 text-white hover:bg-slate-700 px-4 py-2 rounded-xl transition">AR (Arriendos)</button>
-                <button onclick="setCategoryFilter('MQ')" class="cat-btn bg-slate-800 text-white hover:bg-slate-700 px-4 py-2 rounded-xl transition">MQ (Maquinaria)</button>
-                <button onclick="setCategoryFilter('LQ')" class="cat-btn bg-slate-800 text-white hover:bg-slate-700 px-4 py-2 rounded-xl transition">LQ (Segunda Mano / Remate)</button>
-                <button onclick="setCategoryFilter('SOLD')" class="cat-btn bg-rose-700 text-white hover:bg-rose-600 px-4 py-2 rounded-xl transition"><i class="fa-solid fa-circle text-rose-300 mr-1"></i> 🔴💸 Vendidos</button>
+                <button onclick="setCategoryFilter('ALL')" class="cat-btn bg-amber-500 text-slate-950 px-4 py-2 rounded-xl transition shadow-md hover:scale-105">Todos</button>
+                <button onclick="setCategoryFilter('VH')" class="cat-btn bg-slate-800 text-white hover:bg-slate-700 px-4 py-2 rounded-xl transition hover:scale-105">VH (Vehículos)</button>
+                <button onclick="setCategoryFilter('RE')" class="cat-btn bg-slate-800 text-white hover:bg-slate-700 px-4 py-2 rounded-xl transition hover:scale-105">RE (Ventas Raíces)</button>
+                <button onclick="setCategoryFilter('AR')" class="cat-btn bg-slate-800 text-white hover:bg-slate-700 px-4 py-2 rounded-xl transition hover:scale-105">AR (Arriendos)</button>
+                <button onclick="setCategoryFilter('MQ')" class="cat-btn bg-slate-800 text-white hover:bg-slate-700 px-4 py-2 rounded-xl transition hover:scale-105">MQ (Maquinaria)</button>
+                <button onclick="setCategoryFilter('LQ')" class="cat-btn bg-slate-800 text-white hover:bg-slate-700 px-4 py-2 rounded-xl transition hover:scale-105">LQ (Segunda Mano / Remate)</button>
+                <button onclick="setCategoryFilter('SOLD')" class="cat-btn bg-rose-700 text-white hover:bg-rose-600 px-4 py-2 rounded-xl transition hover:scale-105"><i class="fa-solid fa-circle text-rose-300 mr-1"></i> 🔴💸 Vendidos</button>
             </div>
         </div>
 
@@ -388,7 +408,7 @@
 
             <div id="chatMessages" class="p-4 h-64 overflow-y-auto space-y-3 bg-slate-50/70 modal-scroll">
                 <div class="bg-white p-3 rounded-2xl border border-slate-200/80 text-slate-700 shadow-sm leading-relaxed">
-                    ¡Hola! 👋 Te saluda Sofía de <strong>ALIANZA ESTRATÉGICA S.A.S.</strong> ¿Deseas información de algún bien del catálogo o te gustaría consignar tu propiedad o vehículo con nosotros?
+                    ¡Hola! 👋 Te saluda Sofía de <strong>ALIANZA ESTRATÉGICA S.A.S.</strong> ¿Deseas consultar algún bien del catálogo o te gustaría consignar tu propiedad o vehículo con nosotros?
                 </div>
             </div>
 
@@ -529,7 +549,7 @@
                         </tr>
                     </thead>
                     <tbody id="financeTableBody" class="divide-y divide-slate-200 font-medium bg-white">
-                        <!-- FILAS DINÁMICAS -->
+                        <!-- FILAS DINÁMICAS GENERADAS EN TIEMPO REAL -->
                     </tbody>
                 </table>
             </div>
@@ -906,7 +926,7 @@
                     <p id="detDesc" class="text-xs text-slate-600 leading-relaxed whitespace-pre-line bg-slate-50/80 p-3.5 rounded-2xl border border-slate-100"></p>
                 </div>
 
-                <!-- SECCIÓN PRIVADA DE DATOS INTERNOS (SOLO ADMIN Y AGENTES) -->
+                <!-- SECCIÓN PRIVADA DE DATOS INTERNOS -->
                 <div id="detPrivateSection" class="hidden bg-amber-50 p-3.5 rounded-2xl border border-amber-200 space-y-1 text-xs">
                     <h5 class="font-extrabold text-amber-900 flex items-center gap-1"><i class="fa-solid fa-user-lock"></i> Datos Internos de Captación & Legal</h5>
                     <p class="text-slate-700"><strong>Propietario:</strong> <span id="detPrivateOwner">-</span> (<span id="detPrivateDocPhone">-</span>)</p>
