@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ALIANZA ESTRATÉGICA S.A.S. - Catálogo & Marketplace Corporativo</title>
 
-    <!-- METADATOS PWA -->
+    <!-- METADATOS PWA Y APP -->
     <meta name="theme-color" content="#0f172a">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Alianza">
+    <meta name="apple-mobile-web-app-title" content="Alianza SAS">
     <link rel="apple-touch-icon" href="https://lh3.googleusercontent.com/d/1X6tUqZ2z3c8vN-xYqZp8W1V_X7mRzS">
 
-    <!-- Tailwind CSS CDN -->
+    <!-- TAILWIND CSS & FONTAWESOME CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -36,17 +36,11 @@
     </script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
-    <!-- FIREBASE COMPAT SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics-compat.js"></script>
-
     <style>
         :root {
             --app-bg: #f8fafc;
             --app-nav-bg: #0f172a;
             --app-card-bg: #ffffff;
-            --app-primary: #0284c7;
         }
         body { background-color: var(--app-bg) !important; }
         .theme-nav-bg { background-color: var(--app-nav-bg) !important; }
@@ -54,25 +48,6 @@
         
         .modal-scroll::-webkit-scrollbar { width: 6px; }
         .modal-scroll::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 9999px; }
-
-        .reels-scrollbar::-webkit-scrollbar { display: none; }
-        .reels-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-        .reel-card {
-            width: 126px;
-            height: 212px;
-            flex-shrink: 0;
-            border-radius: 1.25rem;
-            overflow: hidden;
-            position: relative;
-            cursor: pointer;
-            border: 2px solid #e2e8f0;
-            transition: transform 0.25s ease, border-color 0.25s ease;
-        }
-        .reel-card:hover {
-            transform: translateY(-4px) scale(1.02);
-            border-color: #38bdf8;
-        }
 
         @keyframes marqueeLeft {
             0% { transform: translateX(0%); }
@@ -89,34 +64,34 @@
 </head>
 <body class="font-sans text-slate-800 antialiased min-h-screen flex flex-col relative transition-colors duration-300">
 
-    <!-- TOAST DE NOTIFICACIÓN VISUAL -->
-    <div id="appToast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2.5 bg-slate-900/95 text-white px-5 py-3 rounded-2xl shadow-2xl border border-emerald-500/40 text-xs font-bold transition-all duration-300 transform opacity-0 translate-y-4 pointer-events-none">
-        <i id="appToastIcon" class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>
-        <span id="appToastMessage">Acción completada con éxito</span>
+    <!-- NOTIFICACIÓN TOAST GLOBAL -->
+    <div id="appToast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] flex items-center gap-3 bg-slate-900/95 text-white px-6 py-3.5 rounded-2xl shadow-2xl border border-emerald-500/50 text-xs font-bold transition-all duration-300 transform opacity-0 translate-y-4 pointer-events-none">
+        <i id="appToastIcon" class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+        <span id="appToastMessage">Operación realizada exitosamente</span>
     </div>
 
-    <!-- TOP BAR -->
-    <div class="theme-nav-bg text-white text-xs py-2 px-4 border-b border-sky-800/50">
+    <!-- TOP BAR INFORMATIVA -->
+    <div class="theme-nav-bg text-white text-xs py-2.5 px-4 border-b border-sky-800/50">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
             <div class="flex items-center gap-3">
                 <span><i class="fa-solid fa-location-dot text-sky-400 mr-1"></i> <span id="topLocationText">El Coca, Orellana - Ecuador</span></span>
                 <span id="topEmailDisplay" class="hidden md:inline"><i class="fa-solid fa-envelope text-sky-400 mr-1"></i> alianzaestrategica2026@gmail.com</span>
-                <span id="cloudStatusBadge" class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] px-2 py-0.5 rounded-full font-semibold flex items-center gap-1">
-                    <i class="fa-solid fa-cloud"></i> <span id="cloudStatusText">Nube Sincronizada</span>
+                <span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] px-2 py-0.5 rounded-full font-semibold flex items-center gap-1">
+                    <i class="fa-solid fa-cloud"></i> Sistema Operativo en Vivo
                 </span>
             </div>
             <div class="flex items-center gap-2">
-                <button onclick="openModal('infoMenuModal')" class="bg-sky-600 hover:bg-sky-500 text-white px-2.5 py-1 rounded text-xs font-bold transition flex items-center gap-1 shadow-sm">
+                <button onclick="openModal('infoMenuModal')" class="bg-sky-600 hover:bg-sky-500 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
                     <i class="fa-solid fa-compass"></i> Menú Informativo
                 </button>
-                <button onclick="openModal('loginModal')" id="loginNavBtn" class="bg-sky-500 hover:bg-sky-400 text-white px-2.5 py-1 rounded text-xs font-bold transition shadow-sm flex items-center">
-                    <i class="fa-solid fa-right-to-bracket mr-1"></i> Ingreso
+                <button onclick="openModal('loginModal')" id="loginNavBtn" class="bg-sky-500 hover:bg-sky-400 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition shadow-sm flex items-center gap-1.5">
+                    <i class="fa-solid fa-right-to-bracket"></i> Ingreso
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- BANNER DE USUARIO ACTIVO (CONTROL DE PRIVILEGIOS) -->
+    <!-- BANNER DE USUARIO Y PRIVILEGIOS -->
     <div id="userPanelBanner" class="bg-amber-500 text-slate-900 px-4 py-3 hidden shadow-md border-b border-amber-600 sticky top-0 z-40">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
             <div class="flex items-center gap-2 font-bold text-xs md:text-sm" id="userBannerStatus"></div>
@@ -124,172 +99,156 @@
         </div>
     </div>
 
-    <!-- HEADER / PERFIL -->
+    <!-- HEADER DE PERFIL & PORTADA -->
     <section class="max-w-7xl mx-auto w-full px-4 pt-4">
         <div class="theme-card-bg rounded-3xl shadow-sm border border-slate-200 overflow-hidden relative">
             <div class="h-48 sm:h-72 w-full relative bg-slate-900">
-                <img id="coverImgDisplay" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80" alt="Portada" class="w-full h-full object-cover">
-                <label id="quickCoverUploadLabel" class="hidden absolute top-4 right-4 bg-black/60 hover:bg-black/80 text-white px-3 py-2 rounded-xl text-xs font-bold backdrop-blur-md transition shadow cursor-pointer">
+                <img id="coverImgDisplay" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80" alt="Portada Corporativa" class="w-full h-full object-cover">
+                <label id="quickCoverUploadLabel" class="hidden absolute top-4 right-4 bg-black/70 hover:bg-black/90 text-white px-3.5 py-2 rounded-xl text-xs font-bold backdrop-blur-md transition shadow cursor-pointer border border-white/20">
                     <i class="fa-solid fa-camera mr-1"></i> Cambiar Portada
-                    <input type="file" accept="image/*" class="hidden" onchange="uploadSingleImageDirectly(this, 'cover')">
+                    <input type="file" accept="image/*" class="hidden" onchange="uploadHeaderImages(this, 'cover')">
                 </label>
             </div>
             <div class="px-6 pb-6 pt-3 relative">
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 -mt-16 sm:-mt-20 mb-4">
                     <div class="flex flex-col sm:flex-row items-center sm:items-end gap-4 text-center sm:text-left">
                         <div class="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full border-4 border-white shadow-2xl overflow-hidden bg-white flex-shrink-0">
-                            <img id="profileLogoImg" src="https://lh3.googleusercontent.com/d/1X6tUqZ2z3c8vN-xYqZp8W1V_X7mRzS" alt="Perfil" class="w-full h-full object-cover">
-                            <label id="quickProfileUploadLabel" class="hidden absolute inset-0 bg-black/50 hover:bg-black/70 text-white text-xs font-bold items-center justify-center flex-col cursor-pointer transition">
+                            <img id="profileLogoImg" src="https://lh3.googleusercontent.com/d/1X6tUqZ2z3c8vN-xYqZp8W1V_X7mRzS" alt="Perfil Corporativo" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Alianza+SAS&background=0284c7&color=fff';">
+                            <label id="quickProfileUploadLabel" class="hidden absolute inset-0 bg-black/60 hover:bg-black/80 text-white text-xs font-bold flex flex-col items-center justify-center cursor-pointer transition">
                                 <i class="fa-solid fa-camera text-xl mb-1"></i>
                                 <span>Cambiar</span>
-                                <input type="file" accept="image/*" class="hidden" onchange="uploadSingleImageDirectly(this, 'logo')">
+                                <input type="file" accept="image/*" class="hidden" onchange="uploadHeaderImages(this, 'logo')">
                             </label>
                         </div>
                         <div>
                             <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900" id="profileCompanyTitle">
                                 ALIANZA ESTRATÉGICA <span class="text-sky-600">S.A.S.</span>
                             </h1>
-                            <p class="text-xs sm:text-sm text-sky-600 font-bold mt-1" id="profileMotto">Excelencia Jurídica, Confianza Profesional</p>
-                            <p class="text-xs text-slate-500 mt-1" id="profileSubtitle">Corretaje Inmobiliario, Vehículos, Maquinaria & Saneamiento Notarial en El Coca</p>
+                            <p class="text-xs sm:text-sm text-sky-600 font-bold mt-1">Excelencia Jurídica, Confianza Profesional & Negocios Transparentes</p>
+                            <p class="text-xs text-slate-500 mt-1">Corretaje Inmobiliario, Vehículos, Maquinaria & Saneamiento Notarial en El Coca</p>
                         </div>
                     </div>
                 </div>
-                <div class="bg-slate-50/80 rounded-2xl p-4 border border-slate-200/80 text-xs sm:text-sm text-slate-600 leading-relaxed" id="profileBioBox">
-                    <p id="profileBioText">Portal oficial de ALIANZA ESTRATÉGICA S.A.S. en El Coca, Orellana. Líder Comercial: Adrián Arturo Íñiguez Lucio | Patrocinio Jurídico: Abg. Carlos Alfredo Íñiguez Rodríguez.</p>
+                <div class="bg-slate-50/80 rounded-2xl p-4 border border-slate-200/80 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    <p>Portal Oficial de Intermediación Comercial y Patrocinio Legal. Dirección General: <strong>Adrián Arturo Íñiguez Lucio</strong> | Asesoría Legal Externa: <strong>Abg. Carlos Alfredo Íñiguez Rodríguez</strong>.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- HISTORIAS & REELS -->
-    <section class="max-w-7xl mx-auto w-full px-4 pt-6">
-        <div class="theme-card-bg rounded-3xl shadow-sm p-4 border border-slate-200">
-            <div class="flex items-center justify-between mb-3 px-1">
-                <span class="text-xs font-extrabold uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
-                    <i class="fa-solid fa-clapperboard text-rose-500"></i> Historias & Reels Destacados
-                </span>
-            </div>
-            <div class="reels-scrollbar flex items-center gap-3 overflow-x-auto pb-2" id="reelsScrollContainer">
-                <div id="addReelCardBtn" onclick="openModal('addReelModal')" class="reel-card bg-slate-50 border-2 border-dashed border-rose-300 hidden flex-col items-center justify-center text-center p-2 hover:bg-rose-50 transition">
-                    <div class="w-10 h-10 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center mb-2">
-                        <i class="fa-solid fa-camera text-base"></i>
-                    </div>
-                    <span class="text-[11px] font-bold text-rose-700 leading-tight">+ Subir Reel</span>
-                </div>
-                <div id="reelsList" class="flex items-center gap-3"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CARRUSEL Y VIDEO CORPORATIVO -->
+    <!-- GALERÍA DESTACADA Y VIDEO CORPORATIVO (REELS ELIMINADOS) -->
     <section class="max-w-7xl mx-auto w-full px-4 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- CARRUSEL DE OPORTUNIDADES -->
         <div class="lg:col-span-7 theme-card-bg rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col justify-between">
             <div class="p-3.5 border-b border-slate-100 flex items-center justify-between">
                 <span class="text-xs font-bold uppercase tracking-wider text-sky-700 flex items-center gap-2">
-                    <i class="fa-solid fa-bolt text-amber-500"></i> Galería de Oportunidades
+                    <i class="fa-solid fa-bolt text-amber-500"></i> Oportunidades Destacadas
                 </span>
             </div>
             <div class="relative w-full h-64 sm:h-80 md:h-96 overflow-hidden bg-slate-900" id="carouselContainer">
                 <div id="carouselSlide" class="w-full h-full relative cursor-pointer" onclick="clickCarouselCurrentSlide()"></div>
-                <button onclick="prevSlide()" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/50 text-white w-9 h-9 rounded-full flex items-center justify-center z-10"><i class="fa-solid fa-chevron-left"></i></button>
-                <button onclick="nextSlide()" class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/50 text-white w-9 h-9 rounded-full flex items-center justify-center z-10"><i class="fa-solid fa-chevron-right"></i></button>
-                <div id="carouselDots" class="absolute bottom-3 left-0 right-0 flex justify-center gap-2 z-10"></div>
+                <button onclick="prevSlide()" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black text-white w-9 h-9 rounded-full flex items-center justify-center z-10 transition"><i class="fa-solid fa-chevron-left"></i></button>
+                <button onclick="nextSlide()" class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black text-white w-9 h-9 rounded-full flex items-center justify-center z-10 transition"><i class="fa-solid fa-chevron-right"></i></button>
             </div>
         </div>
 
+        <!-- VIDEO CORPORATIVO CONFIGURABLE -->
         <div class="lg:col-span-5 theme-card-bg rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col justify-between relative">
             <div class="p-3.5 border-b border-slate-100 flex items-center justify-between">
                 <span class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-2">
-                    <i class="fa-solid fa-circle-play text-red-600"></i> Video Corporativo
+                    <i class="fa-solid fa-circle-play text-red-600"></i> Video Corporativo Informativo
                 </span>
             </div>
-            <div class="p-4 flex-1 flex flex-col justify-center bg-slate-950 relative">
+            <div class="p-4 flex-1 flex flex-col justify-center bg-slate-950 relative min-h-[240px]">
                 <div class="relative w-full aspect-video rounded-xl overflow-hidden bg-black shadow-inner flex items-center justify-center" id="videoPlayerBox"></div>
             </div>
             <div class="p-4 bg-slate-50 text-xs text-slate-600 border-t border-slate-100">
-                <h4 class="font-bold text-slate-800 mb-1">Operaciones transparentes en ALIANZA ESTRATÉGICA S.A.S.</h4>
-                <p class="text-[11px] text-slate-500">Intermediación formal y revisión documental en Notarías y Registro de la Propiedad.</p>
+                <h4 class="font-bold text-slate-800 mb-1">Operaciones Transparentes y Seguras</h4>
+                <p class="text-[11px] text-slate-500">Supervisión notarial y saneamiento documental integral para su tranquilidad.</p>
             </div>
         </div>
     </section>
 
-    <!-- MARKETPLACE -->
+    <!-- MARKETPLACE Y CATALOGO -->
     <main class="max-w-7xl mx-auto px-4 py-6 flex-1 w-full">
-        <div class="bg-gradient-to-r from-sky-700 to-sky-900 rounded-2xl p-6 mb-8 text-white shadow-md">
+        <div class="bg-gradient-to-r from-sky-800 to-slate-900 rounded-3xl p-6 mb-8 text-white shadow-lg">
             <div class="max-w-2xl mx-auto text-center mb-4">
-                <h2 class="text-xl md:text-2xl font-bold mb-1">Marketplace de Bienes & Activos</h2>
-                <p class="text-xs sm:text-sm text-sky-200">Filtre por código único o explore oportunidades en tiempo real.</p>
+                <h2 class="text-xl md:text-2xl font-extrabold mb-1">Catálogo de Activos & Mercado Comercial</h2>
+                <p class="text-xs sm:text-sm text-sky-200">Busque por código asignado (ej: RE-001, VH-001) o explore por categoría.</p>
             </div>
             <div class="max-w-xl mx-auto relative">
-                <input type="text" id="searchInput" onkeyup="filterItems()" placeholder="Buscar por código (ej: RE-001), sector o palabra clave..." class="w-full pl-10 pr-4 py-3 rounded-xl text-slate-800 text-xs sm:text-sm focus:outline-none shadow-lg">
+                <input type="text" id="searchInput" onkeyup="filterItems()" placeholder="Buscar por código, sector o palabra clave..." class="w-full pl-10 pr-4 py-3 rounded-2xl text-slate-800 text-xs sm:text-sm focus:outline-none shadow-lg font-medium">
                 <i class="fa-solid fa-search absolute left-3.5 top-3.5 text-slate-400"></i>
             </div>
         </div>
 
+        <!-- FILTROS POR CATEGORÍA -->
         <div class="flex flex-wrap justify-center gap-2 md:gap-3 mb-8" id="categoryFilters">
-            <button onclick="filterCategory('ALL', this)" class="cat-btn active bg-sky-600 text-white px-4 py-2 rounded-lg text-xs md:text-sm font-semibold shadow-sm transition">Todos Disponibles</button>
-            <button onclick="filterCategory('RE', this)" class="cat-btn bg-white text-slate-700 border px-4 py-2 rounded-lg text-xs md:text-sm font-semibold shadow-sm hover:bg-sky-50 transition">🏠 RE - Ventas</button>
-            <button onclick="filterCategory('AR', this)" class="cat-btn bg-white text-slate-700 border px-4 py-2 rounded-lg text-xs md:text-sm font-semibold shadow-sm hover:bg-sky-50 transition">🔑 AR - Arriendos</button>
-            <button onclick="filterCategory('VH', this)" class="cat-btn bg-white text-slate-700 border px-4 py-2 rounded-lg text-xs md:text-sm font-semibold shadow-sm hover:bg-sky-50 transition">🚗 VH - Vehículos</button>
-            <button onclick="filterCategory('MQ', this)" class="cat-btn bg-white text-slate-700 border px-4 py-2 rounded-lg text-xs md:text-sm font-semibold shadow-sm hover:bg-sky-50 transition">🚜 MQ - Maquinaria</button>
-            <button onclick="filterCategory('LQ', this)" class="cat-btn bg-white text-slate-700 border px-4 py-2 rounded-lg text-xs md:text-sm font-semibold shadow-sm hover:bg-sky-50 transition">📦 LQ - Liquidación</button>
-            <button onclick="filterCategory('SOLD', this)" class="cat-btn bg-emerald-50 text-emerald-800 border px-4 py-2 rounded-lg text-xs md:text-sm font-bold shadow-sm hover:bg-emerald-600 hover:text-white transition">🏆 Vendidos</button>
+            <button onclick="filterCategory('ALL', this)" class="cat-btn active bg-sky-600 text-white px-4 py-2.5 rounded-xl text-xs md:text-sm font-semibold shadow-sm transition">Todos Disponibles</button>
+            <button onclick="filterCategory('RE', this)" class="cat-btn bg-white text-slate-700 border border-slate-200 px-4 py-2.5 rounded-xl text-xs md:text-sm font-semibold shadow-sm hover:bg-sky-50 transition">🏠 RE - Ventas</button>
+            <button onclick="filterCategory('AR', this)" class="cat-btn bg-white text-slate-700 border border-slate-200 px-4 py-2.5 rounded-xl text-xs md:text-sm font-semibold shadow-sm hover:bg-sky-50 transition">🔑 AR - Arriendos</button>
+            <button onclick="filterCategory('VH', this)" class="cat-btn bg-white text-slate-700 border border-slate-200 px-4 py-2.5 rounded-xl text-xs md:text-sm font-semibold shadow-sm hover:bg-sky-50 transition">🚗 VH - Vehículos</button>
+            <button onclick="filterCategory('MQ', this)" class="cat-btn bg-white text-slate-700 border border-slate-200 px-4 py-2.5 rounded-xl text-xs md:text-sm font-semibold shadow-sm hover:bg-sky-50 transition">🚜 MQ - Maquinaria</button>
+            <button onclick="filterCategory('LQ', this)" class="cat-btn bg-white text-slate-700 border border-slate-200 px-4 py-2.5 rounded-xl text-xs md:text-sm font-semibold shadow-sm hover:bg-sky-50 transition">📦 LQ - Liquidación</button>
+            <button onclick="filterCategory('SOLD', this)" class="cat-btn bg-emerald-50 text-emerald-800 border border-emerald-300 px-4 py-2.5 rounded-xl text-xs md:text-sm font-bold shadow-sm hover:bg-emerald-600 hover:text-white transition">🏆 Vendidos</button>
         </div>
 
+        <!-- GRILLA DE ACTIVOS -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="inventoryGrid"></div>
 
-        <!-- ABOGADO Y RESPALDO LEGAL -->
+        <!-- TARJETA DEL ABOGADO Y RESPALDO LEGAL -->
         <section class="mt-16 theme-card-bg rounded-3xl shadow-sm p-6 md:p-8 border border-slate-200">
-            <div class="text-center max-w-2xl mx-auto mb-10">
-                <span class="bg-amber-100 text-amber-900 border border-amber-300 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider inline-block mb-2">Respaldo Jurídico</span>
-                <h3 class="text-2xl md:text-3xl font-extrabold text-slate-900">Equipo Comercial y Asesoría Legal Externa</h3>
+            <div class="text-center max-w-2xl mx-auto mb-8">
+                <span class="bg-amber-100 text-amber-900 border border-amber-300 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider inline-block mb-2">Patrocinio Oficial</span>
+                <h3 class="text-2xl md:text-3xl font-extrabold text-slate-900">Respaldo Jurídico y Dirección Comercial</h3>
             </div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-                <div class="bg-gradient-to-br from-sky-50 to-white rounded-2xl p-6 border border-sky-200 flex flex-col justify-between h-full shadow-sm">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+                <!-- GERENCIA COMERCIAL -->
+                <div class="bg-gradient-to-br from-sky-50 to-white rounded-3xl p-6 border border-sky-200 flex flex-col justify-between shadow-sm">
                     <div>
                         <div class="flex items-center gap-4 mb-4">
-                            <img id="managerPhotoDisplay" src="https://ui-avatars.com/api/?name=Adrian+Iniguez&background=0284c7&color=fff&size=128" alt="Líder Comercial" class="w-16 h-16 rounded-full object-cover border-2 border-sky-600 shadow">
+                            <img src="https://ui-avatars.com/api/?name=Adrian+Iniguez&background=0284c7&color=fff&size=128" alt="Líder Comercial" class="w-16 h-16 rounded-full object-cover border-2 border-sky-600 shadow">
                             <div>
                                 <span class="text-[11px] uppercase font-bold text-sky-700 tracking-wider block">Coordinación Operativa</span>
-                                <h4 class="font-bold text-lg md:text-xl text-slate-900" id="managerNameDisplay">Adrián Arturo Íñiguez Lucio</h4>
+                                <h4 class="font-extrabold text-lg md:text-xl text-slate-900">Adrián Arturo Íñiguez Lucio</h4>
                                 <p class="text-xs font-semibold text-slate-500">Líder Comercial y Jefe de Equipo Operativo</p>
                             </div>
                         </div>
-                        <p class="text-slate-600 text-xs sm:text-sm leading-relaxed mb-6">Coordinación comercial en la provincia de Orellana. Dirección de captaciones, corretaje inmobiliario y custodia de vehículos.</p>
+                        <p class="text-slate-600 text-xs sm:text-sm leading-relaxed mb-6">Atención personalizada para consignación, avalúos preliminares, gestión comercial de bienes inmuebles, vehículos y maquinaria pesada en Orellana.</p>
                     </div>
-                    <div class="space-y-2 pt-4 border-t border-sky-100 text-xs">
-                        <a id="gerenciaWaDisplay" href="https://wa.me/593959190794" target="_blank" class="flex items-center gap-2 text-slate-700 hover:text-emerald-600 transition font-medium">
-                            <i class="fa-brands fa-whatsapp text-emerald-600 text-sm"></i> WhatsApp Equipo: <span id="managerPhoneText">095 919 0794</span>
+                    <div class="pt-4 border-t border-sky-100 text-xs font-bold text-slate-700">
+                        <a href="https://wa.me/593959190794" target="_blank" class="flex items-center gap-2 text-emerald-700 hover:text-emerald-800 transition">
+                            <i class="fa-brands fa-whatsapp text-emerald-600 text-base"></i> Contacto Comercial WhatsApp: <span>095 919 0794</span>
                         </a>
                     </div>
                 </div>
 
-                <!-- TARJETA DEL ABOGADO -->
-                <div class="bg-slate-900 rounded-2xl p-6 text-white shadow-xl border border-amber-500/40 flex flex-col justify-between relative">
+                <!-- TARJETA DEL ABOGADO CONFIGURABLE -->
+                <div class="bg-slate-900 rounded-3xl p-6 text-white shadow-xl border border-amber-500/40 flex flex-col justify-between relative">
                     <div>
                         <div class="mb-4 text-center relative">
                             <span class="text-amber-400 text-[10px] uppercase tracking-wider font-extrabold block mb-2">
-                                <i class="fa-solid fa-scale-balanced mr-1"></i> Tarjeta de Presentación Jurídica Oficial
+                                <i class="fa-solid fa-scale-balanced mr-1"></i> Tarjeta de Presentación Jurídica Externa
                             </span>
-                            <div class="rounded-xl overflow-hidden border border-amber-500/30 shadow-md bg-slate-950 p-2 relative group">
-                                <img id="lawyerCardImg" src="https://lh3.googleusercontent.com/d/1B0q8zHTh3-644iA-e3O3e4rT29i69s38" alt="Tarjeta Abogado" class="w-full h-auto max-h-56 object-contain mx-auto" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Carlos+Iniguez&background=d97706&color=fff';">
-                                <label id="quickLawyerCardUploadLabel" class="hidden absolute inset-0 bg-black/60 hover:bg-black/80 text-white text-xs font-bold items-center justify-center flex-col cursor-pointer transition">
-                                    <i class="fa-solid fa-camera text-2xl text-amber-400 mb-1"></i>
-                                    <span>Cambiar Tarjeta Abogado</span>
+                            <div class="rounded-2xl overflow-hidden border border-amber-500/30 shadow-md bg-slate-950 p-2 relative group min-h-[160px] flex items-center justify-center">
+                                <img id="lawyerCardImg" src="https://lh3.googleusercontent.com/d/1B0q8zHTh3-644iA-e3O3e4rT29i69s38" alt="Tarjeta Abogado" class="w-full h-auto max-h-60 object-contain mx-auto rounded-xl" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Carlos+Iniguez&background=d97706&color=fff&size=300';">
+                                <label id="quickLawyerCardUploadLabel" class="hidden absolute inset-0 bg-black/75 hover:bg-black/90 text-white text-xs font-bold flex flex-col items-center justify-center cursor-pointer transition p-4 text-center">
+                                    <i class="fa-solid fa-camera text-3xl text-amber-400 mb-2"></i>
+                                    <span>Cambiar Imagen de Tarjeta del Abogado desde Archivos / Galería</span>
                                     <input type="file" accept="image/*" class="hidden" onchange="uploadLawyerCardDirectly(this)">
                                 </label>
                             </div>
                         </div>
                         <div class="border-t border-slate-800 pt-3">
-                            <h4 class="font-bold text-lg text-white" id="lawyerNameDisplay">Abg. Carlos Alfredo Íñiguez Rodríguez</h4>
+                            <h4 class="font-extrabold text-lg text-white" id="lawyerNameDisplay">Abg. Carlos Alfredo Íñiguez Rodríguez</h4>
                             <p class="text-xs text-amber-400 font-semibold mb-3">Patrocinio y Asesoría Jurídica Externa Corporativa</p>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-300">
-                                <div class="bg-slate-800/80 p-2.5 rounded-lg border border-slate-700">
-                                    <p class="font-semibold text-white"><i class="fa-solid fa-phone text-amber-400 mr-1.5"></i> Teléfono:</p>
+                                <div class="bg-slate-800/80 p-2.5 rounded-xl border border-slate-700">
+                                    <p class="font-semibold text-white"><i class="fa-solid fa-phone text-amber-400 mr-1.5"></i> Teléfono Directo:</p>
                                     <p id="lawyerPhoneDisplay" class="mt-0.5 text-slate-300">097 922 2328</p>
                                 </div>
-                                <div class="bg-slate-800/80 p-2.5 rounded-lg border border-slate-700">
-                                    <p class="font-semibold text-white"><i class="fa-solid fa-envelope text-amber-400 mr-1.5"></i> Correo:</p>
+                                <div class="bg-slate-800/80 p-2.5 rounded-xl border border-slate-700">
+                                    <p class="font-semibold text-white"><i class="fa-solid fa-envelope text-amber-400 mr-1.5"></i> Correo Electrónico:</p>
                                     <p id="lawyerEmailDisplay" class="mt-0.5 text-slate-300 truncate">carllos-alfredo88@hotmail.com</p>
                                 </div>
                             </div>
@@ -299,15 +258,15 @@
             </div>
         </section>
 
-        <!-- AUSPICIANTES -->
+        <!-- AUSPICIANTES CARRUSEL -->
         <section class="mt-16 theme-card-bg rounded-3xl shadow-sm p-6 border border-slate-200 overflow-hidden">
             <div class="flex flex-wrap items-center justify-between mb-4 px-2">
                 <div>
-                    <span class="text-[10px] bg-sky-100 text-sky-800 font-bold px-2 py-0.5 rounded uppercase tracking-wider">Red de Respaldo Comercial</span>
-                    <h3 class="text-lg md:text-xl font-bold text-slate-900 mt-1">Auspiciantes, Aliados y Entidades</h3>
+                    <span class="text-[10px] bg-sky-100 text-sky-800 font-bold px-2 py-0.5 rounded uppercase tracking-wider">Respaldo Institucional</span>
+                    <h3 class="text-lg md:text-xl font-extrabold text-slate-900 mt-1">Auspiciantes y Entidades Aliadas</h3>
                 </div>
                 <div>
-                    <button onclick="openBrandEditModal()" id="editSponsorsQuickBtn" class="hidden bg-slate-900 text-white text-xs px-3 py-2 rounded-lg font-bold hover:bg-slate-800 transition shadow">
+                    <button onclick="openBrandEditModal()" id="editSponsorsQuickBtn" class="hidden bg-slate-900 text-white text-xs px-3.5 py-2 rounded-xl font-bold hover:bg-slate-800 transition shadow">
                         <i class="fa-solid fa-gear mr-1"></i> Panel Maestro & Auspiciantes
                     </button>
                 </div>
@@ -326,7 +285,7 @@
     <!-- ASISTENTE COMERCIAL VIRTUAL -->
     <div id="aiChatWrapper" class="fixed bottom-5 right-5 z-50 flex flex-col items-end">
         <div id="aiChatWindow" class="hidden w-80 sm:w-96 h-[460px] bg-white rounded-3xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden transition-all duration-300 mb-3">
-            <div class="bg-gradient-to-r from-slate-900 to-sky-900 text-white p-3.5 flex items-center justify-between">
+            <div class="bg-gradient-to-r from-slate-900 to-sky-900 text-white p-4 flex items-center justify-between">
                 <div class="flex items-center gap-3">
                     <div class="relative w-10 h-10 rounded-full border-2 border-sky-400 overflow-hidden shadow-sm">
                         <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80" alt="Asistente Comercial" class="w-full h-full object-cover">
@@ -343,14 +302,14 @@
                 <div class="flex items-start gap-2">
                     <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80" class="w-7 h-7 rounded-full object-cover border border-sky-400">
                     <div class="bg-white p-3 rounded-2xl shadow-sm border border-slate-200 text-slate-700 max-w-[80%]">
-                        ¡Hola! Bienvenid@ a <strong>ALIANZA ESTRATÉGICA S.A.S.</strong> 👋<br><br>
-                        Soy su <strong>Asistente Comercial</strong>. ¿Desea comprar, arrendar o consignar/vender algún inmueble o vehículo con nuestro respaldo legal?
+                        ¡Bienvenido a <strong>ALIANZA ESTRATÉGICA S.A.S.</strong>! 👋<br><br>
+                        ¿En qué podemos ayudarle hoy? Puede consultar sobre compra, arriendo o consignación de inmuebles y vehículos.
                     </div>
                 </div>
             </div>
             <div class="p-3 bg-white border-t border-slate-100 flex items-center gap-2">
-                <input type="text" id="aiUserInput" onkeydown="if(event.key==='Enter') sendAiMessage()" placeholder="Escriba su consulta aquí..." class="flex-1 text-xs border border-slate-300 rounded-xl px-3 py-2 outline-none focus:border-sky-500">
-                <button onclick="sendAiMessage()" class="bg-sky-600 hover:bg-sky-700 text-white p-2 rounded-xl text-xs font-bold transition">
+                <input type="text" id="aiUserInput" onkeydown="if(event.key==='Enter') sendAiMessage()" placeholder="Escriba su consulta..." class="flex-1 text-xs border border-slate-300 rounded-xl px-3 py-2.5 outline-none focus:border-sky-500">
+                <button onclick="sendAiMessage()" class="bg-sky-600 hover:bg-sky-700 text-white p-2.5 rounded-xl text-xs font-bold transition">
                     <i class="fa-solid fa-paper-plane"></i>
                 </button>
             </div>
@@ -364,100 +323,190 @@
         </button>
     </div>
 
-    <!-- MODAL DE LOGIN (ACCESO ADMIN Y AGENTES) -->
-    <div id="loginModal" class="modal-overlay fixed inset-0 bg-slate-900/70 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl relative" onclick="event.stopPropagation()">
-            <button onclick="closeModal('loginModal')" class="absolute top-4 right-4 bg-slate-100 text-slate-600 rounded-full w-8 h-8 flex items-center justify-center font-bold">✕</button>
-            <h3 class="text-lg font-bold text-slate-900 mb-1"><i class="fa-solid fa-right-to-bracket text-sky-600 mr-1"></i> Panel de Acceso</h3>
-            <p class="text-xs text-slate-500 mb-4">Seleccione su perfil corporativo e ingrese credenciales.</p>
-            <form onsubmit="handleLogin(event)" class="space-y-3 text-xs md:text-sm">
+    <!-- MODAL 1: MENÚ INFORMATIVO CORPORATIVO EXPANDIDO (MISIÓN, VISIÓN, HONORARIOS) -->
+    <div id="infoMenuModal" class="modal-overlay fixed inset-0 bg-slate-900/75 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto modal-scroll p-6 shadow-2xl relative" onclick="event.stopPropagation()">
+            <button onclick="closeModal('infoMenuModal')" class="absolute top-4 right-4 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full w-9 h-9 flex items-center justify-center font-bold text-lg transition">✕</button>
+            
+            <div class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
+                <div class="w-12 h-12 rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-building-columns"></i>
+                </div>
                 <div>
-                    <label class="block font-semibold text-slate-700 mb-1">Tipo de Cuenta:</label>
-                    <select id="userType" class="w-full border border-slate-300 rounded-lg p-2.5 outline-none font-semibold text-sky-700">
+                    <h3 class="text-xl font-extrabold text-slate-900">ALIANZA ESTRATÉGICA S.A.S.</h3>
+                    <p class="text-xs text-sky-600 font-bold">Información Institucional & Condiciones Operativas</p>
+                </div>
+            </div>
+
+            <!-- NAAVEGACIÓN INTERNA DE PESTAÑAS -->
+            <div class="flex flex-wrap gap-2 mb-6 border-b border-slate-200 pb-3" id="infoTabsHeader">
+                <button onclick="switchInfoTab('tabMision')" class="info-tab-btn active bg-sky-600 text-white px-3.5 py-1.5 rounded-lg text-xs font-bold transition">Misión y Visión</button>
+                <button onclick="switchInfoTab('tabValores')" class="info-tab-btn bg-slate-100 text-slate-700 px-3.5 py-1.5 rounded-lg text-xs font-bold transition">Valores y Metas</button>
+                <button onclick="switchInfoTab('tabHonorarios')" class="info-tab-btn bg-slate-100 text-slate-700 px-3.5 py-1.5 rounded-lg text-xs font-bold transition">Honorarios y Comisiones</button>
+                <button onclick="switchInfoTab('tabLegal')" class="info-tab-btn bg-slate-100 text-slate-700 px-3.5 py-1.5 rounded-lg text-xs font-bold transition">Respaldo Jurídico</button>
+            </div>
+
+            <div id="infoTabContents" class="text-xs sm:text-sm text-slate-600 leading-relaxed space-y-4">
+                <!-- PESTAÑA MISIÓN Y VISIÓN -->
+                <div id="tabMision" class="info-tab-content space-y-4">
+                    <div class="bg-sky-50/80 p-4 rounded-2xl border border-sky-100">
+                        <h4 class="font-extrabold text-sky-900 text-base mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-bullseye text-sky-600"></i> Nuestra Misión
+                        </h4>
+                        <p>Brindar un servicio integral de intermediación comercial, corretaje inmobiliario y custodia vehicular de excelencia en la provincia de Orellana, garantizando seguridad jurídica, transparencia documental y eficacia económica para compradores, vendedores y arrendatarios.</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                        <h4 class="font-extrabold text-slate-900 text-base mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-eye text-amber-500"></i> Nuestra Visión
+                        </h4>
+                        <p>Consolidarnos como la empresa SAS líder y de mayor confianza en la Amazonía ecuatoriana para la comercialización de activos bienes raíces, automotores y maquinaria pesada, respaldados por la revisión formal notarial y registradores de la propiedad.</p>
+                    </div>
+                </div>
+
+                <!-- PESTAÑA VALORES Y METAS -->
+                <div id="tabValores" class="info-tab-content hidden space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div class="p-3.5 bg-white rounded-xl border border-slate-200">
+                            <h5 class="font-bold text-slate-900 mb-1"><i class="fa-solid fa-shield-halved text-sky-600 mr-1.5"></i> Transparencia Total</h5>
+                            <p class="text-xs">Sin cargos ocultos ni sorpresas en el proceso de transferencia o corretaje.</p>
+                        </div>
+                        <div class="p-3.5 bg-white rounded-xl border border-slate-200">
+                            <h5 class="font-bold text-slate-900 mb-1"><i class="fa-solid fa-gavel text-amber-600 mr-1.5"></i> Rigor Legal</h5>
+                            <p class="text-xs">Verificación previa de gravámenes, prohibiciones de enajenar y títulos.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PESTAÑA HONORARIOS Y COMISIONES -->
+                <div id="tabHonorarios" class="info-tab-content hidden space-y-4">
+                    <div class="bg-amber-50 p-4 rounded-2xl border border-amber-200 text-amber-950">
+                        <h4 class="font-extrabold text-sm mb-2 uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-hand-holding-dollar text-amber-600"></i> Tabla de Comisiones y Corretaje
+                        </h4>
+                        <ul class="space-y-2 text-xs">
+                            <li class="flex justify-between border-b border-amber-200/60 pb-1"><span>Bienes Raíces (Ventas Urbanas / Rurales):</span> <span class="font-bold">3% al 5%</span></li>
+                            <li class="flex justify-between border-b border-amber-200/60 pb-1"><span>Bienes Raíces (Arriendos):</span> <span class="font-bold">1er Mes de Arriendo</span></li>
+                            <li class="flex justify-between border-b border-amber-200/60 pb-1"><span>Vehículos & Automotores:</span> <span class="font-bold">3% al 5%</span></li>
+                            <li class="flex justify-between"><span>Maquinaria Pesada:</span> <span class="font-bold">A convenir en contrato</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- PESTAÑA RESPALDO JURÍDICO -->
+                <div id="tabLegal" class="info-tab-content hidden space-y-4">
+                    <div class="bg-slate-900 text-white p-4 rounded-2xl border border-slate-700">
+                        <h4 class="font-extrabold text-amber-400 mb-2">Patrocinio Externo Especializado</h4>
+                        <p class="text-xs text-slate-300 leading-relaxed mb-3">Toda transacción realizada bajo el amparo de ALIANZA ESTRATÉGICA S.A.S. cuenta con el patrocinio del <strong>Abg. Carlos Alfredo Íñiguez Rodríguez</strong>, asegurando minutas redactadas bajo la ley ecuatoriana vigente.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-6 text-right">
+                <button onclick="closeModal('infoMenuModal')" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-5 py-2.5 rounded-xl transition">
+                    Entendido / Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: INGRESO DE SESIÓN -->
+    <div id="loginModal" class="modal-overlay fixed inset-0 bg-slate-900/75 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl relative" onclick="event.stopPropagation()">
+            <button onclick="closeModal('loginModal')" class="absolute top-4 right-4 bg-slate-100 text-slate-600 rounded-full w-8 h-8 flex items-center justify-center font-bold">✕</button>
+            <h3 class="text-lg font-extrabold text-slate-900 mb-1"><i class="fa-solid fa-right-to-bracket text-sky-600 mr-1.5"></i> Autenticación de Usuario</h3>
+            <p class="text-xs text-slate-500 mb-4">Seleccione su nivel de acceso e ingrese sus credenciales.</p>
+            <form onsubmit="handleLogin(event)" class="space-y-3.5 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Perfil Corporativo:</label>
+                    <select id="userType" class="w-full border border-slate-300 rounded-xl p-3 outline-none font-semibold text-sky-800 bg-slate-50">
                         <option value="ADMIN">Administrador Principal (Gerente)</option>
                         <option value="AGENT">Equipo de Agentes Comerciales</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block font-semibold text-slate-700 mb-1">Usuario / Correo Electrónico:</label>
-                    <input type="text" id="userInput" required placeholder="Usuario" class="w-full border border-slate-300 rounded-lg p-2.5 outline-none">
+                    <label class="block font-bold text-slate-700 mb-1">Usuario / Correo Electrónico:</label>
+                    <input type="text" id="userInput" required placeholder="Usuario" class="w-full border border-slate-300 rounded-xl p-3 outline-none focus:border-sky-500">
                 </div>
                 <div>
-                    <label class="block font-semibold text-slate-700 mb-1">Contraseña:</label>
-                    <input type="password" id="passInput" required placeholder="Contraseña" class="w-full border border-slate-300 rounded-lg p-2.5 outline-none">
+                    <label class="block font-bold text-slate-700 mb-1">Contraseña:</label>
+                    <input type="password" id="passInput" required placeholder="Contraseña" class="w-full border border-slate-300 rounded-xl p-3 outline-none focus:border-sky-500">
                 </div>
-                <button type="submit" class="w-full bg-sky-600 hover:bg-sky-700 text-white font-bold py-3 rounded-xl shadow-md transition">
-                    Autenticar e Ingresar
+                <button type="submit" class="w-full bg-sky-600 hover:bg-sky-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition text-xs uppercase tracking-wider">
+                    Ingresar al Sistema
                 </button>
             </form>
         </div>
     </div>
 
-    <!-- MODAL PANEL MAESTRO (EXCLUSIVO ADMINISTRADOR PRINCIPAL) -->
-    <div id="editBrandModal" class="modal-overlay fixed inset-0 bg-slate-900/70 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-3xl w-full max-h-[92vh] overflow-y-auto modal-scroll p-6 shadow-2xl relative" onclick="event.stopPropagation()">
+    <!-- MODAL 3: PANEL MAESTRO (SOLO GERENTE) DE CONFIGURACIÓN DE YOUTUBE, ABOGADO Y AUSPICIANTES -->
+    <div id="editBrandModal" class="modal-overlay fixed inset-0 bg-slate-900/75 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto modal-scroll p-6 shadow-2xl relative" onclick="event.stopPropagation()">
             <button onclick="closeModal('editBrandModal')" class="absolute top-4 right-4 bg-slate-100 text-slate-600 rounded-full w-8 h-8 flex items-center justify-center font-bold">✕</button>
             <h3 class="text-xl font-extrabold text-slate-900 mb-1"><i class="fa-solid fa-crown text-amber-500 mr-2"></i> Panel de Control Maestro (Gerente)</h3>
-            <p class="text-xs text-slate-500 mb-4">Control total de video corporativo, abogado, textos y auspiciantes.</p>
-            <form onsubmit="handleSaveBrand(event)" class="space-y-5 text-xs md:text-sm">
-                <div class="bg-rose-50 p-4 rounded-xl border border-rose-200 space-y-3">
-                    <h4 class="font-bold text-rose-950 text-xs uppercase flex items-center gap-1">
-                        <i class="fa-solid fa-video text-rose-600"></i> Video Informativo Corporativo (YouTube)
+            <p class="text-xs text-slate-500 mb-5">Configuración de video corporativo, abogado, imágenes y auspiciantes.</p>
+            
+            <form onsubmit="handleSaveBrand(event)" class="space-y-5 text-xs sm:text-sm">
+                <!-- CONFIGURACIÓN VIDEO DE YOUTUBE -->
+                <div class="bg-rose-50 p-4 rounded-2xl border border-rose-200 space-y-2">
+                    <h4 class="font-extrabold text-rose-950 text-xs uppercase flex items-center gap-1.5">
+                        <i class="fa-solid fa-video text-rose-600"></i> Video Corporativo (YouTube / Shorts)
                     </h4>
-                    <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Enlace de YouTube:</label>
-                        <input type="text" id="cfgVideoUrl" placeholder="https://www.youtube.com/watch?v=..." class="w-full border border-slate-300 rounded-xl p-2.5 outline-none">
-                    </div>
+                    <label class="block text-slate-600 text-xs">Pegue aquí el enlace completo de YouTube:</label>
+                    <input type="text" id="cfgVideoUrl" placeholder="https://www.youtube.com/watch?v=..." class="w-full border border-slate-300 rounded-xl p-2.5 outline-none font-mono text-xs">
                 </div>
 
+                <!-- CONFIGURACIÓN DATOS DEL ABOGADO -->
                 <div class="bg-amber-50/80 p-4 rounded-2xl border border-amber-300 space-y-3">
-                    <h4 class="font-bold text-amber-950 text-xs uppercase">Datos del Asesor Legal (Abogado)</h4>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <h4 class="font-extrabold text-amber-950 text-xs uppercase flex items-center gap-1.5">
+                        <i class="fa-solid fa-user-shield text-amber-600"></i> Datos del Asesor Legal (Abogado)
+                    </h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
-                            <label class="block font-semibold text-slate-700 mb-1">Nombre Completo:</label>
-                            <input type="text" id="cfgLawyerName" required class="w-full border border-slate-300 rounded-lg p-2 outline-none">
+                            <label class="block font-bold text-slate-700 mb-1">Nombre Completo:</label>
+                            <input type="text" id="cfgLawyerName" required class="w-full border border-slate-300 rounded-xl p-2.5 outline-none">
                         </div>
                         <div>
-                            <label class="block font-semibold text-slate-700 mb-1">Teléfono / WhatsApp:</label>
-                            <input type="text" id="cfgLawyerPhone" required class="w-full border border-slate-300 rounded-lg p-2 outline-none font-bold text-amber-800">
+                            <label class="block font-bold text-slate-700 mb-1">Teléfono / WhatsApp:</label>
+                            <input type="text" id="cfgLawyerPhone" required class="w-full border border-slate-300 rounded-xl p-2.5 outline-none font-bold text-amber-800">
                         </div>
                     </div>
                     <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Correo Electrónico:</label>
-                        <input type="email" id="cfgLawyerEmail" required class="w-full border border-slate-300 rounded-lg p-2 outline-none">
+                        <label class="block font-bold text-slate-700 mb-1">Correo Electrónico:</label>
+                        <input type="email" id="cfgLawyerEmail" required class="w-full border border-slate-300 rounded-xl p-2.5 outline-none">
                     </div>
                 </div>
 
+                <!-- CONFIGURACIÓN AUSPICIANTES -->
                 <div class="bg-slate-50 p-4 rounded-2xl border border-slate-300 space-y-3">
                     <div class="flex items-center justify-between">
-                        <h4 class="font-bold text-slate-900 text-xs uppercase">Auspiciantes (Subir Logos)</h4>
-                        <span id="modalSponsorCount" class="text-xs bg-sky-200 text-sky-900 font-bold px-2 py-0.5 rounded-full">0</span>
+                        <h4 class="font-extrabold text-slate-900 text-xs uppercase">Gestión de Auspiciantes (Subir Logos)</h4>
+                        <span id="modalSponsorCount" class="text-xs bg-sky-200 text-sky-900 font-bold px-2.5 py-0.5 rounded-full">0</span>
                     </div>
-                    <label class="cursor-pointer bg-slate-900 text-white font-bold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 transition w-full shadow">
-                        <i class="fa-solid fa-images"></i> Subir Logotipos desde Galería / PC
+                    <label class="cursor-pointer bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition w-full shadow text-xs">
+                        <i class="fa-solid fa-folder-open text-sky-400"></i> Seleccionar Logotipos desde PC / Galería
                         <input type="file" multiple accept="image/*" class="hidden" onchange="handleSponsorLogosUpload(this)">
                     </label>
                     <div id="sponsorsPreviewGrid" class="grid grid-cols-4 sm:grid-cols-5 gap-2 mt-2"></div>
                 </div>
 
-                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 rounded-2xl shadow-xl transition text-sm">
-                    Guardar Todo y Sincronizar
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold py-4 rounded-2xl shadow-xl transition text-xs sm:text-sm uppercase tracking-wider">
+                    <i class="fa-solid fa-floppy-disk mr-1.5"></i> Guardar Cambios y Cerrar Ventana
                 </button>
             </form>
         </div>
     </div>
 
-    <!-- MODAL NUEVA CAPTACIÓN (ADMIN Y AGENTES) -->
-    <div id="addItemModal" class="modal-overlay fixed inset-0 bg-slate-900/70 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-xl w-full max-h-[92vh] overflow-y-auto modal-scroll p-6 shadow-2xl relative" onclick="event.stopPropagation()">
+    <!-- MODAL 4: REGISTRAR NUEVA CAPTACIÓN (GERENTE Y AGENTE) -->
+    <div id="addItemModal" class="modal-overlay fixed inset-0 bg-slate-900/75 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-xl w-full max-h-[90vh] overflow-y-auto modal-scroll p-6 shadow-2xl relative" onclick="event.stopPropagation()">
             <button onclick="closeModal('addItemModal')" class="absolute top-4 right-4 bg-slate-100 text-slate-600 rounded-full w-8 h-8 flex items-center justify-center font-bold">✕</button>
-            <h3 class="text-xl font-bold text-slate-900 mb-1">➕ Registrar Nueva Captación</h3>
-            <p class="text-xs text-slate-500 mb-4">Ingresa los datos del bien para publicarlo inmediatamente.</p>
-            <form onsubmit="handleAddNewItem(event)" class="space-y-4 text-xs md:text-sm">
-                <div class="grid grid-cols-2 gap-2 bg-sky-50/70 p-3 rounded-xl border border-sky-200">
+            <h3 class="text-xl font-extrabold text-slate-900 mb-1">➕ Registrar Nueva Captación</h3>
+            <p class="text-xs text-slate-500 mb-4">Ingrese los datos para publicar inmediatamente en la web.</p>
+            <form onsubmit="handleAddNewItem(event)" class="space-y-4 text-xs sm:text-sm">
+                <div class="grid grid-cols-2 gap-3 bg-sky-50/80 p-3.5 rounded-2xl border border-sky-200">
                     <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Categoría:</label>
-                        <select id="newItemCategory" class="w-full border border-slate-300 rounded-lg p-2 outline-none font-semibold text-sky-800" onchange="generateAutomaticItemCode()">
+                        <label class="block font-bold text-slate-700 mb-1">Categoría:</label>
+                        <select id="newItemCategory" class="w-full border border-slate-300 rounded-xl p-2.5 outline-none font-bold text-sky-800 bg-white" onchange="generateAutomaticItemCode()">
                             <option value="RE">RE - Bienes Raíces Venta</option>
                             <option value="AR">AR - Bienes Raíces Arriendo</option>
                             <option value="VH">VH - Vehículo / Automotor</option>
@@ -466,86 +515,99 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Código Asignado:</label>
-                        <input type="text" id="newItemId" readonly class="w-full bg-sky-100 border border-sky-300 text-sky-900 font-mono font-bold rounded-lg p-2 outline-none">
+                        <label class="block font-bold text-slate-700 mb-1">Código Asignado:</label>
+                        <input type="text" id="newItemId" readonly class="w-full bg-sky-100 border border-sky-300 text-sky-900 font-mono font-extrabold rounded-xl p-2.5 outline-none text-center">
                     </div>
                 </div>
                 <div>
-                    <label class="block font-semibold text-slate-700 mb-1">Título / Denominación Comercial:</label>
-                    <input type="text" id="newItemTitle" required placeholder="Ej: Casa 2 Plantas" class="w-full border border-slate-300 rounded-lg p-2.5 outline-none">
+                    <label class="block font-bold text-slate-700 mb-1">Título Commercial del Activo:</label>
+                    <input type="text" id="newItemTitle" required placeholder="Ej: Casa Residencial 2 Plantas" class="w-full border border-slate-300 rounded-xl p-3 outline-none">
                 </div>
-                <div class="grid grid-cols-2 gap-2">
+                <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Ubicación:</label>
-                        <input type="text" id="newItemLocation" required placeholder="Sector / El Coca" class="w-full border border-slate-300 rounded-lg p-2.5 outline-none">
+                        <label class="block font-bold text-slate-700 mb-1">Ubicación / Sector:</label>
+                        <input type="text" id="newItemLocation" required placeholder="Ej: Sector Central, El Coca" class="w-full border border-slate-300 rounded-xl p-3 outline-none">
                     </div>
                     <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Precio en USD ($):</label>
-                        <input type="number" step="any" id="newItemPriceNumber" required placeholder="80000" class="w-full border border-slate-300 rounded-lg p-2.5 outline-none font-bold text-sky-700">
+                        <label class="block font-bold text-slate-700 mb-1">Precio en USD ($):</label>
+                        <input type="number" step="any" id="newItemPriceNumber" required placeholder="80000" class="w-full border border-slate-300 rounded-xl p-3 outline-none font-extrabold text-sky-700">
                     </div>
                 </div>
-                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
-                    <label class="block font-semibold text-slate-700 mb-1">Foto del Activo (Enlace o Archivo):</label>
-                    <input type="text" id="newItemPhotoUrl" placeholder="https://images.unsplash.com/..." class="w-full border border-slate-300 rounded-lg p-2.5 outline-none text-xs">
+                <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
+                    <label class="block font-bold text-slate-700 mb-1">Fotografía del Bien (Imagen/URL):</label>
+                    <input type="text" id="newItemPhotoUrl" placeholder="https://images.unsplash.com/..." class="w-full border border-slate-300 rounded-xl p-2.5 outline-none text-xs">
                 </div>
                 <div>
-                    <label class="block font-semibold text-slate-700 mb-1">Características Técnicas:</label>
-                    <textarea id="newItemFeatures" required rows="2" placeholder="3 Dormitorios, 2 Baños, Garaje" class="w-full border border-slate-300 rounded-lg p-2.5 outline-none"></textarea>
+                    <label class="block font-bold text-slate-700 mb-1">Características Principales (separadas por coma):</label>
+                    <textarea id="newItemFeatures" required rows="2" placeholder="3 Dormitorios, 2 Baños completos, Garaje cerrado" class="w-full border border-slate-300 rounded-xl p-3 outline-none"></textarea>
                 </div>
-                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl shadow-md transition">
-                    Publicar Activo en el Catálogo
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold py-3.5 rounded-2xl shadow-lg transition uppercase tracking-wider text-xs sm:text-sm">
+                    <i class="fa-solid fa-check mr-1.5"></i> Publicar y Cerrar Ventana
                 </button>
             </form>
         </div>
     </div>
 
-    <!-- MODAL EDITAR PRODUCTO (SOLO ADMIN) -->
-    <div id="editItemModal" class="modal-overlay fixed inset-0 bg-slate-900/70 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-xl w-full max-h-[92vh] overflow-y-auto modal-scroll p-6 shadow-2xl relative" onclick="event.stopPropagation()">
+    <!-- MODAL 5: EDITAR BIEN (SOLO GERENTE) -->
+    <div id="editItemModal" class="modal-overlay fixed inset-0 bg-slate-900/75 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-xl w-full max-h-[90vh] overflow-y-auto modal-scroll p-6 shadow-2xl relative" onclick="event.stopPropagation()">
             <button onclick="closeModal('editItemModal')" class="absolute top-4 right-4 bg-slate-100 text-slate-600 rounded-full w-8 h-8 flex items-center justify-center font-bold">✕</button>
-            <h3 class="text-xl font-bold text-slate-900 mb-1"><i class="fa-solid fa-pen-to-square text-sky-600 mr-1"></i> Modificar Producto</h3>
-            <form onsubmit="handleUpdateExistingItem(event)" class="space-y-4 text-xs md:text-sm">
+            <h3 class="text-xl font-extrabold text-slate-900 mb-1"><i class="fa-solid fa-pen-to-square text-sky-600 mr-1.5"></i> Modificar Activo Registrado</h3>
+            <form onsubmit="handleUpdateExistingItem(event)" class="space-y-4 text-xs sm:text-sm">
                 <input type="hidden" id="editItemId">
                 <div>
-                    <label class="block font-semibold text-slate-700 mb-1">Título:</label>
-                    <input type="text" id="editItemTitle" required class="w-full border border-slate-300 rounded-lg p-2.5 outline-none">
+                    <label class="block font-bold text-slate-700 mb-1">Título Comercial:</label>
+                    <input type="text" id="editItemTitle" required class="w-full border border-slate-300 rounded-xl p-3 outline-none">
                 </div>
-                <div class="grid grid-cols-2 gap-2">
+                <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Ubicación:</label>
-                        <input type="text" id="editItemLocation" required class="w-full border border-slate-300 rounded-lg p-2.5 outline-none">
+                        <label class="block font-bold text-slate-700 mb-1">Ubicación:</label>
+                        <input type="text" id="editItemLocation" required class="w-full border border-slate-300 rounded-xl p-3 outline-none">
                     </div>
                     <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Precio:</label>
-                        <input type="text" id="editItemPrice" required class="w-full border border-slate-300 rounded-lg p-2.5 outline-none font-bold text-sky-700">
+                        <label class="block font-bold text-slate-700 mb-1">Precio ($ USD):</label>
+                        <input type="text" id="editItemPrice" required class="w-full border border-slate-300 rounded-xl p-3 outline-none font-extrabold text-sky-700">
                     </div>
                 </div>
                 <div>
-                    <label class="block font-semibold text-slate-700 mb-1">Características:</label>
-                    <textarea id="editItemFeatures" required rows="3" class="w-full border border-slate-300 rounded-lg p-2 outline-none"></textarea>
+                    <label class="block font-bold text-slate-700 mb-1">Características Técnicas:</label>
+                    <textarea id="editItemFeatures" required rows="3" class="w-full border border-slate-300 rounded-xl p-3 outline-none"></textarea>
                 </div>
-                <button type="submit" class="w-full bg-sky-600 hover:bg-sky-700 text-white font-bold py-3.5 rounded-xl shadow-md transition">
-                    Guardar Cambios del Producto
+                <button type="submit" class="w-full bg-sky-600 hover:bg-sky-700 text-white font-extrabold py-3.5 rounded-2xl shadow-lg transition uppercase tracking-wider text-xs sm:text-sm">
+                    <i class="fa-solid fa-floppy-disk mr-1.5"></i> Guardar Cambios y Cerrar
                 </button>
             </form>
         </div>
     </div>
 
-    <!-- MODAL FICHA TÉCNICA -->
-    <div id="itemModal" class="modal-overlay fixed inset-0 bg-slate-900/70 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[92vh] overflow-y-auto modal-scroll shadow-2xl relative" onclick="event.stopPropagation()">
-            <button onclick="closeModal('itemModal')" class="absolute top-4 right-4 bg-slate-100 text-slate-600 rounded-full w-8 h-8 flex items-center justify-center font-bold z-20">✕</button>
+    <!-- MODAL 6: FICHA TÉCNICA Y DETALLES -->
+    <div id="itemModal" class="modal-overlay fixed inset-0 bg-slate-900/75 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto modal-scroll shadow-2xl relative" onclick="event.stopPropagation()">
+            <button onclick="closeModal('itemModal')" class="absolute top-4 right-4 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full w-9 h-9 flex items-center justify-center font-bold text-lg z-20">✕</button>
             <div id="modalContent" class="p-6"></div>
         </div>
     </div>
 
-    <!-- SCRIPT DE MOTOR LÓGICO -->
+    <!-- MOTOR LÓGICO COMPLETO EN JAVASCRIPT -->
     <script>
+        // MSTR SYSTEM CONFIG
         function showToast(message, isSuccess = true) {
             const toast = document.getElementById('appToast');
             const msg = document.getElementById('appToastMessage');
+            const icon = document.getElementById('appToastIcon');
             if(!toast || !msg) return;
+            
             msg.textContent = message;
+            if(isSuccess) {
+                icon.className = "fa-solid fa-circle-check text-emerald-400 text-base";
+                toast.classList.remove('border-red-500/50');
+                toast.classList.add('border-emerald-500/50');
+            } else {
+                icon.className = "fa-solid fa-triangle-exclamation text-rose-400 text-base";
+                toast.classList.remove('border-emerald-500/50');
+                toast.classList.add('border-red-500/50');
+            }
+
             toast.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
             toast.classList.add('opacity-100', 'translate-y-0');
             setTimeout(() => {
@@ -554,27 +616,29 @@
             }, 3200);
         }
 
-        const defaultSponsors = [
+        const defaultSponsorsList = [
             'https://ui-avatars.com/api/?name=Registro+Propiedad+Coca&background=0f172a&color=38bdf8&size=200&bold=true',
             'https://ui-avatars.com/api/?name=Notaria+Primera+Orellana&background=1e293b&color=f59e0b&size=200&bold=true',
             'https://ui-avatars.com/api/?name=ANT+Ecuador&background=0284c7&color=fff&size=200&bold=true',
             'https://ui-avatars.com/api/?name=SRI+Ecuador&background=047857&color=fff&size=200&bold=true'
         ];
 
-        let brandConfig = JSON.parse(localStorage.getItem('alianza_brand_v17')) || {
+        let brandConfig = JSON.parse(localStorage.getItem('alianza_brand_v18')) || {
             corporateVideoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
             lawyerName: 'Abg. Carlos Alfredo Íñiguez Rodríguez',
             lawyerPhone: '097 922 2328',
             lawyerEmail: 'carllos-alfredo88@hotmail.com',
-            sponsors: defaultSponsors,
-            reels: []
+            lawyerCardImgUrl: 'https://lh3.googleusercontent.com/d/1B0q8zHTh3-644iA-e3O3e4rT29i69s38',
+            coverImgUrl: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80',
+            profileLogoUrl: 'https://lh3.googleusercontent.com/d/1X6tUqZ2z3c8vN-xYqZp8W1V_X7mRzS',
+            sponsors: defaultSponsorsList
         };
 
-        let inventory = JSON.parse(localStorage.getItem('alianza_inventory_v17')) || [
+        let inventory = JSON.parse(localStorage.getItem('alianza_inventory_v18')) || [
             {
                 id: 'RE-001',
                 category: 'RE',
-                date: '28 oct 2026',
+                date: '30 oct 2026',
                 title: 'Casa Residencial 2 Plantas en el Centro',
                 location: 'Sector Central, El Coca (Orellana)',
                 price: '$80,000.00 USD',
@@ -609,6 +673,16 @@
             document.getElementById('lawyerNameDisplay').textContent = brandConfig.lawyerName;
             document.getElementById('lawyerPhoneDisplay').textContent = brandConfig.lawyerPhone;
             document.getElementById('lawyerEmailDisplay').textContent = brandConfig.lawyerEmail;
+            
+            if(brandConfig.lawyerCardImgUrl) {
+                document.getElementById('lawyerCardImg').src = brandConfig.lawyerCardImgUrl;
+            }
+            if(brandConfig.coverImgUrl) {
+                document.getElementById('coverImgDisplay').src = brandConfig.coverImgUrl;
+            }
+            if(brandConfig.profileLogoUrl) {
+                document.getElementById('profileLogoImg').src = brandConfig.profileLogoUrl;
+            }
         }
 
         function checkUserState() {
@@ -620,7 +694,6 @@
             const quickProfileLabel = document.getElementById('quickProfileUploadLabel');
             const quickLawyerLabel = document.getElementById('quickLawyerCardUploadLabel');
             const editSponsorsQuickBtn = document.getElementById('editSponsorsQuickBtn');
-            const addReelCardBtn = document.getElementById('addReelCardBtn');
 
             if (currentUserRole === 'ADMIN') {
                 banner.classList.remove('hidden');
@@ -628,50 +701,47 @@
                 quickProfileLabel?.classList.remove('hidden');
                 quickLawyerLabel?.classList.remove('hidden');
                 editSponsorsQuickBtn?.classList.remove('hidden');
-                if(addReelCardBtn) addReelCardBtn.classList.remove('hidden');
 
-                statusDiv.innerHTML = `<i class="fa-solid fa-crown text-slate-900 text-lg mr-1"></i> ADMINISTRADOR PRINCIPAL (Gerente) - Control Total`;
+                statusDiv.innerHTML = `<i class="fa-solid fa-crown text-slate-900 text-lg mr-1"></i> ADMINISTRADOR PRINCIPAL (Gerente) - Control Total Activo`;
                 actionsDiv.innerHTML = `
-                    <button onclick="openAddNewItemModal()" class="bg-slate-900 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-slate-800 transition shadow">
+                    <button onclick="openAddNewItemModal()" class="bg-slate-900 text-white px-3.5 py-1.5 rounded-xl text-xs font-bold hover:bg-slate-800 transition shadow">
                         <i class="fa-solid fa-plus mr-1"></i> Añadir Activo
                     </button>
-                    <button onclick="openBrandEditModal()" class="bg-sky-900 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-sky-800 transition shadow">
-                        <i class="fa-solid fa-sliders mr-1"></i> Panel Maestro & Diseño
+                    <button onclick="openBrandEditModal()" class="bg-sky-900 text-white px-3.5 py-1.5 rounded-xl text-xs font-bold hover:bg-sky-800 transition shadow">
+                        <i class="fa-solid fa-sliders mr-1"></i> Panel Maestro & Ajustes
                     </button>
-                    <button onclick="logoutUser()" class="bg-white text-slate-900 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-slate-100 transition shadow">
+                    <button onclick="logoutUser()" class="bg-white text-slate-900 px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-slate-100 transition shadow">
                         Cerrar Sesión
                     </button>
                 `;
                 loginBtn.innerHTML = '<i class="fa-solid fa-user-shield mr-1"></i> Gerente Activo';
-                loginBtn.className = 'bg-amber-600 text-slate-900 px-2.5 py-1 rounded text-xs font-bold transition ml-1 shadow-sm';
+                loginBtn.className = 'bg-amber-600 text-slate-900 px-3 py-1.5 rounded-lg text-xs font-bold transition ml-1 shadow-sm';
             } else if (currentUserRole === 'AGENT') {
                 banner.classList.remove('hidden');
                 quickCoverLabel?.classList.add('hidden');
                 quickProfileLabel?.classList.add('hidden');
                 quickLawyerLabel?.classList.add('hidden');
                 editSponsorsQuickBtn?.classList.add('hidden');
-                if(addReelCardBtn) addReelCardBtn.classList.add('hidden');
 
                 statusDiv.innerHTML = `<i class="fa-solid fa-id-badge text-lg text-slate-900"></i> AGENTE COMERCIAL - Subida de Captaciones`;
                 actionsDiv.innerHTML = `
-                    <button onclick="openAddNewItemModal()" class="bg-slate-900 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-slate-800 transition shadow">
+                    <button onclick="openAddNewItemModal()" class="bg-slate-900 text-white px-3.5 py-1.5 rounded-xl text-xs font-bold hover:bg-slate-800 transition shadow">
                         <i class="fa-solid fa-plus mr-1"></i> Registrar Nueva Captación
                     </button>
-                    <button onclick="logoutUser()" class="bg-white text-slate-900 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-slate-100 transition shadow">
+                    <button onclick="logoutUser()" class="bg-white text-slate-900 px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-slate-100 transition shadow">
                         Cerrar Sesión
                     </button>
                 `;
                 loginBtn.innerHTML = '<i class="fa-solid fa-id-badge mr-1"></i> Agente Activo';
-                loginBtn.className = 'bg-emerald-600 text-white px-2.5 py-1 rounded text-xs font-bold transition ml-1 shadow-sm';
+                loginBtn.className = 'bg-emerald-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition ml-1 shadow-sm';
             } else {
                 banner.classList.add('hidden');
                 quickCoverLabel?.classList.add('hidden');
                 quickProfileLabel?.classList.add('hidden');
                 quickLawyerLabel?.classList.add('hidden');
                 editSponsorsQuickBtn?.classList.add('hidden');
-                if(addReelCardBtn) addReelCardBtn.classList.add('hidden');
                 loginBtn.innerHTML = '<i class="fa-solid fa-right-to-bracket mr-1"></i> Ingreso';
-                loginBtn.className = 'bg-sky-500 hover:bg-sky-400 text-white px-2.5 py-1 rounded text-xs font-bold transition shadow-sm flex items-center';
+                loginBtn.className = 'bg-sky-500 hover:bg-sky-400 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition shadow-sm flex items-center gap-1.5';
             }
         }
 
@@ -712,7 +782,7 @@
             localStorage.setItem('alianza_user_role', 'GUEST');
             checkUserState();
             renderGrid();
-            showToast('Sesión cerrada');
+            showToast('Sesión cerrada correctamente');
         }
 
         // CONTROL DE VIDEO CORPORATIVO
@@ -725,22 +795,22 @@
                 const id = ytMatch[2];
                 box.innerHTML = `<iframe class="w-full h-full rounded-xl" src="https://www.youtube.com/embed/${id}?autoplay=1&mute=1&playsinline=1&loop=1&playlist=${id}&controls=1" frameborder="0" allowfullscreen></iframe>`;
             } else {
-                box.innerHTML = `<div class="text-white text-xs p-4 text-center">Video configurado correctamente</div>`;
+                box.innerHTML = `<div class="text-white text-xs p-4 text-center">Video de YouTube enlazado correctamente</div>`;
             }
         }
 
-        // AUSPICIANTES
+        // AUSPICIANTES MARQUEE
         function renderSponsorsMarquee() {
             const track1 = document.getElementById('marqueeTrackRow1');
             const track2 = document.getElementById('marqueeTrackRow2');
             if(!track1 || !track2) return;
-            const list = brandConfig.sponsors || defaultSponsors;
+            const list = brandConfig.sponsors || defaultSponsorsList;
             const half = Math.ceil(list.length / 2);
             const row1 = list.slice(0, half);
             const row2 = list.slice(half).length > 0 ? list.slice(half) : row1;
 
-            track1.innerHTML = [...row1, ...row1].map(logo => `<div class="h-11 w-32 flex-shrink-0 bg-white rounded-xl p-1.5 shadow-sm border flex items-center justify-center"><img src="${logo}" class="max-h-full max-w-full object-contain"></div>`).join('');
-            track2.innerHTML = [...row2, ...row2].map(logo => `<div class="h-11 w-32 flex-shrink-0 bg-white rounded-xl p-1.5 shadow-sm border flex items-center justify-center"><img src="${logo}" class="max-h-full max-w-full object-contain"></div>`).join('');
+            track1.innerHTML = [...row1, ...row1].map(logo => `<div class="h-12 w-32 flex-shrink-0 bg-white rounded-xl p-1.5 shadow-sm border border-slate-200 flex items-center justify-center"><img src="${logo}" class="max-h-full max-w-full object-contain"></div>`).join('');
+            track2.innerHTML = [...row2, ...row2].map(logo => `<div class="h-12 w-32 flex-shrink-0 bg-white rounded-xl p-1.5 shadow-sm border border-slate-200 flex items-center justify-center"><img src="${logo}" class="max-h-full max-w-full object-contain"></div>`).join('');
         }
 
         function openBrandEditModal() {
@@ -761,45 +831,73 @@
             brandConfig.lawyerPhone = document.getElementById('cfgLawyerPhone').value.trim();
             brandConfig.lawyerEmail = document.getElementById('cfgLawyerEmail').value.trim();
 
-            localStorage.setItem('alianza_brand_v17', JSON.stringify(brandConfig));
+            localStorage.setItem('alianza_brand_v18', JSON.stringify(brandConfig));
             applyBrandConfig();
             setupVideoPlayer();
             closeModal('editBrandModal');
-            showToast('¡Configuración guardada con éxito!');
+            showToast('¡Configuración guardada exitosamente!');
         }
 
-        async function handleSponsorLogosUpload(input) {
+        function uploadLawyerCardDirectly(input) {
+            if (currentUserRole !== 'ADMIN' || !input.files || !input.files[0]) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                brandConfig.lawyerCardImgUrl = e.target.result;
+                localStorage.setItem('alianza_brand_v18', JSON.stringify(brandConfig));
+                applyBrandConfig();
+                showToast('¡Tarjeta del Abogado actualizada!');
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+
+        function uploadHeaderImages(input, type) {
+            if (currentUserRole !== 'ADMIN' || !input.files || !input.files[0]) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                if (type === 'cover') {
+                    brandConfig.coverImgUrl = e.target.result;
+                } else if (type === 'logo') {
+                    brandConfig.profileLogoUrl = e.target.result;
+                }
+                localStorage.setItem('alianza_brand_v18', JSON.stringify(brandConfig));
+                applyBrandConfig();
+                showToast('¡Imagen guardada para todos los visitantes!');
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+
+        function handleSponsorLogosUpload(input) {
             const files = Array.from(input.files);
             if (!files.length) return;
-            for (const file of files) {
+            files.forEach(file => {
                 const reader = new FileReader();
                 reader.onload = (e) => {
                     brandConfig.sponsors.push(e.target.result);
-                    localStorage.setItem('alianza_brand_v17', JSON.stringify(brandConfig));
+                    localStorage.setItem('alianza_brand_v18', JSON.stringify(brandConfig));
                     renderSponsorsModalPreview();
                     renderSponsorsMarquee();
                 };
                 reader.readAsDataURL(file);
-            }
-            showToast('Logotipos añadidos con éxito');
+            });
+            showToast('Logotipo(s) subido(s)');
         }
 
         function renderSponsorsModalPreview() {
             const grid = document.getElementById('sponsorsPreviewGrid');
             const badge = document.getElementById('modalSponsorCount');
-            const list = brandConfig.sponsors || defaultSponsors;
+            const list = brandConfig.sponsors || defaultSponsorsList;
             if(badge) badge.textContent = list.length;
             if(grid) {
                 grid.innerHTML = list.map((img, idx) => `
-                    <div class="relative group h-14 bg-white rounded-lg p-1 border flex items-center justify-center">
+                    <div class="relative group h-14 bg-white rounded-xl p-1 border border-slate-200 flex items-center justify-center">
                         <img src="${img}" class="max-h-full max-w-full object-contain">
-                        <button type="button" onclick="brandConfig.sponsors.splice(${idx},1); renderSponsorsModalPreview(); renderSponsorsMarquee();" class="absolute -top-1.5 -right-1.5 bg-red-600 text-white rounded-full w-4 h-4 text-[9px] flex items-center justify-center">✕</button>
+                        <button type="button" onclick="brandConfig.sponsors.splice(${idx},1); renderSponsorsModalPreview(); renderSponsorsMarquee();" class="absolute -top-1.5 -right-1.5 bg-red-600 text-white rounded-full w-4 h-4 text-[9px] flex items-center justify-center font-bold shadow">✕</button>
                     </div>
                 `).join('');
             }
         }
 
-        // INVENTARIO Y CAPTACIONES
+        // CAPTACIONALES Y PRODUCTOS
         function openAddNewItemModal() {
             if (currentUserRole === 'GUEST') return;
             generateAutomaticItemCode();
@@ -829,7 +927,7 @@
             };
 
             inventory.unshift(newItem);
-            localStorage.setItem('alianza_inventory_v17', JSON.stringify(inventory));
+            localStorage.setItem('alianza_inventory_v18', JSON.stringify(inventory));
             renderGrid();
             rebuildCarouselList();
             e.target.reset();
@@ -839,7 +937,7 @@
 
         function openEditItemModal(id) {
             if (currentUserRole !== 'ADMIN') {
-                showToast('Acceso denegado: Solo el Gerente puede editar.', false);
+                showToast('Solo el Gerente puede editar activos.', false);
                 return;
             }
             const item = inventory.find(i => i.id === id);
@@ -867,21 +965,18 @@
             item.price = document.getElementById('editItemPrice').value.trim();
             item.features = document.getElementById('editItemFeatures').value.split(',').map(f => f.trim());
 
-            localStorage.setItem('alianza_inventory_v17', JSON.stringify(inventory));
+            localStorage.setItem('alianza_inventory_v18', JSON.stringify(inventory));
             renderGrid();
             rebuildCarouselList();
             closeModal('editItemModal');
-            showToast(`¡Producto ${item.id} actualizado!`);
+            showToast(`¡Activo ${item.id} actualizado!`);
         }
 
         function deleteItem(id) {
-            if (currentUserRole !== 'ADMIN') {
-                showToast('Acceso denegado: Solo el Gerente puede borrar.', false);
-                return;
-            }
-            if (confirm(`¿Eliminar activo ${id}?`)) {
+            if (currentUserRole !== 'ADMIN') return;
+            if (confirm(`¿Está seguro de eliminar el activo ${id}?`)) {
                 inventory = inventory.filter(item => item.id !== id);
-                localStorage.setItem('alianza_inventory_v17', JSON.stringify(inventory));
+                localStorage.setItem('alianza_inventory_v18', JSON.stringify(inventory));
                 renderGrid();
                 rebuildCarouselList();
                 showToast('Activo eliminado');
@@ -901,34 +996,34 @@
             }
 
             if (filtered.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-500 bg-white rounded-2xl border">No hay activos disponibles.</div>`;
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-500 bg-white rounded-3xl border border-slate-200">No hay activos para esta categoría.</div>`;
                 return;
             }
 
             filtered.forEach(item => {
                 const adminActionButtons = currentUserRole === 'ADMIN' ? `
                     <div class="absolute top-3 right-3 flex items-center gap-1.5 z-10">
-                        <button onclick="openEditItemModal('${item.id}')" class="bg-sky-600 text-white text-xs font-bold p-2 rounded-lg shadow"><i class="fa-solid fa-pen-to-square"></i></button>
-                        <button onclick="deleteItem('${item.id}')" class="bg-red-600 text-white text-xs font-bold p-2 rounded-lg shadow"><i class="fa-solid fa-trash"></i></button>
+                        <button onclick="openEditItemModal('${item.id}')" class="bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold p-2.5 rounded-xl shadow"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button onclick="deleteItem('${item.id}')" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold p-2.5 rounded-xl shadow"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 ` : '';
 
                 grid.innerHTML += `
-                    <div class="theme-card-bg rounded-2xl shadow-sm border overflow-hidden flex flex-col justify-between relative group">
+                    <div class="theme-card-bg rounded-3xl shadow-sm border border-slate-200 overflow-hidden flex flex-col justify-between relative group">
                         <div>
-                            <div class="relative h-48 bg-slate-100 cursor-pointer overflow-hidden" onclick="openItemModal('${item.id}')">
+                            <div class="relative h-52 bg-slate-100 cursor-pointer overflow-hidden" onclick="openItemModal('${item.id}')">
                                 <img src="${item.photos[0]}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                                <span class="absolute top-3 left-3 bg-slate-900/90 text-amber-400 text-xs font-bold px-2.5 py-1 rounded-md">Cód. ${item.id}</span>
+                                <span class="absolute top-3 left-3 bg-slate-900/90 text-amber-400 text-xs font-bold px-3 py-1 rounded-lg">Cód. ${item.id}</span>
                             </div>
                             ${adminActionButtons}
                             <div class="p-5">
-                                <h3 class="font-bold text-slate-900 text-base mb-1">${item.title}</h3>
+                                <h3 class="font-extrabold text-slate-900 text-base mb-1">${item.title}</h3>
                                 <p class="text-xs text-slate-500 mb-3"><i class="fa-solid fa-location-dot text-sky-500 mr-1"></i>${item.location}</p>
                                 <div class="text-lg font-extrabold text-sky-700">${item.price}</div>
                             </div>
                         </div>
                         <div class="p-5 pt-0">
-                            <button onclick="openItemModal('${item.id}')" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold py-2.5 rounded-lg transition">Ver Ficha Técnica</button>
+                            <button onclick="openItemModal('${item.id}')" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold py-3 rounded-xl transition">Ver Ficha Técnica Completa</button>
                         </div>
                     </div>
                 `;
@@ -945,18 +1040,24 @@
         function openItemModal(id) {
             const item = inventory.find(i => i.id === id);
             if (!item) return;
-            const adminEditBtn = currentUserRole === 'ADMIN' ? `<button onclick="openEditItemModal('${item.id}')" class="bg-amber-500 text-slate-900 px-3 py-1 rounded text-xs font-bold">Modificar</button>` : '';
+            const adminEditBtn = currentUserRole === 'ADMIN' ? `<button onclick="openEditItemModal('${item.id}')" class="bg-amber-500 text-slate-900 px-3 py-1 rounded-lg text-xs font-bold">Modificar</button>` : '';
 
             document.getElementById('modalContent').innerHTML = `
                 <div class="flex justify-between items-center mb-3">
-                    <span class="bg-sky-100 text-sky-800 px-2.5 py-1 rounded font-mono text-xs">Cód. ${item.id}</span>
+                    <span class="bg-sky-100 text-sky-800 px-3 py-1 rounded-lg font-mono text-xs font-bold">Cód. ${item.id}</span>
                     ${adminEditBtn}
                 </div>
-                <h2 class="text-xl font-bold mb-2">${item.title}</h2>
-                <p class="text-xs text-slate-500 mb-4">${item.location}</p>
-                <img src="${item.photos[0]}" class="w-full h-64 object-cover rounded-xl mb-4">
-                <p class="text-lg font-bold text-sky-700 mb-4">${item.price}</p>
-                <ul class="space-y-1 text-xs text-slate-700 mb-4">${item.features.map(f => `<li>• ${f}</li>`).join('')}</ul>
+                <h2 class="text-xl font-extrabold mb-2 text-slate-900">${item.title}</h2>
+                <p class="text-xs text-slate-500 mb-4"><i class="fa-solid fa-location-dot text-sky-500 mr-1"></i>${item.location}</p>
+                <img src="${item.photos[0]}" class="w-full h-72 object-cover rounded-2xl mb-4 shadow">
+                <p class="text-xl font-extrabold text-sky-700 mb-4">${item.price}</p>
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 mb-4">
+                    <h4 class="font-bold text-xs uppercase text-slate-700 mb-2">Detalles Técnicos:</h4>
+                    <ul class="space-y-1 text-xs text-slate-700">${item.features.map(f => `<li>• ${f}</li>`).join('')}</ul>
+                </div>
+                <a href="https://wa.me/593959190794?text=Hola,%20solicito%20información%20del%20activo%20código%20${item.id}" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold py-3.5 rounded-xl flex items-center justify-center gap-2 transition shadow">
+                    <i class="fa-brands fa-whatsapp text-base"></i> Consultar por WhatsApp
+                </a>
             `;
             openModal('itemModal');
         }
@@ -978,15 +1079,27 @@
             const cur = activeCarouselItems[currentSlideIndex];
             container.innerHTML = `
                 <img src="${cur.img}" class="w-full h-full object-cover">
-                <div class="absolute bottom-3 left-4 right-4 bg-black/75 p-2.5 rounded-xl text-white flex justify-between items-center">
-                    <span class="text-xs font-semibold">${cur.title}</span>
-                    <span class="text-xs font-extrabold text-sky-300">${cur.price}</span>
+                <div class="absolute bottom-3 left-4 right-4 bg-black/80 p-3 rounded-2xl text-white flex justify-between items-center backdrop-blur-sm">
+                    <span class="text-xs font-bold truncate pr-2">${cur.title}</span>
+                    <span class="text-xs font-extrabold text-sky-300 flex-shrink-0">${cur.price}</span>
                 </div>
             `;
         }
         function nextSlide() { if(activeCarouselItems.length) { currentSlideIndex = (currentSlideIndex + 1) % activeCarouselItems.length; renderCarouselSlide(); } }
         function prevSlide() { if(activeCarouselItems.length) { currentSlideIndex = (currentSlideIndex - 1 + activeCarouselItems.length) % activeCarouselItems.length; renderCarouselSlide(); } }
         function clickCarouselCurrentSlide() { if(activeCarouselItems.length) openItemModal(activeCarouselItems[currentSlideIndex].id); }
+
+        // PESTAÑAS DEL MENÚ INFORMATIVO
+        function switchInfoTab(tabId) {
+            document.querySelectorAll('.info-tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.info-tab-btn').forEach(btn => {
+                btn.classList.remove('bg-sky-600', 'text-white');
+                btn.classList.add('bg-slate-100', 'text-slate-700');
+            });
+            document.getElementById(tabId)?.classList.remove('hidden');
+            event.currentTarget.classList.remove('bg-slate-100', 'text-slate-700');
+            event.currentTarget.classList.add('bg-sky-600', 'text-white');
+        }
 
         // ASISTENTE COMERCIAL
         function toggleAiChat() { document.getElementById('aiChatWindow').classList.toggle('hidden'); }
@@ -995,10 +1108,10 @@
             const text = input.value.trim();
             if(!text) return;
             const container = document.getElementById('aiChatMessages');
-            container.innerHTML += `<div class="flex justify-end"><div class="bg-sky-600 text-white p-2.5 rounded-xl text-xs max-w-[80%]">${text}</div></div>`;
+            container.innerHTML += `<div class="flex justify-end"><div class="bg-sky-600 text-white p-3 rounded-2xl text-xs max-w-[80%]">${text}</div></div>`;
             input.value = '';
             setTimeout(() => {
-                container.innerHTML += `<div class="flex items-start gap-2"><div class="bg-white p-2.5 rounded-xl border text-xs text-slate-700 max-w-[80%]">Con gusto le ayudamos con su requerimiento en ALIANZA ESTRATÉGICA S.A.S. ¿Desea que le conecte con un agente por WhatsApp?</div></div>`;
+                container.innerHTML += `<div class="flex items-start gap-2"><div class="bg-white p-3 rounded-2xl border border-slate-200 text-xs text-slate-700 max-w-[80%]">Con gusto le asesoramos en ALIANZA ESTRATÉGICA S.A.S. ¿Desea comunicarse por WhatsApp con nuestro Líder Comercial?</div></div>`;
                 container.scrollTop = container.scrollHeight;
             }, 600);
         }
