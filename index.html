@@ -41,7 +41,7 @@
                     }
                 }
             }
-        }
+        };
     </script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
@@ -88,10 +88,10 @@
 </head>
 <body class="font-sans text-slate-800 antialiased min-h-screen flex flex-col relative transition-colors duration-300">
 
-    <!-- TOAST NOTIFICATION CONTAINER -->
+    <!-- CONTENEDOR DE NOTIFICACIONES TOAST -->
     <div id="toastContainer" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-    <!-- TOP BAR BARRA SUPERIOR -->
+    <!-- BARRA SUPERIOR -->
     <div class="theme-nav-bg text-white text-xs py-2 px-4 border-b border-sky-800/50 sticky top-0 z-40">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
             <div class="flex items-center gap-3">
@@ -99,6 +99,9 @@
                 <span id="topEmailDisplay" class="hidden md:inline"><i class="fa-solid fa-envelope text-sky-400 mr-1"></i> alianzaestrategica2026@gmail.com</span>
                 <span id="roleBadge" class="bg-slate-700/60 text-sky-300 border border-sky-500/30 text-[10px] px-2 py-0.5 rounded-full font-semibold flex items-center gap-1">
                     <i class="fa-solid fa-eye"></i> <span id="roleBadgeText">Modo Público / Visitante</span>
+                </span>
+                <span id="cloudStatusBadge" class="hidden sm:flex items-center gap-1 text-[10px] text-emerald-400 font-mono">
+                    <i class="fa-solid fa-cloud"></i> Sincronizado
                 </span>
             </div>
             <div class="flex items-center gap-2 sm:gap-2.5">
@@ -140,7 +143,7 @@
     <div id="agentBanner" class="bg-sky-600 text-white px-4 py-2.5 hidden shadow-md border-b border-sky-700 z-30">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
             <div class="flex items-center gap-2 font-bold text-xs md:text-sm">
-                <i class="fa-solid fa-user-tie"></i> MODO AGENTE COMERCIAL - REGISTRO DE CAPTACIONES (Clave: agentes12345@)
+                <i class="fa-solid fa-user-tie"></i> MODO AGENTE COMERCIAL - REGISTRO DE CAPTACIONES
             </div>
             <div>
                 <button onclick="openAddProductModal()" class="bg-amber-500 text-slate-900 px-3 py-1 rounded text-xs font-bold hover:bg-amber-400 transition shadow">
@@ -170,7 +173,7 @@
                     <div class="flex flex-col sm:flex-row items-center sm:items-end gap-4 text-center sm:text-left">
                         <div class="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full border-4 border-white shadow-xl overflow-hidden bg-white flex-shrink-0 group">
                             <img id="profileLogoImg" src="https://lh3.googleusercontent.com/d/1X6tUqZ2z3c8vN-xYqZp8W1V_X7mRzS" alt="Perfil" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Alianza+Estrategica&background=0284c7&color=fff';">
-                            <button onclick="triggerFileSelect('profileFileInput')" class="admin-only hidden absolute inset-0 bg-black/60 text-white text-[10px] font-bold flex-col items-center justify-center transition group-hover:flex">
+                            <button onclick="triggerFileSelect('profileFileInput')" class="admin-only hidden absolute inset-0 bg-black/60 text-white text-[10px] font-bold flex flex-col items-center justify-center transition group-hover:flex">
                                 <i class="fa-solid fa-camera text-lg text-sky-400 mb-1"></i> Editar
                             </button>
                             <input type="file" id="profileFileInput" accept="image/*" class="hidden" onchange="handleProfileUpload(event)">
@@ -212,7 +215,7 @@
         </div>
     </section>
 
-    <!-- CARRUSEL Y VIDEO CORPORATIVO -->
+    <!-- CARRUSEL Y VIDEO CORPORATIVO EXCLUSIVO YOUTUBE -->
     <section class="max-w-7xl mx-auto w-full px-4 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
         <!-- CARRUSEL OPORTUNIDADES -->
         <div class="lg:col-span-7 theme-card-bg rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col justify-between">
@@ -247,13 +250,13 @@
             </div>
         </div>
 
-        <!-- VIDEO CORPORATIVO CONFIGURABLE -->
+        <!-- VIDEO CORPORATIVO EXCLUSIVAMENTE YOUTUBE -->
         <div class="lg:col-span-5 theme-card-bg rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col justify-between">
             <div class="p-3.5 border-b border-slate-100 flex items-center justify-between">
                 <span class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-2">
-                    <i class="fa-solid fa-circle-play text-red-600"></i> Video Corporativo
+                    <i class="fa-brands fa-youtube text-red-600 text-sm"></i> Video Corporativo Oficial
                 </span>
-                <span class="text-[11px] bg-red-100 text-red-700 px-2 py-0.5 rounded-full font-bold" id="videoSourceBadge">YouTube</span>
+                <span class="text-[11px] bg-red-100 text-red-700 px-2 py-0.5 rounded-full font-bold" id="videoSourceBadge">YouTube Oficial</span>
             </div>
 
             <div class="p-4 flex-1 flex flex-col justify-center bg-slate-950">
@@ -275,7 +278,7 @@
             <div class="flex flex-col md:flex-row items-center gap-6 relative z-10">
                 <div class="relative w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden border-2 border-sky-400/40 shadow-2xl flex-shrink-0 bg-slate-800 group">
                     <img id="lawyerCardImg" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80" alt="Abogado Patrocinador" class="w-full h-full object-cover">
-                    <button onclick="triggerFileSelect('lawyerFileInput')" class="admin-only hidden absolute inset-0 bg-black/70 text-white text-xs font-bold flex-col items-center justify-center transition group-hover:flex">
+                    <button onclick="triggerFileSelect('lawyerFileInput')" class="admin-only hidden absolute inset-0 bg-black/70 text-white text-xs font-bold flex flex-col items-center justify-center transition group-hover:flex">
                         <i class="fa-solid fa-camera text-sky-400 text-base mb-1"></i> Cambiar Foto
                     </button>
                     <input type="file" id="lawyerFileInput" accept="image/*" class="hidden" onchange="handleLawyerUpload(event)">
@@ -471,10 +474,25 @@
                 </div>
 
                 <hr class="border-slate-100">
-                <h4 class="text-xs font-extrabold text-sky-800 uppercase">Video Corporativo (YouTube)</h4>
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Enlace YouTube / YouTube Shorts</label>
-                    <input type="text" id="cfgVideoUrl" placeholder="https://www.youtube.com/watch?v=..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800">
+                <div class="bg-red-50/50 p-3 rounded-xl border border-red-100 space-y-2">
+                    <h4 class="text-xs font-extrabold text-red-700 uppercase flex items-center gap-1.5">
+                        <i class="fa-brands fa-youtube text-base"></i> Video Corporativo Oficial (YouTube Exclusivo)
+                    </h4>
+                    <p class="text-[11px] text-slate-500">Pegue cualquier enlace de YouTube (normal, Shorts o código embed). El sistema lo convertirá y sincronizará en la nube automáticamente.</p>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Enlace de YouTube / Shorts</label>
+                        <input type="text" id="cfgVideoUrl" placeholder="https://www.youtube.com/watch?v=... o https://youtube.com/shorts/..." class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-800 font-mono">
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-700 mb-1">Título del Video</label>
+                            <input type="text" id="cfgVideoTitle" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-800">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-700 mb-1">Descripción corta del Video</label>
+                            <input type="text" id="cfgVideoDesc" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-800">
+                        </div>
+                    </div>
                 </div>
 
                 <hr class="border-slate-100">
@@ -502,7 +520,7 @@
             <div class="border-t border-slate-100 pt-3 flex justify-end gap-2">
                 <button onclick="closeModal('masterPanelModal')" class="bg-slate-200 text-slate-700 font-bold px-4 py-2 rounded-xl text-xs hover:bg-slate-300 transition">Cancelar</button>
                 <button onclick="saveMasterConfig()" class="bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold px-5 py-2 rounded-xl text-xs transition shadow">
-                    <i class="fa-solid fa-floppy-disk mr-1"></i> Guardar Cambios
+                    <i class="fa-solid fa-floppy-disk mr-1"></i> Guardar Cambios en la Nube
                 </button>
             </div>
         </div>
@@ -565,8 +583,7 @@
                     <input type="text" id="prodDireccion" placeholder="Dirección Exacta o Referencia de Ingreso" class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs">
                 </div>
 
-                <!-- CAMPOS DINÁMICOS DEPENDIENDO DEL TIPO DE ACTIVO -->
-                <!-- BIENES RAÍCES Y CASAS -->
+                <!-- CAMPOS DINÁMICOS POR CATEGORÍA -->
                 <div id="fieldsRealEstate" class="bg-sky-50/60 p-3 rounded-xl border border-sky-100 space-y-2">
                     <h5 class="text-xs font-extrabold text-sky-900"><i class="fa-solid fa-house"></i> Detalles de Bienes Raíces</h5>
                     <div class="grid grid-cols-3 gap-2">
@@ -576,15 +593,14 @@
                     </div>
                     <div class="flex flex-wrap items-center gap-3 text-xs text-slate-700 font-semibold pt-1">
                         <span>Servicios:</span>
-                        <label class="flex items-center gap-1"><input type="checkbox" id="srvAgua"> Agua</label>
-                        <label class="flex items-center gap-1"><input type="checkbox" id="srvLuz"> Luz</label>
-                        <label class="flex items-center gap-1"><input type="checkbox" id="srvInternet"> Internet</label>
-                        <label class="flex items-center gap-1"><input type="checkbox" id="srvAlcantarillado"> Alcantarillado</label>
-                        <label class="flex items-center gap-1 ml-auto text-sky-800"><input type="checkbox" id="srvEscrituras"> 📜 Escrituras al día</label>
+                        <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="srvAgua"> Agua</label>
+                        <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="srvLuz"> Luz</label>
+                        <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="srvInternet"> Internet</label>
+                        <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="srvAlcantarillado"> Alcantarillado</label>
+                        <label class="flex items-center gap-1 ml-auto text-sky-800 cursor-pointer"><input type="checkbox" id="srvEscrituras"> 📜 Escrituras al día</label>
                     </div>
                 </div>
 
-                <!-- VEHÍCULOS Y MAQUINARIA -->
                 <div id="fieldsVehicles" class="hidden bg-amber-50/60 p-3 rounded-xl border border-amber-100 space-y-2">
                     <h5 class="text-xs font-extrabold text-amber-900"><i class="fa-solid fa-truck-monster"></i> Ficha de Vehículo / Maquinaria</h5>
                     <div class="grid grid-cols-3 gap-2">
@@ -594,7 +610,6 @@
                     </div>
                 </div>
 
-                <!-- SEGUNDA MANO Y ENSERES -->
                 <div id="fieldsSecondHand" class="hidden bg-purple-50/60 p-3 rounded-xl border border-purple-100 space-y-2">
                     <h5 class="text-xs font-extrabold text-purple-900"><i class="fa-solid fa-boxes-packing"></i> Artículos Usados / Equipos</h5>
                     <div class="grid grid-cols-2 gap-2">
@@ -604,8 +619,9 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Fotos del Activo (Galería)</label>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Fotos del Activo (Desde la Galería o PC)</label>
                     <input type="file" id="prodFilesInput" accept="image/*" multiple class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 text-xs text-slate-700 file:mr-2 file:py-1 file:px-2 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-sky-600 file:text-white">
+                    <p class="text-[10px] text-slate-500 mt-1">Las fotos se optimizan y convierten de inmediato para sincronizarse con todos los usuarios.</p>
                 </div>
 
                 <div>
@@ -626,8 +642,8 @@
 
                 <div class="pt-2 flex justify-end gap-2">
                     <button type="button" onclick="closeModal('productModal')" class="bg-slate-200 text-slate-700 font-bold px-4 py-2 rounded-xl text-xs hover:bg-slate-300 transition">Cancelar</button>
-                    <button type="submit" class="bg-sky-600 hover:bg-sky-500 text-white font-bold px-5 py-2 rounded-xl text-xs transition shadow">
-                        <i class="fa-solid fa-cloud-arrow-up mr-1"></i> Guardar Activo en la Nube
+                    <button type="submit" id="btnSaveProduct" class="bg-sky-600 hover:bg-sky-500 text-white font-bold px-5 py-2 rounded-xl text-xs transition shadow flex items-center gap-1.5">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Guardar Activo en la Nube
                     </button>
                 </div>
             </form>
@@ -647,7 +663,7 @@
             </div>
 
             <div class="flex-1 overflow-y-auto space-y-4 p-1 modal-scroll">
-                <div class="relative w-full h-64 bg-slate-900 rounded-2xl overflow-hidden">
+                <div class="relative w-full h-64 sm:h-72 bg-slate-900 rounded-2xl overflow-hidden flex items-center justify-center">
                     <img id="detMainImg" src="" class="w-full h-full object-cover">
                 </div>
                 <div id="detThumbsContainer" class="flex gap-2 overflow-x-auto pb-1"></div>
@@ -663,9 +679,7 @@
                     </div>
                 </div>
 
-                <div id="detTechnicalBox" class="bg-sky-50/70 p-3 rounded-xl border border-sky-100 text-xs text-slate-700 space-y-1">
-                    <!-- DETALLES TÉCNICOS DINÁMICOS -->
-                </div>
+                <div id="detTechnicalBox" class="bg-sky-50/70 p-3 rounded-xl border border-sky-100 text-xs text-slate-700 space-y-1"></div>
 
                 <div>
                     <h4 class="text-xs font-bold text-slate-800 uppercase mb-1">Descripción Técnica</h4>
@@ -760,7 +774,7 @@
                     <input type="file" id="spFileInput" accept="image/*" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 text-xs text-slate-700">
                 </div>
                 <button onclick="saveSponsor()" class="w-full bg-sky-600 hover:bg-sky-500 text-white font-bold py-2.5 rounded-xl text-xs transition">
-                    Guardar Aliado
+                    Guardar Aliado en la Nube
                 </button>
             </div>
         </div>
@@ -781,7 +795,7 @@
         </div>
     </div>
 
-    <!-- LÓGICA Y SINCRONIZACIÓN CLOUD -->
+    <!-- LÓGICA Y SINCRONIZACIÓN CLOUD ROBUSTA -->
     <script>
         const DEFAULT_STATE = {
             companyTitle: "ALIANZA ESTRATÉGICA S.A.S.",
@@ -812,15 +826,24 @@
         };
 
         let db = null;
+        let isFirebaseActive = false;
+
         try {
-            if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
             db = firebase.firestore();
-            firebase.auth().signInAnonymously().catch(err => console.log('Auth Firebase:', err));
-        } catch (e) { console.warn('Firebase local fallback:', e); }
+            firebase.auth().signInAnonymously()
+                .then(() => { isFirebaseActive = true; updateCloudBadge(true); })
+                .catch(err => { console.warn('Auth Firebase fallback:', err); updateCloudBadge(false); });
+        } catch (e) {
+            console.warn('Firebase error:', e);
+            updateCloudBadge(false);
+        }
 
         const INITIAL_INVENTORY = [
             {
-                id: '1',
+                id: 'item_re_001',
                 code: 'RE-001',
                 category: 'RE',
                 status: 'OFERTA',
@@ -830,20 +853,22 @@
                 sector: 'Barrio Central',
                 direccion: 'Calle principal junto al parque',
                 priceStr: '$45,000 USD',
+                location: 'El Coca, Barrio Central',
                 images: ['https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80'],
-                desc: 'Excelente propiedad con amplios espacios. Terreno totalmente plano libre de gravámenes.',
+                desc: 'Excelente propiedad con amplios espacios. Terreno totalmente plano libre de gravámenes listo para escrituración inmediata.',
                 reMetros2: '580', reFrente: '15', reConstruccion: '120',
                 srvAgua: true, srvLuz: true, srvInternet: true, srvAlcantarillado: true, srvEscrituras: true,
+                vhAno: '', vhKm: '', vhTransmision: '', lqEstado: '', lqTiempoUso: '',
                 ownerName: 'Familia Mendoza', comision: '5%'
             }
         ];
 
         const INITIAL_SPONSORS = [
-            { id: '1', name: 'Notaría Pública', logo: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=200&q=80' },
-            { id: '2', name: 'Registro de la Propiedad', logo: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=200&q=80' }
+            { id: 'sp_1', name: 'Notaría Pública', logo: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=200&q=80' },
+            { id: 'sp_2', name: 'Registro de la Propiedad', logo: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=200&q=80' }
         ];
 
-        let currentRole = 'GUEST'; // 'GUEST', 'AGENT', 'ADMIN'
+        let currentRole = 'GUEST';
         let appConfig = { ...DEFAULT_STATE };
         let inventory = [];
         let sponsors = [];
@@ -859,6 +884,81 @@
             updateCopyrightYear();
         });
 
+        function updateCloudBadge(online) {
+            const badge = document.getElementById('cloudStatusBadge');
+            if (!badge) return;
+            if (online) {
+                badge.className = "hidden sm:flex items-center gap-1 text-[10px] text-emerald-400 font-mono";
+                badge.innerHTML = '<i class="fa-solid fa-cloud"></i> Nube Sincronizada';
+            } else {
+                badge.className = "hidden sm:flex items-center gap-1 text-[10px] text-amber-400 font-mono";
+                badge.innerHTML = '<i class="fa-solid fa-cloud-arrow-down"></i> Modo Local';
+            }
+        }
+
+        /* COMPRESOR INTELIGENTE PARA IMÁGENES BASE64 */
+        function compressAndConvertToBase64(file, maxWidth = 1200, quality = 0.75) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = event => {
+                    const img = new Image();
+                    img.src = event.target.result;
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > maxWidth) {
+                            height = Math.round((height * maxWidth) / width);
+                            width = maxWidth;
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        resolve(canvas.toDataURL('image/jpeg', quality));
+                    };
+                    img.onerror = error => reject(error);
+                };
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        /* CONVERSOR ROBUSTO DE ENLACES YOUTUBE */
+        function formatYouTubeEmbed(url) {
+            if (!url) return 'https://www.youtube.com/embed/dQw4w9WgXcQ';
+            let cleanUrl = url.trim();
+
+            if (cleanUrl.includes('<iframe')) {
+                const matchSrc = cleanUrl.match(/src=["'](.*?)["']/);
+                if (matchSrc && matchSrc[1]) cleanUrl = matchSrc[1];
+            }
+
+            if (cleanUrl.includes('embed/')) {
+                const idPart = cleanUrl.split('embed/')[1].split('?')[0];
+                return `https://www.youtube.com/embed/${idPart}`;
+            }
+
+            let videoId = '';
+            if (cleanUrl.includes('watch?v=')) {
+                videoId = cleanUrl.split('watch?v=')[1].split('&')[0];
+            } else if (cleanUrl.includes('youtu.be/')) {
+                videoId = cleanUrl.split('youtu.be/')[1].split('?')[0];
+            } else if (cleanUrl.includes('/shorts/')) {
+                videoId = cleanUrl.split('/shorts/')[1].split('?')[0];
+            } else if (cleanUrl.includes('/live/')) {
+                videoId = cleanUrl.split('/live/')[1].split('?')[0];
+            }
+
+            if (videoId) {
+                return `https://www.youtube.com/embed/${videoId}?rel=0`;
+            }
+
+            return cleanUrl;
+        }
+
         function initCloudSync() {
             if (!db) return;
 
@@ -869,79 +969,99 @@
                         appConfig = { ...DEFAULT_STATE, ...cloudData.config };
                         localStorage.setItem('alianza_config', JSON.stringify(appConfig));
                     }
-                    if (cloudData.sponsors) {
+                    if (cloudData.sponsors && Array.isArray(cloudData.sponsors)) {
                         sponsors = cloudData.sponsors;
                         localStorage.setItem('alianza_sponsors', JSON.stringify(sponsors));
                     }
                     renderAppUI();
+                } else {
+                    saveConfigToStorage(true);
                 }
-            });
+            }, err => console.warn('Error escuchando alianza_settings:', err));
 
             db.collection('alianza_inventory').onSnapshot(snapshot => {
-                if (snapshot && !snapshot.empty) {
+                if (snapshot) {
                     const cloudInv = [];
                     snapshot.forEach(doc => cloudInv.push({ id: doc.id, ...doc.data() }));
                     if (cloudInv.length > 0) {
                         inventory = cloudInv;
                         localStorage.setItem('alianza_inventory', JSON.stringify(inventory));
                         filterItems();
+                        updateCarouselDisplay();
+                    } else if (inventory.length === 0) {
+                        inventory = [...INITIAL_INVENTORY];
+                        inventory.forEach(item => saveInventoryItemCloud(item));
+                        filterItems();
+                        updateCarouselDisplay();
                     }
                 }
-            });
+            }, err => console.warn('Error escuchando alianza_inventory:', err));
         }
 
         function loadPersistedData() {
-            const savedCfg = localStorage.getItem('alianza_config');
-            if (savedCfg) appConfig = { ...DEFAULT_STATE, ...JSON.parse(savedCfg) };
+            try {
+                const savedCfg = localStorage.getItem('alianza_config');
+                if (savedCfg) appConfig = { ...DEFAULT_STATE, ...JSON.parse(savedCfg) };
 
-            const savedInv = localStorage.getItem('alianza_inventory');
-            inventory = savedInv ? JSON.parse(savedInv) : [...INITIAL_INVENTORY];
+                const savedInv = localStorage.getItem('alianza_inventory');
+                inventory = savedInv ? JSON.parse(savedInv) : [...INITIAL_INVENTORY];
 
-            const savedSponsors = localStorage.getItem('alianza_sponsors');
-            sponsors = savedSponsors ? JSON.parse(savedSponsors) : [...INITIAL_SPONSORS];
+                const savedSponsors = localStorage.getItem('alianza_sponsors');
+                sponsors = savedSponsors ? JSON.parse(savedSponsors) : [...INITIAL_SPONSORS];
+            } catch (e) {
+                console.warn('Error parsing local storage, restoring defaults:', e);
+                appConfig = { ...DEFAULT_STATE };
+                inventory = [...INITIAL_INVENTORY];
+                sponsors = [...INITIAL_SPONSORS];
+            }
         }
 
-        function saveConfigToStorage() {
+        function saveConfigToStorage(isSilent = false) {
             localStorage.setItem('alianza_config', JSON.stringify(appConfig));
+            localStorage.setItem('alianza_sponsors', JSON.stringify(sponsors));
+
             if (db) {
                 db.collection('alianza_settings').doc('appData').set({
                     config: appConfig,
-                    sponsors: sponsors
-                }, { merge: true });
+                    sponsors: sponsors,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true })
+                .then(() => {
+                    if (!isSilent) showToast('¡Guardado y sincronizado en la Nube con éxito!');
+                })
+                .catch(err => {
+                    console.error('Error sincronizando config en la nube:', err);
+                    if (!isSilent) showToast('Guardado localmente (sin conexión a Firestore)', 'error');
+                });
             }
         }
 
-        function saveInventoryToStorage(itemToSync = null) {
+        function saveInventoryItemCloud(item) {
+            if (!item || !item.id) return;
             localStorage.setItem('alianza_inventory', JSON.stringify(inventory));
-            if (db && itemToSync) {
-                db.collection('alianza_inventory').doc(itemToSync.id).set(itemToSync);
-            }
-        }
-
-        function saveSponsorsToStorage() {
-            localStorage.setItem('alianza_sponsors', JSON.stringify(sponsors));
             if (db) {
-                db.collection('alianza_settings').doc('appData').set({ sponsors: sponsors }, { merge: true });
+                db.collection('alianza_inventory').doc(item.id).set(item, { merge: true })
+                    .catch(err => console.error('Error guardando activo en nube:', err));
             }
         }
 
         function renderAppUI() {
-            document.getElementById('profileCompanyTitle').innerHTML = appConfig.companyTitle.replace("S.A.S.", "<span class='text-sky-600'>S.A.S.</span>");
-            document.getElementById('profileMotto').innerText = appConfig.motto;
-            document.getElementById('topLocationText').innerText = appConfig.location;
-            document.getElementById('profileBioText').innerHTML = appConfig.bioText;
-            document.getElementById('coverImgDisplay').src = appConfig.coverImg;
-            document.getElementById('profileLogoImg').src = appConfig.profileLogo;
+            document.getElementById('profileCompanyTitle').innerHTML = (appConfig.companyTitle || DEFAULT_STATE.companyTitle).replace("S.A.S.", "<span class='text-sky-600'>S.A.S.</span>");
+            document.getElementById('profileMotto').innerText = appConfig.motto || DEFAULT_STATE.motto;
+            document.getElementById('topLocationText').innerText = appConfig.location || DEFAULT_STATE.location;
+            document.getElementById('profileBioText').innerHTML = appConfig.bioText || DEFAULT_STATE.bioText;
+            document.getElementById('coverImgDisplay').src = appConfig.coverImg || DEFAULT_STATE.coverImg;
+            document.getElementById('profileLogoImg').src = appConfig.profileLogo || DEFAULT_STATE.profileLogo;
 
             document.getElementById('videoIframe').src = formatYouTubeEmbed(appConfig.videoUrl);
-            document.getElementById('videoSectionTitle').innerText = appConfig.videoTitle;
-            document.getElementById('videoSectionDesc').innerText = appConfig.videoDesc;
+            document.getElementById('videoSectionTitle').innerText = appConfig.videoTitle || DEFAULT_STATE.videoTitle;
+            document.getElementById('videoSectionDesc').innerText = appConfig.videoDesc || DEFAULT_STATE.videoDesc;
 
-            document.getElementById('lawyerCardImg').src = appConfig.lawyerImg;
-            document.getElementById('lawyerNameDisplay').innerText = appConfig.lawyerName;
-            document.getElementById('lawyerTitleDisplay').innerText = appConfig.lawyerTitle;
-            document.getElementById('lawyerPhoneDisplay').innerText = appConfig.lawyerPhone;
-            document.getElementById('lawyerEmailDisplay').innerText = appConfig.lawyerEmail;
+            document.getElementById('lawyerCardImg').src = appConfig.lawyerImg || DEFAULT_STATE.lawyerImg;
+            document.getElementById('lawyerNameDisplay').innerText = appConfig.lawyerName || DEFAULT_STATE.lawyerName;
+            document.getElementById('lawyerTitleDisplay').innerText = appConfig.lawyerTitle || DEFAULT_STATE.lawyerTitle;
+            document.getElementById('lawyerPhoneDisplay').innerText = appConfig.lawyerPhone || DEFAULT_STATE.lawyerPhone;
+            document.getElementById('lawyerEmailDisplay').innerText = appConfig.lawyerEmail || DEFAULT_STATE.lawyerEmail;
 
             filterItems();
             renderSponsorsMarquee();
@@ -982,11 +1102,7 @@
         function togglePassInput() {
             const select = document.getElementById('loginRoleSelect');
             const label = document.getElementById('passLabel');
-            if (select.value === 'ADMIN') {
-                label.innerText = "Contraseña Administrador Principal";
-            } else {
-                label.innerText = "Contraseña Agente Comercial";
-            }
+            label.innerText = select.value === 'ADMIN' ? "Contraseña Administrador Principal" : "Contraseña Agente Comercial";
         }
 
         function executeLogin() {
@@ -1024,76 +1140,86 @@
         }
 
         function openMasterPanel() {
-            document.getElementById('cfgCompanyTitle').value = appConfig.companyTitle;
-            document.getElementById('cfgMotto').value = appConfig.motto;
-            document.getElementById('cfgLocation').value = appConfig.location;
-            document.getElementById('cfgBioText').value = appConfig.bioText;
-            document.getElementById('cfgVideoUrl').value = appConfig.videoUrl;
-            document.getElementById('cfgLawyerName').value = appConfig.lawyerName;
-            document.getElementById('cfgLawyerTitle').value = appConfig.lawyerTitle;
-            document.getElementById('cfgLawyerPhone').value = appConfig.lawyerPhone;
-            document.getElementById('cfgLawyerEmail').value = appConfig.lawyerEmail;
+            document.getElementById('cfgCompanyTitle').value = appConfig.companyTitle || '';
+            document.getElementById('cfgMotto').value = appConfig.motto || '';
+            document.getElementById('cfgLocation').value = appConfig.location || '';
+            document.getElementById('cfgBioText').value = appConfig.bioText || '';
+            document.getElementById('cfgVideoUrl').value = appConfig.videoUrl || '';
+            document.getElementById('cfgVideoTitle').value = appConfig.videoTitle || '';
+            document.getElementById('cfgVideoDesc').value = appConfig.videoDesc || '';
+            document.getElementById('cfgLawyerName').value = appConfig.lawyerName || '';
+            document.getElementById('cfgLawyerTitle').value = appConfig.lawyerTitle || '';
+            document.getElementById('cfgLawyerPhone').value = appConfig.lawyerPhone || '';
+            document.getElementById('cfgLawyerEmail').value = appConfig.lawyerEmail || '';
             openModal('masterPanelModal');
         }
 
         function saveMasterConfig() {
-            appConfig.companyTitle = document.getElementById('cfgCompanyTitle').value || appConfig.companyTitle;
-            appConfig.motto = document.getElementById('cfgMotto').value || appConfig.motto;
-            appConfig.location = document.getElementById('cfgLocation').value || appConfig.location;
-            appConfig.bioText = document.getElementById('cfgBioText').value || appConfig.bioText;
-            appConfig.videoUrl = document.getElementById('cfgVideoUrl').value || appConfig.videoUrl;
-            appConfig.lawyerName = document.getElementById('cfgLawyerName').value || appConfig.lawyerName;
-            appConfig.lawyerTitle = document.getElementById('cfgLawyerTitle').value || appConfig.lawyerTitle;
-            appConfig.lawyerPhone = document.getElementById('cfgLawyerPhone').value || appConfig.lawyerPhone;
-            appConfig.lawyerEmail = document.getElementById('cfgLawyerEmail').value || appConfig.lawyerEmail;
+            appConfig.companyTitle = document.getElementById('cfgCompanyTitle').value.trim() || appConfig.companyTitle;
+            appConfig.motto = document.getElementById('cfgMotto').value.trim() || appConfig.motto;
+            appConfig.location = document.getElementById('cfgLocation').value.trim() || appConfig.location;
+            appConfig.bioText = document.getElementById('cfgBioText').value.trim() || appConfig.bioText;
+            
+            const rawVideo = document.getElementById('cfgVideoUrl').value.trim();
+            appConfig.videoUrl = rawVideo ? formatYouTubeEmbed(rawVideo) : appConfig.videoUrl;
+            
+            appConfig.videoTitle = document.getElementById('cfgVideoTitle').value.trim() || appConfig.videoTitle;
+            appConfig.videoDesc = document.getElementById('cfgVideoDesc').value.trim() || appConfig.videoDesc;
+
+            appConfig.lawyerName = document.getElementById('cfgLawyerName').value.trim() || appConfig.lawyerName;
+            appConfig.lawyerTitle = document.getElementById('cfgLawyerTitle').value.trim() || appConfig.lawyerTitle;
+            appConfig.lawyerPhone = document.getElementById('cfgLawyerPhone').value.trim() || appConfig.lawyerPhone;
+            appConfig.lawyerEmail = document.getElementById('cfgLawyerEmail').value.trim() || appConfig.lawyerEmail;
 
             saveConfigToStorage();
             renderAppUI();
             closeModal('masterPanelModal');
-            showToast('¡Configuración sincronizada en la nube con éxito!');
         }
 
         function triggerFileSelect(id) { document.getElementById(id).click(); }
 
-        function handleCoverUpload(event) {
+        async function handleCoverUpload(event) {
             const file = event.target.files[0];
             if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    appConfig.coverImg = e.target.result;
+                try {
+                    showToast('Comprimiendo y subiendo portada...');
+                    const base64 = await compressAndConvertToBase64(file, 1600, 0.8);
+                    appConfig.coverImg = base64;
                     saveConfigToStorage();
                     renderAppUI();
-                    showToast('¡Foto de portada guardada en la nube!');
-                };
-                reader.readAsDataURL(file);
+                } catch (e) {
+                    showToast('Error procesando imagen de portada', 'error');
+                }
             }
         }
 
-        function handleProfileUpload(event) {
+        async function handleProfileUpload(event) {
             const file = event.target.files[0];
             if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    appConfig.profileLogo = e.target.result;
+                try {
+                    showToast('Comprimiendo y subiendo foto de perfil...');
+                    const base64 = await compressAndConvertToBase64(file, 500, 0.8);
+                    appConfig.profileLogo = base64;
                     saveConfigToStorage();
                     renderAppUI();
-                    showToast('¡Foto de perfil sincronizada!');
-                };
-                reader.readAsDataURL(file);
+                } catch (e) {
+                    showToast('Error procesando logo de perfil', 'error');
+                }
             }
         }
 
-        function handleLawyerUpload(event) {
+        async function handleLawyerUpload(event) {
             const file = event.target.files[0];
             if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    appConfig.lawyerImg = e.target.result;
+                try {
+                    showToast('Comprimiendo y subiendo foto del Abogado...');
+                    const base64 = await compressAndConvertToBase64(file, 600, 0.8);
+                    appConfig.lawyerImg = base64;
                     saveConfigToStorage();
                     renderAppUI();
-                    showToast('¡Foto de Abogado Patrocinador sincronizada!');
-                };
-                reader.readAsDataURL(file);
+                } catch (e) {
+                    showToast('Error procesando foto', 'error');
+                }
             }
         }
 
@@ -1159,8 +1285,12 @@
             openModal('productModal');
         }
 
-        function handleSaveProduct(e) {
+        async function handleSaveProduct(e) {
             e.preventDefault();
+            const btnSave = document.getElementById('btnSaveProduct');
+            btnSave.disabled = true;
+            btnSave.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Guardando...';
+
             const editId = document.getElementById('prodEditId').value;
             const category = document.getElementById('prodCategory').value;
             const status = document.getElementById('prodStatus').value;
@@ -1178,13 +1308,20 @@
             if (!code) code = `${category}-${Math.floor(100 + Math.random() * 900)}`;
 
             const filesInput = document.getElementById('prodFilesInput');
+            let imagesArray = [];
 
-            const processSave = (imagesArray) => {
+            try {
+                if (filesInput.files && filesInput.files.length > 0) {
+                    const compressPromises = Array.from(filesInput.files).map(f => compressAndConvertToBase64(f, 1000, 0.75));
+                    imagesArray = await Promise.all(compressPromises);
+                }
+
                 let targetItem = null;
-                const locationText = [ciudad, sector].filter(Boolean).join(', ');
+                const locationText = [ciudad, sector].filter(Boolean).join(', ') || 'El Coca';
 
                 const itemData = {
-                    category, status, code, title, ciudad, parroquia, sector, direccion, location: locationText, priceStr, desc, ownerName, comision,
+                    category, status, code, title, ciudad, parroquia, sector, direccion, 
+                    location: locationText, priceStr, desc, ownerName, comision,
                     reMetros2: document.getElementById('reMetros2').value,
                     reFrente: document.getElementById('reFrente').value,
                     reConstruccion: document.getElementById('reConstruccion').value,
@@ -1203,38 +1340,33 @@
                 if (editId) {
                     const idx = inventory.findIndex(i => i.id === editId);
                     if (idx !== -1) {
-                        inventory[idx] = {
-                            ...inventory[idx], ...itemData,
+                        targetItem = {
+                            ...inventory[idx],
+                            ...itemData,
                             images: imagesArray.length > 0 ? imagesArray : inventory[idx].images
                         };
-                        targetItem = inventory[idx];
+                        inventory[idx] = targetItem;
                     }
                 } else {
                     targetItem = {
-                        id: Date.now().toString(),
+                        id: 'item_' + Date.now().toString(),
                         ...itemData,
                         images: imagesArray.length > 0 ? imagesArray : ['https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80']
                     };
                     inventory.unshift(targetItem);
                 }
 
-                saveInventoryToStorage(targetItem);
+                saveInventoryItemCloud(targetItem);
                 filterItems();
+                updateCarouselDisplay();
                 closeModal('productModal');
-                showToast('¡Activo guardado y sincronizado en la nube para todos!');
-            };
-
-            if (filesInput.files && filesInput.files.length > 0) {
-                const readPromises = Array.from(filesInput.files).map(file => {
-                    return new Promise((resolve) => {
-                        const r = new FileReader();
-                        r.onload = e => resolve(e.target.result);
-                        r.readAsDataURL(file);
-                    });
-                });
-                Promise.all(readPromises).then(images => processSave(images));
-            } else {
-                processSave([]);
+                showToast('¡Guardado y sincronizado en la Nube con éxito!');
+            } catch (err) {
+                console.error(err);
+                showToast('Error al procesar el activo', 'error');
+            } finally {
+                btnSave.disabled = false;
+                btnSave.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Guardar Activo en la Nube';
             }
         }
 
@@ -1242,20 +1374,30 @@
             if (confirm('¿Está seguro de eliminar este activo permanentemente?')) {
                 inventory = inventory.filter(i => i.id !== id);
                 localStorage.setItem('alianza_inventory', JSON.stringify(inventory));
-                if (db) db.collection('alianza_inventory').doc(id).delete();
+                if (db) {
+                    db.collection('alianza_inventory').doc(id).delete()
+                        .then(() => showToast('¡Guardado y sincronizado en la Nube con éxito!'))
+                        .catch(() => showToast('Eliminado solo localmente', 'error'));
+                }
                 filterItems();
-                showToast('Activo eliminado de la nube.');
+                updateCarouselDisplay();
             }
         }
 
         function setCategoryFilter(cat) {
             activeCategory = cat;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                btn.classList.remove('bg-amber-500', 'text-slate-900');
+                btn.classList.add('bg-slate-800', 'text-white');
+            });
+            event.currentTarget.classList.add('bg-amber-500', 'text-slate-900');
+            event.currentTarget.classList.remove('bg-slate-800', 'text-white');
             filterItems();
         }
 
         function filterItems() {
-            const query = document.getElementById('searchInput').value.toLowerCase().trim();
-            let filtered = inventory.filter(item => {
+            const query = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+            const filtered = inventory.filter(item => {
                 if (activeCategory === 'SOLD') return item.status === 'SOLD';
                 if (item.status === 'SOLD' && activeCategory !== 'ALL') return false;
 
@@ -1287,7 +1429,7 @@
                 grid.innerHTML = `
                     <div class="col-span-full text-center py-12 text-slate-400">
                         <i class="fa-solid fa-folder-open text-4xl mb-2"></i>
-                        <p class="text-sm font-semibold">No se encontraron activos en esta sección.</p>
+                        <p class="text-sm font-semibold">No se encontraron activos disponibles con los filtros actuales.</p>
                     </div>
                 `;
                 return;
@@ -1300,8 +1442,8 @@
                 if (currentRole === 'ADMIN') {
                     adminBtns = `
                         <div class="flex gap-1">
-                            <button onclick="openEditProductModal('${item.id}')" class="bg-amber-500 hover:bg-amber-600 text-slate-900 p-1.5 rounded-lg text-xs font-bold transition"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <button onclick="deleteProduct('${item.id}')" class="bg-rose-600 hover:bg-rose-700 text-white p-1.5 rounded-lg text-xs font-bold transition"><i class="fa-solid fa-trash"></i></button>
+                            <button onclick="openEditProductModal('${item.id}')" class="bg-amber-500 hover:bg-amber-600 text-slate-900 p-2 rounded-lg text-xs font-bold transition shadow" title="Editar Activo"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button onclick="deleteProduct('${item.id}')" class="bg-rose-600 hover:bg-rose-700 text-white p-2 rounded-lg text-xs font-bold transition shadow" title="Eliminar Activo"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     `;
                 }
@@ -1322,7 +1464,7 @@
                         </div>
 
                         <div class="p-4 pt-0 border-t border-slate-100 flex items-center justify-between gap-2 mt-2">
-                            <button onclick="openDetailModal('${item.id}')" class="bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold px-3 py-2 rounded-xl transition flex-1 text-center">
+                            <button onclick="openDetailModal('${item.id}')" class="bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold px-3 py-2 rounded-xl transition flex-1 text-center shadow">
                                 <i class="fa-solid fa-circle-info mr-1"></i> Ver Ficha Técnica
                             </button>
                             ${adminBtns}
@@ -1351,7 +1493,7 @@
             if (item.images && item.images.length > 1) {
                 item.images.forEach(imgUrl => {
                     thumbsCont.innerHTML += `
-                        <img src="${imgUrl}" onclick="document.getElementById('detMainImg').src='${imgUrl}'" class="w-16 h-12 object-cover rounded-lg border border-slate-200 cursor-pointer hover:opacity-80">
+                        <img src="${imgUrl}" onclick="document.getElementById('detMainImg').src='${imgUrl}'" class="w-16 h-12 object-cover rounded-lg border border-slate-200 cursor-pointer hover:opacity-80 transition">
                     `;
                 });
             }
@@ -1361,8 +1503,8 @@
             if (item.category === 'RE' || item.category === 'AR') {
                 techBox.innerHTML = `
                     <p><strong>Área Total:</strong> ${item.reMetros2 || '-'} m² | <strong>Frente:</strong> ${item.reFrente || '-'} m | <strong>Construcción:</strong> ${item.reConstruccion || '-'} m²</p>
-                    <p><strong>Servicios:</strong> ${item.srvAgua ? 'Agua ✓ ' : ''}${item.srvLuz ? 'Luz ✓ ' : ''}${item.srvInternet ? 'Internet ✓ ' : ''}${item.srvAlcantarillado ? 'Alcantarillado ✓ ' : ''}</p>
-                    <p><strong>Escrituras:</strong> ${item.srvEscrituras ? '📜 Sí, al día' : 'En trámite'}</p>
+                    <p><strong>Servicios Básicos:</strong> ${item.srvAgua ? 'Agua ✓ ' : ''}${item.srvLuz ? 'Luz ✓ ' : ''}${item.srvInternet ? 'Internet ✓ ' : ''}${item.srvAlcantarillado ? 'Alcantarillado ✓ ' : ''}</p>
+                    <p><strong>Situación Jurídica:</strong> ${item.srvEscrituras ? '📜 Escrituras debidamente registradas y al día' : 'En proceso notarial'}</p>
                 `;
             } else if (item.category === 'VH' || item.category === 'MQ') {
                 techBox.innerHTML = `
@@ -1371,7 +1513,7 @@
                 `;
             } else if (item.category === 'LQ') {
                 techBox.innerHTML = `
-                    <p><strong>Estado del Artículo:</strong> ${item.lqEstado || '-'} | <strong>Tiempo de Uso:</strong> ${item.lqTiempoUso || '-'}</p>
+                    <p><strong>Estado del Bien:</strong> ${item.lqEstado || '-'} | <strong>Tiempo de Uso:</strong> ${item.lqTiempoUso || '-'}</p>
                 `;
             }
 
@@ -1384,7 +1526,7 @@
                 privateSec.classList.add('hidden');
             }
 
-            const waMsg = encodeURIComponent(`Hola ALIANZA ESTRATÉGICA S.A.S., solicito más información del activo código: ${item.code} (${item.title})`);
+            const waMsg = encodeURIComponent(`Hola ALIANZA ESTRATÉGICA S.A.S., solicito asesoría del activo: ${item.code} (${item.title})`);
             document.getElementById('detWaConsultBtn').href = `https://wa.me/593959190794?text=${waMsg}`;
 
             openModal('detailModal');
@@ -1406,7 +1548,7 @@
             });
         }
 
-        function saveSponsor() {
+        async function saveSponsor() {
             const name = document.getElementById('spName').value.trim();
             const fileInput = document.getElementById('spFileInput');
 
@@ -1415,29 +1557,27 @@
                 return;
             }
 
-            if (fileInput.files && fileInput.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    sponsors.push({ id: Date.now().toString(), name, logo: e.target.result });
-                    saveSponsorsToStorage();
-                    renderSponsorsMarquee();
-                    closeModal('addSponsorModal');
-                    showToast('Aliado registrado y sincronizado en la nube');
-                };
-                reader.readAsDataURL(fileInput.files[0]);
-            } else {
-                sponsors.push({ id: Date.now().toString(), name, logo: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=200&q=80' });
-                saveSponsorsToStorage();
+            let logoUrl = 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=200&q=80';
+
+            try {
+                if (fileInput.files && fileInput.files[0]) {
+                    logoUrl = await compressAndConvertToBase64(fileInput.files[0], 250, 0.8);
+                }
+                sponsors.push({ id: 'sp_' + Date.now().toString(), name, logo: logoUrl });
+                saveConfigToStorage();
                 renderSponsorsMarquee();
                 closeModal('addSponsorModal');
-                showToast('Aliado registrado');
+                document.getElementById('spName').value = '';
+                document.getElementById('spFileInput').value = '';
+            } catch (err) {
+                showToast('Error subiendo imagen de aliado', 'error');
             }
         }
 
         function initCarousel() {
             updateCarouselDisplay();
             if (carouselTimer) clearInterval(carouselTimer);
-            carouselTimer = setInterval(() => { nextSlide(); }, 4000);
+            carouselTimer = setInterval(() => { nextSlide(); }, 4500);
         }
 
         function updateCarouselDisplay() {
@@ -1464,20 +1604,31 @@
             if (tabKey === 'MISION') {
                 content.innerHTML = `
                     <h4 class="text-sm font-bold text-slate-800 mb-1">Misión Institucional</h4>
-                    <p class="mb-3">Prestar servicios integrales de corretaje, intermediación y gestión notarial de bienes raíces, automotores y maquinaria en El Coca y la región amazónica.</p>
+                    <p class="mb-3">Prestar servicios integrales de corretaje, intermediación y gestión notarial de bienes raíces, automotores y maquinaria en El Coca y la Amazonía ecuatoriana con seguridad jurídica absoluta.</p>
+                    <h4 class="text-sm font-bold text-slate-800 mb-1">Visión</h4>
+                    <p>Ser la corporación de corretaje y gestión notarial referente en el nororiente del Ecuador, reconocida por su solvencia ética y blindaje legal.</p>
                 `;
             } else if (tabKey === 'HONORARIOS') {
                 content.innerHTML = `
                     <h4 class="text-sm font-bold text-slate-800 mb-1">Modelo de Gestión por Éxito ✅</h4>
-                    <p>Cobramos honorarios exclusivamente al concretarse la venta de su bien.</p>
+                    <p class="mb-2">En <strong>ALIANZA ESTRATÉGICA S.A.S.</strong> no cobramos pagos anticipados por consignación publicitaria. Nuestros honorarios se liquidan única y exclusivamente cuando la transacción de compraventa o arriendo se protocoliza exitosamente.</p>
+                    <p>Seguridad para su inversión y tranquilidad para su patrimonio.</p>
                 `;
             } else if (tabKey === 'RESPALDO') {
                 content.innerHTML = `
-                    <h4 class="text-sm font-bold text-slate-800 mb-1">Blindaje Jurídico Notarial</h4>
-                    <p>Patrocinado por el Abg. Carlos Alfredo Íñiguez Rodríguez.</p>
+                    <h4 class="text-sm font-bold text-slate-800 mb-1">Blindaje Jurídico Notarial Permanente</h4>
+                    <p class="mb-2">Cada transacción inmobiliaria o vehicular está respaldada y avalada por el <strong>Abg. Carlos Alfredo Íñiguez Rodríguez</strong>.</p>
+                    <p>Realizamos el levantamiento de gravámenes, promesas de compraventa notarizadas, minutas de transferencia de dominio e inscripción en el Registro de la Propiedad y Mercantil.</p>
                 `;
             } else {
-                content.innerHTML = `<h4 class="text-sm font-bold text-slate-800 mb-1">Valores Fundamentales</h4><p>Transparencia, Legalidad y Eficiencia.</p>`;
+                content.innerHTML = `
+                    <h4 class="text-sm font-bold text-slate-800 mb-1">Valores Fundamentales</h4>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>Honestidad Transaccional:</strong> Precios justos sin sobreprecios ocultos.</li>
+                        <li><strong>Celeridad Operativa:</strong> Trámites eficientes en notarías e instituciones.</li>
+                        <li><strong>Discreción y Custodia:</strong> Protección absoluta de los datos de propietarios y compradores.</li>
+                    </ul>
+                `;
             }
         }
 
@@ -1495,15 +1646,15 @@
             messages.scrollTop = messages.scrollHeight;
 
             setTimeout(() => {
-                const waUrl = `https://wa.me/593959190794?text=${encodeURIComponent('Consulta: ' + text)}`;
+                const waUrl = `https://wa.me/593959190794?text=${encodeURIComponent('Consulta Plataforma: ' + text)}`;
                 messages.innerHTML += `
                     <div class="bg-white p-2.5 rounded-xl border border-slate-200 text-slate-700 shadow-sm leading-relaxed">
-                        ¡Gracias por comunicarte! Puedes hablar con la Gerencia directamente en WhatsApp:
-                        <div class="mt-2"><a href="${waUrl}" target="_blank" class="inline-block bg-emerald-600 text-white font-bold px-3 py-1.5 rounded-lg text-[10px]"><i class="fa-brands fa-whatsapp"></i> Continuar en WhatsApp</a></div>
+                        ¡Gracias por comunicarte! Nuestro equipo legal y comercial está a su servicio. Puede transferir esta consulta a WhatsApp con un clic:
+                        <div class="mt-2"><a href="${waUrl}" target="_blank" class="inline-block bg-emerald-600 text-white font-bold px-3 py-1.5 rounded-lg text-[10px]"><i class="fa-brands fa-whatsapp"></i> Continuar por WhatsApp</a></div>
                     </div>
                 `;
                 messages.scrollTop = messages.scrollHeight;
-            }, 800);
+            }, 600);
         }
 
         function sendConsignarWhatsApp() {
@@ -1517,7 +1668,7 @@
                 return;
             }
 
-            const msg = `Hola ALIANZA ESTRATÉGICA S.A.S., deseo consignar:\n- Nombre: ${name}\n- Tipo: ${cat}\n- Ubicación: ${loc}\n- Precio: ${price}`;
+            const msg = `Hola ALIANZA ESTRATÉGICA S.A.S., deseo consignar mi bien con ustedes:\n- Nombre: ${name}\n- Categoría: ${cat}\n- Ubicación: ${loc}\n- Precio Estimado: ${price}`;
             window.open(`https://wa.me/593959190794?text=${encodeURIComponent(msg)}`, '_blank');
             closeModal('consignarModal');
         }
@@ -1529,22 +1680,13 @@
 
         function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
 
-        function formatYouTubeEmbed(url) {
-            if (!url) return 'https://www.youtube.com/embed/dQw4w9WgXcQ';
-            if (url.includes('embed/')) return url;
-            let videoId = '';
-            if (url.includes('v=')) videoId = url.split('v=')[1].split('&')[0];
-            else if (url.includes('youtu.be/')) videoId = url.split('youtu.be/')[1].split('?')[0];
-            return videoId ? `https://www.youtube.com/embed/${videoId}` : url;
-        }
-
         function showToast(message, type = 'success') {
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
             toast.className = `px-4 py-2.5 rounded-xl text-xs font-bold text-white shadow-2xl transition-all duration-300 pointer-events-auto flex items-center gap-2 ${type === 'error' ? 'bg-rose-600' : 'bg-slate-900 border border-sky-500'}`;
             toast.innerHTML = `<i class="fa-solid ${type === 'error' ? 'fa-circle-exclamation text-rose-300' : 'fa-circle-check text-sky-400'}"></i> ${message}`;
             container.appendChild(toast);
-            setTimeout(() => { toast.remove(); }, 3000);
+            setTimeout(() => { toast.remove(); }, 3200);
         }
 
         function copyShareUrl() {
