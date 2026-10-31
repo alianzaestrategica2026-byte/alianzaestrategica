@@ -13,7 +13,7 @@
     <meta name="apple-mobile-web-app-title" content="Alianza">
     <link rel="apple-touch-icon" href="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=250&q=80">
 
-    <!-- FUENTE CORPORATIVA OFICIAL: PLUS JAKARTA SANS -->
+    <!-- FUENTE PLUS JAKARTA SANS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -285,13 +285,13 @@
         </div>
     </section>
 
-    <!-- TARJETA DEL ABOGADO PATROCINADOR -->
+    <!-- TARJETA DEL ABOGADO PATROCINADOR (CON CARGA DIRECTA DE FOTO) -->
     <section class="max-w-7xl mx-auto w-full px-4 mb-6">
         <div class="glass-card-dark rounded-3xl p-6 text-white shadow-2xl relative overflow-hidden">
             <div class="flex flex-col md:flex-row items-center gap-6 relative z-10">
                 <div class="relative w-32 h-32 md:w-44 md:h-44 rounded-3xl overflow-hidden border-2 border-sky-400/40 shadow-2xl flex-shrink-0 bg-slate-900 group">
                     <img id="lawyerCardImg" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80" alt="Abogado Patrocinador" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80';">
-                    <button onclick="triggerFileSelect('lawyerFileInput')" class="admin-only hidden absolute bottom-2 right-2 bg-slate-950/90 text-sky-400 p-2.5 rounded-full border border-white/30 shadow-xl hover:scale-110 transition" title="Cambiar Foto Abogado">
+                    <button type="button" onclick="triggerFileSelect('lawyerFileInput')" class="admin-only hidden absolute bottom-2 right-2 bg-slate-950/90 text-sky-400 p-2.5 rounded-full border border-white/30 shadow-xl hover:scale-110 transition cursor-pointer" title="Cambiar Foto Abogado">
                         <i class="fa-solid fa-camera text-sm"></i>
                     </button>
                     <input type="file" id="lawyerFileInput" accept="image/*" class="hidden" onchange="handleImageUpload(event, 'lawyerImg')">
@@ -324,16 +324,16 @@
                 <p class="text-xs sm:text-sm text-sky-200">Consulte el catálogo verificado de ALIANZA ESTRATÉGICA S.A.S.</p>
             </div>
             <div class="max-w-xl mx-auto relative mb-5">
-                <input type="text" id="searchInput" onkeyup="filterItems()" placeholder="Buscar por código (ej: RE-001, VH-101), sector o palabra..." class="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-white/10 backdrop-blur-md text-white placeholder-slate-400 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 border border-white/10 transition shadow-inner">
+                <input type="text" id="searchInput" onkeyup="filterItems()" placeholder="Buscar por código (ej: RE-001, VH-001), sector o palabra..." class="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-white/10 backdrop-blur-md text-white placeholder-slate-400 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 border border-white/10 transition shadow-inner">
                 <i class="fa-solid fa-magnifying-glass absolute left-4 top-4 text-sky-400"></i>
             </div>
 
             <!-- BOTONES CATEGORÍAS -->
             <div class="flex flex-wrap justify-center gap-2 text-xs font-bold" id="categoryTabGroup">
                 <button onclick="setCategoryFilter('ALL')" class="cat-btn bg-amber-500 text-slate-950 px-4 py-2 rounded-xl transition shadow-md">Todos</button>
+                <button onclick="setCategoryFilter('VH')" class="cat-btn bg-slate-800 text-white hover:bg-slate-700 px-4 py-2 rounded-xl transition">VH (Vehículos)</button>
                 <button onclick="setCategoryFilter('RE')" class="cat-btn bg-slate-800 text-white hover:bg-slate-700 px-4 py-2 rounded-xl transition">RE (Ventas Raíces)</button>
                 <button onclick="setCategoryFilter('AR')" class="cat-btn bg-slate-800 text-white hover:bg-slate-700 px-4 py-2 rounded-xl transition">AR (Arriendos)</button>
-                <button onclick="setCategoryFilter('VH')" class="cat-btn bg-slate-800 text-white hover:bg-slate-700 px-4 py-2 rounded-xl transition">VH (Vehículos)</button>
                 <button onclick="setCategoryFilter('MQ')" class="cat-btn bg-slate-800 text-white hover:bg-slate-700 px-4 py-2 rounded-xl transition">MQ (Maquinaria)</button>
                 <button onclick="setCategoryFilter('LQ')" class="cat-btn bg-slate-800 text-white hover:bg-slate-700 px-4 py-2 rounded-xl transition">LQ (Segunda Mano / Remate)</button>
                 <button onclick="setCategoryFilter('SOLD')" class="cat-btn bg-rose-700 text-white hover:bg-rose-600 px-4 py-2 rounded-xl transition"><i class="fa-solid fa-circle text-rose-300 mr-1"></i> 🔴💸 Vendidos</button>
@@ -388,7 +388,7 @@
 
             <div id="chatMessages" class="p-4 h-64 overflow-y-auto space-y-3 bg-slate-50/70 modal-scroll">
                 <div class="bg-white p-3 rounded-2xl border border-slate-200/80 text-slate-700 shadow-sm leading-relaxed">
-                    ¡Hola! 👋 Te saluda Sofía de <strong>ALIANZA ESTRATÉGICA S.A.S.</strong> ¿Deseas consultar algún bien del catálogo o te gustaría consignar tu propiedad o vehículo con nosotros?
+                    ¡Hola! 👋 Te saluda Sofía de <strong>ALIANZA ESTRATÉGICA S.A.S.</strong> ¿Deseas información de algún bien del catálogo o te gustaría consignar tu propiedad o vehículo con nosotros?
                 </div>
             </div>
 
@@ -534,7 +534,7 @@
                 </table>
             </div>
 
-            <!-- FOOTER MODAL Y GUÍA POWER QUERY -->
+            <!-- FOOTER MODAL -->
             <div class="p-3 bg-slate-100 border-t border-slate-200 flex flex-wrap items-center justify-between text-xs text-slate-500 no-print">
                 <span><i class="fa-solid fa-link text-emerald-600 mr-1"></i> Conexión en Vivo PC: <strong>Datos &gt; Desde la web &gt; URL de exportación .csv</strong> para sincronización 24/7 automática.</span>
                 <span class="font-mono text-[11px] text-slate-700">Comisiones: 50% ALIANZA S.A.S. | 50% Fuerza de Ventas (50% un solo agente o 25%/25% dividido)</span>
@@ -612,7 +612,7 @@
         </div>
     </div>
 
-    <!-- MODAL PANEL MAESTRO (CONFIGURACIÓN GLOBAL WEB - SIEMPRE DISPONIBLE Y PRECARGADO) -->
+    <!-- MODAL PANEL MAESTRO (CONFIGURACIÓN GLOBAL WEB - PRECARGADO Y EDITABLE) -->
     <div id="masterPanelModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
         <div class="glass-card rounded-3xl max-w-2xl w-full p-6 space-y-4 shadow-2xl max-h-[90vh] flex flex-col border border-white/20">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
@@ -684,6 +684,13 @@
                         <input type="text" id="cfgLawyerEmail" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800">
                     </div>
                 </div>
+                <div class="pt-2">
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Foto del Abogado Patrocinador</label>
+                    <button type="button" onclick="triggerFileSelect('lawyerFileInputMaster')" class="w-full bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded-xl px-3 py-2 text-xs font-bold text-slate-800 flex items-center justify-center gap-2 cursor-pointer">
+                        <i class="fa-solid fa-camera text-sky-600"></i> Seleccionar Nueva Foto del Abogado
+                    </button>
+                    <input type="file" id="lawyerFileInputMaster" accept="image/*" class="hidden" onchange="handleImageUpload(event, 'lawyerImg')">
+                </div>
             </div>
 
             <div class="border-t border-slate-100 pt-3 flex justify-end gap-2">
@@ -695,7 +702,7 @@
         </div>
     </div>
 
-    <!-- MODAL REGISTRO / EDICIÓN DE CAPTACIÓN (ROBUSTO Y SIN BLOQUEOS) -->
+    <!-- MODAL REGISTRO / EDICIÓN DE CAPTACIÓN -->
     <div id="productModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
         <div class="glass-card rounded-3xl max-w-2xl w-full p-6 space-y-4 shadow-2xl max-h-[90vh] flex flex-col border border-white/20">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
@@ -722,9 +729,9 @@
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1">Categoría</label>
                         <select id="prodCategory" onchange="toggleCategoryFields()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-bold">
+                            <option value="VH">VH - Vehículo (Carro / Moto / Camioneta)</option>
                             <option value="RE">RE - Bienes Raíces Venta</option>
                             <option value="AR">AR - Bienes Raíces Arriendo</option>
-                            <option value="VH">VH - Vehículo (Carro / Moto / Camioneta)</option>
                             <option value="MQ">MQ - Maquinaria Pesada</option>
                             <option value="LQ">LQ - Artículos de Segunda Mano / Remate</option>
                         </select>
@@ -743,8 +750,8 @@
 
                 <div class="grid grid-cols-3 gap-2">
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Código Único</label>
-                        <input type="text" id="prodCode" placeholder="Ej: RE-001" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-mono font-bold">
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Código Único (Automático)</label>
+                        <input type="text" id="prodCode" placeholder="VH-001" class="w-full bg-slate-100 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 font-mono font-extrabold">
                     </div>
                     <div class="col-span-2">
                         <label class="block text-xs font-bold text-slate-700 mb-1">Título / Detalle Corto</label>
@@ -791,7 +798,17 @@
                 </div>
 
                 <!-- ESPECIFICACIONES DINÁMICAS -->
-                <div id="fieldsRealEstate" class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-2">
+                <div id="fieldsVehicles" class="bg-amber-50/60 p-3.5 rounded-2xl border border-amber-100 space-y-2">
+                    <h5 class="text-xs font-extrabold text-amber-900"><i class="fa-solid fa-truck-monster"></i> Ficha de Vehículo / Maquinaria</h5>
+                    <div class="grid grid-cols-3 gap-2">
+                        <input type="text" id="vhAno" placeholder="Año / Modelo" class="bg-white border border-amber-200 rounded-xl px-2.5 py-1.5 text-xs">
+                        <input type="text" id="vhKm" placeholder="Kilometraje / Horas" class="bg-white border border-amber-200 rounded-xl px-2.5 py-1.5 text-xs">
+                        <input type="text" id="vhTransmision" placeholder="Transmisión / Motor" class="bg-white border border-amber-200 rounded-xl px-2.5 py-1.5 text-xs">
+                    </div>
+                    <input type="text" id="vhDetalles" placeholder="Detalles mecánicos y extras" class="w-full bg-white border border-amber-200 rounded-xl px-2.5 py-1.5 text-xs">
+                </div>
+
+                <div id="fieldsRealEstate" class="hidden bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-2">
                     <h5 class="text-xs font-extrabold text-slate-800"><i class="fa-solid fa-house"></i> Parámetros de Bienes Raíces</h5>
                     <div class="grid grid-cols-3 gap-2">
                         <input type="text" id="reMetros2" placeholder="Área Total (m²)" class="bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs">
@@ -811,16 +828,6 @@
                         <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="srvAlcantarillado"> Alcantarillado</label>
                         <label class="flex items-center gap-1 ml-auto text-sky-800 font-bold cursor-pointer"><input type="checkbox" id="srvEscrituras"> 📜 Escrituras al día</label>
                     </div>
-                </div>
-
-                <div id="fieldsVehicles" class="hidden bg-amber-50/60 p-3.5 rounded-2xl border border-amber-100 space-y-2">
-                    <h5 class="text-xs font-extrabold text-amber-900"><i class="fa-solid fa-truck-monster"></i> Ficha de Vehículo / Maquinaria</h5>
-                    <div class="grid grid-cols-3 gap-2">
-                        <input type="text" id="vhAno" placeholder="Año / Modelo" class="bg-white border border-amber-200 rounded-xl px-2.5 py-1.5 text-xs">
-                        <input type="text" id="vhKm" placeholder="Kilometraje / Horas" class="bg-white border border-amber-200 rounded-xl px-2.5 py-1.5 text-xs">
-                        <input type="text" id="vhTransmision" placeholder="Transmisión" class="bg-white border border-amber-200 rounded-xl px-2.5 py-1.5 text-xs">
-                    </div>
-                    <input type="text" id="vhDetalles" placeholder="Detalles mecánicos y extras" class="w-full bg-white border border-amber-200 rounded-xl px-2.5 py-1.5 text-xs">
                 </div>
 
                 <div id="fieldsSecondHand" class="hidden bg-purple-50/60 p-3.5 rounded-2xl border border-purple-100 space-y-2">
@@ -849,7 +856,7 @@
 
                 <div class="pt-2 flex justify-end gap-2">
                     <button type="button" onclick="closeModal('productModal')" class="bg-slate-200 text-slate-700 font-bold px-4 py-2 rounded-xl text-xs hover:bg-slate-300 transition">Cancelar</button>
-                    <button type="submit" id="btnSaveProduct" class="bg-sky-600 hover:bg-sky-500 text-white font-extrabold px-5 py-2 rounded-xl text-xs transition shadow-md flex items-center gap-1.5">
+                    <button type="submit" id="btnSaveProduct" class="bg-sky-600 hover:bg-sky-500 text-white font-extrabold px-5 py-2 rounded-xl text-xs transition shadow-md flex items-center gap-1.5 cursor-pointer">
                         <i class="fa-solid fa-cloud-arrow-up"></i> Guardar Activo en la Nube
                     </button>
                 </div>
@@ -956,9 +963,9 @@
             <div class="space-y-3">
                 <input type="text" id="csgOwnerName" placeholder="Su Nombre Completo" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs">
                 <select id="csgCategory" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold">
+                    <option value="Vehiculo">Vehículo / Camioneta</option>
                     <option value="Bienes Raices Venta">Bienes Raíces (Venta)</option>
                     <option value="Bienes Raices Arriendo">Bienes Raíces (Arriendo)</option>
-                    <option value="Vehiculo">Vehículo / Camioneta</option>
                     <option value="Maquinaria">Maquinaria Pesada</option>
                     <option value="Segunda Mano">Artículo de Segunda Mano</option>
                 </select>
@@ -968,6 +975,21 @@
                 <button onclick="sendConsignarWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold py-2.5 rounded-xl text-xs transition shadow-lg flex items-center justify-center gap-2">
                     <i class="fa-brands fa-whatsapp text-base"></i> Enviar por WhatsApp a Gestión Comercial
                 </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL COMPARTIR WEB -->
+    <div id="shareModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-card rounded-3xl max-w-sm w-full p-6 space-y-4 shadow-2xl text-center border border-white/20">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                <h3 class="text-base font-extrabold text-slate-900">Compartir Plataforma</h3>
+                <button onclick="closeModal('shareModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <p class="text-xs text-slate-600">Copie el enlace oficial para compartir en redes:</p>
+            <div class="flex gap-2">
+                <input type="text" id="shareUrlInput" readonly value="https://alianzaestrategica2026-byte.github.io/alianzaestrategica/" class="flex-1 bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs font-mono">
+                <button onclick="copyShareUrl()" class="bg-sky-600 text-white px-3 py-2 rounded-xl text-xs font-bold hover:bg-sky-500">Copiar</button>
             </div>
         </div>
     </div>
@@ -1074,6 +1096,30 @@
             const el = document.getElementById(id);
             return el ? el.checked : false;
         };
+
+        /* GENERADOR SECUENCIAL DE CÓDIGOS CORRELATIVOS POR CATEGORÍA */
+        function generateNextCode(category) {
+            const prefix = (category || 'VH').toUpperCase().trim();
+            let maxNum = 0;
+            if (Array.isArray(inventory)) {
+                inventory.forEach(item => {
+                    const code = (item.code || '').toUpperCase().trim();
+                    if (code.startsWith(prefix + '-')) {
+                        const numPart = code.replace(prefix + '-', '');
+                        const n = parseInt(numPart, 10);
+                        if (!isNaN(n) && n > maxNum) maxNum = n;
+                    } else if (item.category === prefix && code) {
+                        const match = code.match(/\d+/);
+                        if (match) {
+                            const n = parseInt(match[0], 10);
+                            if (!isNaN(n) && n > maxNum) maxNum = n;
+                        }
+                    }
+                });
+            }
+            const next = maxNum + 1;
+            return `${prefix}-${String(next).padStart(3, '0')}`;
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
             loadPersistedData();
@@ -1191,6 +1237,7 @@
             if (!db) return;
 
             try {
+                // Sincronización general
                 db.collection('alianza_settings').doc('appData').onSnapshot(doc => {
                     if (doc && doc.exists) {
                         const cloudData = doc.data();
@@ -1204,6 +1251,37 @@
                     }
                 }, err => console.warn('Sync settings:', err));
 
+                // Sincronización independiente de foto del abogado
+                db.collection('alianza_settings').doc('media_lawyer').onSnapshot(doc => {
+                    if (doc && doc.exists && doc.data().lawyerImg) {
+                        appConfig.lawyerImg = doc.data().lawyerImg;
+                        localStorage.setItem('alianza_lawyerImg', appConfig.lawyerImg);
+                        const el = document.getElementById('lawyerCardImg');
+                        if (el) el.src = appConfig.lawyerImg;
+                    }
+                }, () => {});
+
+                // Sincronización independiente de foto de portada
+                db.collection('alianza_settings').doc('media_cover').onSnapshot(doc => {
+                    if (doc && doc.exists && doc.data().coverImg) {
+                        appConfig.coverImg = doc.data().coverImg;
+                        localStorage.setItem('alianza_coverImg', appConfig.coverImg);
+                        const el = document.getElementById('coverImgDisplay');
+                        if (el) el.src = appConfig.coverImg;
+                    }
+                }, () => {});
+
+                // Sincronización independiente de foto de perfil
+                db.collection('alianza_settings').doc('media_profile').onSnapshot(doc => {
+                    if (doc && doc.exists && doc.data().profileLogo) {
+                        appConfig.profileLogo = doc.data().profileLogo;
+                        localStorage.setItem('alianza_profileLogo', appConfig.profileLogo);
+                        const el = document.getElementById('profileLogoImg');
+                        if (el) el.src = appConfig.profileLogo;
+                    }
+                }, () => {});
+
+                // Sincronización de inventario
                 db.collection('alianza_inventory').onSnapshot(snapshot => {
                     if (snapshot && !snapshot.empty) {
                         const cloudInv = [];
@@ -1232,6 +1310,15 @@
             try {
                 const savedCfg = localStorage.getItem('alianza_config');
                 if (savedCfg) appConfig = { ...DEFAULT_STATE, ...JSON.parse(savedCfg) };
+
+                const savedCover = localStorage.getItem('alianza_coverImg') || localStorage.getItem('alianza_cover');
+                if (savedCover) appConfig.coverImg = savedCover;
+
+                const savedProfile = localStorage.getItem('alianza_profileLogo') || localStorage.getItem('alianza_profile');
+                if (savedProfile) appConfig.profileLogo = savedProfile;
+
+                const savedLawyer = localStorage.getItem('alianza_lawyerImg') || localStorage.getItem('alianza_lawyer');
+                if (savedLawyer) appConfig.lawyerImg = savedLawyer;
 
                 const savedInv = localStorage.getItem('alianza_inventory');
                 inventory = savedInv ? JSON.parse(savedInv) : [...INITIAL_INVENTORY];
@@ -1416,25 +1503,68 @@
             showToast('¡Información corporativa guardada en la Nube!');
         }
 
-        function triggerFileSelect(id) { document.getElementById(id).click(); }
+        function triggerFileSelect(id) { 
+            const el = document.getElementById(id);
+            if (el) el.click(); 
+        }
 
-        /* MANEJADOR DE IMÁGENES GLOBALES */
+        /* MANEJADOR DE IMÁGENES GLOBALES (PORTADA, PERFIL, ABOGADO CON CANALES DEDICADOS) */
         async function handleImageUpload(event, targetProp) {
             const file = event.target.files[0];
             if (!file) return;
             showToast('Optimizando y subiendo imagen...');
-            const base64 = await compressSmartImage(file, 1000, 0.8);
+            const base64 = await compressSmartImage(file, 800, 0.75);
             if (base64) {
                 appConfig[targetProp] = base64;
-                saveConfigToStorage();
-                renderAppUI();
-                showToast('¡Imagen actualizada en la Nube con éxito!');
+                
+                // Actualización inmediata en UI
+                if (targetProp === 'coverImg' && document.getElementById('coverImgDisplay')) {
+                    document.getElementById('coverImgDisplay').src = base64;
+                }
+                if (targetProp === 'profileLogo' && document.getElementById('profileLogoImg')) {
+                    document.getElementById('profileLogoImg').src = base64;
+                }
+                if (targetProp === 'lawyerImg' && document.getElementById('lawyerCardImg')) {
+                    document.getElementById('lawyerCardImg').src = base64;
+                }
+
+                localStorage.setItem('alianza_' + targetProp, base64);
+                localStorage.setItem('alianza_config', JSON.stringify(appConfig));
+
+                // Guardado dedicado en Firestore
+                if (db) {
+                    try {
+                        if (targetProp === 'lawyerImg') {
+                            db.collection('alianza_settings').doc('media_lawyer').set({
+                                lawyerImg: base64,
+                                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                            }, { merge: true }).catch(() => {});
+                        } else if (targetProp === 'coverImg') {
+                            db.collection('alianza_settings').doc('media_cover').set({
+                                coverImg: base64,
+                                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                            }, { merge: true }).catch(() => {});
+                        } else if (targetProp === 'profileLogo') {
+                            db.collection('alianza_settings').doc('media_profile').set({
+                                profileLogo: base64,
+                                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                            }, { merge: true }).catch(() => {});
+                        }
+
+                        db.collection('alianza_settings').doc('appData').set({
+                            config: appConfig,
+                            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                        }, { merge: true }).catch(() => {});
+                    } catch (e) {}
+                }
+                showToast('¡Foto actualizada y guardada con éxito!');
             }
             event.target.value = '';
         }
 
+        /* CAMBIO DINÁMICO DE CATEGORÍA Y ASIGNACIÓN AUTOMÁTICA DE CÓDIGO SECUENCIAL */
         function toggleCategoryFields() {
-            const cat = getVal('prodCategory') || 'RE';
+            const cat = getVal('prodCategory') || 'VH';
             const fieldsVehicles = document.getElementById('fieldsVehicles');
             const fieldsRealEstate = document.getElementById('fieldsRealEstate');
             const fieldsSecondHand = document.getElementById('fieldsSecondHand');
@@ -1449,6 +1579,15 @@
                 if (fieldsVehicles) fieldsVehicles.classList.remove('hidden');
             } else if (cat === 'LQ') {
                 if (fieldsSecondHand) fieldsSecondHand.classList.remove('hidden');
+            }
+
+            // Si es un registro nuevo, auto-generar la numeración correlativa de esta categoría:
+            const editId = getVal('prodEditId');
+            if (!editId) {
+                const codeInput = document.getElementById('prodCode');
+                if (codeInput) {
+                    codeInput.value = generateNextCode(cat);
+                }
             }
         }
 
@@ -1473,6 +1612,13 @@
             const modalTitle = document.getElementById('productModalTitle');
             if (modalTitle) modalTitle.innerText = 'Registrar Nueva Captación';
 
+            // Por defecto VH o categoría inicial seleccionada:
+            const cat = getVal('prodCategory') || 'VH';
+            const codeInput = document.getElementById('prodCode');
+            if (codeInput) {
+                codeInput.value = generateNextCode(cat);
+            }
+
             toggleCategoryFields();
             openModal('productModal');
         }
@@ -1483,7 +1629,7 @@
 
             document.getElementById('prodEditId').value = item.id;
             document.getElementById('prodIsFeatured').checked = item.isFeatured !== false;
-            document.getElementById('prodCategory').value = item.category || 'RE';
+            document.getElementById('prodCategory').value = item.category || 'VH';
             document.getElementById('prodStatus').value = item.status || 'DISPONIBLE';
             document.getElementById('prodCode').value = item.code || '';
             document.getElementById('prodTitle').value = item.title || '';
@@ -1550,10 +1696,10 @@
             try {
                 const editId = getVal('prodEditId');
                 const isFeatured = getChecked('prodIsFeatured');
-                const category = getVal('prodCategory') || 'RE';
+                const category = getVal('prodCategory') || 'VH';
                 const status = getVal('prodStatus') || 'DISPONIBLE';
                 let code = getVal('prodCode');
-                const title = getVal('prodTitle') || 'Activo sin título';
+                const title = getVal('prodTitle') || 'Captación sin título';
                 const ciudad = getVal('prodCiudad');
                 const parroquia = getVal('prodParroquia');
                 const sector = getVal('prodSector');
@@ -1569,9 +1715,10 @@
                 const agentName = getVal('prodAgentName') || 'Gerencia General';
                 const urlDirect = getVal('prodUrlDirect');
 
-                if (!code) code = `${category}-${Math.floor(100 + Math.random() * 900)}`;
+                // Si no tiene código, auto-generar secuencial
+                if (!code) code = generateNextCode(category);
 
-                // Sanitización numérica de seguridad (nunca arroja NaN ni bloquea la app)
+                // Sanitización numérica
                 const cleanPriceNum = parseFloat(priceStr.replace(/[^0-9.]/g, '')) || 0;
                 let cleanComNum = 0;
                 if (comisionStr.includes('%')) {
@@ -1593,7 +1740,7 @@
 
                 if (finalImages.length === 0) {
                     if (category === 'VH') {
-                        finalImages = ['https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80'];
+                        finalImages = ['https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=800&q=80'];
                     } else {
                         finalImages = ['https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80'];
                     }
@@ -1675,14 +1822,14 @@
                 // 1. Guardar de inmediato localmente
                 localStorage.setItem('alianza_inventory', JSON.stringify(inventory));
 
-                // 2. Actualizar interfaz al milisegundo
+                // 2. Actualizar interfaz al milisegundo (catálogo, banner y tabla)
                 filterItems();
                 updateCarouselDisplay();
                 renderFinanceTable();
 
                 // 3. Cerrar modal y avisar con Toast
                 closeModal('productModal');
-                showToast('¡Captación guardada y visible en catálogo y carrusel!');
+                showToast(`¡Captación ${code} guardada y visible en catálogo y carrusel!`);
 
                 // 4. Sincronización asíncrona en la nube protegida
                 if (db && targetItem) {
@@ -2108,6 +2255,7 @@
             document.getElementById('detDesc').innerText = item.desc || 'Sin descripción detallada.';
             document.getElementById('detAgentDisplay').innerText = item.agentName || 'Gerencia General';
 
+            // Precios en ficha
             const priceEl = document.getElementById('detPrice');
             const offerEl = document.getElementById('detOfferPrice');
             if (item.offerPriceStr) {
