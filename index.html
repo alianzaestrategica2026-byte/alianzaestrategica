@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="htmlPageTitle">ALIANZA ESTRATÉGICA S.A.S. - Plataforma Oficial</title>
+    <title id="htmlPageTitle">ALIANZA ESTRATÉGICA S.A.S. - Catálogo Inmobiliario & Vehicular</title>
 
     <!-- METADATOS PWA Y TEMA -->
     <meta name="theme-color" content="#020617">
@@ -11,9 +11,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Alianza">
-    <link rel="apple-touch-icon" href="https://lh3.googleusercontent.com/d/1X6tUqZ2z3c8vN-xYqZp8W1V_X7mRzS">
+    <link rel="apple-touch-icon" href="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=250&q=80">
 
-    <!-- GOOGLE FONTS (INTER / PLUS JAKARTA SANS) -->
+    <!-- TIPOGRAFÍA PLUS JAKARTA SANS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -28,30 +28,12 @@
                         sans: ['"Plus Jakarta Sans"', 'sans-serif'],
                     },
                     colors: {
-                        slate: {
-                            850: '#0f172a',
-                            950: '#020617'
-                        },
                         brand: {
                             celeste: '#38bdf8',
                             celesteLight: '#f0f9ff',
                             celesteDark: '#0284c7',
                             gold: '#d97706',
                             goldLight: '#f59e0b'
-                        }
-                    },
-                    animation: {
-                        'marquee': 'marquee 30s linear infinite',
-                        'pulse-subtle': 'pulseSubtle 3s ease-in-out infinite'
-                    },
-                    keyframes: {
-                        marquee: {
-                            '0%': { transform: 'translateX(0%)' },
-                            '100%': { transform: 'translateX(-50%)' }
-                        },
-                        pulseSubtle: {
-                            '0%, 100%': { opacity: '1' },
-                            '50%': { opacity: '0.6' }
                         }
                     }
                 }
@@ -76,34 +58,19 @@
             font-feature-settings: "cv02", "cv03", "cv04", "cv11";
         }
         .glass-card {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(226, 232, 240, 0.8);
+            border: 1px solid rgba(226, 232, 240, 0.9);
         }
         .glass-card-dark {
-            background: rgba(15, 23, 42, 0.85);
+            background: rgba(15, 23, 42, 0.92);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .modal-scroll::-webkit-scrollbar { width: 5px; height: 5px; }
         .modal-scroll::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 9999px; }
-
-        .aspect-video-custom {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-        }
-        .aspect-video-custom iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
 
         [data-netlify-badge], .netlify-badge, iframe[src*="netlify"] { 
             display: none !important; 
@@ -118,28 +85,27 @@
     <!-- CONTENEDOR DE NOTIFICACIONES TOAST -->
     <div id="toastContainer" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-    <!-- TOPBAR CORPORATIVA -->
-    <header class="bg-slate-950/90 text-white text-xs py-2 px-4 border-b border-slate-800/80 sticky top-0 z-40 backdrop-blur-md">
+    <!-- TOPBAR SUPERIOR -->
+    <header class="bg-slate-950 text-white text-xs py-2 px-4 border-b border-slate-800/80 sticky top-0 z-40 backdrop-blur-md">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
             <div class="flex items-center gap-3">
                 <span class="flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-sky-400"></i> <span id="topLocationText">El Coca, Orellana - Ecuador</span></span>
                 <span id="topEmailDisplay" class="hidden md:inline text-slate-400"><i class="fa-solid fa-envelope text-sky-400 mr-1"></i> alianzaestrategica2026@gmail.com</span>
-                <span id="roleBadge" class="bg-slate-800/80 text-sky-300 border border-sky-500/30 text-[10px] px-2.5 py-0.5 rounded-full font-semibold flex items-center gap-1.5 shadow-sm">
+                <span id="roleBadge" class="bg-slate-800 text-sky-300 border border-sky-500/30 text-[10px] px-2.5 py-0.5 rounded-full font-semibold flex items-center gap-1.5 shadow-sm">
                     <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span> <span id="roleBadgeText">Modo Público</span>
                 </span>
                 <span id="cloudStatusBadge" class="hidden sm:flex items-center gap-1 text-[10px] text-emerald-400 font-mono">
-                    <i class="fa-solid fa-cloud"></i> Sincronizado
+                    <i class="fa-solid fa-cloud"></i> Nube Activa
                 </span>
             </div>
-            <div class="flex items-center gap-2 sm:gap-2.5">
-                <a id="fbOfficialLink" href="https://www.facebook.com/share/18ZHQPZGYk/" target="_blank" rel="noopener noreferrer" class="hover:text-sky-400 transition hidden sm:inline"><i class="fa-brands fa-facebook"></i> Oficial</a>
+            <div class="flex items-center gap-2">
                 <a id="waCatalogLink" href="https://wa.me/c/593959190794" target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:text-amber-300 font-semibold transition hidden sm:inline"><i class="fa-solid fa-store"></i> Catálogo WA</a>
                
                 <button onclick="openModal('shareModal')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-2.5 py-1 rounded-lg text-xs font-semibold transition flex items-center gap-1 shadow-sm">
                     <i class="fa-solid fa-share-nodes text-sky-400"></i> Compartir
                 </button>
 
-                <!-- BOTÓN INGRESO SISTEMA ROLES -->
+                <!-- BOTÓN ACCESO SISTEMA -->
                 <button onclick="openModal('loginModal')" id="loginNavBtn" class="bg-sky-600 hover:bg-sky-500 text-white px-3 py-1 rounded-lg text-xs font-bold transition shadow-sm flex items-center gap-1">
                     <i class="fa-solid fa-right-to-bracket"></i> Acceso Sistema
                 </button>
@@ -150,18 +116,18 @@
         </div>
     </header>
 
-    <!-- BANNERS DE MODO ADMINISTRADOR / AGENTE -->
+    <!-- BANNERS DE CONTROL DE ROL -->
     <div id="adminBanner" class="bg-gradient-to-r from-amber-500 via-amber-600 to-amber-500 text-slate-950 px-4 py-2 hidden shadow-md border-b border-amber-600 z-30 transition-all">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
             <div class="flex items-center gap-2 font-extrabold text-xs md:text-sm">
-                <i class="fa-solid fa-user-shield text-slate-950 text-base"></i> PANEL DE CONTROL GERENCIA ACTIVO
+                <i class="fa-solid fa-user-shield text-slate-950 text-base"></i> PANEL DE GERENCIA GENERAL ACTIVO
             </div>
             <div class="flex flex-wrap items-center gap-2">
                 <button onclick="openMasterPanel()" class="bg-slate-950 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-slate-900 transition flex items-center gap-1.5 shadow">
-                    <i class="fa-solid fa-sliders text-amber-400"></i> Configurar Web
+                    <i class="fa-solid fa-sliders text-amber-400"></i> Editar Datos Web
                 </button>
                 <button onclick="openAddProductModal()" class="bg-sky-900 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-sky-800 transition flex items-center gap-1.5 shadow">
-                    <i class="fa-solid fa-plus-circle text-sky-300"></i> Crear Activo
+                    <i class="fa-solid fa-plus-circle text-sky-300"></i> + Registrar Captación
                 </button>
             </div>
         </div>
@@ -180,28 +146,28 @@
         </div>
     </div>
 
-    <!-- HERO PROFILE HEADER -->
+    <!-- HEADER / PERFIL CORPORATIVO -->
     <section class="max-w-7xl mx-auto w-full px-4 pt-4">
         <div class="glass-card rounded-3xl shadow-xl overflow-hidden relative transition-all duration-300">
-            <!-- PORTADA ULTRA PRO -->
-            <div class="h-52 sm:h-64 md:h-80 w-full relative bg-slate-950 group overflow-hidden">
-                <img id="coverImgDisplay" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80" alt="Portada Corporativa" class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+            <!-- PORTADA -->
+            <div class="h-52 sm:h-64 md:h-80 w-full relative bg-slate-900 group overflow-hidden">
+                <img id="coverImgDisplay" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80" alt="Portada Corporativa" class="w-full h-full object-cover transition duration-700" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80';">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent"></div>
                 
-                <button onclick="triggerFileSelect('coverFileInput')" class="admin-only hidden absolute top-4 right-4 bg-slate-950/80 hover:bg-slate-900 text-white text-xs font-bold px-3.5 py-2 rounded-xl backdrop-blur-md border border-white/20 transition flex items-center gap-2 shadow-2xl">
+                <button onclick="triggerFileSelect('coverFileInput')" class="admin-only hidden absolute top-4 right-4 bg-slate-950/85 hover:bg-slate-900 text-white text-xs font-bold px-3.5 py-2 rounded-xl backdrop-blur-md border border-white/20 transition flex items-center gap-2 shadow-2xl">
                     <i class="fa-solid fa-camera text-sky-400"></i> Cambiar Portada
                 </button>
                 <input type="file" id="coverFileInput" accept="image/*" class="hidden" onchange="handleCoverUpload(event)">
             </div>
 
-            <!-- DETALLES DE PERFIL ELEGANTE -->
+            <!-- DETALLES DE PERFIL -->
             <div class="px-6 pb-6 pt-2 relative">
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 -mt-20 sm:-mt-24 md:-mt-28 mb-4">
                     <div class="flex flex-col sm:flex-row items-center sm:items-end gap-5 text-center sm:text-left">
-                        <div class="relative w-32 h-32 sm:w-40 sm:h-40 rounded-3xl border-4 border-white shadow-2xl overflow-hidden bg-slate-900 flex-shrink-0 group">
-                            <img id="profileLogoImg" src="https://lh3.googleusercontent.com/d/1X6tUqZ2z3c8vN-xYqZp8W1V_X7mRzS" alt="Perfil Corporativo" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Alianza+Estrategica&background=0284c7&color=fff';">
-                            <button onclick="triggerFileSelect('profileFileInput')" class="admin-only hidden absolute inset-0 bg-slate-950/70 text-white text-xs font-bold flex flex-col items-center justify-center transition group-hover:flex backdrop-blur-sm">
-                                <i class="fa-solid fa-camera text-xl text-sky-400 mb-1"></i> Editar
+                        <div class="relative w-32 h-32 sm:w-40 sm:h-40 rounded-3xl border-4 border-white shadow-2xl overflow-hidden bg-gradient-to-tr from-sky-800 to-slate-900 flex-shrink-0 group">
+                            <img id="profileLogoImg" src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=400&q=80" alt="Perfil Corporativo" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Alianza+Estrategica&background=0284c7&color=fff';">
+                            <button onclick="triggerFileSelect('profileFileInput')" class="admin-only hidden absolute bottom-2 right-2 bg-slate-950/90 text-sky-400 p-2.5 rounded-full border border-white/30 shadow-xl hover:scale-110 transition">
+                                <i class="fa-solid fa-camera text-sm"></i>
                             </button>
                             <input type="file" id="profileFileInput" accept="image/*" class="hidden" onchange="handleProfileUpload(event)">
                         </div>
@@ -221,7 +187,7 @@
                         </div>
                     </div>
 
-                    <!-- ACCIONES RÁPIDAS FLOTANTES -->
+                    <!-- ACCIONES RÁPIDAS -->
                     <div class="flex flex-wrap items-center justify-center gap-2 pt-2">
                         <button onclick="openModal('infoMenuModal')" class="bg-slate-900 hover:bg-slate-800 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow-md transition flex items-center gap-2">
                             <i class="fa-solid fa-circle-info text-sky-400"></i> Dossier Legal
@@ -244,59 +210,39 @@
         </div>
     </section>
 
-    <!-- MULTIMEDIA & CARRUSEL DEPORTIVO -->
-    <section class="max-w-7xl mx-auto w-full px-4 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <!-- CARRUSEL ULTRA ESTILIZADO -->
-        <div class="lg:col-span-7 glass-card rounded-3xl shadow-lg border border-slate-200 overflow-hidden flex flex-col justify-between">
-            <div class="p-4 border-b border-slate-100 flex items-center justify-between">
-                <span class="text-xs font-extrabold uppercase tracking-wider text-sky-700 flex items-center gap-2">
-                    <i class="fa-solid fa-bolt text-amber-500"></i> Galería de Oportunidades & Activos Destacados
+    <!-- BANNER DINÁMICO PANORÁMICO DE ACTIVOS DESTACADOS (ANCHO COMPLETO) -->
+    <section class="max-w-7xl mx-auto w-full px-4 py-6">
+        <div class="glass-card rounded-3xl shadow-xl border border-slate-200 overflow-hidden flex flex-col justify-between">
+            <div class="p-4 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-slate-900 to-sky-950 text-white">
+                <span class="text-xs font-extrabold uppercase tracking-wider text-amber-400 flex items-center gap-2">
+                    <i class="fa-solid fa-bolt"></i> Oportunidades & Captaciones Destacadas
                 </span>
-                <span class="text-[11px] bg-sky-100/70 text-sky-800 px-2.5 py-0.5 rounded-full font-bold">Secuencia Activa</span>
+                <span class="text-[11px] bg-sky-500/20 text-sky-300 border border-sky-400/30 px-3 py-0.5 rounded-full font-bold">
+                    Rotación Automática
+                </span>
             </div>
 
-            <div class="relative w-full h-64 sm:h-80 md:h-96 overflow-hidden bg-slate-950 group" id="carouselContainer">
+            <div class="relative w-full h-72 sm:h-96 md:h-[420px] overflow-hidden bg-slate-950 group" id="carouselContainer">
                 <div id="carouselSlide" class="w-full h-full relative cursor-pointer" onclick="clickCarouselCurrentSlide()">
-                    <img id="carouselImg" src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover transition duration-700">
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-5 flex flex-col justify-end">
-                        <span id="carouselBadge" class="inline-block self-start text-[10px] font-mono font-bold bg-amber-500 text-slate-950 px-2.5 py-0.5 rounded-md mb-2 shadow">RE-001</span>
-                        <h3 id="carouselTitle" class="text-base sm:text-xl font-extrabold text-white leading-tight drop-shadow-md">CASA Y LE REGALO EL TERRENO! 580 m² EN EL COCA 💥🏡</h3>
-                        <p id="carouselSub" class="text-xs text-amber-300 font-bold mt-1 drop-shadow">$45,000 USD - El Coca, Orellana</p>
+                    <img id="carouselImg" src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80" class="w-full h-full object-cover transition duration-700" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80';">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent p-6 sm:p-8 flex flex-col justify-end">
+                        <span id="carouselBadge" class="inline-block self-start text-[11px] font-mono font-extrabold bg-amber-500 text-slate-950 px-3 py-1 rounded-md mb-2 shadow">RE-001</span>
+                        <h3 id="carouselTitle" class="text-lg sm:text-2xl md:text-3xl font-extrabold text-white leading-tight drop-shadow-md max-w-3xl">CASA Y LE REGALO EL TERRENO! 580 m² EN EL COCA 💥🏡</h3>
+                        <p id="carouselSub" class="text-sm sm:text-base text-amber-300 font-bold mt-1.5 drop-shadow">$45,000 USD - El Coca, Orellana</p>
                     </div>
                 </div>
 
-                <button onclick="prevSlide()" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white w-10 h-10 rounded-full flex items-center justify-center transition backdrop-blur-sm border border-white/20">
-                    <i class="fa-solid fa-chevron-left text-sm"></i>
+                <button onclick="prevSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white w-11 h-11 rounded-full flex items-center justify-center transition backdrop-blur-md border border-white/20 shadow-xl">
+                    <i class="fa-solid fa-chevron-left text-base"></i>
                 </button>
-                <button onclick="nextSlide()" class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white w-10 h-10 rounded-full flex items-center justify-center transition backdrop-blur-sm border border-white/20">
-                    <i class="fa-solid fa-chevron-right text-sm"></i>
+                <button onclick="nextSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white w-11 h-11 rounded-full flex items-center justify-center transition backdrop-blur-md border border-white/20 shadow-xl">
+                    <i class="fa-solid fa-chevron-right text-base"></i>
                 </button>
             </div>
 
-            <div class="p-3.5 bg-sky-50/60 text-xs text-sky-800 border-t border-sky-100 flex justify-between items-center">
-                <span class="font-medium"><i class="fa-solid fa-shield text-sky-600 mr-1"></i> Inmuebles verificados con respaldo legal.</span>
-                <span class="text-[11px] text-sky-700 font-bold font-mono">Toca para consultar</span>
-            </div>
-        </div>
-
-        <!-- VIDEO CORPORATIVO OFICIAL EXCLUSIVO YOUTUBE -->
-        <div class="lg:col-span-5 glass-card rounded-3xl shadow-lg border border-slate-200 overflow-hidden flex flex-col justify-between">
-            <div class="p-4 border-b border-slate-100 flex items-center justify-between">
-                <span class="text-xs font-extrabold uppercase tracking-wider text-slate-700 flex items-center gap-2">
-                    <i class="fa-brands fa-youtube text-red-600 text-base"></i> Video Corporativo Oficial
-                </span>
-                <span class="text-[11px] bg-red-100 text-red-700 px-2.5 py-0.5 rounded-full font-bold" id="videoSourceBadge">YouTube HD</span>
-            </div>
-
-            <div class="p-4 flex-1 flex flex-col justify-center bg-slate-950">
-                <div class="relative w-full aspect-video-custom rounded-2xl overflow-hidden bg-black shadow-inner" id="videoDisplayContainer">
-                    <iframe id="videoIframe" src="https://www.youtube.com/embed/dQw4w9WgXcQ" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"></iframe>
-                </div>
-            </div>
-
-            <div class="p-4 bg-slate-50/80 text-xs text-slate-600 border-t border-slate-100">
-                <h4 class="font-extrabold text-slate-900 mb-1" id="videoSectionTitle">Operaciones transparentes en ALIANZA ESTRATÉGICA S.A.S.</h4>
-                <p class="text-[11px] text-slate-500 leading-relaxed" id="videoSectionDesc">Intermediación formal, contratos de compraventa y revisión documental en Notarías y Registro de la Propiedad.</p>
+            <div class="p-3.5 bg-slate-50 text-xs text-slate-700 border-t border-slate-100 flex justify-between items-center px-6">
+                <span class="font-semibold text-slate-600"><i class="fa-solid fa-shield-halved text-sky-600 mr-1.5"></i> Inmuebles, vehículos y maquinaria verificados con estudio de títulos notarial.</span>
+                <span class="text-xs text-sky-700 font-extrabold font-mono flex items-center gap-1 cursor-pointer" onclick="clickCarouselCurrentSlide()">Ver Ficha Técnica <i class="fa-solid fa-arrow-right"></i></span>
             </div>
         </div>
     </section>
@@ -304,12 +250,11 @@
     <!-- TARJETA DEL ABOGADO PATROCINADOR -->
     <section class="max-w-7xl mx-auto w-full px-4 mb-6">
         <div class="glass-card-dark rounded-3xl p-6 text-white shadow-2xl relative overflow-hidden">
-            <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
             <div class="flex flex-col md:flex-row items-center gap-6 relative z-10">
                 <div class="relative w-32 h-32 md:w-44 md:h-44 rounded-3xl overflow-hidden border-2 border-sky-400/40 shadow-2xl flex-shrink-0 bg-slate-900 group">
-                    <img id="lawyerCardImg" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80" alt="Abogado Patrocinador" class="w-full h-full object-cover">
-                    <button onclick="triggerFileSelect('lawyerFileInput')" class="admin-only hidden absolute inset-0 bg-slate-950/70 text-white text-xs font-bold flex flex-col items-center justify-center transition group-hover:flex backdrop-blur-sm">
-                        <i class="fa-solid fa-camera text-sky-400 text-lg mb-1"></i> Cambiar Foto
+                    <img id="lawyerCardImg" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80" alt="Abogado Patrocinador" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80';">
+                    <button onclick="triggerFileSelect('lawyerFileInput')" class="admin-only hidden absolute bottom-2 right-2 bg-slate-950/90 text-sky-400 p-2.5 rounded-full border border-white/30 shadow-xl hover:scale-110 transition">
+                        <i class="fa-solid fa-camera text-sm"></i>
                     </button>
                     <input type="file" id="lawyerFileInput" accept="image/*" class="hidden" onchange="handleLawyerUpload(event)">
                 </div>
@@ -334,7 +279,7 @@
 
     <!-- MARKETPLACE Y FILTROS -->
     <main class="max-w-7xl mx-auto px-4 py-4 flex-1 w-full">
-        <!-- BUSCADOR & NAVEGACIÓN CATEGORÍAS -->
+        <!-- BUSCADOR -->
         <div class="bg-gradient-to-r from-slate-900 via-sky-950 to-slate-900 rounded-3xl p-6 mb-8 text-white shadow-xl border border-sky-900/40">
             <div class="max-w-2xl mx-auto text-center mb-5">
                 <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-1.5">Marketplace de Bienes & Activos</h2>
@@ -345,7 +290,7 @@
                 <i class="fa-solid fa-magnifying-glass absolute left-4 top-4 text-sky-400"></i>
             </div>
 
-            <!-- BOTONES CATEGORÍAS ESTILIZADOS -->
+            <!-- BOTONES CATEGORÍAS -->
             <div class="flex flex-wrap justify-center gap-2 text-xs font-bold" id="categoryTabGroup">
                 <button onclick="setCategoryFilter('ALL')" class="cat-btn bg-amber-500 text-slate-950 px-4 py-2 rounded-xl transition shadow-md">Todos</button>
                 <button onclick="setCategoryFilter('RE')" class="cat-btn bg-slate-800 text-white hover:bg-slate-700 px-4 py-2 rounded-xl transition">RE (Ventas Raíces)</button>
@@ -360,24 +305,6 @@
         <!-- REJILLA DEL CATÁLOGO -->
         <div id="catalogGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
     </main>
-
-    <!-- MARQUESINA DE ALIADOS Y AUSPICIANTES -->
-    <section class="max-w-7xl mx-auto w-full px-4 py-8">
-        <div class="glass-card rounded-3xl p-6 border border-slate-200 shadow-lg overflow-hidden">
-            <div class="flex items-center justify-between mb-4 border-b border-slate-100 pb-3">
-                <span class="text-xs font-extrabold uppercase tracking-wider text-slate-700 flex items-center gap-2">
-                    <i class="fa-solid fa-handshake text-sky-600"></i> Red de Respaldo Comercial, Auspiciantes y Notarías
-                </span>
-                <button onclick="openModal('addSponsorModal')" class="admin-only hidden bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition flex items-center gap-1 shadow">
-                    <i class="fa-solid fa-plus"></i> Añadir Aliado
-                </button>
-            </div>
-
-            <div class="relative w-full overflow-hidden py-2" id="sponsorsMarqueeContainer">
-                <div id="sponsorsMarqueeTrack" class="flex gap-8 items-center animate-marquee whitespace-nowrap"></div>
-            </div>
-        </div>
-    </section>
 
     <!-- FOOTER CORPORATIVO -->
     <footer class="bg-slate-950 text-slate-400 text-xs py-12 border-t border-slate-800 mt-auto">
@@ -395,9 +322,9 @@
                 <p><i class="fa-solid fa-envelope text-sky-400 mr-2"></i> alianzaestrategica2026@gmail.com</p>
             </div>
             <div class="space-y-2">
-                <h4 class="text-white font-extrabold text-sm tracking-wide">Ubicación y Jurisdicción</h4>
+                <h4 class="text-white font-extrabold text-sm tracking-wide">Ubicación y Cobertura</h4>
                 <p><i class="fa-solid fa-location-dot text-rose-500 mr-2"></i> Francisco de Orellana (El Coca), Orellana - Ecuador</p>
-                <p class="text-[11px] text-slate-500 pt-2">Operaciones notariales y registrales coordinadas a nivel nacional.</p>
+                <p class="text-[11px] text-slate-500 pt-2">Saneamiento y formalización notarial en todo el territorio ecuatoriano.</p>
             </div>
         </div>
         <div class="max-w-7xl mx-auto px-4 pt-4 border-t border-slate-800/80 text-center text-[11px] text-slate-500">
@@ -446,7 +373,7 @@
         </button>
     </div>
 
-    <!-- MODAL INGRESO ROLES DE SEGURIDAD -->
+    <!-- MODAL ACCESO ROLES -->
     <div id="loginModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
         <div class="glass-card rounded-3xl max-w-sm w-full p-6 space-y-4 shadow-2xl border border-white/20">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
@@ -459,8 +386,8 @@
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1">Seleccionar Nivel de Acceso</label>
                     <select id="loginRoleSelect" onchange="togglePassInput()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-sky-500">
-                        <option value="AGENT">Agente Comercial</option>
-                        <option value="ADMIN">Administrador Principal</option>
+                        <option value="AGENT">Agente Comercial (Clave: agentes12345@)</option>
+                        <option value="ADMIN">Administrador Principal (Gerencia General)</option>
                     </select>
                 </div>
                 <div id="passContainer">
@@ -474,12 +401,12 @@
         </div>
     </div>
 
-    <!-- MODAL PANEL MAESTRO WEB (SOLO ADMIN) -->
+    <!-- MODAL PANEL MAESTRO (EDICIÓN DE DATOS INSTITUCIONALES) -->
     <div id="masterPanelModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
         <div class="glass-card rounded-3xl max-w-2xl w-full p-6 space-y-4 shadow-2xl max-h-[90vh] flex flex-col border border-white/20">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
                 <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
-                    <i class="fa-solid fa-sliders text-amber-500"></i> Panel Maestro de Configuración Web
+                    <i class="fa-solid fa-sliders text-amber-500"></i> Panel Maestro de Configuración
                 </h3>
                 <button onclick="closeModal('masterPanelModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
@@ -502,28 +429,6 @@
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1">Biografía / Texto Descriptivo Principal</label>
                     <textarea id="cfgBioText" rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800"></textarea>
-                </div>
-
-                <hr class="border-slate-100">
-                <div class="bg-red-50/60 p-4 rounded-2xl border border-red-100 space-y-2.5">
-                    <h4 class="text-xs font-extrabold text-red-700 uppercase flex items-center gap-1.5">
-                        <i class="fa-brands fa-youtube text-base"></i> Video Corporativo Oficial (YouTube Exclusivo)
-                    </h4>
-                    <p class="text-[11px] text-slate-500">Pegue cualquier enlace de YouTube o Shorts. El sistema lo convertirá y sincronizará en la nube automáticamente.</p>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Enlace de YouTube</label>
-                        <input type="text" id="cfgVideoUrl" placeholder="https://www.youtube.com/watch?v=..." class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-mono">
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-                        <div>
-                            <label class="block text-[11px] font-bold text-slate-700 mb-1">Título del Video</label>
-                            <input type="text" id="cfgVideoTitle" class="w-full bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs text-slate-800">
-                        </div>
-                        <div>
-                            <label class="block text-[11px] font-bold text-slate-700 mb-1">Descripción del Video</label>
-                            <input type="text" id="cfgVideoDesc" class="w-full bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs text-slate-800">
-                        </div>
-                    </div>
                 </div>
 
                 <hr class="border-slate-100">
@@ -557,20 +462,32 @@
         </div>
     </div>
 
-    <!-- MODAL CREAR / EDITAR ACTIVO (ADMIN Y AGENTES) -->
+    <!-- MODAL CREAR / EDITAR ACTIVO -->
     <div id="productModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
         <div class="glass-card rounded-3xl max-w-2xl w-full p-6 space-y-4 shadow-2xl max-h-[90vh] flex flex-col border border-white/20">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                <h3 class="text-base font-extrabold text-slate-900" id="productModalTitle">Añadir Nuevo Activo / Captación</h3>
+                <h3 class="text-base font-extrabold text-slate-900" id="productModalTitle">Registrar Nueva Captación</h3>
                 <button onclick="closeModal('productModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
 
             <form id="productForm" onsubmit="handleSaveProduct(event)" class="flex-1 overflow-y-auto space-y-3.5 p-1 modal-scroll">
                 <input type="hidden" id="prodEditId">
+
+                <!-- SELECTOR DE DESTACADO PARA EL BANNER SUPERIOR -->
+                <div class="bg-amber-50 p-3 rounded-2xl border border-amber-300 flex items-center justify-between">
+                    <div>
+                        <span class="block text-xs font-extrabold text-amber-950">⭐ Destacar en Banner Superior Panorámico</span>
+                        <span class="text-[10px] text-amber-700">Aparecerá en el cuadro de rotación automática superior</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="prodIsFeatured" class="sr-only peer" checked>
+                        <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
+                    </label>
+                </div>
                 
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Categoría Principal</label>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Categoría</label>
                         <select id="prodCategory" onchange="toggleCategoryFields()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-bold" required>
                             <option value="RE">RE - Bienes Raíces Venta</option>
                             <option value="AR">AR - Bienes Raíces Arriendo</option>
@@ -580,7 +497,7 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Estado de Disponibilidad</label>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Disponibilidad</label>
                         <select id="prodStatus" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-bold" required>
                             <option value="DISPONIBLE">✅ Disponible</option>
                             <option value="OFERTA">🔥 Oferta Especial</option>
@@ -597,14 +514,14 @@
                         <input type="text" id="prodCode" placeholder="Ej: RE-001" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-mono font-bold">
                     </div>
                     <div class="col-span-2">
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Título Promocional del Activo</label>
-                        <input type="text" id="prodTitle" placeholder="Ej: CASA Y LE REGALO EL TERRENO! 580 m² EN EL COCA 💥🏡" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800" required>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Título del Activo</label>
+                        <input type="text" id="prodTitle" placeholder="Ej: CASA Y TERRENO 580 m² EN EL COCA 💥🏡" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800" required>
                     </div>
                 </div>
 
-                <!-- UBICACIÓN GEOGRÁFICA -->
+                <!-- UBICACIÓN -->
                 <div class="bg-slate-50/80 p-3.5 rounded-2xl border border-slate-200 space-y-2">
-                    <h5 class="text-xs font-extrabold text-sky-800 flex items-center gap-1.5"><i class="fa-solid fa-map-location-dot"></i> Datos de Ubicación y Precio</h5>
+                    <h5 class="text-xs font-extrabold text-sky-800 flex items-center gap-1.5"><i class="fa-solid fa-map-location-dot"></i> Ubicación Geográfica & Precio</h5>
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
                         <input type="text" id="prodCiudad" placeholder="Ciudad (ej: El Coca)" class="bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs">
                         <input type="text" id="prodParroquia" placeholder="Parroquia" class="bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs">
@@ -614,7 +531,7 @@
                     <input type="text" id="prodDireccion" placeholder="Dirección Exacta o Referencia de Ingreso" class="w-full bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs">
                 </div>
 
-                <!-- CAMPOS ESPECÍFICOS POR CATEGORÍA -->
+                <!-- ESPECIFICACIONES -->
                 <div id="fieldsRealEstate" class="bg-sky-50/60 p-3.5 rounded-2xl border border-sky-100 space-y-2">
                     <h5 class="text-xs font-extrabold text-sky-900"><i class="fa-solid fa-house"></i> Parámetros de Inmuebles</h5>
                     <div class="grid grid-cols-3 gap-2">
@@ -652,22 +569,21 @@
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1">Fotos del Activo (Cámara o Galería)</label>
                     <input type="file" id="prodFilesInput" accept="image/*" multiple class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 text-xs text-slate-700 file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-sky-600 file:text-white">
-                    <p class="text-[10px] text-slate-500 mt-1">El compresor inteligente escala las fotos pesadas de celulares sin desbordar memoria.</p>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Descripción Completa del Activo</label>
-                    <textarea id="prodDesc" rows="3" placeholder="Detalles de construcción, accesos, comodidades, facilidades..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800"></textarea>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Descripción Detallada</label>
+                    <textarea id="prodDesc" rows="3" placeholder="Detalles de construcción, facilidades, estado del inmueble o vehículo..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800"></textarea>
                 </div>
 
                 <!-- SECCIÓN PRIVADA DE CAPTACIÓN -->
                 <div class="bg-amber-100/70 p-3.5 rounded-2xl border border-amber-300 space-y-2">
                     <h5 class="text-xs font-extrabold text-amber-950 flex items-center gap-1">
-                        <i class="fa-solid fa-lock"></i> Datos Internos de Captación (Exclusivo Gerencia y Agentes)
+                        <i class="fa-solid fa-lock"></i> Datos Internos de Captación (Visible solo para Gerencia y Agentes)
                     </h5>
                     <div class="grid grid-cols-2 gap-2">
                         <input type="text" id="prodOwnerName" placeholder="Nombre Propietario / Consignante" class="bg-white border border-amber-300 rounded-xl px-2.5 py-1.5 text-xs">
-                        <input type="text" id="prodComision" placeholder="% Comisión / Acuerdo de Venta" class="bg-white border border-amber-300 rounded-xl px-2.5 py-1.5 text-xs">
+                        <input type="text" id="prodComision" placeholder="% Comisión / Honorarios" class="bg-white border border-amber-300 rounded-xl px-2.5 py-1.5 text-xs">
                     </div>
                 </div>
 
@@ -694,8 +610,8 @@
             </div>
 
             <div class="flex-1 overflow-y-auto space-y-4 p-1 modal-scroll">
-                <div class="relative w-full h-64 sm:h-72 bg-slate-950 rounded-2xl overflow-hidden flex items-center justify-center">
-                    <img id="detMainImg" src="" class="w-full h-full object-cover">
+                <div class="relative w-full h-64 sm:h-72 bg-slate-900 rounded-2xl overflow-hidden flex items-center justify-center">
+                    <img id="detMainImg" src="" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80';">
                 </div>
                 <div id="detThumbsContainer" class="flex gap-2 overflow-x-auto pb-1"></div>
 
@@ -733,7 +649,7 @@
         </div>
     </div>
 
-    <!-- MODAL DOSSIER LEGAL E INSTITUCIONAL -->
+    <!-- MODAL DOSSIER INSTITUCIONAL -->
     <div id="infoMenuModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
         <div class="glass-card rounded-3xl max-w-3xl w-full p-6 space-y-4 shadow-2xl max-h-[90vh] flex flex-col border border-white/20">
             <div class="flex justify-between items-center border-b border-slate-100 pb-3">
@@ -788,29 +704,6 @@
         </div>
     </div>
 
-    <!-- MODAL AÑADIR AUSPICIANTE -->
-    <div id="addSponsorModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="glass-card rounded-3xl max-w-sm w-full p-6 space-y-4 shadow-2xl border border-white/20">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                <h3 class="text-base font-extrabold text-slate-900">Añadir Aliado / Auspiciante</h3>
-                <button onclick="closeModal('addSponsorModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
-            <div class="space-y-3">
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Nombre de la Entidad / Notaría</label>
-                    <input type="text" id="spName" placeholder="Ej: Notaría Primera del Cantón Orellana" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Logotipo (Desde PC o Celular)</label>
-                    <input type="file" id="spFileInput" accept="image/*" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 text-xs text-slate-700">
-                </div>
-                <button onclick="saveSponsor()" class="w-full bg-sky-600 hover:bg-sky-500 text-white font-extrabold py-2.5 rounded-xl text-xs transition shadow-md">
-                    Guardar Aliado en la Nube
-                </button>
-            </div>
-        </div>
-    </div>
-
     <!-- MODAL COMPARTIR WEB -->
     <div id="shareModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
         <div class="glass-card rounded-3xl max-w-sm w-full p-6 space-y-4 shadow-2xl text-center border border-white/20">
@@ -826,7 +719,7 @@
         </div>
     </div>
 
-    <!-- LÓGICA Y SINCRONIZACIÓN CLOUD RESILIENTE -->
+    <!-- MOTOR DE PERSISTENCIA Y CARGA DIARIA MASIVA -->
     <script>
         const DEFAULT_STATE = {
             companyTitle: "ALIANZA ESTRATÉGICA S.A.S.",
@@ -834,10 +727,7 @@
             location: "El Coca, Orellana - Ecuador",
             bioText: "Portal oficial de ALIANZA ESTRATÉGICA S.A.S. en El Coca, Orellana. Gerente General & Representante Legal: Adrián Arturo Íñiguez Lucio | Patrocinio Jurídico Externo: Abg. Carlos Alfredo Íñiguez Rodríguez. Transparencia, legalidad y seguridad transaccional.",
             coverImg: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80",
-            profileLogo: "https://lh3.googleusercontent.com/d/1X6tUqZ2z3c8vN-xYqZp8W1V_X7mRzS",
-            videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-            videoTitle: "Operaciones transparentes en ALIANZA ESTRATÉGICA S.A.S.",
-            videoDesc: "Intermediación formal, contratos de compraventa y revisión documental en Notarías y Registro de la Propiedad.",
+            profileLogo: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=400&q=80",
             lawyerName: "Abg. Carlos Alfredo Íñiguez Rodríguez",
             lawyerTitle: "Asesor Jurídico Externo & Especialista Notarial",
             lawyerPhone: "097 922 2328",
@@ -877,6 +767,7 @@
                 code: 'RE-001',
                 category: 'RE',
                 status: 'OFERTA',
+                isFeatured: true,
                 title: 'CASA Y LE REGALO EL TERRENO! 580 m² EN EL COCA 💥🏡',
                 ciudad: 'El Coca',
                 parroquia: 'Puerto Francisco de Orellana',
@@ -884,7 +775,7 @@
                 direccion: 'Calle principal junto al parque',
                 priceStr: '$45,000 USD',
                 location: 'El Coca, Barrio Central',
-                images: ['https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80'],
+                images: ['https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80'],
                 desc: 'Excelente propiedad con amplios espacios. Terreno totalmente plano libre de gravámenes listo para escrituración inmediata.',
                 reMetros2: '580', reFrente: '15', reConstruccion: '120',
                 srvAgua: true, srvLuz: true, srvInternet: true, srvAlcantarillado: true, srvEscrituras: true,
@@ -893,15 +784,9 @@
             }
         ];
 
-        const INITIAL_SPONSORS = [
-            { id: 'sp_1', name: 'Notaría Pública', logo: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=200&q=80' },
-            { id: 'sp_2', name: 'Registro de la Propiedad', logo: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=200&q=80' }
-        ];
-
         let currentRole = 'GUEST';
         let appConfig = { ...DEFAULT_STATE };
         let inventory = [];
-        let sponsors = [];
         let activeCategory = 'ALL';
         let carouselIndex = 0;
         let carouselTimer = null;
@@ -926,8 +811,8 @@
             }
         }
 
-        /* COMPRESOR ULTRA-SEGURO CON CANVAS ENVOLVENTE Y BACKUP BASE64 */
-        function safeImageToBase64(file, maxWidth = 1000) {
+        /* COMPRESOR OPTIMIZADO PARA SUBIDAS DIARIAS RÁPIDAS */
+        function safeImageToBase64(file, maxWidth = 800, quality = 0.72) {
             return new Promise((resolve) => {
                 if (!file) return resolve('');
                 const reader = new FileReader();
@@ -937,16 +822,20 @@
                         const img = new Image();
                         img.onload = () => {
                             try {
-                                if (img.width <= maxWidth && file.size < 500000) {
-                                    return resolve(rawBase64);
-                                }
                                 const canvas = document.createElement('canvas');
-                                const ratio = maxWidth / img.width;
-                                canvas.width = maxWidth;
-                                canvas.height = Math.round(img.height * ratio);
+                                let width = img.width;
+                                let height = img.height;
+
+                                if (width > maxWidth) {
+                                    height = Math.round((height * maxWidth) / width);
+                                    width = maxWidth;
+                                }
+
+                                canvas.width = width;
+                                canvas.height = height;
                                 const ctx = canvas.getContext('2d');
-                                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                                const compressed = canvas.toDataURL('image/jpeg', 0.82);
+                                ctx.drawImage(img, 0, 0, width, height);
+                                const compressed = canvas.toDataURL('image/jpeg', quality);
                                 resolve(compressed || rawBase64);
                             } catch (canvasErr) {
                                 resolve(rawBase64);
@@ -963,55 +852,51 @@
             });
         }
 
-        /* CONVERSOR DE ENLACES YOUTUBE */
-        function formatYouTubeEmbed(url) {
-            if (!url) return 'https://www.youtube.com/embed/dQw4w9WgXcQ';
-            let cleanUrl = url.trim();
-
-            if (cleanUrl.includes('<iframe')) {
-                const matchSrc = cleanUrl.match(/src=["'](.*?)["']/);
-                if (matchSrc && matchSrc[1]) cleanUrl = matchSrc[1];
-            }
-
-            if (cleanUrl.includes('embed/')) {
-                const idPart = cleanUrl.split('embed/')[1].split('?')[0];
-                return `https://www.youtube.com/embed/${idPart}`;
-            }
-
-            let videoId = '';
-            if (cleanUrl.includes('watch?v=')) {
-                videoId = cleanUrl.split('watch?v=')[1].split('&')[0];
-            } else if (cleanUrl.includes('youtu.be/')) {
-                videoId = cleanUrl.split('youtu.be/')[1].split('?')[0];
-            } else if (cleanUrl.includes('/shorts/')) {
-                videoId = cleanUrl.split('/shorts/')[1].split('?')[0];
-            } else if (cleanUrl.includes('/live/')) {
-                videoId = cleanUrl.split('/live/')[1].split('?')[0];
-            }
-
-            return videoId ? `https://www.youtube.com/embed/${videoId}?rel=0` : cleanUrl;
-        }
-
+        /* SINCRONIZACIÓN EN TIEMPO REAL FIRESTORE */
         function initCloudSync() {
             if (!db) return;
 
-            db.collection('alianza_settings').doc('appData').onSnapshot(doc => {
+            // 1. Configuración de textos
+            db.collection('alianza_settings').doc('general').onSnapshot(doc => {
                 if (doc && doc.exists) {
-                    const cloudData = doc.data();
-                    if (cloudData.config) {
-                        appConfig = { ...DEFAULT_STATE, ...cloudData.config };
-                        localStorage.setItem('alianza_config', JSON.stringify(appConfig));
-                    }
-                    if (cloudData.sponsors && Array.isArray(cloudData.sponsors)) {
-                        sponsors = cloudData.sponsors;
-                        localStorage.setItem('alianza_sponsors', JSON.stringify(sponsors));
-                    }
+                    const data = doc.data();
+                    appConfig = { ...appConfig, ...data };
+                    localStorage.setItem('alianza_config', JSON.stringify(appConfig));
                     renderAppUI();
-                } else {
-                    saveConfigToStorage(true);
                 }
-            }, err => console.warn('Error en listener alianza_settings:', err));
+            }, err => console.warn('Sync general:', err));
 
+            // 2. Portada
+            db.collection('alianza_settings').doc('media_cover').onSnapshot(doc => {
+                if (doc && doc.exists && doc.data().coverImg) {
+                    appConfig.coverImg = doc.data().coverImg;
+                    localStorage.setItem('alianza_cover', appConfig.coverImg);
+                    const el = document.getElementById('coverImgDisplay');
+                    if (el) el.src = appConfig.coverImg;
+                }
+            }, err => console.warn('Sync cover:', err));
+
+            // 3. Logo/Perfil
+            db.collection('alianza_settings').doc('media_profile').onSnapshot(doc => {
+                if (doc && doc.exists && doc.data().profileLogo) {
+                    appConfig.profileLogo = doc.data().profileLogo;
+                    localStorage.setItem('alianza_profile', appConfig.profileLogo);
+                    const el = document.getElementById('profileLogoImg');
+                    if (el) el.src = appConfig.profileLogo;
+                }
+            }, err => console.warn('Sync profile:', err));
+
+            // 4. Foto Abogado
+            db.collection('alianza_settings').doc('media_lawyer').onSnapshot(doc => {
+                if (doc && doc.exists && doc.data().lawyerImg) {
+                    appConfig.lawyerImg = doc.data().lawyerImg;
+                    localStorage.setItem('alianza_lawyer', appConfig.lawyerImg);
+                    const el = document.getElementById('lawyerCardImg');
+                    if (el) el.src = appConfig.lawyerImg;
+                }
+            }, err => console.warn('Sync lawyer:', err));
+
+            // 5. Inventario de Activos (Colección con documentos independientes)
             db.collection('alianza_inventory').onSnapshot(snapshot => {
                 if (snapshot) {
                     const cloudInv = [];
@@ -1028,7 +913,7 @@
                         updateCarouselDisplay();
                     }
                 }
-            }, err => console.warn('Error en listener alianza_inventory:', err));
+            }, err => console.warn('Sync inventory:', err));
         }
 
         function loadPersistedData() {
@@ -1036,33 +921,44 @@
                 const savedCfg = localStorage.getItem('alianza_config');
                 if (savedCfg) appConfig = { ...DEFAULT_STATE, ...JSON.parse(savedCfg) };
 
+                const savedCover = localStorage.getItem('alianza_cover');
+                if (savedCover) appConfig.coverImg = savedCover;
+
+                const savedProfile = localStorage.getItem('alianza_profile');
+                if (savedProfile) appConfig.profileLogo = savedProfile;
+
+                const savedLawyer = localStorage.getItem('alianza_lawyer');
+                if (savedLawyer) appConfig.lawyerImg = savedLawyer;
+
                 const savedInv = localStorage.getItem('alianza_inventory');
                 inventory = savedInv ? JSON.parse(savedInv) : [...INITIAL_INVENTORY];
-
-                const savedSponsors = localStorage.getItem('alianza_sponsors');
-                sponsors = savedSponsors ? JSON.parse(savedSponsors) : [...INITIAL_SPONSORS];
             } catch (e) {
                 appConfig = { ...DEFAULT_STATE };
                 inventory = [...INITIAL_INVENTORY];
-                sponsors = [...INITIAL_SPONSORS];
             }
         }
 
         function saveConfigToStorage(isSilent = false) {
             localStorage.setItem('alianza_config', JSON.stringify(appConfig));
-            localStorage.setItem('alianza_sponsors', JSON.stringify(sponsors));
 
             if (db) {
-                db.collection('alianza_settings').doc('appData').set({
-                    config: appConfig,
-                    sponsors: sponsors,
+                db.collection('alianza_settings').doc('general').set({
+                    companyTitle: appConfig.companyTitle,
+                    motto: appConfig.motto,
+                    location: appConfig.location,
+                    bioText: appConfig.bioText,
+                    lawyerName: appConfig.lawyerName,
+                    lawyerTitle: appConfig.lawyerTitle,
+                    lawyerPhone: appConfig.lawyerPhone,
+                    lawyerEmail: appConfig.lawyerEmail,
+                    lawyerDesc: appConfig.lawyerDesc,
                     updatedAt: firebase.firestore.FieldValue.serverTimestamp()
                 }, { merge: true })
                 .then(() => {
-                    if (!isSilent) showToast('¡Sincronizado en la Nube con éxito!');
+                    if (!isSilent) showToast('¡Datos institucionales guardados en la Nube!');
                 })
                 .catch(err => {
-                    console.error('Error sincronizando nube:', err);
+                    console.error('Error guardando en general:', err);
                     if (!isSilent) showToast('Guardado localmente', 'success');
                 });
             } else if (!isSilent) {
@@ -1075,7 +971,7 @@
             localStorage.setItem('alianza_inventory', JSON.stringify(inventory));
             if (db) {
                 db.collection('alianza_inventory').doc(item.id).set(item, { merge: true })
-                    .catch(err => console.error('Error guardando en Firestore:', err));
+                    .catch(err => console.error('Error guardando captación en Firestore:', err));
             }
         }
 
@@ -1084,12 +980,9 @@
             document.getElementById('profileMotto').innerText = appConfig.motto || DEFAULT_STATE.motto;
             document.getElementById('topLocationText').innerText = appConfig.location || DEFAULT_STATE.location;
             document.getElementById('profileBioText').innerHTML = appConfig.bioText || DEFAULT_STATE.bioText;
+            
             document.getElementById('coverImgDisplay').src = appConfig.coverImg || DEFAULT_STATE.coverImg;
             document.getElementById('profileLogoImg').src = appConfig.profileLogo || DEFAULT_STATE.profileLogo;
-
-            document.getElementById('videoIframe').src = formatYouTubeEmbed(appConfig.videoUrl);
-            document.getElementById('videoSectionTitle').innerText = appConfig.videoTitle || DEFAULT_STATE.videoTitle;
-            document.getElementById('videoSectionDesc').innerText = appConfig.videoDesc || DEFAULT_STATE.videoDesc;
 
             document.getElementById('lawyerCardImg').src = appConfig.lawyerImg || DEFAULT_STATE.lawyerImg;
             document.getElementById('lawyerNameDisplay').innerText = appConfig.lawyerName || DEFAULT_STATE.lawyerName;
@@ -1098,7 +991,6 @@
             document.getElementById('lawyerEmailDisplay').innerText = appConfig.lawyerEmail || DEFAULT_STATE.lawyerEmail;
 
             filterItems();
-            renderSponsorsMarquee();
             applyRolePermissions();
         }
 
@@ -1178,9 +1070,6 @@
             document.getElementById('cfgMotto').value = appConfig.motto || '';
             document.getElementById('cfgLocation').value = appConfig.location || '';
             document.getElementById('cfgBioText').value = appConfig.bioText || '';
-            document.getElementById('cfgVideoUrl').value = appConfig.videoUrl || '';
-            document.getElementById('cfgVideoTitle').value = appConfig.videoTitle || '';
-            document.getElementById('cfgVideoDesc').value = appConfig.videoDesc || '';
             document.getElementById('cfgLawyerName').value = appConfig.lawyerName || '';
             document.getElementById('cfgLawyerTitle').value = appConfig.lawyerTitle || '';
             document.getElementById('cfgLawyerPhone').value = appConfig.lawyerPhone || '';
@@ -1193,12 +1082,6 @@
             appConfig.motto = document.getElementById('cfgMotto').value.trim() || appConfig.motto;
             appConfig.location = document.getElementById('cfgLocation').value.trim() || appConfig.location;
             appConfig.bioText = document.getElementById('cfgBioText').value.trim() || appConfig.bioText;
-            
-            const rawVideo = document.getElementById('cfgVideoUrl').value.trim();
-            appConfig.videoUrl = rawVideo ? formatYouTubeEmbed(rawVideo) : appConfig.videoUrl;
-            
-            appConfig.videoTitle = document.getElementById('cfgVideoTitle').value.trim() || appConfig.videoTitle;
-            appConfig.videoDesc = document.getElementById('cfgVideoDesc').value.trim() || appConfig.videoDesc;
 
             appConfig.lawyerName = document.getElementById('cfgLawyerName').value.trim() || appConfig.lawyerName;
             appConfig.lawyerTitle = document.getElementById('cfgLawyerTitle').value.trim() || appConfig.lawyerTitle;
@@ -1212,16 +1095,24 @@
 
         function triggerFileSelect(id) { document.getElementById(id).click(); }
 
-        /* CARGA Y COMPRESIÓN DE FOTOS */
+        /* CARGA Y PERSISTENCIA AISLADA DE IMÁGENES */
         async function handleCoverUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
-            showToast('Optimizando foto de portada...');
-            const base64 = await safeImageToBase64(file, 1200);
+            showToast('Procesando foto de portada...');
+            const base64 = await safeImageToBase64(file, 1000, 0.7);
             if (base64) {
                 appConfig.coverImg = base64;
-                saveConfigToStorage();
-                renderAppUI();
+                localStorage.setItem('alianza_cover', base64);
+                document.getElementById('coverImgDisplay').src = base64;
+                
+                if (db) {
+                    db.collection('alianza_settings').doc('media_cover').set({
+                        coverImg: base64,
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    }).then(() => showToast('¡Foto de portada guardada en la Nube con éxito!'))
+                      .catch(err => { console.error(err); showToast('Guardada localmente', 'success'); });
+                }
             }
             event.target.value = '';
         }
@@ -1229,12 +1120,20 @@
         async function handleProfileUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
-            showToast('Optimizando foto de perfil...');
-            const base64 = await safeImageToBase64(file, 600);
+            showToast('Procesando foto de perfil...');
+            const base64 = await safeImageToBase64(file, 400, 0.75);
             if (base64) {
                 appConfig.profileLogo = base64;
-                saveConfigToStorage();
-                renderAppUI();
+                localStorage.setItem('alianza_profile', base64);
+                document.getElementById('profileLogoImg').src = base64;
+                
+                if (db) {
+                    db.collection('alianza_settings').doc('media_profile').set({
+                        profileLogo: base64,
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    }).then(() => showToast('¡Foto de perfil guardada en la Nube con éxito!'))
+                      .catch(err => { console.error(err); showToast('Guardada localmente', 'success'); });
+                }
             }
             event.target.value = '';
         }
@@ -1242,12 +1141,20 @@
         async function handleLawyerUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
-            showToast('Optimizando foto del asesor legal...');
-            const base64 = await safeImageToBase64(file, 600);
+            showToast('Procesando foto del asesor legal...');
+            const base64 = await safeImageToBase64(file, 400, 0.75);
             if (base64) {
                 appConfig.lawyerImg = base64;
-                saveConfigToStorage();
-                renderAppUI();
+                localStorage.setItem('alianza_lawyer', base64);
+                document.getElementById('lawyerCardImg').src = base64;
+                
+                if (db) {
+                    db.collection('alianza_settings').doc('media_lawyer').set({
+                        lawyerImg: base64,
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    }).then(() => showToast('¡Foto del asesor guardada en la Nube con éxito!'))
+                      .catch(err => { console.error(err); showToast('Guardada localmente', 'success'); });
+                }
             }
             event.target.value = '';
         }
@@ -1270,7 +1177,8 @@
         function openAddProductModal() {
             document.getElementById('productForm').reset();
             document.getElementById('prodEditId').value = '';
-            document.getElementById('productModalTitle').innerText = 'Añadir Nuevo Activo / Captación';
+            document.getElementById('prodIsFeatured').checked = true;
+            document.getElementById('productModalTitle').innerText = 'Registrar Nueva Captación';
             toggleCategoryFields();
             openModal('productModal');
         }
@@ -1280,6 +1188,7 @@
             if (!item) return;
 
             document.getElementById('prodEditId').value = item.id;
+            document.getElementById('prodIsFeatured').checked = item.isFeatured !== false;
             document.getElementById('prodCategory').value = item.category || 'RE';
             document.getElementById('prodStatus').value = item.status || 'DISPONIBLE';
             document.getElementById('prodCode').value = item.code || '';
@@ -1309,7 +1218,7 @@
             document.getElementById('lqEstado').value = item.lqEstado || '';
             document.getElementById('lqTiempoUso').value = item.lqTiempoUso || '';
 
-            document.getElementById('productModalTitle').innerText = 'Editar Activo ' + (item.code || '');
+            document.getElementById('productModalTitle').innerText = 'Editar Captación ' + (item.code || '');
             toggleCategoryFields();
             openModal('productModal');
         }
@@ -1321,6 +1230,7 @@
             btnSave.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1.5"></i> Procesando y Subiendo...';
 
             const editId = document.getElementById('prodEditId').value;
+            const isFeatured = document.getElementById('prodIsFeatured').checked;
             const category = document.getElementById('prodCategory').value;
             const status = document.getElementById('prodStatus').value;
             let code = document.getElementById('prodCode').value.trim();
@@ -1341,7 +1251,7 @@
 
             try {
                 if (filesInput.files && filesInput.files.length > 0) {
-                    const promises = Array.from(filesInput.files).map(f => safeImageToBase64(f, 900));
+                    const promises = Array.from(filesInput.files).map(f => safeImageToBase64(f, 800, 0.72));
                     const results = await Promise.all(promises);
                     imagesArray = results.filter(Boolean);
                 }
@@ -1350,7 +1260,7 @@
                 const locationText = [ciudad, sector].filter(Boolean).join(', ') || 'El Coca';
 
                 const itemData = {
-                    category, status, code, title, ciudad, parroquia, sector, direccion, 
+                    category, status, isFeatured, code, title, ciudad, parroquia, sector, direccion, 
                     location: locationText, priceStr, desc, ownerName, comision,
                     reMetros2: document.getElementById('reMetros2').value,
                     reFrente: document.getElementById('reFrente').value,
@@ -1390,7 +1300,7 @@
                 filterItems();
                 updateCarouselDisplay();
                 closeModal('productModal');
-                showToast('¡Guardado y sincronizado en la Nube con éxito!');
+                showToast('¡Captación guardada y sincronizada en la Nube con éxito!');
             } catch (err) {
                 console.error(err);
                 showToast('Error procesando el registro', 'error');
@@ -1401,12 +1311,12 @@
         }
 
         function deleteProduct(id) {
-            if (confirm('¿Está seguro de eliminar este activo permanentemente?')) {
+            if (confirm('¿Está seguro de eliminar esta captación permanentemente?')) {
                 inventory = inventory.filter(i => i.id !== id);
                 localStorage.setItem('alianza_inventory', JSON.stringify(inventory));
                 if (db) {
                     db.collection('alianza_inventory').doc(id).delete()
-                        .then(() => showToast('¡Eliminado y sincronizado en la Nube!'))
+                        .then(() => showToast('¡Eliminado de la Nube!'))
                         .catch(() => showToast('Eliminado localmente', 'error'));
                 }
                 filterItems();
@@ -1459,7 +1369,7 @@
                 grid.innerHTML = `
                     <div class="col-span-full text-center py-16 text-slate-400 glass-card rounded-3xl">
                         <i class="fa-solid fa-folder-open text-4xl mb-2 text-slate-300"></i>
-                        <p class="text-sm font-semibold">No se encontraron activos disponibles con este filtro.</p>
+                        <p class="text-sm font-semibold">No se encontraron captaciones con este filtro.</p>
                     </div>
                 `;
                 return;
@@ -1481,10 +1391,13 @@
                 grid.innerHTML += `
                     <div class="glass-card rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between border border-slate-200">
                         <div>
-                            <div class="relative h-52 w-full bg-slate-950 overflow-hidden group">
-                                <img src="${mainImg}" class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
+                            <div class="relative h-52 w-full bg-slate-900 overflow-hidden group">
+                                <img src="${mainImg}" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80';">
                                 <span class="absolute top-3 left-3 bg-slate-950/80 backdrop-blur-md text-amber-400 font-mono text-[10px] font-bold px-2.5 py-0.5 rounded-lg border border-amber-400/30">${item.code || ''}</span>
-                                <div class="absolute top-3 right-3">${getStatusBadgeHTML(item.status)}</div>
+                                <div class="absolute top-3 right-3 flex items-center gap-1">
+                                    ${item.isFeatured ? '<span class="bg-amber-400 text-slate-950 text-[10px] font-extrabold px-1.5 py-0.5 rounded shadow">⭐</span>' : ''}
+                                    ${getStatusBadgeHTML(item.status)}
+                                </div>
                             </div>
                             <div class="p-5 space-y-2">
                                 <h3 class="text-base font-extrabold text-slate-900 leading-tight">${item.title || ''}</h3>
@@ -1516,14 +1429,14 @@
             document.getElementById('detDesc').innerText = item.desc || 'Sin descripción detallada.';
 
             const mainImg = document.getElementById('detMainImg');
-            mainImg.src = (item.images && item.images.length > 0) ? item.images[0] : '';
+            mainImg.src = (item.images && item.images.length > 0) ? item.images[0] : 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80';
 
             const thumbsCont = document.getElementById('detThumbsContainer');
             thumbsCont.innerHTML = '';
             if (item.images && item.images.length > 1) {
                 item.images.forEach(imgUrl => {
                     thumbsCont.innerHTML += `
-                        <img src="${imgUrl}" onclick="document.getElementById('detMainImg').src='${imgUrl}'" class="w-16 h-12 object-cover rounded-xl border border-slate-200 cursor-pointer hover:opacity-80 transition">
+                        <img src="${imgUrl}" onclick="document.getElementById('detMainImg').src='${imgUrl}'" class="w-16 h-12 object-cover rounded-xl border border-slate-200 cursor-pointer hover:opacity-80 transition" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80';">
                     `;
                 });
             }
@@ -1556,53 +1469,16 @@
                 privateSec.classList.add('hidden');
             }
 
-            const waMsg = encodeURIComponent(`Hola ALIANZA ESTRATÉGICA S.A.S., solicito información del activo: ${item.code} (${item.title})`);
+            const waMsg = encodeURIComponent(`Hola ALIANZA ESTRATÉGICA S.A.S., solicito información de la captación: ${item.code} (${item.title})`);
             document.getElementById('detWaConsultBtn').href = `https://wa.me/593959190794?text=${waMsg}`;
 
             openModal('detailModal');
         }
 
-        function renderSponsorsMarquee() {
-            const track = document.getElementById('sponsorsMarqueeTrack');
-            if (!track) return;
-            track.innerHTML = '';
-
-            const fullList = [...sponsors, ...sponsors, ...sponsors];
-            fullList.forEach(sp => {
-                track.innerHTML += `
-                    <div class="inline-flex items-center gap-2.5 bg-slate-50 border border-slate-200/90 px-4 py-2 rounded-2xl flex-shrink-0 shadow-sm">
-                        <img src="${sp.logo}" class="w-8 h-8 rounded-full object-cover border border-sky-300">
-                        <span class="text-xs font-bold text-slate-800">${sp.name}</span>
-                    </div>
-                `;
-            });
-        }
-
-        async function saveSponsor() {
-            const name = document.getElementById('spName').value.trim();
-            const fileInput = document.getElementById('spFileInput');
-
-            if (!name) {
-                showToast('Ingrese el nombre del aliado', 'error');
-                return;
-            }
-
-            let logoUrl = 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=200&q=80';
-
-            try {
-                if (fileInput.files && fileInput.files[0]) {
-                    const base64 = await safeImageToBase64(fileInput.files[0], 300);
-                    if (base64) logoUrl = base64;
-                }
-                sponsors.push({ id: 'sp_' + Date.now().toString(), name, logo: logoUrl });
-                saveConfigToStorage();
-                renderSponsorsMarquee();
-                closeModal('addSponsorModal');
-                document.getElementById('spName').value = '';
-                document.getElementById('spFileInput').value = '';
-            } catch (err) {
-                showToast('Error procesando el aliado', 'error');
-            }
+        /* LÓGICA DEL BANNER DINÁMICO DE ACTIVOS DESTACADOS */
+        function getFeaturedItems() {
+            const featured = inventory.filter(i => i.isFeatured === true);
+            return featured.length > 0 ? featured : inventory;
         }
 
         function initCarousel() {
@@ -1612,13 +1488,15 @@
         }
 
         function updateCarouselDisplay() {
-            if (!inventory || inventory.length === 0) return;
-            if (carouselIndex >= inventory.length) carouselIndex = 0;
-            if (carouselIndex < 0) carouselIndex = inventory.length - 1;
+            const items = getFeaturedItems();
+            if (!items || items.length === 0) return;
+            if (carouselIndex >= items.length) carouselIndex = 0;
+            if (carouselIndex < 0) carouselIndex = items.length - 1;
 
-            const item = inventory[carouselIndex];
-            const imgUrl = (item.images && item.images.length > 0) ? item.images[0] : '';
-            document.getElementById('carouselImg').src = imgUrl;
+            const item = items[carouselIndex];
+            const imgUrl = (item.images && item.images.length > 0) ? item.images[0] : 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80';
+            const imgEl = document.getElementById('carouselImg');
+            if (imgEl) imgEl.src = imgUrl;
             document.getElementById('carouselBadge').innerText = item.code || 'RE-001';
             document.getElementById('carouselTitle').innerText = item.title || '';
             document.getElementById('carouselSub').innerText = `${item.priceStr || ''} - ${item.location || 'El Coca'}`;
@@ -1627,7 +1505,8 @@
         function nextSlide() { carouselIndex++; updateCarouselDisplay(); }
         function prevSlide() { carouselIndex--; updateCarouselDisplay(); }
         function clickCarouselCurrentSlide() {
-            if (inventory[carouselIndex]) openDetailModal(inventory[carouselIndex].id);
+            const items = getFeaturedItems();
+            if (items[carouselIndex]) openDetailModal(items[carouselIndex].id);
         }
 
         function setInfoTab(tabKey) {
