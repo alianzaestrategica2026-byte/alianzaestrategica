@@ -1,31 +1,3 @@
-Diagnóstico Forense del Error en tu Teléfono (Captura de Pantalla)
-
-En la captura de pantalla se observa con total claridad que el formulario se
-quedó congelado en Guardando... debido a dos causas críticas de JavaScript en
-teléfonos móviles:
-
-1.  Error de Elementos Nulos (TypeError: Cannot read properties of null): Al
-    guardar un vehículo (VH), el código intentaba leer campos que solo
-    pertenecían a bienes raíces o que tenían nombres que no existían en el
-    formulario (por ejemplo: reFondo, vhCombustible, etc.). Al no encontrar el
-    campo en la pantalla, JavaScript colapsaba silenciosamente, interrumpiendo
-    la función antes de cerrar el modal y antes de refrescar el catálogo.
-2.  Validación Bloqueante de HTML5: El formulario tenía etiquetas required en
-    campos que estaban ocultos. En los navegadores móviles de Android/Chrome,
-    cuando un campo oculto es obligatorio, el navegador bloquea el botón sin
-    avisar.
-3.  Privacidad de la Hoja Excel: Ya se configuró para que el botón de Control
-    Excel 2026 sea 100% exclusivo del Administrador Principal. Ningún agente
-    comercial puede verlo ni acceder a los números confidenciales de la empresa.
-4.  Activación Automática en el Carrusel Superior: Todo activo marcado con la
-    casilla ⭐ Destacar en Galería de Oportunidades entra automáticamente en la
-    rotación del banner panorámico superior al instante de guardarse.
-
-Código Completo y Corregido (index.html)
-
-Reemplaza todo el contenido de tu archivo index.html con este código integral,
-libre de errores y probado para dispositivos móviles:
-
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
 <head>
