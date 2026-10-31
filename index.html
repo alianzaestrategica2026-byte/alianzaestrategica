@@ -58,13 +58,13 @@
             font-feature-settings: "cv02", "cv03", "cv04", "cv11";
         }
         .glass-card {
-            background: rgba(255, 255, 255, 0.92);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(226, 232, 240, 0.9);
         }
         .glass-card-dark {
-            background: rgba(15, 23, 42, 0.92);
+            background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -146,13 +146,13 @@
         </div>
     </div>
 
-    <!-- HEADER / PERFIL CORPORATIVO -->
+    <!-- HEADER / PERFIL CORPORATIVO REDISEÑADO SIN SOLAPAMIENTO -->
     <section class="max-w-7xl mx-auto w-full px-4 pt-4">
         <div class="glass-card rounded-3xl shadow-xl overflow-hidden relative transition-all duration-300">
             <!-- PORTADA -->
-            <div class="h-52 sm:h-64 md:h-80 w-full relative bg-slate-900 group overflow-hidden">
+            <div class="h-48 sm:h-60 md:h-72 w-full relative bg-slate-900 group overflow-hidden">
                 <img id="coverImgDisplay" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80" alt="Portada Corporativa" class="w-full h-full object-cover transition duration-700" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80';">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent"></div>
                 
                 <button onclick="triggerFileSelect('coverFileInput')" class="admin-only hidden absolute top-4 right-4 bg-slate-950/85 hover:bg-slate-900 text-white text-xs font-bold px-3.5 py-2 rounded-xl backdrop-blur-md border border-white/20 transition flex items-center gap-2 shadow-2xl">
                     <i class="fa-solid fa-camera text-sky-400"></i> Cambiar Portada
@@ -160,25 +160,25 @@
                 <input type="file" id="coverFileInput" accept="image/*" class="hidden" onchange="handleCoverUpload(event)">
             </div>
 
-            <!-- DETALLES DE PERFIL -->
-            <div class="px-6 pb-6 pt-2 relative">
-                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 -mt-20 sm:-mt-24 md:-mt-28 mb-4">
+            <!-- DETALLES DE PERFIL ESPACIADOS PERFECTAMENTE -->
+            <div class="px-6 pb-6 pt-4 relative">
+                <div class="flex flex-col md:flex-row items-center md:items-end justify-between gap-6 -mt-16 sm:-mt-20 mb-4">
                     <div class="flex flex-col sm:flex-row items-center sm:items-end gap-5 text-center sm:text-left">
-                        <div class="relative w-32 h-32 sm:w-40 sm:h-40 rounded-3xl border-4 border-white shadow-2xl overflow-hidden bg-gradient-to-tr from-sky-800 to-slate-900 flex-shrink-0 group">
+                        <div class="relative w-28 h-28 sm:w-36 sm:h-36 rounded-3xl border-4 border-white shadow-2xl overflow-hidden bg-slate-900 flex-shrink-0 group">
                             <img id="profileLogoImg" src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=400&q=80" alt="Perfil Corporativo" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Alianza+Estrategica&background=0284c7&color=fff';">
-                            <button onclick="triggerFileSelect('profileFileInput')" class="admin-only hidden absolute bottom-2 right-2 bg-slate-950/90 text-sky-400 p-2.5 rounded-full border border-white/30 shadow-xl hover:scale-110 transition">
-                                <i class="fa-solid fa-camera text-sm"></i>
+                            <button onclick="triggerFileSelect('profileFileInput')" class="admin-only hidden absolute bottom-1 right-1 bg-slate-950/90 text-sky-400 p-2 rounded-full border border-white/30 shadow-xl hover:scale-110 transition">
+                                <i class="fa-solid fa-camera text-xs"></i>
                             </button>
                             <input type="file" id="profileFileInput" accept="image/*" class="hidden" onchange="handleProfileUpload(event)">
                         </div>
-                        <div class="pt-2 sm:pt-0">
+                        <div class="pt-2">
                             <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2">
-                                <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-none" id="profileCompanyTitle">
+                                <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight" id="profileCompanyTitle">
                                     ALIANZA ESTRATÉGICA <span class="text-sky-600">S.A.S.</span>
                                 </h1>
-                                <i class="fa-solid fa-certificate text-sky-500 text-xl" title="Sociedad Comercial Verificada"></i>
+                                <span class="inline-flex items-center text-sky-500 text-lg" title="Empresa Verificada"><i class="fa-solid fa-circle-check"></i></span>
                             </div>
-                            <p class="text-sm font-bold text-sky-600 mt-1.5 flex items-center justify-center sm:justify-start gap-2" id="profileMotto">
+                            <p class="text-xs sm:text-sm font-bold text-sky-600 mt-1 flex items-center justify-center sm:justify-start gap-1.5" id="profileMotto">
                                 <i class="fa-solid fa-shield-halved text-amber-500"></i> Excelencia Jurídica, Confianza Profesional
                             </p>
                             <p class="text-xs text-slate-500 mt-1 max-w-xl" id="profileSubtitle">
@@ -206,6 +206,29 @@
                         Portal oficial de <strong>ALIANZA ESTRATÉGICA S.A.S.</strong> en El Coca, Orellana. Gerente General & Representante Legal: <strong>Adrián Arturo Íñiguez Lucio</strong> | Patrocinio Jurídico Externo: <strong>Abg. Carlos Alfredo Íñiguez Rodríguez</strong>. Transparencia, formalidad notarial y seguridad patrimonial garantizada.
                     </p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN REPUTACIÓN Y TESTIMONIOS 5 ESTRELLAS -->
+    <section class="max-w-7xl mx-auto w-full px-4 pt-4">
+        <div class="glass-card rounded-2xl p-4 border border-amber-200/60 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4 bg-gradient-to-r from-amber-50/50 via-white to-sky-50/50">
+            <div class="flex items-center gap-3 text-center md:text-left">
+                <div class="flex text-amber-400 text-lg">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <div>
+                    <span class="font-extrabold text-sm text-slate-900">4.9 / 5.0 Calificación de Confianza</span>
+                    <span class="text-xs text-slate-500 block">Basado en operaciones notariales y ventas cerradas con éxito en El Coca</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 text-xs font-semibold text-slate-600">
+                <span class="bg-white px-3 py-1.5 rounded-xl border border-slate-200 shadow-sm flex items-center gap-1.5"><i class="fa-solid fa-user-check text-emerald-500"></i> +120 Clientes Satisfechos</span>
+                <span class="bg-white px-3 py-1.5 rounded-xl border border-slate-200 shadow-sm flex items-center gap-1.5"><i class="fa-solid fa-shield-halved text-sky-500"></i> 100% Blindaje Legal</span>
             </div>
         </div>
     </section>
@@ -286,7 +309,7 @@
                 <p class="text-xs sm:text-sm text-sky-200">Consulte el catálogo de inmuebles, vehículos y maquinaria con título saneado</p>
             </div>
             <div class="max-w-xl mx-auto relative mb-5">
-                <input type="text" id="searchInput" onkeyup="filterItems()" placeholder="Buscar por código (ej: RE-001, VH-101), sector o palabra clave..." class="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-white/10 backdrop-blur-md text-white placeholder-slate-400 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 border border-white/10 transition shadow-inner">
+                <input type="text" id="searchInput" onkeyup="filterItems()" placeholder="Buscar por código (ej: VH-101), sector o palabra clave..." class="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-white/10 backdrop-blur-md text-white placeholder-slate-400 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 border border-white/10 transition shadow-inner">
                 <i class="fa-solid fa-magnifying-glass absolute left-4 top-4 text-sky-400"></i>
             </div>
 
@@ -462,267 +485,6 @@
         </div>
     </div>
 
-    <!-- MODAL CREAR / EDITAR CAPTACIÓN CON VISTA PREVIA INMEDIATA -->
-    <div id="productModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="glass-card rounded-3xl max-w-2xl w-full p-6 space-y-4 shadow-2xl max-h-[90vh] flex flex-col border border-white/20">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                <h3 class="text-base font-extrabold text-slate-900" id="productModalTitle">Registrar Nueva Captación</h3>
-                <button onclick="closeModal('productModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
-
-            <form id="productForm" onsubmit="handleSaveProduct(event)" class="flex-1 overflow-y-auto space-y-3.5 p-1 modal-scroll">
-                <input type="hidden" id="prodEditId">
-
-                <!-- SELECTOR DE DESTACADO PARA EL BANNER SUPERIOR -->
-                <div class="bg-amber-50 p-3 rounded-2xl border border-amber-300 flex items-center justify-between">
-                    <div>
-                        <span class="block text-xs font-extrabold text-amber-950">⭐ Destacar en Banner Superior Panorámico</span>
-                        <span class="text-[10px] text-amber-700">Aparecerá en la rotación automática superior</span>
-                    </div>
-                    <label class="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" id="prodIsFeatured" class="sr-only peer" checked>
-                        <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
-                    </label>
-                </div>
-                
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Categoría</label>
-                        <select id="prodCategory" onchange="toggleCategoryFields()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-bold" required>
-                            <option value="VH">VH - Vehículo (Carro / Moto / Camioneta)</option>
-                            <option value="RE">RE - Bienes Raíces Venta</option>
-                            <option value="AR">AR - Bienes Raíces Arriendo</option>
-                            <option value="MQ">MQ - Maquinaria Pesada</option>
-                            <option value="LQ">LQ - Artículos de Segunda Mano / Remate</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Disponibilidad</label>
-                        <select id="prodStatus" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-bold" required>
-                            <option value="DISPONIBLE">✅ Disponible</option>
-                            <option value="OFERTA">🔥 Oferta Especial</option>
-                            <option value="REMATE">💥 Liquidación / Remate</option>
-                            <option value="RESERVADO">⏳ Reservado</option>
-                            <option value="SOLD">🔴💸 Vendido</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-3 gap-2">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Código Único</label>
-                        <input type="text" id="prodCode" placeholder="Ej: VH-101" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-mono font-bold">
-                    </div>
-                    <div class="col-span-2">
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Título del Activo / Captación</label>
-                        <input type="text" id="prodTitle" placeholder="Ej: MOTO SUKIDA STIFF 150 AL DÍA" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800" required>
-                    </div>
-                </div>
-
-                <!-- UBICACIÓN -->
-                <div class="bg-slate-50/80 p-3.5 rounded-2xl border border-slate-200 space-y-2">
-                    <h5 class="text-xs font-extrabold text-sky-800 flex items-center gap-1.5"><i class="fa-solid fa-map-location-dot"></i> Ubicación Geográfica & Precio</h5>
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                        <input type="text" id="prodCiudad" placeholder="Ciudad (ej: El Coca)" class="bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs">
-                        <input type="text" id="prodParroquia" placeholder="Parroquia" class="bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs">
-                        <input type="text" id="prodSector" placeholder="Sector / Barrio" class="bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs">
-                        <input type="text" id="prodPrice" placeholder="Precio ($ USD)" class="bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs font-bold text-amber-600" required>
-                    </div>
-                    <input type="text" id="prodDireccion" placeholder="Dirección Exacta o Referencia" class="w-full bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs">
-                </div>
-
-                <!-- ESPECIFICACIONES -->
-                <div id="fieldsVehicles" class="bg-amber-50/60 p-3.5 rounded-2xl border border-amber-100 space-y-2">
-                    <h5 class="text-xs font-extrabold text-amber-900"><i class="fa-solid fa-truck-monster"></i> Parámetros de Vehículo / Maquinaria</h5>
-                    <div class="grid grid-cols-3 gap-2">
-                        <input type="text" id="vhAno" placeholder="Año / Modelo (ej: 2023)" class="bg-white border border-amber-200 rounded-xl px-2.5 py-1.5 text-xs">
-                        <input type="text" id="vhKm" placeholder="Kilometraje (ej: 12,000 km)" class="bg-white border border-amber-200 rounded-xl px-2.5 py-1.5 text-xs">
-                        <input type="text" id="vhTransmision" placeholder="Transmisión / Motor (Manual / 150cc)" class="bg-white border border-amber-200 rounded-xl px-2.5 py-1.5 text-xs">
-                    </div>
-                </div>
-
-                <div id="fieldsRealEstate" class="hidden bg-sky-50/60 p-3.5 rounded-2xl border border-sky-100 space-y-2">
-                    <h5 class="text-xs font-extrabold text-sky-900"><i class="fa-solid fa-house"></i> Parámetros de Inmuebles</h5>
-                    <div class="grid grid-cols-3 gap-2">
-                        <input type="text" id="reMetros2" placeholder="Área Total (m²)" class="bg-white border border-sky-200 rounded-xl px-2.5 py-1.5 text-xs">
-                        <input type="text" id="reFrente" placeholder="Frente / Ancho (m)" class="bg-white border border-sky-200 rounded-xl px-2.5 py-1.5 text-xs">
-                        <input type="text" id="reConstruccion" placeholder="Área Const. (m²)" class="bg-white border border-sky-200 rounded-xl px-2.5 py-1.5 text-xs">
-                    </div>
-                    <div class="flex flex-wrap items-center gap-3 text-xs text-slate-700 font-semibold pt-1">
-                        <span>Servicios:</span>
-                        <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="srvAgua"> Agua</label>
-                        <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="srvLuz"> Luz</label>
-                        <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="srvInternet"> Internet</label>
-                        <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="srvAlcantarillado"> Alcantarillado</label>
-                        <label class="flex items-center gap-1 ml-auto text-sky-800 font-bold cursor-pointer"><input type="checkbox" id="srvEscrituras"> 📜 Escrituras al día</label>
-                    </div>
-                </div>
-
-                <div id="fieldsSecondHand" class="hidden bg-purple-50/60 p-3.5 rounded-2xl border border-purple-100 space-y-2">
-                    <h5 class="text-xs font-extrabold text-purple-900"><i class="fa-solid fa-boxes-packing"></i> Artículos Usados / Equipos</h5>
-                    <div class="grid grid-cols-2 gap-2">
-                        <input type="text" id="lqEstado" placeholder="Estado (10/10, Excelente, etc.)" class="bg-white border border-purple-200 rounded-xl px-2.5 py-1.5 text-xs">
-                        <input type="text" id="lqTiempoUso" placeholder="Tiempo de Uso Estimado" class="bg-white border border-purple-200 rounded-xl px-2.5 py-1.5 text-xs">
-                    </div>
-                </div>
-
-                <!-- CARGA DE IMÁGENES DUAL CON PREVISUALIZADOR -->
-                <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-2">
-                    <label class="block text-xs font-bold text-slate-700">Fotos de la Captación (Cámara / Galería)</label>
-                    <input type="file" id="prodFilesInput" accept="image/*" multiple onchange="previewSelectedFiles(event)" class="w-full bg-white border border-slate-200 rounded-xl p-2 text-xs text-slate-700 file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-sky-600 file:text-white">
-                    <input type="text" id="prodUrlDirect" placeholder="O pega enlace directo de imagen (https://...)" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs text-slate-800">
-                    <!-- Vista previa en miniatura inmediata -->
-                    <div id="previewThumbsContainer" class="flex gap-2 overflow-x-auto pt-1 empty:hidden"></div>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Descripción Detallada</label>
-                    <textarea id="prodDesc" rows="3" placeholder="Detalles mecánicos, accesorios, estado de matrícula, gravámenes..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800"></textarea>
-                </div>
-
-                <!-- SECCIÓN PRIVADA DE CAPTACIÓN -->
-                <div class="bg-amber-100/70 p-3.5 rounded-2xl border border-amber-300 space-y-2">
-                    <h5 class="text-xs font-extrabold text-amber-950 flex items-center gap-1">
-                        <i class="fa-solid fa-lock"></i> Datos Internos de Captación (Exclusivo Gerencia y Agentes)
-                    </h5>
-                    <div class="grid grid-cols-2 gap-2">
-                        <input type="text" id="prodOwnerName" placeholder="Nombre Propietario / Consignante" class="bg-white border border-amber-300 rounded-xl px-2.5 py-1.5 text-xs">
-                        <input type="text" id="prodComision" placeholder="% Comisión / Honorarios" class="bg-white border border-amber-300 rounded-xl px-2.5 py-1.5 text-xs">
-                    </div>
-                </div>
-
-                <div class="pt-2 flex justify-end gap-2">
-                    <button type="button" onclick="closeModal('productModal')" class="bg-slate-200 text-slate-700 font-bold px-4 py-2 rounded-xl text-xs hover:bg-slate-300 transition">Cancelar</button>
-                    <button type="submit" id="btnSaveProduct" class="bg-sky-600 hover:bg-sky-500 text-white font-extrabold px-5 py-2 rounded-xl text-xs transition shadow-md flex items-center gap-1.5">
-                        <i class="fa-solid fa-cloud-arrow-up"></i> Guardar Activo Ahora
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- MODAL VER FICHA DETALLADA DEL ACTIVO -->
-    <div id="detailModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="glass-card rounded-3xl max-w-2xl w-full p-6 space-y-4 shadow-2xl max-h-[90vh] flex flex-col border border-white/20">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                <div>
-                    <span id="detCodeBadge" class="text-[10px] font-mono font-bold bg-amber-500 text-slate-950 px-2 py-0.5 rounded-md">VH-101</span>
-                    <span id="detStatusBadge" class="text-[10px] font-bold bg-emerald-600 text-white px-2 py-0.5 rounded-md ml-1">✅ Disponible</span>
-                    <h3 id="detTitle" class="text-lg font-extrabold text-slate-900 mt-1">Título</h3>
-                </div>
-                <button onclick="closeModal('detailModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
-
-            <div class="flex-1 overflow-y-auto space-y-4 p-1 modal-scroll">
-                <div class="relative w-full h-64 sm:h-72 bg-slate-900 rounded-2xl overflow-hidden flex items-center justify-center">
-                    <img id="detMainImg" src="" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80';">
-                </div>
-                <div id="detThumbsContainer" class="flex gap-2 overflow-x-auto pb-1"></div>
-
-                <div class="flex flex-wrap justify-between items-center gap-2 bg-slate-50/80 p-3.5 rounded-2xl border border-slate-200">
-                    <div>
-                        <span class="block text-[10px] uppercase font-bold text-slate-400">Precio Comercial</span>
-                        <span id="detPrice" class="text-lg font-extrabold text-amber-600">$0.00 USD</span>
-                    </div>
-                    <div>
-                        <span class="block text-[10px] uppercase font-bold text-slate-400">Ubicación</span>
-                        <span id="detLocation" class="text-xs font-bold text-slate-800">El Coca</span>
-                    </div>
-                </div>
-
-                <div id="detTechnicalBox" class="bg-sky-50/80 p-3.5 rounded-2xl border border-sky-100 text-xs text-slate-700 space-y-1.5"></div>
-
-                <div>
-                    <h4 class="text-xs font-extrabold text-slate-800 uppercase mb-1">Descripción Técnica</h4>
-                    <p id="detDesc" class="text-xs text-slate-600 leading-relaxed whitespace-pre-line bg-slate-50/80 p-3.5 rounded-2xl border border-slate-100"></p>
-                </div>
-
-                <div id="detPrivateSection" class="hidden bg-amber-50 p-3.5 rounded-2xl border border-amber-200 space-y-1 text-xs">
-                    <h5 class="font-extrabold text-amber-900 flex items-center gap-1"><i class="fa-solid fa-user-lock"></i> Información Interna de Gerencia</h5>
-                    <p class="text-slate-700"><strong>Propietario:</strong> <span id="detPrivateOwner">-</span></p>
-                    <p class="text-slate-700"><strong>Comisión / Acuerdo:</strong> <span id="detPrivateComision">-</span></p>
-                </div>
-            </div>
-
-            <div class="border-t border-slate-100 pt-3 flex flex-wrap justify-between items-center gap-2">
-                <button onclick="closeModal('detailModal')" class="bg-slate-200 text-slate-700 font-bold px-4 py-2 rounded-xl text-xs hover:bg-slate-300 transition">Cerrar</button>
-                <a id="detWaConsultBtn" href="#" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-5 py-2 rounded-xl text-xs transition shadow-md flex items-center gap-2">
-                    <i class="fa-brands fa-whatsapp text-sm"></i> Consultar a Gerencia
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL DOSSIER INSTITUCIONAL -->
-    <div id="infoMenuModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="glass-card rounded-3xl max-w-3xl w-full p-6 space-y-4 shadow-2xl max-h-[90vh] flex flex-col border border-white/20">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                <h3 class="text-lg font-extrabold text-slate-900 flex items-center gap-2">
-                    <i class="fa-solid fa-building text-sky-600"></i> Dossier Institucional & Garantía Notarial
-                </h3>
-                <button onclick="closeModal('infoMenuModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
-
-            <div class="flex flex-wrap gap-2 border-b border-slate-100 pb-2 text-xs font-bold">
-                <button onclick="setInfoTab('MISION')" class="info-tab-btn bg-sky-600 text-white px-3.5 py-1.5 rounded-xl transition shadow-sm">Misión y Visión</button>
-                <button onclick="setInfoTab('HONORARIOS')" class="info-tab-btn bg-slate-100 text-slate-700 hover:bg-slate-200 px-3.5 py-1.5 rounded-xl transition">Cobro por Éxito</button>
-                <button onclick="setInfoTab('RESPALDO')" class="info-tab-btn bg-slate-100 text-slate-700 hover:bg-slate-200 px-3.5 py-1.5 rounded-xl transition">Respaldo Notarial</button>
-                <button onclick="setInfoTab('VALORES')" class="info-tab-btn bg-slate-100 text-slate-700 hover:bg-slate-200 px-3.5 py-1.5 rounded-xl transition">Valores y Metas</button>
-            </div>
-
-            <div id="infoTabContent" class="flex-1 overflow-y-auto space-y-3 p-1 modal-scroll text-xs text-slate-600 leading-relaxed"></div>
-
-            <div class="border-t border-slate-100 pt-3 flex justify-end">
-                <button onclick="closeModal('infoMenuModal')" class="bg-slate-900 text-white font-bold px-5 py-2 rounded-xl text-xs hover:bg-slate-800 transition">Cerrar Dossier</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL CONSIGNAR ACTIVO PÚBLICO -->
-    <div id="consignarModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="glass-card rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-white/20">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
-                    <i class="fa-solid fa-plus-circle text-amber-500"></i> Consignar Inmueble o Vehículo
-                </h3>
-                <button onclick="closeModal('consignarModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
-            <p class="text-xs text-slate-600 leading-relaxed">
-                Promocione su bien con <strong>ALIANZA ESTRATÉGICA S.A.S.</strong> bajo nuestro modelo de <strong>Cobro Exclusivo por Éxito</strong>. Sin pagos iniciales.
-            </p>
-            <div class="space-y-3">
-                <input type="text" id="csgOwnerName" placeholder="Su Nombre Completo" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs">
-                <select id="csgCategory" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold">
-                    <option value="Vehiculo">Vehículo / Camioneta</option>
-                    <option value="Inmueble Venta">Inmueble en Venta</option>
-                    <option value="Inmueble Arriendo">Inmueble en Arriendo</option>
-                    <option value="Maquinaria">Maquinaria Pesada</option>
-                    <option value="Segunda Mano">Artículo de Segunda Mano</option>
-                </select>
-                <input type="text" id="csgLocation" placeholder="Ubicación (Ciudad / Sector)" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs">
-                <input type="text" id="csgPrice" placeholder="Precio Estimado ($ USD)" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs">
-                <button onclick="sendConsignarWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold py-2.5 rounded-xl text-xs transition shadow-lg flex items-center justify-center gap-2">
-                    <i class="fa-brands fa-whatsapp text-base"></i> Enviar Ficha por WhatsApp
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL COMPARTIR WEB -->
-    <div id="shareModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="glass-card rounded-3xl max-w-sm w-full p-6 space-y-4 shadow-2xl text-center border border-white/20">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                <h3 class="text-base font-extrabold text-slate-900">Compartir Plataforma</h3>
-                <button onclick="closeModal('shareModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
-            <p class="text-xs text-slate-600">Copie el enlace oficial para compartir en redes:</p>
-            <div class="flex gap-2">
-                <input type="text" id="shareUrlInput" readonly value="https://alianzaestrategica2026-byte.github.io/alianzaestrategica/" class="flex-1 bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs font-mono">
-                <button onclick="copyShareUrl()" class="bg-sky-600 text-white px-3 py-2 rounded-xl text-xs font-bold hover:bg-sky-500">Copiar</button>
-            </div>
-        </div>
-    </div>
-
     <!-- LÓGICA ULTRA-RESILIENTE (LOCAL FIRST + CLOUD ASYNC) -->
     <script>
         const DEFAULT_STATE = {
@@ -751,7 +513,7 @@
         };
 
         let db = null;
-        let stagedImages = []; // Almacena temporalmente las fotos seleccionadas
+        let stagedImages = [];
 
         try {
             if (!firebase.apps.length) {
@@ -772,10 +534,11 @@
                 isFeatured: true,
                 title: 'CASA Y LE REGALO EL TERRENO! 580 m² EN EL COCA 💥🏡',
                 ciudad: 'El Coca',
-                parroquia: 'Puerto Francisco de Orellana',
                 sector: 'Barrio Central',
                 direccion: 'Calle principal junto al parque',
                 priceStr: '$45,000 USD',
+                offerPriceStr: '$39,500 USD',
+                agentName: 'Adrián Íñiguez (Gerente)',
                 location: 'El Coca, Barrio Central',
                 images: ['https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80'],
                 desc: 'Excelente propiedad con amplios espacios. Terreno totalmente plano libre de gravámenes listo para escrituración inmediata.',
@@ -801,8 +564,8 @@
             updateCopyrightYear();
         });
 
-        /* COMPRESOR ULTRA-LIVIANO PARA FOTOS DE CAPTACIONES */
-        function safeImageToBase64(file, maxWidth = 800, quality = 0.72) {
+        /* COMPRESOR ULTRA-LIVIANO PARA GUARDAR VARIAS FOTOS SIN PROBLEMAS */
+        function safeImageToBase64(file, maxWidth = 650, quality = 0.65) {
             return new Promise((resolve) => {
                 if (!file) return resolve('');
                 const reader = new FileReader();
@@ -852,12 +615,12 @@
             if (!files || files.length === 0) return;
 
             for (let i = 0; i < files.length; i++) {
-                const b64 = await safeImageToBase64(files[i], 800, 0.72);
+                const b64 = await safeImageToBase64(files[i], 650, 0.65);
                 if (b64) {
                     stagedImages.push(b64);
                     const thumb = document.createElement('img');
                     thumb.src = b64;
-                    thumb.className = 'w-14 h-14 object-cover rounded-xl border border-sky-400 shadow-sm flex-shrink-0';
+                    thumb.className = 'w-14 h-14 object-cover rounded-xl border-2 border-sky-400 shadow-sm flex-shrink-0';
                     container.appendChild(thumb);
                 }
             }
@@ -1089,7 +852,7 @@
             const file = event.target.files[0];
             if (!file) return;
             showToast('Actualizando portada...');
-            const base64 = await safeImageToBase64(file, 1000, 0.7);
+            const base64 = await safeImageToBase64(file, 900, 0.7);
             if (base64) {
                 appConfig.coverImg = base64;
                 localStorage.setItem('alianza_cover', base64);
@@ -1191,11 +954,12 @@
             document.getElementById('prodCode').value = item.code || '';
             document.getElementById('prodTitle').value = item.title || '';
             document.getElementById('prodCiudad').value = item.ciudad || '';
-            document.getElementById('prodParroquia').value = item.parroquia || '';
             document.getElementById('prodSector').value = item.sector || '';
             document.getElementById('prodDireccion').value = item.direccion || '';
             document.getElementById('prodPrice').value = item.priceStr || '';
+            document.getElementById('prodOfferPrice').value = item.offerPriceStr || '';
             document.getElementById('prodDesc').value = item.desc || '';
+            document.getElementById('prodAgentName').value = item.agentName || '';
             document.getElementById('prodOwnerName').value = item.ownerName || '';
             document.getElementById('prodComision').value = item.comision || '';
 
@@ -1245,11 +1009,12 @@
             let code = document.getElementById('prodCode').value.trim();
             const title = document.getElementById('prodTitle').value.trim();
             const ciudad = document.getElementById('prodCiudad').value.trim();
-            const parroquia = document.getElementById('prodParroquia').value.trim();
             const sector = document.getElementById('prodSector').value.trim();
             const direccion = document.getElementById('prodDireccion').value.trim();
             const priceStr = document.getElementById('prodPrice').value.trim();
+            const offerPriceStr = document.getElementById('prodOfferPrice').value.trim();
             const desc = document.getElementById('prodDesc').value.trim();
+            const agentName = document.getElementById('prodAgentName').value.trim() || 'Gerencia Comercial';
             const ownerName = document.getElementById('prodOwnerName').value.trim();
             const comision = document.getElementById('prodComision').value.trim();
             const urlDirect = document.getElementById('prodUrlDirect').value.trim();
@@ -1271,7 +1036,7 @@
             // Fallback temático según la categoría si no subió ninguna foto
             if (finalImages.length === 0) {
                 if (category === 'VH') {
-                    finalImages = ['https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80'];
+                    finalImages = ['https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=800&q=80'];
                 } else if (category === 'RE' || category === 'AR') {
                     finalImages = ['https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80'];
                 } else {
@@ -1282,8 +1047,8 @@
             const locationText = [ciudad, sector].filter(Boolean).join(', ') || 'El Coca';
 
             const itemData = {
-                category, status, isFeatured, code, title, ciudad, parroquia, sector, direccion, 
-                location: locationText, priceStr, desc, ownerName, comision, images: finalImages,
+                category, status, isFeatured, code, title, ciudad, sector, direccion, 
+                location: locationText, priceStr, offerPriceStr, desc, agentName, ownerName, comision, images: finalImages,
                 vhAno: document.getElementById('vhAno').value,
                 vhKm: document.getElementById('vhKm').value,
                 vhTransmision: document.getElementById('vhTransmision').value,
@@ -1371,7 +1136,8 @@
                 const matchesCat = (activeCategory === 'ALL') || (item.category === activeCategory);
                 const matchesQuery = (item.title || '').toLowerCase().includes(query) ||
                                      (item.code || '').toLowerCase().includes(query) ||
-                                     (item.location || '').toLowerCase().includes(query);
+                                     (item.location || '').toLowerCase().includes(query) ||
+                                     (item.agentName || '').toLowerCase().includes(query);
                 return matchesCat && matchesQuery;
             });
             renderGrid(filtered);
@@ -1379,11 +1145,11 @@
 
         function getStatusBadgeHTML(status) {
             switch(status) {
-                case 'OFERTA': return '<span class="bg-amber-500 text-slate-950 font-bold text-[10px] px-2 py-0.5 rounded shadow">🔥 Oferta Especial</span>';
-                case 'REMATE': return '<span class="bg-purple-600 text-white font-bold text-[10px] px-2 py-0.5 rounded shadow">💥 Remate</span>';
-                case 'RESERVADO': return '<span class="bg-amber-600 text-white font-bold text-[10px] px-2 py-0.5 rounded shadow">⏳ Reservado</span>';
-                case 'SOLD': return '<span class="bg-rose-700 text-white font-bold text-[10px] px-2 py-0.5 rounded shadow">🔴💸 Vendido</span>';
-                default: return '<span class="bg-emerald-600 text-white font-bold text-[10px] px-2 py-0.5 rounded shadow">✅ Disponible</span>';
+                case 'OFERTA': return '<span class="bg-amber-500 text-slate-950 font-extrabold text-[10px] px-2.5 py-0.5 rounded-lg shadow">🔥 Oferta Especial</span>';
+                case 'REMATE': return '<span class="bg-purple-600 text-white font-extrabold text-[10px] px-2.5 py-0.5 rounded-lg shadow">💥 Gran Remate</span>';
+                case 'RESERVADO': return '<span class="bg-amber-600 text-white font-extrabold text-[10px] px-2.5 py-0.5 rounded-lg shadow">⏳ Reservado</span>';
+                case 'SOLD': return '<span class="bg-rose-700 text-white font-extrabold text-[10px] px-2.5 py-0.5 rounded-lg shadow">🔴💸 Vendido</span>';
+                default: return '<span class="bg-emerald-600 text-white font-extrabold text-[10px] px-2.5 py-0.5 rounded-lg shadow">✅ Disponible</span>';
             }
         }
 
@@ -1403,7 +1169,7 @@
             }
 
             items.forEach(item => {
-                const mainImg = (item.images && item.images.length > 0) ? item.images[0] : 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80';
+                const mainImg = (item.images && item.images.length > 0) ? item.images[0] : 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=800&q=80';
 
                 let adminBtns = '';
                 if (currentRole === 'ADMIN') {
@@ -1415,21 +1181,35 @@
                     `;
                 }
 
+                // Lógica de visualización de precios con oferta
+                let priceHtml = `<p class="text-base font-extrabold text-slate-900">${item.priceStr || ''}</p>`;
+                if (item.offerPriceStr) {
+                    priceHtml = `
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs text-slate-400 line-through font-bold">${item.priceStr}</span>
+                            <span class="text-base font-extrabold text-amber-600 flex items-center gap-1">🔥 ${item.offerPriceStr}</span>
+                        </div>
+                    `;
+                }
+
                 grid.innerHTML += `
                     <div class="glass-card rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between border border-slate-200">
                         <div>
                             <div class="relative h-52 w-full bg-slate-900 overflow-hidden group">
-                                <img src="${mainImg}" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80';">
+                                <img src="${mainImg}" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=800&q=80';">
                                 <span class="absolute top-3 left-3 bg-slate-950/80 backdrop-blur-md text-amber-400 font-mono text-[10px] font-bold px-2.5 py-0.5 rounded-lg border border-amber-400/30">${item.code || ''}</span>
                                 <div class="absolute top-3 right-3 flex items-center gap-1">
-                                    ${item.isFeatured ? '<span class="bg-amber-400 text-slate-950 text-[10px] font-extrabold px-1.5 py-0.5 rounded shadow">⭐</span>' : ''}
+                                    ${item.isFeatured ? '<span class="bg-amber-400 text-slate-950 text-[10px] font-extrabold px-1.5 py-0.5 rounded shadow">⭐ Destacado</span>' : ''}
                                     ${getStatusBadgeHTML(item.status)}
                                 </div>
                             </div>
                             <div class="p-5 space-y-2">
                                 <h3 class="text-base font-extrabold text-slate-900 leading-tight">${item.title || ''}</h3>
-                                <p class="text-xs text-slate-500 flex items-center gap-1"><i class="fa-solid fa-location-dot text-rose-500"></i> ${item.location || 'El Coca'}</p>
-                                <p class="text-base font-extrabold text-amber-600 pt-1">${item.priceStr || ''}</p>
+                                <div class="flex items-center justify-between text-xs text-slate-500">
+                                    <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i> ${item.location || 'El Coca'}</span>
+                                    <span class="text-[11px] font-bold text-sky-700 bg-sky-50 px-2 py-0.5 rounded-md border border-sky-100"><i class="fa-solid fa-user-tie"></i> ${item.agentName || 'Gerencia'}</span>
+                                </div>
+                                <div class="pt-1.5">${priceHtml}</div>
                             </div>
                         </div>
 
@@ -1451,19 +1231,33 @@
             document.getElementById('detCodeBadge').innerText = item.code || '';
             document.getElementById('detStatusBadge').innerHTML = getStatusBadgeHTML(item.status);
             document.getElementById('detTitle').innerText = item.title || '';
-            document.getElementById('detPrice').innerText = item.priceStr || '';
             document.getElementById('detLocation').innerText = item.location || 'El Coca';
             document.getElementById('detDesc').innerText = item.desc || 'Sin descripción detallada.';
+            document.getElementById('detAgentDisplay').innerText = item.agentName || 'Gerencia General';
+
+            // Precios en ficha
+            const priceEl = document.getElementById('detPrice');
+            const offerEl = document.getElementById('detOfferPrice');
+            if (item.offerPriceStr) {
+                priceEl.className = "text-sm text-slate-400 line-through font-bold";
+                priceEl.innerText = item.priceStr;
+                offerEl.className = "text-xl font-extrabold text-amber-600 block";
+                offerEl.innerText = `🔥 Oferta: ${item.offerPriceStr}`;
+            } else {
+                priceEl.className = "text-xl font-extrabold text-slate-900";
+                priceEl.innerText = item.priceStr || '$0.00 USD';
+                offerEl.className = "hidden";
+            }
 
             const mainImg = document.getElementById('detMainImg');
-            mainImg.src = (item.images && item.images.length > 0) ? item.images[0] : 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80';
+            mainImg.src = (item.images && item.images.length > 0) ? item.images[0] : 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=800&q=80';
 
             const thumbsCont = document.getElementById('detThumbsContainer');
             thumbsCont.innerHTML = '';
             if (item.images && item.images.length > 1) {
                 item.images.forEach(imgUrl => {
                     thumbsCont.innerHTML += `
-                        <img src="${imgUrl}" onclick="document.getElementById('detMainImg').src='${imgUrl}'" class="w-16 h-12 object-cover rounded-xl border border-slate-200 cursor-pointer hover:opacity-80 transition" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80';">
+                        <img src="${imgUrl}" onclick="document.getElementById('detMainImg').src='${imgUrl}'" class="w-16 h-12 object-cover rounded-xl border border-slate-200 cursor-pointer hover:opacity-80 transition">
                     `;
                 });
             }
@@ -1496,7 +1290,7 @@
                 privateSec.classList.add('hidden');
             }
 
-            const waMsg = encodeURIComponent(`Hola ALIANZA ESTRATÉGICA S.A.S., solicito información de la captación: ${item.code} (${item.title})`);
+            const waMsg = encodeURIComponent(`Hola ALIANZA ESTRATÉGICA S.A.S., solicito información de la captación: ${item.code} (${item.title}) - Agente: ${item.agentName || 'Gerencia'}`);
             document.getElementById('detWaConsultBtn').href = `https://wa.me/593959190794?text=${waMsg}`;
 
             openModal('detailModal');
@@ -1526,7 +1320,8 @@
             if (imgEl) imgEl.src = imgUrl;
             document.getElementById('carouselBadge').innerText = item.code || 'RE-001';
             document.getElementById('carouselTitle').innerText = item.title || '';
-            document.getElementById('carouselSub').innerText = `${item.priceStr || ''} - ${item.location || 'El Coca'}`;
+            const priceShow = item.offerPriceStr ? `🔥 ${item.offerPriceStr}` : (item.priceStr || '');
+            document.getElementById('carouselSub').innerText = `${priceShow} - ${item.location || 'El Coca'}`;
         }
 
         function nextSlide() { carouselIndex++; updateCarouselDisplay(); }
