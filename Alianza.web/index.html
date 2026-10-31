@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="htmlPageTitle">ALIANZA ESTRATÉGICA S.A.S. - Catálogo & Marketplace Corporativo</title>
+    <title>ALIANZA ESTRATÉGICA S.A.S. - Catálogo & Marketplace Corporativo</title>
 
     <!-- METADATOS PWA -->
     <meta name="theme-color" content="#0f172a">
@@ -36,13 +36,8 @@
         }
     </script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-   
-    <!-- FIREBASE COMPAT SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics-compat.js"></script>
 
-    <style id="customDynamicStyles">
+    <style>
         :root {
             --app-bg: #f8fafc;
             --app-nav-bg: #0f172a;
@@ -52,32 +47,26 @@
         body { background-color: var(--app-bg) !important; }
         .theme-nav-bg { background-color: var(--app-nav-bg) !important; }
         .theme-card-bg { background-color: var(--app-card-bg) !important; }
-       
-        .modal-scroll::-webkit-scrollbar { width: 6px; }
-        .modal-scroll::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 9999px; }
-
-        /* REELS SCROLLBAR */
+        
         .reels-scrollbar::-webkit-scrollbar { display: none; }
         .reels-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
         .reel-card {
-            width: 124px;
-            height: 208px;
+            width: 126px;
+            height: 212px;
             flex-shrink: 0;
             border-radius: 1.25rem;
             overflow: hidden;
             position: relative;
             cursor: pointer;
             border: 2px solid #e2e8f0;
-            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+            transition: transform 0.25s ease, border-color 0.25s ease;
         }
         .reel-card:hover {
             transform: translateY(-4px) scale(1.02);
             border-color: #38bdf8;
-            box-shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.2);
         }
 
-        /* 2 FILAS DE AUSPICIANTES EN SECUENCIA CONTINUA */
         @keyframes marqueeLeft {
             0% { transform: translateX(0%); }
             100% { transform: translateX(-50%); }
@@ -86,39 +75,14 @@
             0% { transform: translateX(-50%); }
             100% { transform: translateX(0%); }
         }
-        .marquee-row-1 {
-            display: flex;
-            width: max-content;
-            animation: marqueeLeft 28s linear infinite;
-        }
-        .marquee-row-2 {
-            display: flex;
-            width: max-content;
-            animation: marqueeRight 32s linear infinite;
-        }
-        .marquee-row-1:hover, .marquee-row-2:hover {
-            animation-play-state: paused;
-        }
-
-        .carousel-fade {
-            transition: opacity 0.5s ease-in-out;
-        }
-
-        /* OCULTAR INSIGNIA Y FLOTANTE DE NETLIFY */
-        [data-netlify-badge],
-        .netlify-badge,
-        iframe[src*="netlify"],
-        iframe[title*="Netlify"] {
-            display: none !important;
-            opacity: 0 !important;
-            visibility: hidden !important;
-            pointer-events: none !important;
-        }
+        .marquee-row-1 { display: flex; width: max-content; animation: marqueeLeft 28s linear infinite; }
+        .marquee-row-2 { display: flex; width: max-content; animation: marqueeRight 32s linear infinite; }
+        .marquee-row-1:hover, .marquee-row-2:hover { animation-play-state: paused; }
     </style>
 </head>
-<body class="font-sans text-slate-800 antialiased min-h-screen flex flex-col relative transition-colors duration-300">
+<body class="font-sans text-slate-800 antialiased min-h-screen flex flex-col relative">
 
-    <!-- TOAST DE NOTIFICACIÓN VISUAL ELEGANTE (SIN ALERTS) -->
+    <!-- TOAST DE NOTIFICACIÓN -->
     <div id="appToast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2.5 bg-slate-900/95 text-white px-5 py-3 rounded-2xl shadow-2xl border border-emerald-500/40 text-xs font-bold transition-all duration-300 transform opacity-0 translate-y-4 pointer-events-none">
         <i id="appToastIcon" class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>
         <span id="appToastMessage">Acción completada con éxito</span>
@@ -130,26 +94,8 @@
             <div class="flex items-center gap-3">
                 <span><i class="fa-solid fa-location-dot text-sky-400 mr-1"></i> <span id="topLocationText">El Coca, Orellana - Ecuador</span></span>
                 <span id="topEmailDisplay" class="hidden md:inline"><i class="fa-solid fa-envelope text-sky-400 mr-1"></i> alianzaestrategica2026@gmail.com</span>
-                <span id="cloudStatusBadge" class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] px-2 py-0.5 rounded-full font-semibold flex items-center gap-1">
-                    <i class="fa-solid fa-cloud"></i> <span id="cloudStatusText">Nube Conectada</span>
-                </span>
             </div>
-            <div class="flex items-center gap-2 sm:gap-2.5">
-                <button onclick="openModal('infoMenuModal')" class="bg-sky-600 hover:bg-sky-500 text-white px-2.5 py-1 rounded text-xs font-bold transition flex items-center gap-1 shadow-sm">
-                    <i class="fa-solid fa-compass"></i> Menú Informativo
-                </button>
-
-                <button onclick="triggerPwaInstall()" class="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white px-2.5 py-1 rounded text-xs font-bold transition flex items-center gap-1 shadow-sm">
-                    <i class="fa-solid fa-mobile-screen-button"></i> Instalar App
-                </button>
-
-                <a id="fbOfficialLink" href="https://www.facebook.com/share/18ZHQPZGYk/" target="_blank" rel="noopener noreferrer" class="hover:text-sky-400 transition hidden sm:inline"><i class="fa-brands fa-facebook"></i> Oficial</a>
-                <a id="waCatalogLink" href="https://wa.me/c/593959190794" target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:text-amber-300 font-semibold transition hidden sm:inline"><i class="fa-solid fa-store"></i> Catálogo WA</a>
-               
-                <button onclick="openModal('shareModal')" class="bg-amber-500 hover:bg-amber-600 text-slate-900 px-2.5 py-1 rounded text-xs font-bold transition flex items-center gap-1 shadow-sm">
-                    <i class="fa-solid fa-share-nodes"></i> Compartir
-                </button>
-
+            <div class="flex items-center gap-2">
                 <button onclick="openModal('loginModal')" id="loginNavBtn" class="bg-sky-500 hover:bg-sky-400 text-white px-2.5 py-1 rounded text-xs font-bold transition shadow-sm flex items-center">
                     <i class="fa-solid fa-right-to-bracket mr-1"></i> Ingreso
                 </button>
@@ -157,7 +103,7 @@
         </div>
     </div>
 
-    <!-- BANNER DE USUARIO ACTIVO (CONTROL DE PRIVILEGIOS POR ROL) -->
+    <!-- BANNER ADMINISTRATIVO -->
     <div id="userPanelBanner" class="bg-amber-500 text-slate-900 px-4 py-3 hidden shadow-md border-b border-amber-600 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
             <div class="flex items-center gap-2 font-bold text-xs md:text-sm" id="userBannerStatus"></div>
@@ -165,342 +111,42 @@
         </div>
     </div>
 
-    <!-- HEADER ESTILO PERFIL DE FACEBOOK (TÍTULO Y PRESENTACIÓN ALINEADOS) -->
+    <!-- HEADER / PERFIL -->
     <section class="max-w-7xl mx-auto w-full px-4 pt-4">
-        <div class="theme-card-bg rounded-3xl shadow-sm border border-slate-200 overflow-hidden relative transition-colors">
-            <!-- PORTADA -->
-            <div class="h-48 sm:h-72 md:h-88 w-full relative bg-slate-900">
+        <div class="theme-card-bg rounded-3xl shadow-sm border border-slate-200 overflow-hidden relative">
+            <div class="h-48 sm:h-72 w-full relative bg-slate-900">
                 <img id="coverImgDisplay" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80" alt="Portada" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-black/20"></div>
-                
-                <!-- BOTÓN EXCLUSIVO ADMINISTRADOR PRINCIPAL (GERENTE): CAMBIAR PORTADA -->
-                <label id="quickCoverUploadLabel" class="hidden absolute top-4 right-4 bg-black/60 hover:bg-black/80 text-white px-3 py-2 rounded-xl text-xs font-bold backdrop-blur-md transition shadow cursor-pointer">
-                    <i class="fa-solid fa-camera mr-1"></i> Cambiar Portada
-                    <input type="file" accept="image/*" class="hidden" onchange="uploadSingleImageDirectly(this, 'cover')">
-                </label>
             </div>
-
-            <!-- DETALLES DE PERFIL -->
             <div class="px-6 pb-6 pt-3 relative">
-                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 -mt-16 sm:-mt-20 md:-mt-24 mb-4">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 -mt-16 sm:-mt-20 mb-4">
                     <div class="flex flex-col sm:flex-row items-center sm:items-end gap-4 text-center sm:text-left">
-                        <div class="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full border-4 border-white shadow-2xl overflow-hidden bg-white flex-shrink-0 group">
-                            <img id="profileLogoImg" src="https://lh3.googleusercontent.com/d/1X6tUqZ2z3c8vN-xYqZp8W1V_X7mRzS" alt="Perfil" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Alianza+Estrategica&background=0284c7&color=fff';">
-                            <!-- BOTÓN EXCLUSIVO ADMINISTRADOR PRINCIPAL: CAMBIAR FOTO PERFIL -->
-                            <label id="quickProfileUploadLabel" class="hidden absolute inset-0 bg-black/50 hover:bg-black/70 text-white text-xs font-bold items-center justify-center flex-col cursor-pointer transition">
-                                <i class="fa-solid fa-camera text-xl mb-1"></i>
-                                <span>Cambiar Foto</span>
-                                <input type="file" accept="image/*" class="hidden" onchange="uploadSingleImageDirectly(this, 'logo')">
-                            </label>
+                        <div class="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full border-4 border-white shadow-2xl overflow-hidden bg-white">
+                            <img id="profileLogoImg" src="https://lh3.googleusercontent.com/d/1X6tUqZ2z3c8vN-xYqZp8W1V_X7mRzS" alt="Perfil" class="w-full h-full object-cover">
                         </div>
-                        
-                        <div class="pt-2 sm:pt-0">
-                            <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2">
-                                <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight leading-none" id="profileCompanyTitle">
-                                    ALIANZA ESTRATÉGICA <span class="text-sky-600">S.A.S.</span>
-                                </h1>
-                                <i class="fa-solid fa-circle-check text-sky-500 text-lg" title="Empresa Verificada"></i>
-                            </div>
-                            <p class="text-xs sm:text-sm text-sky-600 font-bold mt-1.5" id="profileMotto">Excelencia Jurídica, Confianza Profesional</p>
-                            <p class="text-xs text-slate-500 mt-1" id="profileSubtitle">
-                                <i class="fa-solid fa-building text-slate-400 mr-1"></i> Corretaje Inmobiliario, Vehículos, Maquinaria & Saneamiento Notarial en El Coca
-                            </p>
+                        <div>
+                            <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900" id="profileCompanyTitle">
+                                ALIANZA ESTRATÉGICA <span class="text-sky-600">S.A.S.</span>
+                            </h1>
+                            <p class="text-xs sm:text-sm text-sky-600 font-bold mt-1" id="profileMotto">Excelencia Jurídica, Confianza Profesional</p>
                         </div>
                     </div>
-
-                    <!-- BOTONES DE CONTACTO -->
-                    <div class="flex flex-wrap items-center justify-center gap-2 pt-2">
-                        <button onclick="openModal('infoMenuModal')" class="bg-slate-800 hover:bg-slate-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow transition flex items-center gap-1.5">
-                            <i class="fa-solid fa-circle-info text-sky-400"></i> Sobre Nosotros
-                        </button>
-                        <a id="heroWaDirectBtn" href="https://wa.me/593959190794?text=Hola,%20deseo%20contactarme%20con%20el%20equipo%20de%20agentes%20para%20solicitar%20una%20inspecci%C3%B3n%20y%20visita%20t%C3%A9cnica" target="_blank" rel="noopener noreferrer" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow transition flex items-center gap-2">
-                            <i class="fa-brands fa-whatsapp text-lg"></i> Contactar Equipo de Agentes
-                        </a>
-                        <button onclick="openModal('consignarModal')" class="bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow transition flex items-center gap-2">
-                            <i class="fa-solid fa-plus-circle"></i> Consignar Activo
-                        </button>
-                    </div>
-                </div>
-
-                <div class="bg-slate-50/80 rounded-2xl p-4 border border-slate-200/80 text-xs sm:text-sm text-slate-600 leading-relaxed" id="profileBioBox">
-                    <p id="profileBioText">
-                        Portal oficial de <strong>ALIANZA ESTRATÉGICA S.A.S.</strong> en El Coca, Orellana. Líder Comercial y Jefe de Equipo Operativo: <strong>Adrián Arturo Íñiguez Lucio</strong> | Patrocinio Jurídico Externa: <strong>Abg. Carlos Alfredo Íñiguez Rodríguez</strong>. Transparencia, legalidad y seguridad transaccional en compraventas, contratos de arrendamiento, gravámenes y liquidación de activos con sincronización en tiempo real.
-                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- HISTORIAS Y REELS DESTACADOS (FORMATO 9:16) -->
-    <section class="max-w-7xl mx-auto w-full px-4 pt-6">
-        <div class="theme-card-bg rounded-3xl shadow-sm p-4 border border-slate-200">
-            <div class="flex items-center justify-between mb-3 px-1">
-                <span class="text-xs font-extrabold uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
-                    <i class="fa-solid fa-clapperboard text-rose-500"></i> Historias & Reels Destacados
-                </span>
-                <span class="text-[11px] text-slate-400 font-medium">Recorridos rápidos en video • Caducidad 7 días</span>
-            </div>
-
-            <div class="reels-scrollbar flex items-center gap-3 overflow-x-auto pb-2" id="reelsScrollContainer">
-                <!-- BOTÓN CREAR REEL (EXCLUSIVO GERENTE / ADMIN) -->
-                <div id="addReelCardBtn" onclick="openModal('addReelModal')" class="reel-card bg-slate-50 border-2 border-dashed border-rose-300 hidden flex-col items-center justify-center text-center p-2 hover:bg-rose-50 transition">
-                    <div class="w-10 h-10 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center mb-2 shadow-sm">
-                        <i class="fa-solid fa-camera text-base"></i>
-                    </div>
-                    <span class="text-[11px] font-bold text-rose-700 leading-tight">+ Subir Reel</span>
-                    <span class="text-[9px] text-slate-400 mt-0.5">Galería / Embed</span>
-                </div>
-                <!-- LISTA PÚBLICA DE REELS -->
-                <div id="reelsList" class="flex items-center gap-3"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CARRUSEL Y VIDEO INFORMATIVO CORPORATIVO -->
-    <section class="max-w-7xl mx-auto w-full px-4 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
-        
-        <!-- CARRUSEL SECUENCIAL DE OPORTUNIDADES (DESPLAZAMIENTO FLUIDO CADA 3.5 SEGUNDOS) -->
-        <div class="lg:col-span-7 theme-card-bg rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col justify-between">
-            <div class="p-3.5 border-b border-slate-100 flex items-center justify-between">
-                <span class="text-xs font-bold uppercase tracking-wider text-sky-700 flex items-center gap-2">
-                    <i class="fa-solid fa-bolt text-amber-500"></i> <span id="carouselTitleDisplay">Galería de Oportunidades & Activos en Secuencia</span>
-                </span>
-                <span class="text-[11px] text-slate-400 font-medium" id="carouselSourceLabel">Sincronizado en Vivo</span>
-            </div>
-
-            <div class="relative w-full h-64 sm:h-80 md:h-96 overflow-hidden bg-slate-900" id="carouselContainer">
-                <div id="carouselSlide" class="w-full h-full relative cursor-pointer" onclick="clickCarouselCurrentSlide()"></div>
-
-                <button onclick="prevSlide()" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white w-9 h-9 rounded-full flex items-center justify-center transition z-10">
-                    <i class="fa-solid fa-chevron-left text-sm"></i>
-                </button>
-                <button onclick="nextSlide()" class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white w-9 h-9 rounded-full flex items-center justify-center transition z-10">
-                    <i class="fa-solid fa-chevron-right text-sm"></i>
-                </button>
-
-                <div id="carouselDots" class="absolute bottom-3 left-0 right-0 flex justify-center gap-2 z-10"></div>
-            </div>
-
-            <div class="p-3 bg-sky-50 text-xs text-sky-800 border-t border-sky-100 flex justify-between items-center px-4">
-                <span>Inmuebles y vehículos verificados con Hoja de Visita y respaldo notarial.</span>
-                <span class="text-[10px] text-sky-600 font-mono">Toca la foto para ver ficha técnica</span>
-            </div>
-        </div>
-
-        <!-- VIDEO INFORMATIVO CORPORATIVO ROBUSTO (CERO PANTALLAS NEGRAS) -->
-        <div class="lg:col-span-5 theme-card-bg rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col justify-between relative">
-            <div class="p-3.5 border-b border-slate-100 flex items-center justify-between">
-                <span class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-2">
-                    <i class="fa-solid fa-circle-play text-red-600"></i> Video Corporativo
-                </span>
-                <span class="text-[11px] bg-red-100 text-red-700 px-2 py-0.5 rounded-full font-bold" id="videoSourceBadge">Público</span>
-            </div>
-
-            <div class="p-4 flex-1 flex flex-col justify-center bg-slate-950 relative">
-                <div class="relative w-full aspect-video rounded-xl overflow-hidden bg-black shadow-inner flex items-center justify-center" id="videoPlayerBox"></div>
-                <!-- BOTÓN FLOTANTE CONTROL RÁPIDO DE AUDIO -->
-                <button id="toggleAudioBtn" onclick="toggleCorporateAudio()" class="absolute bottom-6 right-6 bg-slate-900/85 hover:bg-slate-900 text-white text-xs px-3 py-1.5 rounded-lg shadow-lg backdrop-blur-md border border-white/20 flex items-center gap-1.5 transition z-10">
-                    <i class="fa-solid fa-volume-high text-amber-400" id="audioIcon"></i> <span id="audioText">Activar Sonido (50%)</span>
-                </button>
-            </div>
-
-            <div class="p-4 bg-slate-50 text-xs text-slate-600 border-t border-slate-100">
-                <h4 class="font-bold text-slate-800 mb-1" id="videoSectionTitle">Operaciones transparentes en ALIANZA ESTRATÉGICA S.A.S.</h4>
-                <p class="text-[11px] text-slate-500 leading-relaxed" id="videoSectionDesc">Intermediación formal, contratos de compraventa y revisión documental en Notarías y Registro de la Propiedad.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- MARKETPLACE -->
+    <!-- MARKETPLACE GRID -->
     <main class="max-w-7xl mx-auto px-4 py-6 flex-1 w-full">
-        <div class="bg-gradient-to-r from-sky-700 to-sky-900 rounded-2xl p-6 mb-8 text-white shadow-md" id="marketplaceHeroBox">
-            <div class="max-w-2xl mx-auto text-center mb-4">
-                <h2 class="text-xl md:text-2xl font-bold mb-1" id="marketplaceTitle">Marketplace de Bienes & Activos</h2>
-                <p class="text-xs sm:text-sm text-sky-200" id="marketplaceSubtitle">Filtre por código único (RE, AR, VH, MQ, LQ) o explore oportunidades verificadas en tiempo real.</p>
-            </div>
-            <div class="max-w-xl mx-auto relative">
-                <input type="text" id="searchInput" onkeyup="filterItems()" placeholder="Buscar por código (ej: RE-001), sector o palabra clave..." class="w-full pl-10 pr-4 py-3 rounded-xl text-slate-800 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-lg">
-                <i class="fa-solid fa-search absolute left-3.5 top-3.5 text-slate-400"></i>
-            </div>
-        </div>
-
-        <!-- CATEGORÍAS -->
-        <div class="flex flex-wrap justify-center gap-2 md:gap-3 mb-8" id="categoryFilters">
-            <button onclick="filterCategory('ALL', this)" class="cat-btn active bg-sky-600 text-white px-4 py-2 rounded-lg text-xs md:text-sm font-semibold shadow-sm transition">Todos Disponibles</button>
-            <button onclick="filterCategory('RE', this)" class="cat-btn bg-white text-slate-700 border border-slate-200 px-4 py-2 rounded-lg text-xs md:text-sm font-semibold shadow-sm hover:bg-sky-50 hover:text-sky-600 transition">🏠 RE - Ventas</button>
-            <button onclick="filterCategory('AR', this)" class="cat-btn bg-white text-slate-700 border border-slate-200 px-4 py-2 rounded-lg text-xs md:text-sm font-semibold shadow-sm hover:bg-sky-50 hover:text-sky-600 transition">🔑 AR - Arriendos</button>
-            <button onclick="filterCategory('VH', this)" class="cat-btn bg-white text-slate-700 border border-slate-200 px-4 py-2 rounded-lg text-xs md:text-sm font-semibold shadow-sm hover:bg-sky-50 hover:text-sky-600 transition">🚗 VH - Vehículos</button>
-            <button onclick="filterCategory('MQ', this)" class="cat-btn bg-white text-slate-700 border border-slate-200 px-4 py-2 rounded-lg text-xs md:text-sm font-semibold shadow-sm hover:bg-sky-50 hover:text-sky-600 transition">🚜 MQ - Maquinaria</button>
-            <button onclick="filterCategory('LQ', this)" class="cat-btn bg-white text-slate-700 border border-slate-200 px-4 py-2 rounded-lg text-xs md:text-sm font-semibold shadow-sm hover:bg-sky-50 hover:text-sky-600 transition">📦 LQ - Liquidación</button>
-            <button onclick="filterCategory('SOLD', this)" class="cat-btn bg-emerald-50 text-emerald-800 border border-emerald-300 px-4 py-2 rounded-lg text-xs md:text-sm font-bold shadow-sm hover:bg-emerald-600 hover:text-white transition">🏆 Casos de Éxito / Vendidos</button>
-        </div>
-
-        <!-- GRID DE PRODUCTOS -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="inventoryGrid"></div>
-
-        <!-- SECCIÓN DE RESPALDO LEGAL Y EQUIPO COMERCIAL -->
-        <section class="mt-16 theme-card-bg rounded-3xl shadow-sm p-6 md:p-8 border border-slate-200">
-            <div class="text-center max-w-2xl mx-auto mb-10">
-                <span class="bg-amber-100 text-amber-900 border border-amber-300 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider inline-block mb-2">
-                    Respaldo Institucional y Jurídico
-                </span>
-                <h3 class="text-2xl md:text-3xl font-extrabold text-slate-900" id="directivaSectionTitle">Equipo Comercial y Asesoría Legal Externa</h3>
-                <p class="text-slate-500 text-xs sm:text-sm mt-1" id="directivaSectionSubtitle">Transacciones garantizadas bajo la legislación ecuatoriana y patrocinio letrado.</p>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-                
-                <!-- LÍDER COMERCIAL Y JEFE DE EQUIPO OPERATIVO -->
-                <div class="bg-gradient-to-br from-sky-50 to-white rounded-2xl p-6 border border-sky-200 flex flex-col justify-between h-full shadow-sm">
-                    <div>
-                        <div class="flex items-center gap-4 mb-4">
-                            <img id="managerPhotoDisplay" src="https://ui-avatars.com/api/?name=Adrian+Iniguez&background=0284c7&color=fff&size=128" alt="Líder Comercial" class="w-16 h-16 rounded-full object-cover border-2 border-sky-600 shadow">
-                            <div>
-                                <span class="text-[11px] uppercase font-bold text-sky-700 tracking-wider block" id="managerRoleBadge">Coordinación Operativa</span>
-                                <h4 class="font-bold text-lg md:text-xl text-slate-900" id="managerNameDisplay">Adrián Arturo Íñiguez Lucio</h4>
-                                <p class="text-xs font-semibold text-slate-500" id="managerTitleDisplay">Líder Comercial y Jefe de Equipo Operativo</p>
-                            </div>
-                        </div>
-                        <p class="text-slate-600 text-xs sm:text-sm leading-relaxed mb-6" id="managerDescDisplay">
-                            Coordinación comercial en la provincia de Orellana. Dirección de captaciones, corretaje inmobiliario, custodia de vehículos y subasta de lotes corporativos.
-                        </p>
-                    </div>
-
-                    <div class="space-y-2 pt-4 border-t border-sky-100 text-xs">
-                        <a id="gerenciaWaDisplay" href="https://wa.me/593959190794?text=Hola,%20deseo%20contactarme%20con%20el%20equipo%20de%20agentes%20para%20solicitar%20una%20inspecci%C3%B3n%20y%20visita%20t%C3%A9cnica" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-slate-700 hover:text-emerald-600 transition font-medium">
-                            <i class="fa-brands fa-whatsapp text-emerald-600 text-sm"></i> WhatsApp Equipo de Agentes: <span id="managerPhoneText">095 919 0794</span>
-                        </a>
-                        <a id="gerenciaCatDisplay" href="https://wa.me/c/593959190794" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-slate-700 hover:text-amber-600 transition font-medium">
-                            <i class="fa-solid fa-store text-amber-600 text-sm"></i> Catálogo Business Oficial
-                        </a>
-                    </div>
-                </div>
-
-                <!-- TARJETA DEL ABOGADO EXTERNO -->
-                <div class="bg-slate-900 rounded-2xl p-6 text-white shadow-xl border border-amber-500/40 flex flex-col justify-between relative">
-                    <div>
-                        <div class="mb-4 text-center relative">
-                            <span class="text-amber-400 text-[10px] uppercase tracking-wider font-extrabold block mb-2">
-                                <i class="fa-solid fa-scale-balanced mr-1"></i> Tarjeta de Presentación Jurídica Oficial
-                            </span>
-                            
-                            <div class="rounded-xl overflow-hidden border border-amber-500/30 shadow-md bg-slate-950 p-2 relative group">
-                                <img id="lawyerCardImg" src="https://lh3.googleusercontent.com/d/1B0q8zHTh3-644iA-e3O3e4rT29i69s38" alt="Tarjeta Abogado" class="w-full h-auto max-h-56 object-contain mx-auto" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Carlos+Iniguez&background=d97706&color=fff';">
-                                
-                                <label id="quickLawyerCardUploadLabel" class="hidden absolute inset-0 bg-black/60 hover:bg-black/80 text-white text-xs font-bold items-center justify-center flex-col cursor-pointer transition">
-                                    <i class="fa-solid fa-camera text-2xl text-amber-400 mb-1"></i>
-                                    <span>Subir Foto Tarjeta desde Galería / PC</span>
-                                    <input type="file" accept="image/*" class="hidden" onchange="uploadLawyerCardDirectly(this)">
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="border-t border-slate-800 pt-3">
-                            <h4 class="font-bold text-lg text-white" id="lawyerNameDisplay">Abg. Carlos Alfredo Íñiguez Rodríguez</h4>
-                            <p class="text-xs text-amber-400 font-semibold mb-3">Patrocinio y Asesoría Jurídica Externa Corporativa</p>
-
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-300">
-                                <div class="bg-slate-800/80 p-2.5 rounded-lg border border-slate-700">
-                                    <p class="font-semibold text-white"><i class="fa-solid fa-phone text-amber-400 mr-1.5"></i> Teléfono / WhatsApp:</p>
-                                    <p id="lawyerPhoneDisplay" class="mt-0.5 text-slate-300">097 922 2328</p>
-                                </div>
-                                <div class="bg-slate-800/80 p-2.5 rounded-lg border border-slate-700">
-                                    <p class="font-semibold text-white"><i class="fa-solid fa-envelope text-amber-400 mr-1.5"></i> Correo Electrónico:</p>
-                                    <p id="lawyerEmailDisplay" class="mt-0.5 text-slate-300 truncate">carllos-alfredo88@hotmail.com</p>
-                                </div>
-                            </div>
-
-                            <div class="mt-3 bg-slate-800/80 p-2.5 rounded-lg border border-slate-700 text-xs text-slate-300">
-                                <p class="font-semibold text-white mb-1"><i class="fa-solid fa-file-signature text-amber-400 mr-1.5"></i> Cobertura Legal Notarial:</p>
-                                <p id="lawyerCoverageDisplay" class="text-[11px] text-slate-400 leading-relaxed">
-                                    Minutas, promesas de compraventa, escrituras definitivas, contratos de arriendo y verificación de gravámenes en el Registro de la Propiedad.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-4 pt-3 border-t border-slate-800 text-center">
-                        <a id="lawyerWaBtn" href="https://wa.me/593979222328?text=Hola%20Abg.%20Carlos%20%C3%8D%C3%B1iguez,%20solicito%20asesor%C3%ADa%20jur%C3%ADdica%20a%20trav%C3%A9s%20de%20ALIANZA%20ESTRAT%C3%89GICA%20S.A.S." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-slate-900 text-xs font-bold px-4 py-2 rounded-xl transition shadow">
-                            <i class="fa-brands fa-whatsapp text-sm"></i> Consulta Legal Directa con el Abogado
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- AUSPICIANTES EN 2 FILAS EN SECUENCIA CONTINUA -->
-        <section class="mt-16 theme-card-bg rounded-3xl shadow-sm p-6 border border-slate-200 overflow-hidden">
-            <div class="flex flex-wrap items-center justify-between mb-4 px-2">
-                <div>
-                    <span class="text-[10px] bg-sky-100 text-sky-800 font-bold px-2 py-0.5 rounded uppercase tracking-wider">Red de Respaldo Comercial</span>
-                    <h3 class="text-lg md:text-xl font-bold text-slate-900 mt-1" id="sponsorsTitleDisplay">Auspiciantes, Aliados y Entidades</h3>
-                </div>
-                <div class="flex items-center gap-2">
-                    <span id="sponsorCounterBadge" class="text-xs text-slate-500 font-semibold"></span>
-                    <button onclick="openBrandEditModal()" id="editSponsorsQuickBtn" class="hidden bg-slate-900 text-white text-xs px-2.5 py-1.5 rounded-lg font-bold hover:bg-slate-800 transition shadow">
-                        <i class="fa-solid fa-plus mr-1"></i> Gestionar Auspiciantes (20)
-                    </button>
-                </div>
-            </div>
-
-            <!-- CONTENEDOR DE DOS FILAS EN MOVIMIENTO CONTINUO -->
-            <div class="space-y-3 bg-slate-50/80 p-3 rounded-2xl border border-slate-100 overflow-hidden">
-                <div class="relative w-full overflow-hidden flex items-center min-h-[56px]">
-                    <div class="marquee-row-1 flex items-center gap-4" id="marqueeTrackRow1"></div>
-                </div>
-                <div class="relative w-full overflow-hidden flex items-center min-h-[56px]">
-                    <div class="marquee-row-2 flex items-center gap-4" id="marqueeTrackRow2"></div>
-                </div>
-            </div>
-            <p class="text-[10px] text-center text-slate-400 mt-2">Circulación automática continua en doble secuencia • Entidades notariales, registrales y comerciales aliadas</p>
-        </section>
-
     </main>
 
-    <!-- FOOTER -->
-    <footer class="theme-nav-bg text-white pt-10 pb-6 border-t border-slate-800 mt-12">
-        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 text-xs md:text-sm">
-            <div>
-                <h4 class="font-bold text-base text-sky-400 mb-3" id="footerCompanyTitle">ALIANZA ESTRATÉGICA S.A.S.</h4>
-                <p class="text-slate-400 leading-relaxed mb-3" id="footerCompanyDesc">
-                    Empresa formal de corretaje inmobiliario, intermediación comercial y liquidación de activos en El Coca y todo el Ecuador.
-                </p>
-                <p class="text-amber-400 font-semibold italic" id="footerCompanyMotto">"Excelencia Jurídica, Confianza Profesional"</p>
-            </div>
-            
-            <div>
-                <h4 class="font-bold text-base text-sky-400 mb-3">Equipo Comercial & Contacto</h4>
-                <ul class="space-y-2 text-slate-300">
-                    <li id="footerWaText"><i class="fa-brands fa-whatsapp text-emerald-500 mr-2"></i> WhatsApp Equipo: 095 919 0794</li>
-                    <li id="footerEmailText"><i class="fa-solid fa-envelope text-sky-400 mr-2"></i> alianzaestrategica2026@gmail.com</li>
-                    <li><i class="fa-solid fa-location-dot text-red-400 mr-2"></i> <span id="footerLocationText">Francisco de Orellana (El Coca), Ecuador</span></li>
-                </ul>
-            </div>
-
-            <div>
-                <h4 class="font-bold text-base text-sky-400 mb-3">Enlaces Oficiales</h4>
-                <div class="flex flex-col gap-2 text-slate-300">
-                    <button onclick="openModal('infoMenuModal')" class="text-left hover:text-sky-400 transition flex items-center gap-2"><i class="fa-solid fa-compass text-sky-400"></i> Menú de Información & Transparencia</button>
-                    <a id="footerCatLink" href="https://wa.me/c/593959190794" target="_blank" rel="noopener noreferrer" class="hover:text-amber-400 transition"><i class="fa-solid fa-store mr-2"></i> Catálogo WhatsApp Business</a>
-                    <a id="footerFb1" href="https://www.facebook.com/share/18ZHQPZGYk/" target="_blank" rel="noopener noreferrer" class="hover:text-sky-400 transition"><i class="fa-brands fa-facebook mr-2"></i> Facebook Oficial</a>
-                    <a id="footerFb2" href="https://www.facebook.com/share/19kEEGVFsk/" target="_blank" rel="noopener noreferrer" class="hover:text-sky-400 transition"><i class="fa-brands fa-facebook-f mr-2"></i> Portal de Ventas</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="max-w-7xl mx-auto px-4 pt-4 border-t border-slate-800 text-center text-xs text-slate-500" id="footerCopyrightText">
-            © 2026 ALIANZA ESTRATÉGICA S.A.S. Todos los derechos reservados.
-        </div>
-    </footer>
-
-    <!-- ASISTENTE COMERCIAL FLOTANTE (FOTO EJECUTIVA EN OFICINA) -->
+    <!-- BOTÓN Y VENTANA FLOTANTE DEL ASISTENTE COMERCIAL -->
     <div id="aiChatWrapper" class="fixed bottom-5 right-5 z-50 flex flex-col items-end">
         
-        <!-- VENTANA DE CHAT CON INTELIGENCIA COMERCIAL -->
-        <div id="aiChatWindow" class="hidden w-80 sm:w-96 h-[470px] bg-white rounded-3xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden transition-all duration-300 mb-3">
+        <!-- VENTANA DE CHAT DE LA ASISTENTE COMERCIAL -->
+        <div id="aiChatWindow" class="hidden w-80 sm:w-96 h-[460px] bg-white rounded-3xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden transition-all duration-300 mb-3">
             
-            <!-- CABECERA EJECUTIVA -->
+            <!-- CABECERA CON FOTO DE ASESORA EN OFICINA -->
             <div class="bg-gradient-to-r from-slate-900 to-sky-900 text-white p-3.5 flex items-center justify-between">
                 <div class="flex items-center gap-3">
                     <div class="relative w-10 h-10 rounded-full border-2 border-sky-400 overflow-hidden shadow-sm">
@@ -519,15 +165,9 @@
             <div id="aiChatMessages" class="flex-1 p-4 overflow-y-auto space-y-3 bg-slate-50 text-xs">
                 <div class="flex items-start gap-2">
                     <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80" class="w-7 h-7 rounded-full object-cover border border-sky-400">
-                    <div class="bg-white p-3 rounded-2xl shadow-sm border border-slate-200 text-slate-700 max-w-[85%] leading-relaxed">
-                        ¡Hola! Le doy la bienvenida a <strong>ALIANZA ESTRATÉGICA S.A.S.</strong> 👋<br><br>
-                        Soy su <strong>Asistente Comercial</strong>. ¿En qué le podemos servir hoy? Puede escribir su consulta o seleccionar una opción rápida:
-                        <div class="mt-2.5 flex flex-wrap gap-1.5">
-                            <button onclick="quickAssistantAsk('Deseo vender o consignar un inmueble o vehículo')" class="bg-sky-50 text-sky-700 border border-sky-200 px-2.5 py-1 rounded-lg text-[10px] font-bold hover:bg-sky-100 transition">🏠 Vender / Consignar</button>
-                            <button onclick="quickAssistantAsk('Quiero comprar una propiedad en El Coca')" class="bg-sky-50 text-sky-700 border border-sky-200 px-2.5 py-1 rounded-lg text-[10px] font-bold hover:bg-sky-100 transition">🔑 Comprar Inmueble</button>
-                            <button onclick="quickAssistantAsk('Consultar catálogo de vehículos disponibles')" class="bg-sky-50 text-sky-700 border border-sky-200 px-2.5 py-1 rounded-lg text-[10px] font-bold hover:bg-sky-100 transition">🚗 Vehículos</button>
-                            <button onclick="quickAssistantAsk('Requiero asesoría jurídica notarial')" class="bg-amber-50 text-amber-800 border border-amber-200 px-2.5 py-1 rounded-lg text-[10px] font-bold hover:bg-amber-100 transition">⚖️ Asesoría Legal</button>
-                        </div>
+                    <div class="bg-white p-3 rounded-2xl shadow-sm border border-slate-200 text-slate-700 max-w-[80%]">
+                        ¡Hola! Bienvenid@ a <strong>ALIANZA ESTRATÉGICA S.A.S.</strong> 👋<br><br>
+                        Soy su <strong>Asistente Comercial</strong>. ¿En qué puedo asesorarle hoy? ¿Desea comprar, arrendar o consignar/vender algún inmueble o vehículo con nuestro respaldo legal?
                     </div>
                 </div>
             </div>
@@ -535,14 +175,14 @@
             <!-- ENTRADA DE TEXTO -->
             <div class="p-3 bg-white border-t border-slate-100 flex items-center gap-2">
                 <input type="text" id="aiUserInput" onkeydown="if(event.key==='Enter') sendAiMessage()" placeholder="Escriba su consulta aquí..." class="flex-1 text-xs border border-slate-300 rounded-xl px-3 py-2 outline-none focus:border-sky-500">
-                <button onclick="sendAiMessage()" class="bg-sky-600 hover:bg-sky-700 text-white p-2.5 rounded-xl text-xs font-bold transition shadow">
+                <button onclick="sendAiMessage()" class="bg-sky-600 hover:bg-sky-700 text-white p-2 rounded-xl text-xs font-bold transition">
                     <i class="fa-solid fa-paper-plane"></i>
                 </button>
             </div>
         </div>
 
-        <!-- BOTÓN FLOTANTE PRINCIPAL (FOTO EJECUTIVA + ASISTENTE COMERCIAL) -->
-        <button onclick="toggleAiChat()" class="bg-gradient-to-r from-sky-600 to-sky-800 text-white px-4 py-2.5 rounded-full shadow-2xl hover:scale-105 transition flex items-center gap-3 border-2 border-white">
+        <!-- BOTÓN FLOTANTE PRINCIPAL (FOTO ASESORA + ASISTENTE COMERCIAL) -->
+        <button onclick="toggleAiChat()" class="bg-gradient-to-r from-sky-600 to-sky-800 text-white px-4 py-3 rounded-full shadow-2xl hover:scale-105 transition flex items-center gap-3 border-2 border-white">
             <div class="relative w-8 h-8 rounded-full overflow-hidden border border-white">
                 <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80" alt="Asistente Comercial" class="w-full h-full object-cover">
                 <span class="absolute bottom-0 right-0 w-2 h-2 bg-emerald-400 rounded-full border border-white"></span>
@@ -551,75 +191,13 @@
         </button>
     </div>
 
-    <!-- JAVASCRIPT & MOTOR EN TIEMPO REAL CON ASISTENTE COMERCIAL Y MULTIMEDIA -->
+    <!-- LÓGICA DE INTERACCIÓN DE LA ASISTENTE COMERCIAL -->
     <script>
-        function escapeHtml(text) {
-            if (!text) return '';
-            return String(text)
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-        }
-
-        // SISTEMA DE TOAST NOTIFICATIONS
-        function showToast(message, isSuccess = true) {
-            const toast = document.getElementById('appToast');
-            const msg = document.getElementById('appToastMessage');
-            const icon = document.getElementById('appToastIcon');
-            if(!toast || !msg) return;
-
-            msg.textContent = message;
-            if(isSuccess) {
-                icon.className = 'fa-solid fa-circle-check text-emerald-400 text-sm';
-                toast.classList.remove('border-red-500/40');
-                toast.classList.add('border-emerald-500/40');
-            } else {
-                icon.className = 'fa-solid fa-circle-exclamation text-rose-400 text-sm';
-                toast.classList.remove('border-emerald-500/40');
-                toast.classList.add('border-red-500/40');
-            }
-
-            toast.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
-            toast.classList.add('opacity-100', 'translate-y-0');
-
-            setTimeout(() => {
-                toast.classList.remove('opacity-100', 'translate-y-0');
-                toast.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
-            }, 3200);
-        }
-
-        function switchInfoTab(tabId) {
-            document.querySelectorAll('.info-tab-pane').forEach(pane => pane.classList.add('hidden'));
-            document.querySelectorAll('.info-tab-btn').forEach(btn => {
-                btn.classList.remove('bg-sky-600', 'text-white');
-                btn.classList.add('bg-slate-100', 'text-slate-700');
-            });
-            
-            const targetPane = document.getElementById(tabId);
-            if (targetPane) targetPane.classList.remove('hidden');
-
-            const activeBtn = event.currentTarget;
-            if (activeBtn) {
-                activeBtn.classList.remove('bg-slate-100', 'text-slate-700');
-                activeBtn.classList.add('bg-sky-600', 'text-white');
-            }
-        }
-
-        // =========================================================================
-        // LÓGICA INTELIGENTE DEL ASISTENTE COMERCIAL (EN ESPAÑOL Y TRANSFERENCIA WA)
-        // =========================================================================
-        let assistantStep = 'IDLE';
+        let chatState = 'IDLE';
 
         function toggleAiChat() {
             const win = document.getElementById('aiChatWindow');
-            if(win) win.classList.toggle('hidden');
-        }
-
-        function quickAssistantAsk(promptText) {
-            appendUserMessage(promptText);
-            processAssistantChat(promptText);
+            win.classList.toggle('hidden');
         }
 
         function sendAiMessage() {
@@ -627,553 +205,68 @@
             const text = input.value.trim();
             if(!text) return;
 
-            appendUserMessage(text);
+            appendMessage(text, 'USER');
             input.value = '';
 
             setTimeout(() => {
-                processAssistantChat(text);
-            }, 500);
+                processAssistantResponse(text);
+            }, 600);
         }
 
-        function appendUserMessage(msg) {
+        function appendMessage(msg, sender) {
             const container = document.getElementById('aiChatMessages');
-            if(!container) return;
-            container.innerHTML += `
+            const isUser = sender === 'USER';
+            
+            const html = isUser ? `
                 <div class="flex justify-end">
-                    <div class="bg-sky-600 text-white p-3 rounded-2xl shadow-sm text-xs max-w-[80%] leading-relaxed">
-                        ${escapeHtml(msg)}
+                    <div class="bg-sky-600 text-white p-3 rounded-2xl shadow-sm text-xs max-w-[80%]">
+                        ${msg}
                     </div>
                 </div>
-            `;
-            container.scrollTop = container.scrollHeight;
-        }
-
-        function appendBotMessage(htmlMsg) {
-            const container = document.getElementById('aiChatMessages');
-            if(!container) return;
-            container.innerHTML += `
+            ` : `
                 <div class="flex items-start gap-2">
                     <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80" class="w-7 h-7 rounded-full object-cover border border-sky-400">
-                    <div class="bg-white p-3 rounded-2xl shadow-sm border border-slate-200 text-slate-700 max-w-[85%] leading-relaxed">
-                        ${htmlMsg}
+                    <div class="bg-white p-3 rounded-2xl shadow-sm border border-slate-200 text-slate-700 max-w-[80%]">
+                        ${msg}
                     </div>
                 </div>
             `;
+            
+            container.innerHTML += html;
             container.scrollTop = container.scrollHeight;
         }
 
-        function processAssistantChat(msg) {
-            const lower = msg.toLowerCase();
+        function processAssistantResponse(userMsg) {
+            const lower = userMsg.toLowerCase();
 
-            if (lower.includes('vender') || lower.includes('consignar') || lower.includes('inmueble') || lower.includes('casa') || lower.includes('terreno')) {
-                assistantStep = 'CAPTACION';
-                appendBotMessage(
-                    "Con mucho gusto le asistimos en el proceso de **consignación sin traspaso previo de dominio**. 📄✨<br><br>" +
-                    "Por favor indíquenos brevemente:<br>" +
-                    "1. ¿Qué tipo de activo desea comercializar? (Casa, solar, departamento, vehículo o maquinaria)<br>" +
-                    "2. ¿En qué sector se ubica y cuál es el valor estimado en USD?"
+            if (lower.includes('vender') || lower.includes('consignar') || lower.includes('casa') || lower.includes('terreno') || lower.includes('vehiculo')) {
+                chatState = 'CAPTACION';
+                appendMessage(
+                    "Con mucho gusto le ayudamos a vender o consignar su activo con total respaldo notarial y legal. 📄✨<br><br>" +
+                    "Por favor, facilíteme los siguientes detalles breves:<br>" +
+                    "1. ¿Qué bien desea consignar? (Casa, terreno, vehículo, maquinaria)<br>" +
+                    "2. ¿En qué sector se ubica y cuál es el precio estimado?",
+                    'BOT'
                 );
-            } else if (assistantStep === 'CAPTACION') {
-                assistantStep = 'IDLE';
-                const waText = encodeURIComponent(`Hola Asistente Comercial, solicito una inspección y visita técnica para consignar:\n${msg}`);
+            } else if (chatState === 'CAPTACION') {
+                chatState = 'IDLE';
+                const waText = encodeURIComponent(`Hola Asistente Comercial, solicito inspección y consignación de mi bien:\n${userMsg}`);
                 const waUrl = `https://wa.me/593959190794?text=${waText}`;
 
-                appendBotMessage(
-                    "He estructurado los datos de su requerimiento. Para asignarle un agente técnico y coordinar la visita presencial con respaldo jurídico, presione el siguiente enlace directo: <br><br>" +
-                    `<a href="${waUrl}" target="_blank" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs shadow transition">` +
-                    `<i class="fa-brands fa-whatsapp text-sm"></i> Transferir Solicitud a WhatsApp` +
-                    `</a>`
-                );
-            } else if (lower.includes('abogado') || lower.includes('legal') || lower.includes('notari') || lower.includes('escritura')) {
-                const waLawyer = `https://wa.me/593979222328?text=${encodeURIComponent('Hola Abg. Carlos Íñiguez, solicito asesoría jurídica notarial a través de ALIANZA ESTRATÉGICA S.A.S.')}`;
-                appendBotMessage(
-                    "Todas nuestras operaciones cuentan con el patrocinio del **Abg. Carlos Alfredo Íñiguez Rodríguez** para minutas, promesas notariales, escrituras y saneamiento de gravámenes. ⚖️<br><br>" +
-                    `<a href="${waLawyer}" target="_blank" class="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold px-4 py-2 rounded-xl text-xs shadow transition">` +
-                    `<i class="fa-solid fa-scale-balanced text-amber-400"></i> Contactar al Asesor Jurídico` +
-                    `</a>`
+                appendMessage(
+                    "Excelente información. He generado la ficha previa para nuestro equipo de agentes y el área jurídica. 💼<br><br>" +
+                    `<a href="${waUrl}" target="_blank" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2 rounded-xl text-xs shadow mt-2">` +
+                    `<i class="fa-brands fa-whatsapp mr-1"></i> Transferir Ficha a WhatsApp` +
+                    `</a>`,
+                    'BOT'
                 );
             } else {
-                appendBotMessage(
-                    "En **ALIANZA ESTRATÉGICA S.A.S.** le garantizamos seguridad jurídica total, contratos formalizados ante notario y verificación previa de títulos.<br><br>" +
-                    "¿Desea que le agendemos una llamada técnica con nuestro equipo comercial o prefiere revisar alguna propiedad específica del catálogo?"
+                appendMessage(
+                    "En **ALIANZA ESTRATÉGICA S.A.S.** ofrecemos corretaje inmobiliario, compraventa de automotores y asesoría jurídica respaldada por el **Abg. Carlos Alfredo Íñiguez Rodríguez**.<br><br>" +
+                    "Si desea consignar o ver un activo, dígame y le conecto de inmediato.",
+                    'BOT'
                 );
             }
-        }
-
-        // PARSEADOR UNIVERSAL DE VIDEOS / EMBEDS (SIN PANTALLAS NEGRAS)
-        function parseMediaToHtml(url, isReel = false, isMuted = true) {
-            if (!url) return null;
-
-            // YouTube / Shorts
-            const ytMatch = url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|shorts\/)([^#\&\?]*).*/);
-            if (ytMatch && ytMatch[2].length === 11) {
-                const id = ytMatch[2];
-                return `<iframe class="w-full h-full ${isReel ? 'rounded-3xl' : 'rounded-xl'}" src="https://www.youtube.com/embed/${id}?autoplay=1&mute=${isMuted ? 1 : 0}&playsinline=1&loop=1&playlist=${id}&controls=1&modestbranding=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-            }
-
-            // Google Drive Video
-            const driveMatch = url.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
-            if (driveMatch && driveMatch[1]) {
-                const fileId = driveMatch[1];
-                return `<iframe class="w-full h-full ${isReel ? 'rounded-3xl' : 'rounded-xl'}" src="https://drive.google.com/file/d/${fileId}/preview" frameborder="0" allow="autoplay" allowfullscreen></iframe>`;
-            }
-
-            // Archivo Directo (Base64 / Blob / MP4)
-            if (url.startsWith('data:video') || url.startsWith('blob:') || url.match(/\.(mp4|webm|mov)(\?.*)?$/i)) {
-                return `<video id="${isReel ? 'activeReelPlayer' : 'corporateVideoPlayer'}" autoplay loop playsinline ${isMuted ? 'muted' : ''} controls class="w-full h-full object-cover ${isReel ? 'rounded-3xl' : 'rounded-xl'}"><source src="${url}" type="video/mp4"></video>`;
-            }
-
-            // Imagen directa
-            if (url.startsWith('data:image') || url.match(/\.(jpg|jpeg|png|webp|svg)(\?.*)?$/i)) {
-                return `<img src="${url}" class="w-full h-full object-contain ${isReel ? 'rounded-3xl' : 'rounded-xl'}">`;
-            }
-
-            return null;
-        }
-
-        const defaultSponsors = [
-            'https://ui-avatars.com/api/?name=Registro+Propiedad+Coca&background=0f172a&color=38bdf8&size=200&bold=true',
-            'https://ui-avatars.com/api/?name=Notaria+Primera+Orellana&background=1e293b&color=f59e0b&size=200&bold=true',
-            'https://ui-avatars.com/api/?name=ANT+Ecuador&background=0284c7&color=fff&size=200&bold=true',
-            'https://ui-avatars.com/api/?name=SRI+Ecuador&background=047857&color=fff&size=200&bold=true',
-            'https://ui-avatars.com/api/?name=Banco+Pichincha&background=fef08a&color=854d0e&size=200&bold=true',
-            'https://ui-avatars.com/api/?name=Sector+Industrial+Coca&background=334155&color=fff&size=200&bold=true'
-        ];
-
-        const defaultReels = [
-            {
-                id: 'reel-1',
-                title: 'Recorrido Casa 2 Plantas en el Centro',
-                thumbnail: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=600&q=80',
-                mediaUrl: 'https://www.youtube.com/shorts/dQw4w9WgXcQ',
-                type: 'video',
-                createdAt: Date.now()
-            }
-        ];
-
-        let brandConfig = JSON.parse(localStorage.getItem('alianza_brand_v18')) || {
-            bgMain: '#f8fafc',
-            cardBg: '#ffffff',
-            navBg: '#0f172a',
-            primaryColor: '#0284c7',
-            companyTitle: 'ALIANZA ESTRATÉGICA S.A.S.',
-            companyMotto: 'Excelencia Jurídica, Confianza Profesional',
-            companySubtitle: 'Corretaje Inmobiliario, Vehículos, Maquinaria & Saneamiento Notarial en El Coca',
-            companyBio: 'Portal oficial de ALIANZA ESTRATÉGICA S.A.S. en El Coca, Orellana. Líder Comercial y Jefe de Equipo Operativo: Adrián Arturo Íñiguez Lucio | Patrocinio Jurídico Externa: Abg. Carlos Alfredo Íñiguez Rodríguez. Transparencia, legalidad y seguridad transaccional en compraventas, contratos de arrendamiento, gravámenes y liquidación de activos.',
-            coverUrl: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80',
-            logoUrl: 'https://lh3.googleusercontent.com/d/1X6tUqZ2z3c8vN-xYqZp8W1V_X7mRzS',
-            managerPhoto: 'https://ui-avatars.com/api/?name=Adrian+Iniguez&background=0284c7&color=fff&size=128',
-            managerName: 'Adrián Arturo Íñiguez Lucio',
-            waPhone: '0959190794',
-            email: 'alianzaestrategica2026@gmail.com',
-            lawyerCardUrl: 'https://lh3.googleusercontent.com/d/1B0q8zHTh3-644iA-e3O3e4rT29i69s38',
-            lawyerName: 'Abg. Carlos Alfredo Íñiguez Rodríguez',
-            lawyerPhone: '097 922 2328',
-            lawyerEmail: 'carllos-alfredo88@hotmail.com',
-            lawyerCoverage: 'Minutas, promesas de compraventa, escrituras definitivas, contratos de arriendo y verificación de gravámenes en el Registro de la Propiedad.',
-            sponsors: defaultSponsors,
-            reels: defaultReels,
-            corporateVideo: {
-                url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-                type: 'youtube',
-                title: 'Operaciones transparentes en ALIANZA ESTRATÉGICA S.A.S.',
-                desc: 'Intermediación formal, contratos de compraventa y revisión documental en Notarías y Registro de la Propiedad.'
-            },
-            catWaUrl: 'https://wa.me/c/593959190794',
-            fb1Url: 'https://www.facebook.com/share/18ZHQPZGYk/',
-            fb2Url: 'https://www.facebook.com/share/19kEEGVFsk/'
-        };
-
-        let defaultInventory = [
-            {
-                id: 'RE-001',
-                category: 'RE',
-                date: '28 oct 2026',
-                title: 'Casa Residencial 2 Plantas en el Centro',
-                location: 'Sector Central, El Coca (Orellana)',
-                price: '$80,000.00 USD',
-                status: 'Disponible - Venta Directa',
-                hasOffer: true,
-                offerText: '¡Precio de oportunidad por viaje! Incluye línea blanca básica.',
-                inCarousel: true,
-                photos: [
-                    'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80'
-                ],
-                features: ['3 Habitaciones con clósets', '2.5 Baños completos', 'Sala, comedor y cocina con mesón', 'Garaje cerrado y patio de lavado'],
-                agentCode: 'AGENTE-01',
-                commission: '3% ($2,400.00 USD)',
-                contractPhotos: [],
-                legal: 'Verificación de Certificado de Gravámenes, pago predial al día y patrocinio legal del Abg. Carlos Alfredo Íñiguez Rodríguez.'
-            }
-        ];
-
-        let inventory = JSON.parse(localStorage.getItem('alianza_inventory_v18')) || defaultInventory;
-        let currentUserRole = localStorage.getItem('alianza_user_role') || 'GUEST';
-        let currentCategory = 'ALL';
-        let currentSlideIndex = 0;
-        let carouselInterval = null;
-        let activeCarouselItems = [];
-
-        document.addEventListener('DOMContentLoaded', () => {
-            applyBrandConfig();
-            checkUserState();
-            renderGrid();
-            setupVideoPlayer();
-            renderReels();
-            rebuildCarouselList();
-            startCarousel();
-            renderSponsorsMarquee();
-        });
-
-        function renderReels() {
-            const reelsList = document.getElementById('reelsList');
-            if(!reelsList) return;
-            const reels = brandConfig.reels || defaultReels;
-
-            reelsList.innerHTML = reels.map((reel, idx) => `
-                <div onclick="openReelViewer(${idx})" class="reel-card group shadow-md border border-slate-200">
-                    <img src="${reel.thumbnail}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80'">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30"></div>
-                    <div class="absolute top-2 left-2 w-7 h-7 rounded-full border-2 border-sky-400 overflow-hidden bg-slate-900 flex items-center justify-center text-[10px] text-white font-bold">
-                        <i class="fa-solid fa-play text-sky-400"></i>
-                    </div>
-                    <div class="absolute bottom-2 left-2 right-2 text-white">
-                        <span class="bg-rose-600 text-white text-[8px] font-extrabold px-1.5 py-0.5 rounded uppercase">Reel</span>
-                        <p class="text-[10px] font-bold leading-tight mt-1 line-clamp-2">${escapeHtml(reel.title)}</p>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function openReelViewer(index) {
-            const reels = brandConfig.reels || defaultReels;
-            const reel = reels[index];
-            if (!reel) return;
-
-            const box = document.getElementById('reelVideoFrameBox');
-            const mediaHtml = parseMediaToHtml(reel.mediaUrl || reel.thumbnail, true, false);
-            box.innerHTML = mediaHtml || `<div class="w-full h-full flex items-center justify-center text-white text-xs p-4 text-center">Video no disponible</div>`;
-            openModal('reelViewerModal');
-        }
-
-        function closeReelViewer() {
-            closeModal('reelViewerModal');
-            document.getElementById('reelVideoFrameBox').innerHTML = '';
-        }
-
-        function setupVideoPlayer() {
-            const box = document.getElementById('videoPlayerBox');
-            if(!box) return;
-
-            const videoTarget = (brandConfig.corporateVideo && brandConfig.corporateVideo.url) 
-                ? brandConfig.corporateVideo.url 
-                : "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
-
-            const mediaHtml = parseMediaToHtml(videoTarget, false, true);
-            box.innerHTML = mediaHtml || `<div class="w-full h-full flex items-center justify-center text-white text-xs">Video Corporativo</div>`;
-        }
-
-        function toggleCorporateAudio() {
-            const video = document.getElementById('corporateVideoPlayer');
-            const icon = document.getElementById('audioIcon');
-            const text = document.getElementById('audioText');
-            if (!video) {
-                showToast('Control de audio directo disponible en videos nativos.');
-                return;
-            }
-
-            if (video.muted) {
-                video.muted = false;
-                video.volume = 0.5;
-                icon.className = 'fa-solid fa-volume-high text-emerald-400';
-                text.textContent = 'Audio Activo (50%)';
-                showToast('Audio establecido al 50%');
-            } else {
-                video.muted = true;
-                icon.className = 'fa-solid fa-volume-xmark text-amber-400';
-                text.textContent = 'Activar Sonido (50%)';
-            }
-        }
-
-        function renderSponsorsMarquee() {
-            const track1 = document.getElementById('marqueeTrackRow1');
-            const track2 = document.getElementById('marqueeTrackRow2');
-            if(!track1 || !track2) return;
-
-            const list = (brandConfig.sponsors && brandConfig.sponsors.length > 0) ? brandConfig.sponsors : defaultSponsors;
-            const half = Math.ceil(list.length / 2);
-            const row1 = list.slice(0, half);
-            const row2 = list.slice(half).length > 0 ? list.slice(half) : row1;
-
-            const dup1 = [...row1, ...row1, ...row1];
-            const dup2 = [...row2, ...row2, ...row2];
-
-            track1.innerHTML = dup1.map(logo => `
-                <div class="h-11 sm:h-12 w-28 sm:w-36 flex-shrink-0 bg-white rounded-xl p-1.5 shadow-sm border border-slate-200 flex items-center justify-center">
-                    <img src="${logo}" class="max-h-full max-w-full object-contain">
-                </div>
-            `).join('');
-
-            track2.innerHTML = dup2.map(logo => `
-                <div class="h-11 sm:h-12 w-28 sm:w-36 flex-shrink-0 bg-white rounded-xl p-1.5 shadow-sm border border-slate-200 flex items-center justify-center">
-                    <img src="${logo}" class="max-h-full max-w-full object-contain">
-                </div>
-            `).join('');
-        }
-
-        function rebuildCarouselList() {
-            activeCarouselItems = inventory.filter(item => item.inCarousel !== false && (!item.status || !item.status.includes('Vendido')));
-            renderCarouselSlide();
-        }
-
-        function startCarousel() {
-            if (carouselInterval) clearInterval(carouselInterval);
-            carouselInterval = setInterval(() => { nextSlide(); }, 3500);
-        }
-
-        function renderCarouselSlide() {
-            const container = document.getElementById('carouselSlide');
-            if(!container || !activeCarouselItems.length) return;
-            if (currentSlideIndex >= activeCarouselItems.length) currentSlideIndex = 0;
-            if (currentSlideIndex < 0) currentSlideIndex = activeCarouselItems.length - 1;
-
-            const cur = activeCarouselItems[currentSlideIndex];
-            const photo = (cur.photos && cur.photos.length > 0) ? cur.photos[0] : '';
-
-            container.innerHTML = `
-                <img src="${photo}" alt="${escapeHtml(cur.title)}" class="w-full h-full object-cover carousel-fade">
-                <div class="absolute bottom-3 left-4 right-4 flex items-center justify-between bg-black/75 backdrop-blur-md p-2.5 rounded-xl border border-white/20 text-white">
-                    <div class="truncate">
-                        <span class="font-bold text-xs text-amber-400">Cód. ${cur.id}</span>
-                        <p class="text-xs font-semibold truncate text-slate-100">${escapeHtml(cur.title)}</p>
-                    </div>
-                    <span class="text-xs font-extrabold text-sky-300 ml-2">${cur.price}</span>
-                </div>
-            `;
-        }
-
-        function nextSlide() {
-            if (!activeCarouselItems.length) return;
-            currentSlideIndex = (currentSlideIndex + 1) % activeCarouselItems.length;
-            renderCarouselSlide();
-        }
-
-        function prevSlide() {
-            if (!activeCarouselItems.length) return;
-            currentSlideIndex = (currentSlideIndex - 1 + activeCarouselItems.length) % activeCarouselItems.length;
-            renderCarouselSlide();
-        }
-
-        function clickCarouselCurrentSlide() {
-            if (!activeCarouselItems.length) return;
-            const cur = activeCarouselItems[currentSlideIndex];
-            if (cur && cur.id) openItemModal(cur.id);
-        }
-
-        function applyBrandConfig() {
-            document.getElementById('coverImgDisplay').src = brandConfig.coverUrl;
-            document.getElementById('profileLogoImg').src = brandConfig.logoUrl;
-            document.getElementById('profileCompanyTitle').innerHTML = `ALIANZA ESTRATÉGICA <span class="text-sky-600">S.A.S.</span>`;
-            document.getElementById('profileMotto').textContent = brandConfig.companyMotto;
-            document.getElementById('profileSubtitle').innerHTML = `<i class="fa-solid fa-building text-slate-400 mr-1"></i> ${escapeHtml(brandConfig.companySubtitle)}`;
-            document.getElementById('profileBioText').textContent = brandConfig.companyBio;
-
-            document.getElementById('managerPhotoDisplay').src = brandConfig.managerPhoto;
-            document.getElementById('managerNameDisplay').textContent = brandConfig.managerName;
-            document.getElementById('managerPhoneText').textContent = brandConfig.waPhone;
-
-            document.getElementById('lawyerCardImg').src = brandConfig.lawyerCardUrl;
-            document.getElementById('lawyerNameDisplay').textContent = brandConfig.lawyerName;
-            document.getElementById('lawyerPhoneDisplay').textContent = brandConfig.lawyerPhone;
-            document.getElementById('lawyerEmailDisplay').textContent = brandConfig.lawyerEmail;
-            document.getElementById('lawyerCoverageDisplay').textContent = brandConfig.lawyerCoverage;
-        }
-
-        function checkUserState() {
-            const banner = document.getElementById('userPanelBanner');
-            const addReelBtn = document.getElementById('addReelCardBtn');
-
-            if (currentUserRole === 'ADMIN') {
-                // GERENTE: CONTROL TOTAL
-                banner.classList.remove('hidden');
-                document.getElementById('userBannerStatus').innerHTML = `<i class="fa-solid fa-crown text-slate-900 text-lg mr-1"></i> ADMINISTRADOR PRINCIPAL (Gerente) - Control Total`;
-                document.getElementById('userBannerActions').innerHTML = `
-                    <button onclick="openAddNewItemModal()" class="bg-slate-900 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-slate-800 transition shadow">
-                        <i class="fa-solid fa-plus mr-1"></i> Añadir Activo
-                    </button>
-                    <button onclick="openBrandEditModal()" class="bg-sky-900 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-sky-800 transition shadow">
-                        <i class="fa-solid fa-sliders mr-1"></i> Panel Maestro & Diseño
-                    </button>
-                    <button onclick="logoutUser()" class="bg-white text-slate-900 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-slate-100 transition shadow">
-                        Cerrar Sesión
-                    </button>
-                `;
-                if(addReelBtn) addReelBtn.classList.remove('hidden');
-            } else if (currentUserRole === 'AGENT') {
-                // AGENTES: SOLO REGISTRAR NUEVAS CAPTACIONES
-                banner.classList.remove('hidden');
-                document.getElementById('userBannerStatus').innerHTML = `<i class="fa-solid fa-id-badge text-lg text-slate-900"></i> EQUIPO DE AGENTES - Subida de Nuevas Captaciones`;
-                document.getElementById('userBannerActions').innerHTML = `
-                    <button onclick="openAddNewItemModal()" class="bg-slate-900 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-slate-800 transition shadow">
-                        <i class="fa-solid fa-plus mr-1"></i> Registrar Nueva Captación
-                    </button>
-                    <button onclick="logoutUser()" class="bg-white text-slate-900 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-slate-100 transition shadow">
-                        Cerrar Sesión
-                    </button>
-                `;
-                if(addReelBtn) addReelBtn.classList.add('hidden');
-            } else {
-                // VISITANTES / CLIENTES: NINGÚN BOTÓN ADMINISTRATIVO
-                banner.classList.add('hidden');
-                if(addReelBtn) addReelBtn.classList.add('hidden');
-            }
-        }
-
-        function renderGrid() {
-            const grid = document.getElementById('inventoryGrid');
-            if(!grid) return;
-            grid.innerHTML = '';
-
-            let filtered = inventory;
-            if (currentCategory === 'SOLD') {
-                filtered = inventory.filter(item => item.status && item.status.includes('Vendido'));
-            } else if (currentCategory === 'ALL') {
-                filtered = inventory.filter(item => !item.status || !item.status.includes('Vendido'));
-            } else {
-                filtered = inventory.filter(item => item.category === currentCategory && (!item.status || !item.status.includes('Vendido')));
-            }
-
-            filtered.forEach(item => {
-                const mainPhoto = (item.photos && item.photos.length > 0) ? item.photos[0] : '';
-                
-                // BOTONES DE EDICIÓN Y BORRADO: EXCLUSIVOS DEL ADMINISTRADOR PRINCIPAL (GERENTE)
-                const adminActionButtons = currentUserRole === 'ADMIN' ? `
-                    <div class="absolute top-3 right-3 flex items-center gap-1.5 z-10">
-                        <button onclick="openEditItemModal('${escapeHtml(item.id)}')" class="bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold p-2 rounded-lg shadow transition" title="Modificar Producto">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </button>
-                        <button onclick="deleteItem('${escapeHtml(item.id)}')" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold p-2 rounded-lg shadow transition" title="Borrar Producto">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </div>
-                ` : '';
-
-                grid.innerHTML += `
-                    <div class="theme-card-bg rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col justify-between relative">
-                        <div>
-                            <div class="relative h-48 bg-slate-100 cursor-pointer overflow-hidden" onclick="openItemModal('${escapeHtml(item.id)}')">
-                                <img src="${escapeHtml(mainPhoto)}" class="w-full h-full object-cover">
-                                <span class="absolute top-3 left-3 bg-slate-900/90 text-amber-400 text-xs font-bold px-2.5 py-1 rounded-md">
-                                    Cód. ${escapeHtml(item.id)}
-                                </span>
-                            </div>
-                            ${adminActionButtons}
-                            <div class="p-5">
-                                <h3 class="font-bold text-slate-900 text-base mb-1">${escapeHtml(item.title)}</h3>
-                                <p class="text-xs text-slate-500 mb-3"><i class="fa-solid fa-location-dot text-sky-500 mr-1"></i>${escapeHtml(item.location)}</p>
-                                <div class="text-lg font-extrabold text-sky-700">${escapeHtml(item.price)}</div>
-                            </div>
-                        </div>
-                        <div class="p-5 pt-0">
-                            <button onclick="openItemModal('${escapeHtml(item.id)}')" class="w-full bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold py-2.5 rounded-lg transition">
-                                Ver Ficha Técnica
-                            </button>
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        function openItemModal(id) {
-            const item = inventory.find(i => i.id === id);
-            if (!item) return;
-
-            // PRIVACIDAD TOTAL: COMISIÓN Y CONTRATOS SOLO VISIBLES PARA ADMIN O AGENTE
-            let privateSection = '';
-            if (currentUserRole === 'ADMIN' || currentUserRole === 'AGENT') {
-                privateSection = `
-                    <div class="bg-amber-50 p-3 rounded-xl border border-amber-300 text-xs mb-3">
-                        <span class="font-bold text-amber-900 block">🔒 Información Interna Privada:</span>
-                        <p class="text-slate-700">Comisión: <strong>${escapeHtml(item.commission || 'No especificada')}</strong> | Código: <strong>${escapeHtml(item.agentCode || 'N/A')}</strong></p>
-                    </div>
-                `;
-            }
-
-            const modalContent = document.getElementById('modalContent');
-            modalContent.innerHTML = `
-                <span class="bg-sky-100 text-sky-800 text-xs font-bold px-2 py-1 rounded">📌 ${escapeHtml(item.id)}</span>
-                <h2 class="text-xl font-bold text-slate-900 mt-2 mb-1">${escapeHtml(item.title)}</h2>
-                <p class="text-xs text-slate-500 mb-3"><i class="fa-solid fa-location-dot text-sky-500 mr-1"></i>${escapeHtml(item.location)}</p>
-                
-                <img src="${item.photos[0] || ''}" class="w-full h-64 object-cover rounded-xl mb-4 border border-slate-200">
-
-                ${privateSection}
-
-                <h4 class="font-bold text-xs uppercase text-slate-400 mb-2">📐 Características:</h4>
-                <ul class="space-y-1 text-xs text-slate-700 mb-4">
-                    ${item.features.map(f => `<li>• ${escapeHtml(f)}</li>`).join('')}
-                </ul>
-
-                <div class="flex justify-between items-center pt-3 border-t border-slate-100">
-                    <span class="text-xl font-extrabold text-sky-700">${escapeHtml(item.price)}</span>
-                    <a href="https://wa.me/593959190794?text=Hola,%20deseo%20contactarme%20con%20el%20equipo%20de%20agentes%20para%20el%20activo%20${encodeURIComponent(item.id)}" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl flex items-center gap-2">
-                        <i class="fa-brands fa-whatsapp text-sm"></i> Contactar Agentes
-                    </a>
-                </div>
-            `;
-            openModal('itemModal');
-        }
-
-        function openModal(id) {
-            const el = document.getElementById(id);
-            if(el) el.classList.remove('hidden');
-        }
-
-        function closeModal(id) {
-            const el = document.getElementById(id);
-            if(el) el.classList.add('hidden');
-        }
-
-        function filterCategory(cat, btn) {
-            currentCategory = cat;
-            renderGrid();
-        }
-
-        function filterItems() {
-            renderGrid();
-        }
-
-        function handleLogin(e) {
-            e.preventDefault();
-            const user = document.getElementById('userInput').value.trim();
-            const pass = document.getElementById('passInput').value.trim();
-            const type = document.getElementById('userType').value;
-
-            if (type === 'ADMIN' && user === 'alianzaestrategica2026@gmail.com' && pass === 'A180991a') {
-                currentUserRole = 'ADMIN';
-                localStorage.setItem('alianza_user_role', 'ADMIN');
-                closeModal('loginModal');
-                checkUserState();
-                renderGrid();
-                showToast('¡Bienvenido Administrador Principal (Gerente)!');
-            } else if (type === 'AGENT' && user === 'agente.intermediacion' && pass === 'agente.intermediacion') {
-                currentUserRole = 'AGENT';
-                localStorage.setItem('alianza_user_role', 'AGENT');
-                closeModal('loginModal');
-                checkUserState();
-                renderGrid();
-                showToast('¡Bienvenido Equipo de Agentes Comerciales!');
-            } else {
-                showToast('Credenciales incorrectas', false);
-            }
-        }
-
-        function logoutUser() {
-            currentUserRole = 'GUEST';
-            localStorage.setItem('alianza_user_role', 'GUEST');
-            checkUserState();
-            renderGrid();
-            showToast('Sesión cerrada');
         }
     </script>
 </body>
