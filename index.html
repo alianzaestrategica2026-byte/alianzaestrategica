@@ -3,15 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="htmlPageTitle">ALIANZA ESTRATÉGICA S.A.S. - Plataforma Oficial & Matriz Financiera 2026</title>
+    <title id="htmlPageTitle">ALIANZA ESTRATÉGICA S.A.S. - Plataforma Corporativa & Sistema Financiero 2026</title>
 
-    <!-- METADATOS PWA Y NAVEGADORES MÓVILES -->
+    <!-- METADATOS DINÁMICOS OPEN GRAPH & TWITTER CARD (VISTA PREVIA EN REDES) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" id="ogTitle" content="ALIANZA ESTRATÉGICA S.A.S. - Catálogo Inmobiliario & Activos">
+    <meta property="og:description" id="ogDescription" content="Corretaje Inmobiliario, Vehículos, Maquinaria & Saneamiento Notarial en El Coca, Ecuador.">
+    <meta property="og:image" id="ogImage" content="https://lh3.googleusercontent.com/d/1X6tUqZ2z3c8vN-xYqZp8W1V_X7mRzS">
+    <meta property="og:url" id="ogUrl" content="https://alianzaestrategica2026-byte.github.io/alianzaestrategica/">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" id="twTitle" content="ALIANZA ESTRATÉGICA S.A.S. - Catálogo Inmobiliario & Activos">
+    <meta name="twitter:description" id="twDescription" content="Corretaje Inmobiliario, Vehículos, Maquinaria & Saneamiento Notarial en El Coca, Ecuador.">
+    <meta name="twitter:image" id="twImage" content="https://lh3.googleusercontent.com/d/1X6tUqZ2z3c8vN-xYqZp8W1V_X7mRzS">
+
+    <!-- CONFIGURACIÓN PWA PROFESIONAL & APPLE TOUCH ICON -->
     <meta name="theme-color" content="#080c14">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Alianza">
-    <link rel="apple-touch-icon" href="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=250&q=80">
+    <link rel="apple-touch-icon" href="https://lh3.googleusercontent.com/d/1X6tUqZ2z3c8vN-xYqZp8W1V_X7mRzS">
+    <link rel="manifest" href='data:application/manifest+json,{"name":"ALIANZA ESTRATÉGICA S.A.S.","short_name":"Alianza","start_url":"/","display":"standalone","background_color":"#080c14","theme_color":"#0284c7","icons":[{"src":"https://lh3.googleusercontent.com/d/1X6tUqZ2z3c8vN-xYqZp8W1V_X7mRzS","sizes":"192x192 512x512","type":"image/png"}]}'>
 
     <!-- FUENTE PLUS JAKARTA SANS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -152,7 +165,7 @@
                     <i class="fa-solid fa-plus-circle"></i> + Captación
                 </button>
                 <a id="waCatalogLink" href="https://wa.me/c/593959190794" target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:text-amber-300 font-semibold transition hidden md:inline"><i class="fa-solid fa-store"></i> Catálogo WA</a>
-                <button onclick="openModal('shareModal')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-2 py-1 rounded-lg text-xs font-semibold transition flex items-center gap-1 shadow-sm">
+                <button onclick="openShareModalMain()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-2 py-1 rounded-lg text-xs font-semibold transition flex items-center gap-1 shadow-sm" title="Compartir Portal">
                     <i class="fa-solid fa-share-nodes text-sky-400"></i>
                 </button>
                 <button onclick="openModal('loginModal')" id="loginNavBtn" class="bg-sky-600 hover:bg-sky-500 text-white px-2.5 py-1 rounded-lg text-xs font-bold transition shadow-sm flex items-center gap-1">
@@ -169,7 +182,7 @@
     <div id="adminBanner" class="bg-gradient-to-r from-amber-500 via-amber-600 to-amber-500 text-slate-950 px-4 py-2.5 hidden shadow-md border-b border-amber-600 z-30 transition-all">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
             <div class="flex items-center gap-2 font-extrabold text-xs md:text-sm">
-                <i class="fa-solid fa-user-shield text-slate-950 text-base"></i> PANEL ADMINISTRADOR GENERAL ACTIVO
+                <i class="fa-solid fa-user-shield text-slate-950 text-base"></i> MODO ADMINISTRADOR GERENCIA ACTIVO
             </div>
             <div class="flex flex-wrap items-center gap-2">
                 <button onclick="openFinanceModal()" class="bg-emerald-950 text-white border border-emerald-400/40 px-3.5 py-1.5 rounded-xl text-xs font-bold hover:bg-emerald-900 transition flex items-center gap-1.5 shadow">
@@ -263,7 +276,7 @@
 
     <!-- BANNER DINÁMICO PANORÁMICO DE ACTIVOS DESTACADOS (CARRUSEL AUTOMÁTICO) -->
     <section class="max-w-7xl mx-auto w-full px-4 py-6">
-        <div class="glass-panel rounded-3xl shadow-2xl border border-slate-800 overflow-hidden flex flex-col justify-between">
+        <div class="glass-panel rounded-3xl shadow-xl border border-slate-800 overflow-hidden flex flex-col justify-between">
             <div class="p-4 border-b border-slate-800 flex items-center justify-between bg-gradient-to-r from-slate-950 via-slate-900 to-sky-950 text-white">
                 <span class="text-xs font-extrabold uppercase tracking-wider text-amber-400 flex items-center gap-2">
                     <i class="fa-solid fa-bolt"></i> Galería de Oportunidades & Activos Destacados
@@ -411,7 +424,7 @@
 
             <div id="chatMessages" class="p-4 h-64 overflow-y-auto space-y-3 bg-slate-950/70 modal-scroll">
                 <div class="bg-slate-900 p-3 rounded-2xl border border-slate-800 text-slate-300 shadow-sm leading-relaxed">
-                    ¡Hola! 👋 Te saluda Sofía de <strong>ALIANZA ESTRATÉGICA S.A.S.</strong> ¿Deseas consultar algún bien del catálogo o te gustaría consignar tu propiedad o vehículo con nosotros?
+                    ¡Hola! 👋 Te saluda Sofía de <strong>ALIANZA ESTRATÉGICA S.A.S.</strong> ¿Deseas información de algún bien del catálogo o te gustaría consignar tu propiedad o vehículo con nosotros?
                 </div>
             </div>
 
@@ -909,9 +922,14 @@
 
             <div class="border-t border-slate-800 pt-3 flex flex-wrap justify-between items-center gap-2">
                 <button onclick="closeModal('detailModal')" class="bg-slate-800 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs hover:bg-slate-700 transition">Cerrar</button>
-                <a id="detWaConsultBtn" href="#" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-5 py-2 rounded-xl text-xs transition shadow-md flex items-center gap-2">
-                    <i class="fa-brands fa-whatsapp text-sm"></i> Contactar a Gerencia
-                </a>
+                <div class="flex items-center gap-2">
+                    <button id="detShareBtn" onclick="" class="bg-sky-600 hover:bg-sky-500 text-white font-bold px-3.5 py-2 rounded-xl text-xs transition shadow-md flex items-center gap-1.5">
+                        <i class="fa-solid fa-share-nodes text-sm"></i> Compartir Artículo
+                    </button>
+                    <a id="detWaConsultBtn" href="#" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-5 py-2 rounded-xl text-xs transition shadow-md flex items-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-sm"></i> Contactar a Gerencia
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -955,9 +973,9 @@
             <div class="space-y-3">
                 <input type="text" id="csgOwnerName" placeholder="Su Nombre Completo" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
                 <select id="csgCategory" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs font-semibold text-white">
-                    <option value="Vehiculo">Vehículo / Camioneta</option>
                     <option value="Bienes Raices Venta">Bienes Raíces (Venta)</option>
                     <option value="Bienes Raices Arriendo">Bienes Raíces (Arriendo)</option>
+                    <option value="Vehiculo">Vehículo / Camioneta</option>
                     <option value="Maquinaria">Maquinaria Pesada</option>
                     <option value="Segunda Mano">Artículo de Segunda Mano</option>
                 </select>
@@ -981,7 +999,7 @@
             <p class="text-xs text-slate-300">Copie el enlace oficial para compartir en redes:</p>
             <div class="flex gap-2">
                 <input type="text" id="shareUrlInput" readonly value="https://alianzaestrategica2026-byte.github.io/alianzaestrategica/" class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs font-mono text-sky-400">
-                <button onclick="copyShareUrl()" class="bg-sky-600 text-white px-3 py-2 rounded-xl text-xs font-bold hover:bg-sky-500">Copiar</button>
+                <button onclick="copyShareUrl()" class="bg-sky-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-sky-500">Copiar</button>
             </div>
         </div>
     </div>
@@ -994,7 +1012,10 @@
             location: "El Coca, Orellana - Ecuador",
             bioText: "Portal oficial de ALIANZA ESTRATÉGICA S.A.S. en El Coca, Orellana. Gerente General & Representante Legal: Adrián Arturo Íñiguez Lucio | Patrocinio Jurídico Externo: Abg. Carlos Alfredo Íñiguez Rodríguez. Transparencia, legalidad y seguridad transaccional garantizada.",
             coverImg: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80",
-            profileLogo: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=400&q=80",
+            profileLogo: "https://lh3.googleusercontent.com/d/1X6tUqZ2z3c8vN-xYqZp8W1V_X7mRzS",
+            videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+            videoTitle: "Operaciones transparentes en ALIANZA ESTRATÉGICA S.A.S.",
+            videoDesc: "Intermediación formal, contratos de compraventa y revisión documental en Notarías y Registro de la Propiedad.",
             lawyerName: "Abg. Carlos Alfredo Íñiguez Rodríguez",
             lawyerTitle: "Asesor Jurídico Externo & Especialista Notarial",
             lawyerPhone: "097 922 2328",
@@ -1026,11 +1047,8 @@
             console.warn('Firebase init fallback:', e);
         }
 
-        let inventory = [
-            { id: "1", code: "VH-001", dateCreated: "31/10/2026", category: "VH", categoryType: "Vehículo", title: "🚗 CHEVROLET AVEO EMOTION 1.6L AL DÍA", ownerName: "Freddy Tuquerés", realSalePrice: 11000.00, priceStr: "$11,000 USD", commissionPactada: 500.00, comisionStr: "$500 USD", agentName: "Adrian Iñiguez", sellerAgentName: "", status: "DISPONIBLE", images: ["https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80"], location: "El Coca, Orellana", isFeatured: true },
-            { id: "2", code: "RE-001", dateCreated: "31/10/2026", category: "RE", categoryType: "Bienes Raíces Venta", title: "🏡 LOTE DE 240 m² CON CASITA EN EL COCA", ownerName: "Juan Lizuriaga", realSalePrice: 25000.00, priceStr: "$25,000 USD", commissionPactada: 1500.00, comisionStr: "$1,500 USD", agentName: "Adrian Iñiguez", sellerAgentName: "", status: "DISPONIBLE", images: ["https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80"], location: "El Coca, Barrio Central", isFeatured: true },
-            { id: "3", code: "VH-002", dateCreated: "01/11/2026", category: "VH", categoryType: "Vehículo", title: "🛻 CAMIONETA NISSAN DATSUN 1200", ownerName: "Juan Lizuriaga", realSalePrice: 5000.00, priceStr: "$5,000 USD", commissionPactada: 300.00, comisionStr: "$300 USD", agentName: "Adrian Iñiguez", sellerAgentName: "", status: "DISPONIBLE", images: ["https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=800&q=80"], location: "El Coca, Orellana", isFeatured: false },
-            { id: "4", code: "VH-003", dateCreated: "01/11/2026", category: "VH", categoryType: "Vehículo", title: "🏍️ MOTO SUKIDA STIFF 150 AL DÍA", ownerName: "Juan Lizuriaga", realSalePrice: 800.00, priceStr: "$800 USD", commissionPactada: 160.00, comisionStr: "$160 USD", agentName: "Pedro luis", sellerAgentName: "", status: "DISPONIBLE", images: ["https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=800&q=80"], location: "El Coca, Orellana", isFeatured: false }
+        let inventory = JSON.parse(localStorage.getItem('alianza_inventory_v18')) || [
+            { id: "item_re_001", code: "RE-001", dateCreated: "31/10/2026", category: "RE", categoryType: "Bienes Raíces Venta", title: "CASA Y LE REGALO EL TERRENO! 580 m² EN EL COCA 💥🏡", ownerName: "Familia Mendoza", realSalePrice: 45000.00, priceStr: "$45,000 USD", commissionPactada: 2250.00, comisionStr: "5%", agentName: "Adrián Arturo Íñiguez Lucio", sellerAgentName: "", status: "DISPONIBLE", images: ["https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80"], location: "El Coca, Barrio Central", isFeatured: true }
         ];
 
         let currentRole = 'GUEST';
@@ -1041,7 +1059,6 @@
         let excelSortField = 'dateCreated';
         let excelSortAsc = false;
 
-        // Helpers de lectura segura
         const getVal = (id) => {
             const el = document.getElementById(id);
             return el ? el.value.trim() : '';
@@ -1052,7 +1069,6 @@
             return el ? el.checked : false;
         };
 
-        /* GENERADOR SECUENCIAL DE CÓDIGOS CORRELATIVOS POR CATEGORÍA */
         function generateNextCode(category) {
             const prefix = (category || 'VH').toUpperCase().trim();
             let maxNum = 0;
@@ -1076,9 +1092,65 @@
             renderAppUI();
             initCarousel();
             updateCopyrightYear();
+            checkUrlDeepLink();
         });
 
-        /* COMPRESOR INTELIGENTE 2026 */
+        /* ACTUALIZACIÓN DINÁMICA DE OPEN GRAPH Y METATAGS */
+        function updateOpenGraphMeta(item = null) {
+            const ogTitle = document.getElementById('ogTitle');
+            const ogDesc = document.getElementById('ogDescription');
+            const ogImg = document.getElementById('ogImage');
+            const ogUrl = document.getElementById('ogUrl');
+            const twTitle = document.getElementById('twTitle');
+            const twDesc = document.getElementById('twDescription');
+            const twImg = document.getElementById('twImage');
+            const pageTitle = document.getElementById('htmlPageTitle');
+
+            if (item) {
+                const photo = (item.images && item.images.length > 0) ? item.images[0] : (item.photos && item.photos.length > 0 ? item.photos[0] : brandConfig.logoUrl);
+                const titleText = `${item.title} (${item.code || item.id}) - ALIANZA ESTRATÉGICA S.A.S.`;
+                const descText = `${item.priceStr || item.price || ''} en ${item.location || 'El Coca'}. Intermediación con blindaje notarial.`;
+                const itemUrl = `${window.location.origin}${window.location.pathname}?item=${encodeURIComponent(item.id)}`;
+
+                if (pageTitle) pageTitle.textContent = `${item.code || item.id}: ${item.title} | Alianza`;
+                if (ogTitle) ogTitle.content = titleText;
+                if (ogDesc) ogDesc.content = descText;
+                if (ogImg) ogImg.content = photo;
+                if (ogUrl) ogUrl.content = itemUrl;
+                if (twTitle) twTitle.content = titleText;
+                if (twDesc) twDesc.content = descText;
+                if (twImg) twImg.content = photo;
+            } else {
+                const defaultTitle = `${appConfig.companyTitle} - Catálogo & Marketplace Corporativo`;
+                const defaultDesc = `${appConfig.motto} - ${appConfig.location}`;
+                const defaultLogo = appConfig.profileLogo;
+                const rootUrl = `${window.location.origin}${window.location.pathname}`;
+
+                if (pageTitle) pageTitle.textContent = defaultTitle;
+                if (ogTitle) ogTitle.content = defaultTitle;
+                if (ogDesc) ogDesc.content = defaultDesc;
+                if (ogImg) ogImg.content = defaultLogo;
+                if (ogUrl) ogUrl.content = rootUrl;
+                if (twTitle) twTitle.content = defaultTitle;
+                if (twDesc) twDesc.content = defaultDesc;
+                if (twImg) twImg.content = defaultLogo;
+            }
+        }
+
+        function checkUrlDeepLink() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const itemId = urlParams.get('item') || urlParams.get('id');
+            if (itemId) {
+                const target = inventory.find(i => i.id === itemId || i.code === itemId);
+                if (target) {
+                    updateOpenGraphMeta(target);
+                    setTimeout(() => openItemModal(target.id), 400);
+                }
+            } else {
+                updateOpenGraphMeta(null);
+            }
+        }
+
         function compressSmartImage(file, maxWidth = 1000, quality = 0.8) {
             return new Promise((resolve) => {
                 if (!file) return resolve('');
@@ -1119,7 +1191,6 @@
             });
         }
 
-        /* PREVISUALIZADOR DE HASTA 5 FOTOS */
         async function previewSelectedFiles(event) {
             const container = document.getElementById('previewThumbsContainer');
             const statusText = document.getElementById('uploadStatusText');
@@ -1152,7 +1223,6 @@
             }
         }
 
-        /* SINCRONIZACIÓN FIRESTORE */
         function initCloudSync() {
             if (!db) return;
 
@@ -1181,6 +1251,12 @@
                             updateCarouselDisplay();
                             renderFinanceTable();
                         }
+                    } else if (inventory.length === 0) {
+                        inventory = [...INITIAL_INVENTORY];
+                        inventory.forEach(item => saveInventoryItemCloud(item));
+                        filterItems();
+                        updateCarouselDisplay();
+                        renderFinanceTable();
                     }
                 }, err => console.warn('Sync inventory:', err));
             } catch (e) {
@@ -1258,6 +1334,7 @@
             filterItems();
             applyRolePermissions();
             renderFinanceTable();
+            updateOpenGraphMeta(null);
         }
 
         function applyRolePermissions() {
@@ -1272,13 +1349,12 @@
             document.querySelectorAll('.admin-only').forEach(el => el.classList.add('hidden'));
 
             if (currentRole === 'ADMIN') {
-                roleBadgeText.innerText = "Administrador Principal";
+                roleBadgeText.innerText = "Modo Administrador";
                 adminBanner.classList.remove('hidden');
                 agentBanner.classList.add('hidden');
                 loginNavBtn.classList.add('hidden');
                 logoutNavBtn.classList.remove('hidden');
                 if (quickAddNavBtn) quickAddNavBtn.classList.remove('hidden');
-                // EXCLUSIVO SOLO PARA ADMINISTRADOR:
                 if (financeNavBtn) financeNavBtn.classList.remove('hidden');
                 document.querySelectorAll('.admin-only').forEach(el => el.classList.remove('hidden'));
             } else if (currentRole === 'AGENT') {
@@ -1288,7 +1364,6 @@
                 loginNavBtn.classList.add('hidden');
                 logoutNavBtn.classList.remove('hidden');
                 if (quickAddNavBtn) quickAddNavBtn.classList.remove('hidden');
-                // NUNCA VISIBLE PARA AGENTES:
                 if (financeNavBtn) financeNavBtn.classList.add('hidden');
             } else {
                 roleBadgeText.innerText = "Modo Público";
@@ -1342,7 +1417,6 @@
             showToast('Sesión cerrada.');
         }
 
-        /* PANEL MAESTRO */
         function openMasterPanel() {
             document.getElementById('cfgCompanyTitle').value = appConfig.companyTitle || DEFAULT_STATE.companyTitle;
             document.getElementById('cfgMotto').value = appConfig.motto || DEFAULT_STATE.motto;
@@ -1377,12 +1451,11 @@
             if (el) el.click(); 
         }
 
-        /* MANEJADOR DE IMÁGENES GLOBALES */
         async function handleImageUpload(event, targetProp) {
             const file = event.target.files[0];
             if (!file) return;
             showToast('Optimizando y subiendo imagen...');
-            const base64 = await compressSmartImage(file, 800, 0.75);
+            const base64 = await compressSmartImage(file, 1000, 0.8);
             if (base64) {
                 appConfig[targetProp] = base64;
                 
@@ -1401,6 +1474,23 @@
 
                 if (db) {
                     try {
+                        if (targetProp === 'lawyerImg') {
+                            db.collection('alianza_settings').doc('media_lawyer').set({
+                                lawyerImg: base64,
+                                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                            }, { merge: true }).catch(() => {});
+                        } else if (targetProp === 'coverImg') {
+                            db.collection('alianza_settings').doc('media_cover').set({
+                                coverImg: base64,
+                                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                            }, { merge: true }).catch(() => {});
+                        } else if (targetProp === 'profileLogo') {
+                            db.collection('alianza_settings').doc('media_profile').set({
+                                profileLogo: base64,
+                                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                            }, { merge: true }).catch(() => {});
+                        }
+
                         db.collection('alianza_settings').doc('appData').set({
                             config: appConfig,
                             updatedAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -1412,7 +1502,6 @@
             event.target.value = '';
         }
 
-        /* CATEGORÍA Y GENERACIÓN SECUENCIAL AUTOMÁTICA */
         function toggleCategoryFields() {
             const cat = getVal('prodCategory') || 'VH';
             const fieldsVehicles = document.getElementById('fieldsVehicles');
@@ -1469,7 +1558,6 @@
             openModal('productModal');
         }
 
-        /* GUARDADO CON LOCAL-FIRST INMEDIATO */
         async function handleSaveProduct(e) {
             e.preventDefault();
             const btnSave = document.getElementById('btnSaveProduct');
@@ -1481,22 +1569,24 @@
                 const isFeatured = getChecked('prodIsFeatured');
                 const category = getVal('prodCategory') || 'VH';
                 const status = getVal('prodStatus') || 'DISPONIBLE';
-                let code = getVal('prodCode') || generateNextCode(category);
-                const title = getVal('prodTitle') || 'Captación sin título';
+                let code = getVal('prodCode');
+                const title = document.getElementById('prodTitle').value.trim() || 'Captación sin título';
                 const ciudad = getVal('prodCiudad');
                 const parroquia = getVal('prodParroquia');
                 const sector = getVal('prodSector');
                 const direccion = getVal('prodDireccion');
-                const priceStr = getVal('prodPrice') || '$0.00';
-                const offerPriceStr = getVal('prodOfferPrice');
-                const desc = getVal('prodDesc');
-                const ownerName = getVal('prodOwnerName');
-                const ownerDocPhone = getVal('prodOwnerDocPhone');
-                const contractType = getVal('prodContractType') || 'Corretaje Libre';
-                const legalStatus = getVal('prodLegalStatus') || 'Escrituras al día';
-                const comisionStr = getVal('prodComision') || '5%';
-                const agentName = getVal('prodAgentName') || 'Gerencia General';
-                const urlDirect = getVal('prodUrlDirect');
+                const priceStr = document.getElementById('prodPrice').value.trim() || '$0.00';
+                const offerPriceStr = getVal('prodOfferPrice').value.trim();
+                const desc = document.getElementById('prodDesc').value.trim();
+                const ownerName = document.getElementById('prodOwnerName').value.trim();
+                const ownerDocPhone = document.getElementById('prodOwnerDocPhone').value.trim();
+                const contractType = document.getElementById('prodContractType').value;
+                const legalStatus = document.getElementById('prodLegalStatus').value;
+                const comisionStr = document.getElementById('prodComision').value.trim() || '5%';
+                const agentName = document.getElementById('prodAgentName').value.trim() || 'Gerencia General';
+                const urlDirect = document.getElementById('prodUrlDirect').value.trim();
+
+                if (!code) code = generateNextCode(category);
 
                 const cleanPriceNum = parseFloat(priceStr.replace(/[^0-9.]/g, '')) || 0;
                 let cleanComNum = 0;
@@ -1611,6 +1701,7 @@
                 }
             } catch (err) {
                 console.error('Error al procesar:', err);
+                showToast('Guardado completado con ajustes preventivos');
                 closeModal('productModal');
             } finally {
                 btnSave.disabled = false;
@@ -1618,74 +1709,124 @@
             }
         }
 
-        /* LIQUIDACIÓN DE VENTA & ASIGNACIÓN DE COMISIONES (50% / 25% / 25%) */
-        function toggleSaleStatus(index) {
-            const item = inventory[index];
-            if (!item) return;
-
-            if (item.status === 'DISPONIBLE' || item.status === 'OFERTA' || item.status === 'RESERVADO') {
-                document.getElementById('settleItemId').value = item.id;
-                document.getElementById('settleItemTitle').innerText = `${item.code} - ${item.title}`;
-                document.getElementById('settleFinalPrice').value = item.realSalePrice || parseFloat(String(item.priceStr || '').replace(/[^0-9.]/g, '')) || 0;
-                document.getElementById('settleTotalCommission').value = item.commissionPactada || 0;
-                document.getElementById('settleCaptadorName').value = item.agentName || 'Gerencia General';
-                document.getElementById('settleVendedorName').value = item.sellerAgentName || item.agentName || '';
-                openModal('settleSoldModal');
-            } else {
-                item.status = 'DISPONIBLE';
-                item.sellerAgentName = '';
-                item.payCaptador = 0;
-                item.payVendedor = 0;
-                item.netEmpresa = 0;
-                saveInventoryItemCloud(item);
+        function deleteProduct(id) {
+            if (confirm('¿Está seguro de eliminar esta captación permanentemente?')) {
+                inventory = inventory.filter(i => i.id !== id);
+                localStorage.setItem('alianza_inventory', JSON.stringify(inventory));
                 filterItems();
                 updateCarouselDisplay();
                 renderFinanceTable();
-                showToast('Estado revertido a DISPONIBLE');
+                showToast('Activo eliminado.');
+
+                if (db) {
+                    try {
+                        db.collection('alianza_inventory').doc(id).delete().catch(() => {});
+                    } catch(e) {}
+                }
             }
         }
 
-        function handleConfirmSettleSold(e) {
+        /* LIQUIDACIÓN DE VENTA & ASIGNACIÓN DE COMISIONES (50% / 25% / 25%) CON PERSISTENCIA TOTAL */
+        function openSettleModal(id) {
+            if (currentRole !== 'ADMIN') {
+                showToast('Acceso exclusivo para Gerente / Administrador', false);
+                return;
+            }
+            const item = inventory.find(i => i.id === id || i.code === id);
+            if (!item) return;
+
+            document.getElementById('settleItemId').value = item.id;
+            document.getElementById('settleItemTitle').innerText = `${item.code} - ${item.title}`;
+            document.getElementById('settleFinalPrice').value = item.realSalePrice || parseFloat(String(item.priceStr || item.price || '').replace(/[^0-9.]/g, '')) || 0;
+            document.getElementById('settleTotalCommission').value = item.commissionPactada || 0;
+            document.getElementById('settleCaptadorName').value = item.agentName || 'Gerencia General';
+            document.getElementById('settleVendedorName').value = item.sellerAgentName || item.agentName || '';
+
+            calculateSettleDividends();
+            openModal('settleModal');
+        }
+
+        function calculateSettleDividends() {
+            const commTotal = parseFloat(document.getElementById('settleTotalCommission').value) || 0;
+            const captador = document.getElementById('settleCaptadorName').value.trim().toLowerCase();
+            const vendedor = document.getElementById('settleVendedorName').value.trim().toLowerCase();
+
+            const divEmpresa = commTotal * 0.50;
+            let divCaptador = 0;
+            let divVendedor = 0;
+
+            if (captador && vendedor && captador === vendedor) {
+                divCaptador = commTotal * 0.50;
+                divVendedor = 0;
+                document.getElementById('previewLblCaptador').textContent = `👤 Pago Agente Único (${captador.toUpperCase()} - 50%):`;
+                document.getElementById('previewLblVendedor').textContent = `🤝 Vendedor Adicional (0%):`;
+            } else {
+                divCaptador = commTotal * 0.25;
+                divVendedor = commTotal * 0.25;
+                document.getElementById('previewLblCaptador').textContent = `👤 Pago Agente Captador (${captador.toUpperCase()} - 25%):`;
+                document.getElementById('previewLblVendedor').textContent = `🤝 Pago Agente Vendedor (${vendedor.toUpperCase()} - 25%):`;
+            }
+
+            document.getElementById('previewDivEmpresa').textContent = `$${divEmpresa.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USD`;
+            document.getElementById('previewDivCaptador').textContent = `$${divCaptador.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USD`;
+            document.getElementById('previewDivVendedor').textContent = `$${divVendedor.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USD`;
+        }
+
+        async function handleConfirmSettle(e) {
             e.preventDefault();
+            if (currentRole !== 'ADMIN') return;
+
             const id = document.getElementById('settleItemId').value;
             const item = inventory.find(i => i.id === id);
             if (!item) return;
 
-            const finalPrice = parseFloat(document.getElementById('settleFinalPrice').value) || 0;
-            const totalCommission = parseFloat(document.getElementById('settleTotalCommission').value) || 0;
+            const salePrice = parseFloat(document.getElementById('settleFinalPrice').value) || 0;
+            const commTotal = parseFloat(document.getElementById('settleTotalCommission').value) || 0;
             const captador = document.getElementById('settleCaptadorName').value.trim();
             const vendedor = document.getElementById('settleVendedorName').value.trim();
 
-            // REGLA MATEMÁTICA: 50% EMPRESA | 50% FUERZA VENTAS
-            const netEmpresa = totalCommission * 0.50;
+            const netEmpresa = commTotal * 0.50;
             let payCaptador = 0;
             let payVendedor = 0;
 
             if (captador.toLowerCase() === vendedor.toLowerCase()) {
-                payCaptador = totalCommission * 0.50;
+                payCaptador = commTotal * 0.50;
                 payVendedor = 0;
             } else {
-                payCaptador = totalCommission * 0.25;
-                payVendedor = totalCommission * 0.25;
+                payCaptador = commTotal * 0.25;
+                payVendedor = commTotal * 0.25;
             }
 
-            item.status = 'VENDIDO';
-            item.realSalePrice = finalPrice;
-            item.commissionPactada = totalCommission;
+            // Persistencia del estado liquidado
+            item.status = 'Vendido / Finiquitado';
+            item.inCarousel = false;
+            item.realSalePrice = salePrice;
+            item.commissionPactada = commTotal;
+            item.settlement = {
+                finalSalePrice: salePrice,
+                totalCommission: commTotal,
+                captador: captador,
+                vendedor: vendedor,
+                divEmpresa: netEmpresa,
+                divCaptador: payCaptador,
+                divVendedor: payVendedor,
+                settledAt: new Date().toISOString()
+            };
             item.sellerAgentName = vendedor;
             item.payCaptador = payCaptador;
             item.payVendedor = payVendedor;
             item.netEmpresa = netEmpresa;
 
+            // Guardar local y en la nube
             saveInventoryItemCloud(item);
             filterItems();
             updateCarouselDisplay();
             renderFinanceTable();
-            closeModal('settleSoldModal');
-            showToast('¡Venta liquidada con regla 50%/25%/25% calculada!');
+            closeModal('settleModal');
+            showToast(`¡Activo ${item.id} finiquitado y liquidación guardada con éxito!`);
         }
 
-        /* RENDER DE LA TABLA EXCEL FUSIONADA (MATRIZ FINANCIERA V2.0) */
+        /* RENDER DE LA TABLA EXCEL (SOLO ADMIN) */
         function openFinanceModal() {
             if (currentRole !== 'ADMIN') {
                 showToast('Acceso exclusivo para Gerencia General / Administrador', 'error');
@@ -1696,7 +1837,7 @@
         }
 
         function renderFinanceTable() {
-            const tbody = document.getElementById('tableBody') || document.getElementById('financeTableBody');
+            const tbody = document.getElementById('tableBody');
             if (!tbody) return;
             const search = (document.getElementById('excelSearchInput')?.value || '').toLowerCase().trim();
             const filter = document.getElementById('statusFilterExcel')?.value || 'ALL';
@@ -1714,12 +1855,13 @@
                                       (item.title || '').toLowerCase().includes(search) || 
                                       (item.ownerName || '').toLowerCase().includes(search) || 
                                       (item.agentName || '').toLowerCase().includes(search);
-                const isVendido = item.status === 'VENDIDO';
+                
+                const isVendido = item.status && (item.status.includes('Vendido') || item.status.includes('Finiquitado') || item.status === 'SOLD');
                 const matchesFilter = filter === 'ALL' || (filter === 'VENDIDO' ? isVendido : !isVendido);
 
                 if (matchesSearch && matchesFilter) {
                     count++;
-                    const priceVal = item.realSalePrice || parseFloat(String(item.priceStr || '').replace(/[^0-9.]/g, '')) || 0;
+                    const priceVal = item.realSalePrice || parseFloat(String(item.priceStr || item.price || '').replace(/[^0-9.]/g, '')) || 0;
                     const comisionVal = item.commissionPactada || 0;
 
                     totalCapital += priceVal;
@@ -1755,10 +1897,10 @@
                                 </span>
                             </td>
                             <td class="py-2.5 px-3 text-center flex justify-center gap-1.5 no-print">
-                                <button onclick="toggleSaleStatus(${index})" class="px-2 py-1 rounded text-[10px] font-bold bg-slate-800 hover:bg-slate-700 text-sky-300 transition" title="Liquidar Estado">
-                                    <i class="fa-solid fa-arrows-rotate mr-1"></i> Liquidar
+                                <button onclick="openSettleModal('${item.id}')" class="px-2.5 py-1 rounded text-[10px] font-bold bg-emerald-600 hover:bg-emerald-500 text-white transition shadow" title="Liquidar Venta">
+                                    <i class="fa-solid fa-calculator mr-1"></i> Liquidar
                                 </button>
-                                <button onclick="deleteItem(${index})" class="text-slate-500 hover:text-rose-400 px-1 transition" title="Eliminar">
+                                <button onclick="deleteItem('${item.id}')" class="text-slate-500 hover:text-rose-400 px-1 transition" title="Eliminar">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </button>
                             </td>
@@ -1788,22 +1930,11 @@
             renderFinanceTable();
         }
 
-        function deleteItem(index) {
-            if (confirm("¿Estás seguro de eliminar este activo de la matriz financiera?")) {
-                const item = inventory[index];
-                inventory.splice(index, 1);
-                localStorage.setItem('alianza_inventory', JSON.stringify(inventory));
-                if (db && item && item.id) {
-                    try { db.collection('alianza_inventory').doc(item.id).delete().catch(() => {}); } catch (e) {}
-                }
-                filterItems();
-                updateCarouselDisplay();
-                renderFinanceTable();
-                showToast('Activo eliminado.');
-            }
+        function filterExcelTable() {
+            renderFinanceTable();
         }
 
-        /* EXPORTADOR PROFESIONAL A .CSV (COMPATIBLE CON EXCEL Y POWER QUERY) */
+        /* EXPORTADOR .CSV (UTF-8) */
         function exportToCSV() {
             if (!inventory || inventory.length === 0) {
                 showToast('No hay registros para exportar', 'error');
@@ -1815,10 +1946,11 @@
             csvContent += headers.join(";") + "\n";
 
             inventory.forEach(item => {
-                const price = item.realSalePrice || parseFloat(String(item.priceStr || '').replace(/[^0-9.]/g, '')) || 0;
+                const price = item.realSalePrice || parseFloat(String(item.priceStr || item.price || '').replace(/[^0-9.]/g, '')) || 0;
                 const comision = item.commissionPactada || 0;
-                const liqEmpresa = item.status === 'VENDIDO' ? (item.netEmpresa || comision * 0.5) : 0;
-                const liqAgentes = item.status === 'VENDIDO' ? ((item.payCaptador || 0) + (item.payVendedor || 0) || comision * 0.5) : 0;
+                const isVendido = item.status && (item.status.includes('Vendido') || item.status.includes('Finiquitado') || item.status === 'SOLD');
+                const liqEmpresa = isVendido ? (item.netEmpresa || comision * 0.5) : 0;
+                const liqAgentes = isVendido ? ((item.payCaptador || 0) + (item.payVendedor || 0) || comision * 0.5) : 0;
 
                 const row = [
                     `"${item.code || ''}"`,
@@ -1867,8 +1999,9 @@
         function filterItems() {
             const query = (document.getElementById('searchInput')?.value || '').toLowerCase().trim();
             const filtered = inventory.filter(item => {
-                if (activeCategory === 'SOLD') return item.status === 'VENDIDO' || item.status === 'SOLD';
-                if ((item.status === 'VENDIDO' || item.status === 'SOLD') && activeCategory !== 'ALL') return false;
+                const isVendido = item.status && (item.status.includes('Vendido') || item.status.includes('Finiquitado') || item.status === 'SOLD');
+                if (activeCategory === 'SOLD') return isVendido;
+                if (isVendido && activeCategory !== 'ALL') return false;
 
                 const matchesCat = (activeCategory === 'ALL') || (item.category === activeCategory);
                 const matchesQuery = (item.title || '').toLowerCase().includes(query) ||
@@ -1886,7 +2019,8 @@
                 case 'REMATE': return '<span class="bg-purple-600 text-white font-extrabold text-[10px] px-2.5 py-0.5 rounded-lg shadow">💥 Remate</span>';
                 case 'RESERVADO': return '<span class="bg-amber-600 text-white font-extrabold text-[10px] px-2.5 py-0.5 rounded-lg shadow">⏳ Reservado</span>';
                 case 'VENDIDO':
-                case 'SOLD': return '<span class="bg-rose-700 text-white font-extrabold text-[10px] px-2.5 py-0.5 rounded-lg shadow">🔴💸 Vendido</span>';
+                case 'SOLD':
+                case 'Vendido / Finiquitado': return '<span class="bg-rose-700 text-white font-extrabold text-[10px] px-2.5 py-0.5 rounded-lg shadow">🔴💸 Vendido</span>';
                 default: return '<span class="bg-emerald-600 text-white font-extrabold text-[10px] px-2.5 py-0.5 rounded-lg shadow">✅ Disponible</span>';
             }
         }
@@ -1907,7 +2041,7 @@
             }
 
             items.forEach(item => {
-                const mainImg = (item.images && item.images.length > 0) ? item.images[0] : 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80';
+                const mainImg = (item.images && item.images.length > 0) ? item.images[0] : (item.photos && item.photos.length > 0 ? item.photos[0] : 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80');
 
                 let adminBtns = '';
                 if (currentRole === 'ADMIN') {
@@ -1918,11 +2052,13 @@
                     `;
                 }
 
-                let priceHtml = `<p class="text-base font-extrabold text-white">${item.priceStr || ('$' + (item.realSalePrice || 0) + ' USD')}</p>`;
+                const isSold = item.status && (item.status.includes('Vendido') || item.status.includes('Finiquitado') || item.status === 'SOLD');
+
+                let priceHtml = `<p class="text-base font-extrabold text-white">${item.priceStr || item.price || ''}</p>`;
                 if (item.offerPriceStr) {
                     priceHtml = `
                         <div class="flex items-center gap-2">
-                            <span class="text-xs text-slate-400 line-through font-bold">${item.priceStr}</span>
+                            <span class="text-xs text-slate-400 line-through font-bold">${item.priceStr || item.price}</span>
                             <span class="text-base font-extrabold text-amber-400 flex items-center gap-1">🔥 ${item.offerPriceStr}</span>
                         </div>
                     `;
@@ -1933,25 +2069,28 @@
                         <div>
                             <div class="relative h-52 w-full bg-slate-950 overflow-hidden group">
                                 <img src="${mainImg}" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80';">
-                                <span class="absolute top-3 left-3 bg-slate-950/80 backdrop-blur-md text-amber-400 font-mono text-[10px] font-bold px-2.5 py-0.5 rounded-lg border border-amber-400/30">${item.code || ''}</span>
+                                <span class="absolute top-3 left-3 bg-slate-950/80 backdrop-blur-md text-amber-400 font-mono text-[10px] font-bold px-2.5 py-0.5 rounded-lg border border-amber-400/30">${item.code || item.id}</span>
                                 <div class="absolute top-3 right-3 flex items-center gap-1">
                                     ${item.isFeatured ? '<span class="bg-amber-400 text-slate-950 text-[10px] font-extrabold px-1.5 py-0.5 rounded shadow">⭐ Destacado</span>' : ''}
                                     ${getStatusBadgeHTML(item.status)}
                                 </div>
                             </div>
                             <div class="p-5 space-y-2">
-                                <h3 class="text-base font-extrabold text-white leading-tight">${item.title || ''}</h3>
+                                <h3 class="text-base font-extrabold text-white leading-tight">${escapeHtml(item.title)}</h3>
                                 <div class="flex items-center justify-between text-xs text-slate-400">
-                                    <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i> ${item.location || 'El Coca'}</span>
-                                    <span class="text-[11px] font-bold text-sky-400 bg-sky-950/60 px-2 py-0.5 rounded-md border border-sky-400/30"><i class="fa-solid fa-user-tie"></i> ${item.agentName || 'Gerencia'}</span>
+                                    <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i> ${escapeHtml(item.location || 'El Coca')}</span>
+                                    <span class="text-[11px] font-bold text-sky-400 bg-sky-950/60 px-2 py-0.5 rounded-md border border-sky-400/30"><i class="fa-solid fa-user-tie"></i> ${escapeHtml(item.agentName || 'Gerencia')}</span>
                                 </div>
                                 <div class="pt-1.5">${priceHtml}</div>
                             </div>
                         </div>
 
                         <div class="p-5 pt-0 border-t border-slate-800/80 flex items-center justify-between gap-2 mt-2">
-                            <button onclick="openDetailModal('${item.id}')" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition flex-1 text-center shadow-md border border-slate-700">
+                            <button onclick="openItemModal('${escapeHtml(item.id)}')" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition flex-1 text-center shadow-md border border-slate-700">
                                 <i class="fa-solid fa-circle-info mr-1.5"></i> Ficha Técnica
+                            </button>
+                            <button onclick="shareSpecificItem('${escapeHtml(item.id)}')" class="bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold p-2.5 rounded-xl transition shadow-md" title="Compartir este artículo">
+                                <i class="fa-solid fa-share-nodes"></i>
                             </button>
                             ${adminBtns}
                         </div>
@@ -1960,86 +2099,12 @@
             });
         }
 
-        function openDetailModal(id) {
-            const item = inventory.find(i => i.id === id);
-            if (!item) return;
-
-            document.getElementById('detCodeBadge').innerText = item.code || '';
-            document.getElementById('detStatusBadge').innerHTML = getStatusBadgeHTML(item.status);
-            document.getElementById('detTitle').innerText = item.title || '';
-            document.getElementById('detLocation').innerText = item.location || 'El Coca';
-            document.getElementById('detDesc').innerText = item.desc || 'Sin descripción detallada.';
-            document.getElementById('detAgentDisplay').innerText = item.agentName || 'Gerencia General';
-
-            const priceEl = document.getElementById('detPrice');
-            const offerEl = document.getElementById('detOfferPrice');
-            if (item.offerPriceStr) {
-                priceEl.className = "text-sm text-slate-400 line-through font-bold";
-                priceEl.innerText = item.priceStr;
-                offerEl.className = "text-xl font-extrabold text-amber-400 block";
-                offerEl.innerText = `🔥 Oferta: ${item.offerPriceStr}`;
-            } else {
-                priceEl.className = "text-xl font-extrabold text-white";
-                priceEl.innerText = item.priceStr || ('$' + (item.realSalePrice || 0) + ' USD');
-                offerEl.className = "hidden";
-            }
-
-            const mainImg = document.getElementById('detMainImg');
-            mainImg.src = (item.images && item.images.length > 0) ? item.images[0] : 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80';
-
-            const thumbsCont = document.getElementById('detThumbsContainer');
-            thumbsCont.innerHTML = '';
-            if (item.images && item.images.length > 1) {
-                item.images.forEach(imgUrl => {
-                    thumbsCont.innerHTML += `
-                        <img src="${imgUrl}" onclick="document.getElementById('detMainImg').src='${imgUrl}'" class="w-16 h-12 object-cover rounded-xl border border-slate-700 cursor-pointer hover:opacity-80 transition">
-                    `;
-                });
-            }
-
-            const techBox = document.getElementById('detTechnicalBox');
-            techBox.innerHTML = '';
-            if (item.category === 'RE' || item.category === 'AR') {
-                techBox.innerHTML = `
-                    <p><strong>Dimensiones:</strong> Área Total: ${item.reMetros2 || '-'} m² | Frente: ${item.reFrente || '-'} m | Fondo: ${item.reFondo || '-'} m</p>
-                    <p><strong>Construcción:</strong> ${item.reConstruccion || '-'} m² | Pisos: ${item.rePisos || '-'} | Habitaciones: ${item.reHabitaciones || '-'} | Baños: ${item.reBanos || '-'}</p>
-                    <p><strong>Servicios:</strong> ${item.srvAgua ? 'Agua ✓ ' : ''}${item.srvLuz ? 'Luz ✓ ' : ''}${item.srvInternet ? 'Internet ✓ ' : ''}${item.srvAlcantarillado ? 'Alcantarillado ✓ ' : ''}</p>
-                    <p><strong>Escrituras:</strong> ${item.srvEscrituras ? '📜 Sí, al día y listas para notaría' : 'En trámite'}</p>
-                `;
-            } else if (item.category === 'VH' || item.category === 'MQ') {
-                techBox.innerHTML = `
-                    <p><strong>Año/Modelo:</strong> ${item.vhAno || '-'} | <strong>Kilometraje/Horas:</strong> ${item.vhKm || '-'}</p>
-                    <p><strong>Transmisión:</strong> ${item.vhTransmision || '-'} | <strong>Detalles:</strong> ${item.vhDetalles || '-'}</p>
-                `;
-            } else if (item.category === 'LQ') {
-                techBox.innerHTML = `
-                    <p><strong>Estado Técnico:</strong> ${item.lqEstado || '-'} | <strong>Tiempo de Uso:</strong> ${item.lqTiempoUso || '-'}</p>
-                `;
-            }
-
-            const privateSec = document.getElementById('detPrivateSection');
-            if (currentRole === 'ADMIN' || currentRole === 'AGENT') {
-                privateSec.classList.remove('hidden');
-                document.getElementById('detPrivateOwner').innerText = item.ownerName || 'No especificado';
-                document.getElementById('detPrivateDocPhone').innerText = item.ownerDocPhone || 'No especificado';
-                document.getElementById('detPrivateContract').innerText = item.contractType || 'Corretaje Libre';
-                document.getElementById('detPrivateLegal').innerText = item.legalStatus || 'Escrituras al día';
-                document.getElementById('detPrivateComision').innerText = item.comisionStr || `${item.commissionPactada || 0} USD`;
-                document.getElementById('detPrivateAgent').innerText = item.agentName || 'Gerencia General';
-            } else {
-                privateSec.classList.add('hidden');
-            }
-
-            const waMsg = encodeURIComponent(`Hola ALIANZA ESTRATÉGICA S.A.S., solicito información del activo: ${item.code} (${item.title})`);
-            document.getElementById('detWaConsultBtn').href = `https://wa.me/593959190794?text=${waMsg}`;
-
-            openModal('detailModal');
-        }
-
-        /* CARRUSEL Y MARQUESINA CONTINUA */
+        // =========================================================================
+        // CARRUSEL Y MARQUESINA CONTINUA
+        // =========================================================================
         function getFeaturedItems() {
-            const featured = inventory.filter(i => i.isFeatured === true);
-            return featured.length > 0 ? featured : inventory;
+            const featured = inventory.filter(i => i.isFeatured === true && (!i.status || !i.status.includes('Vendido')));
+            return featured.length > 0 ? featured : inventory.filter(i => !i.status || !i.status.includes('Vendido'));
         }
 
         function initCarousel() {
@@ -2055,12 +2120,14 @@
             if (carouselIndex < 0) carouselIndex = items.length - 1;
 
             const item = items[carouselIndex];
-            const imgUrl = (item.images && item.images.length > 0) ? item.images[0] : 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80';
+            const photos = item.photos || item.images || [];
+            const imgUrl = photos.length > 0 ? photos[0] : 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80';
+            
             const imgEl = document.getElementById('carouselImg');
             if (imgEl) imgEl.src = imgUrl;
-            document.getElementById('carouselBadge').innerText = item.code || 'RE-001';
-            document.getElementById('carouselTitle').innerText = item.title || '';
-            const priceShow = item.offerPriceStr ? `🔥 ${item.offerPriceStr}` : (item.priceStr || ('$' + (item.realSalePrice || 0) + ' USD'));
+            document.getElementById('carouselBadge').innerText = item.code || item.id;
+            document.getElementById('carouselTitle').innerText = item.title;
+            const priceShow = item.offerPriceStr ? `🔥 ${item.offerPriceStr}` : (item.priceStr || item.price);
             document.getElementById('carouselSub').innerText = `${priceShow} - ${item.location || 'El Coca'}`;
         }
 
@@ -2068,7 +2135,7 @@
         function prevSlide() { carouselIndex--; updateCarouselDisplay(); }
         function clickCarouselCurrentSlide() {
             const items = getFeaturedItems();
-            if (items[carouselIndex]) openDetailModal(items[carouselIndex].id);
+            if (items[carouselIndex]) openItemModal(items[carouselIndex].id);
         }
 
         function setInfoTab(tabKey) {
@@ -2157,11 +2224,20 @@
             setTimeout(() => { toast.remove(); }, 3200);
         }
 
+        function openShareModalMain() {
+            currentActiveShareItem = null;
+            updateOpenGraphMeta(null);
+            document.getElementById('shareModalTitle').textContent = 'Difundir Catálogo Digital';
+            document.getElementById('shareModalDesc').textContent = 'Comparta la plataforma oficial de ALIANZA ESTRATÉGICA S.A.S.';
+            openModal('shareModal');
+        }
+
         function copyShareUrl() {
             const input = document.getElementById('shareUrlInput');
             input.select();
             document.execCommand('copy');
             showToast('¡Enlace copiado al portapapeles!');
+            closeModal('shareModal');
         }
 
         function updateCopyrightYear() {
