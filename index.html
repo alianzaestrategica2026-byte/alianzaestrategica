@@ -5,28 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="htmlPageTitle">ALIANZA ESTRATÉGICA S.A.S. - Plataforma Corporativa & Matriz Financiera 2026</title>
 
-    <!-- METADATOS OPEN GRAPH DINÁMICOS (WHATSAPP Y REDES SOCIALES) -->
-    <meta property="og:type" content="website" />
-    <meta property="og:title" id="og-title" content="ALIANZA ESTRATÉGICA S.A.S. | Portal Oficial" />
-    <meta property="og:description" id="og-description" content="Excelencia Jurídica, Confianza Profesional. Catálogo de Bienes Raíces, Vehículos y Maquinaria en El Coca." />
-    <meta property="og:image" id="og-image" content="https://alianzaestrategica2026-byte.github.io/alianzaestrategica/108900.jpg" />
-    <meta property="og:url" id="og-url" content="https://alianzaestrategica2026-byte.github.io/alianzaestrategica/" />
-
-    <!-- TWITTER CARDS -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" id="twitter-title" content="ALIANZA ESTRATÉGICA S.A.S.">
-    <meta name="twitter:description" id="twitter-description" content="Catálogo verificado de activos y corretaje en El Coca, Orellana.">
-    <meta name="twitter:image" id="twitter-image" content="https://alianzaestrategica2026-byte.github.io/alianzaestrategica/108900.jpg">
-
-    <!-- CONFIGURACIÓN PWA Y MANIFEST -->
-    <link rel="manifest" href='data:application/manifest+json,{"name":"ALIANZA ESTRATÉGICA S.A.S.","short_name":"Alianza","start_url":"/","display":"standalone","background_color":"#080c14","theme_color":"#0284c7","icons":[{"src":"https://alianzaestrategica2026-byte.github.io/alianzaestrategica/108900.jpg","sizes":"192x192 512x512","type":"image/jpeg"}]}'>
+    <!-- METADATOS PWA Y NAVEGADORES MÓVILES -->
     <meta name="theme-color" content="#080c14">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Alianza S.A.S.">
-    <link rel="apple-touch-icon" href="https://alianzaestrategica2026-byte.github.io/alianzaestrategica/108900.jpg">
-    <link rel="icon" type="image/jpeg" href="https://alianzaestrategica2026-byte.github.io/alianzaestrategica/108900.jpg">
+    <meta name="apple-mobile-web-app-title" content="Alianza">
+    <link rel="apple-touch-icon" href="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=250&q=80">
 
     <!-- FUENTE PLUS JAKARTA SANS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -165,7 +150,7 @@
                 </span>
             </div>
             <div class="flex items-center gap-1.5 sm:gap-2">
-                <!-- BOTÓN MATRIZ FINANCIERA (EXCLUSIVO ADMINISTRADOR PRINCIPAL) -->
+                <!-- BOTÓN MATRIZ FINANCIERA (EXCLUSIVO ADMINISTRADOR) -->
                 <button onclick="openFinanceModal()" id="financeNavBtn" class="admin-only hidden bg-emerald-600 hover:bg-emerald-500 text-white px-2.5 py-1 rounded-lg text-xs font-extrabold shadow flex items-center gap-1 transition">
                     <i class="fa-solid fa-file-invoice-dollar"></i> Matriz Financiera v2.0
                 </button>
@@ -186,11 +171,11 @@
         </div>
     </header>
 
-    <!-- BANNERS DE CONTROL DE ROL EXCLUSIVO -->
+    <!-- BANNERS DE ROL -->
     <div id="adminBanner" class="bg-gradient-to-r from-amber-500 via-amber-600 to-amber-500 text-slate-950 px-4 py-2.5 hidden shadow-md border-b border-amber-600 z-30 transition-all">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
             <div class="flex items-center gap-2 font-extrabold text-xs md:text-sm">
-                <i class="fa-solid fa-user-shield text-slate-950 text-base"></i> MODO ADMINISTRADOR GERENCIA ACTIVO (CONTROL TOTAL)
+                <i class="fa-solid fa-user-shield text-slate-950 text-base"></i> PANEL ADMINISTRADOR GENERAL ACTIVO (CONTROL TOTAL)
             </div>
             <div class="flex flex-wrap items-center gap-2">
                 <button onclick="openFinanceModal()" class="bg-emerald-950 text-white border border-emerald-400/40 px-3.5 py-1.5 rounded-xl text-xs font-bold hover:bg-emerald-900 transition flex items-center gap-1.5 shadow">
@@ -222,7 +207,7 @@
     <!-- HEADER / PERFIL CORPORATIVO -->
     <section class="max-w-7xl mx-auto w-full px-4 pt-4">
         <div class="glass-panel rounded-3xl shadow-2xl overflow-hidden relative transition-all duration-300">
-            <!-- PORTADA CON CAMBIO EXCLUSIVO DE ADMIN -->
+            <!-- PORTADA -->
             <div class="h-48 sm:h-60 md:h-72 w-full relative bg-slate-950 group overflow-hidden">
                 <img id="coverImgDisplay" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80" alt="Portada Corporativa" class="w-full h-full object-cover transition duration-700" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80';">
                 <div class="absolute inset-0 bg-gradient-to-t from-[#080c14] via-transparent to-transparent"></div>
@@ -237,7 +222,7 @@
                 <div class="flex flex-col md:flex-row items-center md:items-end justify-between gap-6 -mt-16 sm:-mt-20 mb-4">
                     <div class="flex flex-col sm:flex-row items-center sm:items-end gap-5 text-center sm:text-left">
                         <div class="relative w-28 h-28 sm:w-36 sm:h-36 rounded-3xl border-4 border-slate-900 shadow-2xl overflow-hidden bg-slate-900 flex-shrink-0 group">
-                            <img id="profileLogoImg" src="https://alianzaestrategica2026-byte.github.io/alianzaestrategica/108900.jpg" alt="Perfil Corporativo" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Alianza+Estrategica&background=0284c7&color=fff';">
+                            <img id="profileLogoImg" src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=400&q=80" alt="Perfil Corporativo" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Alianza+Estrategica&background=0284c7&color=fff';">
                             <button onclick="triggerFileSelect('profileFileInput')" class="admin-only hidden absolute bottom-1 right-1 bg-slate-950/90 text-sky-400 p-2 rounded-full border border-white/30 shadow-xl hover:scale-110 transition cursor-pointer" title="Cambiar Logotipo">
                                 <i class="fa-solid fa-camera text-xs"></i>
                             </button>
@@ -1016,9 +1001,6 @@
             bioText: "Portal oficial de ALIANZA ESTRATÉGICA S.A.S. en El Coca, Orellana. Gerente General & Representante Legal: Adrián Arturo Íñiguez Lucio | Patrocinio Jurídico Externo: Abg. Carlos Alfredo Íñiguez Rodríguez. Transparencia, legalidad y seguridad transaccional garantizada.",
             coverImg: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80",
             profileLogo: "https://alianzaestrategica2026-byte.github.io/alianzaestrategica/108900.jpg",
-            videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-            videoTitle: "Operaciones transparentes en ALIANZA ESTRATÉGICA S.A.S.",
-            videoDesc: "Intermediación formal, contratos de compraventa y revisión documental en Notarías y Registro de la Propiedad.",
             lawyerName: "Abg. Carlos Alfredo Íñiguez Rodríguez",
             lawyerTitle: "Asesor Jurídico Externo & Especialista Notarial",
             lawyerPhone: "097 922 2328",
@@ -1055,7 +1037,7 @@
             { id: "2", code: "RE-001", dateCreated: "31/10/2026", category: "RE", categoryType: "Bienes Raíces Venta", title: "🏡 LOTE DE 240 m² CON CASITA EN EL COCA", ownerName: "Juan Lizuriaga", realSalePrice: 25000.00, priceStr: "$25,000 USD", commissionPactada: 1500.00, comisionStr: "$1,500 USD", agentName: "Adrian Iñiguez", sellerAgentName: "", status: "DISPONIBLE", images: ["https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80"], location: "El Coca, Barrio Central", isFeatured: true }
         ];
 
-        let currentRole = 'GUEST';
+        let currentRole = localStorage.getItem('alianza_role') || 'GUEST';
         let appConfig = { ...DEFAULT_STATE };
         let activeCategory = 'ALL';
         let carouselIndex = 0;
@@ -1286,7 +1268,6 @@
             const financeNavBtn = document.getElementById('financeNavBtn');
 
             document.querySelectorAll('.admin-only').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.auth-only').forEach(el => el.classList.add('hidden'));
 
             if (currentRole === 'ADMIN') {
                 roleBadgeText.innerText = "Modo Administrador";
@@ -1297,7 +1278,6 @@
                 if (quickAddNavBtn) quickAddNavBtn.classList.remove('hidden');
                 if (financeNavBtn) financeNavBtn.classList.remove('hidden');
                 document.querySelectorAll('.admin-only').forEach(el => el.classList.remove('hidden'));
-                document.querySelectorAll('.auth-only').forEach(el => el.classList.remove('hidden'));
             } else if (currentRole === 'AGENT') {
                 roleBadgeText.innerText = "Modo Agente Comercial";
                 adminBanner.classList.add('hidden');
@@ -1306,7 +1286,6 @@
                 logoutNavBtn.classList.remove('hidden');
                 if (quickAddNavBtn) quickAddNavBtn.classList.remove('hidden');
                 if (financeNavBtn) financeNavBtn.classList.add('hidden'); // AGENTE NO VE EXCEL
-                document.querySelectorAll('.auth-only').forEach(el => el.classList.remove('hidden'));
             } else {
                 roleBadgeText.innerText = "Modo Público";
                 adminBanner.classList.add('hidden');
@@ -2031,57 +2010,7 @@
             const waMsg = encodeURIComponent(`Hola ALIANZA ESTRATÉGICA S.A.S., solicito información del activo: ${item.code} (${item.title})`);
             document.getElementById('detWaConsultBtn').href = `https://wa.me/593959190794?text=${waMsg}`;
 
-            // Actualizar Open Graph dinámico al abrir la ficha técnica
-            const imgOg = (item.images && item.images[0]) ? item.images[0] : 'https://alianzaestrategica2026-byte.github.io/alianzaestrategica/108900.jpg';
-            actualizarOpenGraphDinamico(item.title, `${item.priceStr || '$' + item.realSalePrice} - ${item.location}`, imgOg, item.id);
-
             openModal('detailModal');
-        }
-
-        function actualizarOpenGraphDinamico(titulo, descripcion, imagenUrl, codigoActivo) {
-            const urlCompleta = window.location.origin + window.location.pathname + (codigoActivo ? '?id=' + codigoActivo : '');
-
-            const setMeta = (id, attr, val) => {
-                const el = document.getElementById(id);
-                if (el) el.setAttribute(attr, val);
-            };
-
-            setMeta('og-title', 'content', `${titulo} | ALIANZA ESTRATÉGICA S.A.S.`);
-            setMeta('og-description', 'content', descripcion);
-            setMeta('og-image', 'content', imagenUrl);
-            setMeta('og-url', 'content', urlCompleta);
-
-            setMeta('twitter-title', 'content', titulo);
-            setMeta('twitter-description', 'content', descripcion);
-            setMeta('twitter-image', 'content', imagenUrl);
-        }
-
-        function compartirActivoWhatsApp(idActivo) {
-            const activo = inventory.find(a => a.id === idActivo);
-            if (!activo) return;
-
-            const imgOriginal = (activo.images && activo.images.length > 0) ? activo.images[0] : 'https://alianzaestrategica2026-byte.github.io/alianzaestrategica/108900.jpg';
-            actualizarOpenGraphDinamico(activo.title, `${activo.priceStr || '$' + activo.realSalePrice} - ${activo.location}`, imgOriginal, activo.id);
-
-            const urlCompartir = window.location.origin + window.location.pathname + '?id=' + activo.id;
-            const textoMensaje = encodeURIComponent(
-                `¡Hola! Te comparto este activo verificado de ALIANZA ESTRATÉGICA S.A.S. (El Coca):\n\n📌 *${activo.title}*\n💵 Precio: ${activo.priceStr || '$' + activo.realSalePrice + ' USD'}\n🏷️ Código: ${activo.code || activo.id}\n\nConsulta la ficha técnica completa aquí:\n${urlCompartir}`
-            );
-
-            window.open(`https://api.whatsapp.com/send?text=${textoMensaje}`, '_blank');
-        }
-
-        function verificarEnlaceCompartidoPorUrl() {
-            const params = new URLSearchParams(window.location.search);
-            const idParam = params.get('id');
-            if (idParam) {
-                const activoEncontrado = inventory.find(a => a.id === idParam || a.code === idParam);
-                if (activoEncontrado) {
-                    const imgOriginal = (activoEncontrado.images && activoEncontrado.imagenes[0]) ? activoEncontrado.imagenes[0] : 'https://alianzaestrategica2026-byte.github.io/alianzaestrategica/108900.jpg';
-                    actualizarOpenGraphDinamico(activoEncontrado.title, `${activoEncontrado.priceStr || '$' + activoEncontrado.realSalePrice} - ${activoEncontrado.location}`, imgOriginal, activoEncontrado.id);
-                    setTimeout(() => openDetailModal(activoEncontrado.id), 500);
-                }
-            }
         }
 
         /* CARRUSEL Y MARQUESINA CONTINUA */
