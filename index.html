@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="htmlPageTitle">ALIANZA ESTRATÉGICA S.A.S. - Plataforma Corporativa & Sistema Financiero 2026</title>
+    <title id="htmlPageTitle">ALIANZA ESTRATÉGICA S.A.S. - Plataforma Oficial & Matriz Financiera 2026</title>
 
     <!-- METADATOS PWA Y NAVEGADORES MÓVILES -->
-    <meta name="theme-color" content="#020617">
+    <meta name="theme-color" content="#080c14">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -28,13 +28,21 @@
                         sans: ['"Plus Jakarta Sans"', 'sans-serif'],
                     },
                     colors: {
+                        elite: {
+                            bg: '#080c14',
+                            card: '#0f172a',
+                            border: '#1e293b',
+                            accent: '#0284c7',
+                            gold: '#f59e0b',
+                            emerald: '#10b981'
+                        },
                         brand: {
                             celeste: '#38bdf8',
                             celesteLight: '#f0f9ff',
                             celesteDark: '#0284c7',
                             gold: '#d97706',
                             goldLight: '#f59e0b',
-                            navyDark: '#020617'
+                            navyDark: '#080c14'
                         }
                     },
                     animation: {
@@ -70,30 +78,25 @@
 
     <style id="customDynamicStyles">
         :root {
-            --app-bg: #f8fafc;
-            --app-nav-bg: #020617;
-            --app-card-bg: rgba(255, 255, 255, 0.95);
+            --app-bg: #080c14;
+            --app-nav-bg: #0f172a;
+            --app-card-bg: rgba(15, 23, 42, 0.95);
         }
         body { 
-            background-color: var(--app-bg) !important; 
+            background-color: #080c14 !important; 
+            color: #f8fafc;
             font-feature-settings: "cv02", "cv03", "cv04", "cv11";
         }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(226, 232, 240, 0.9);
+        .glass-panel { 
+            background: rgba(15, 23, 42, 0.95); 
+            backdrop-filter: blur(14px); 
+            border: 1px solid #1e293b; 
         }
-        .glass-card-dark {
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
+        .table-scroll::-webkit-scrollbar { height: 6px; width: 6px; }
+        .table-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 9999px; }
+        .table-scroll::-webkit-scrollbar-thumb:hover { background: #0284c7; }
         .modal-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
-        .modal-scroll::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 9999px; }
-        .excel-table-scroll::-webkit-scrollbar { width: 8px; height: 8px; }
-        .excel-table-scroll::-webkit-scrollbar-thumb { background-color: #94a3b8; border-radius: 4px; }
+        .modal-scroll::-webkit-scrollbar-thumb { background-color: #334155; border-radius: 9999px; }
 
         .aspect-video-custom {
             position: relative;
@@ -125,13 +128,13 @@
         }
     </style>
 </head>
-<body class="font-sans text-slate-800 antialiased min-h-screen flex flex-col relative selection:bg-sky-500 selection:text-white pb-14">
+<body class="font-sans antialiased min-h-screen flex flex-col relative selection:bg-sky-500 selection:text-white pb-14">
 
     <!-- CONTENEDOR TOAST FLOTANTE -->
     <div id="toastContainer" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
     <!-- TOPBAR SUPERIOR -->
-    <header class="bg-slate-950 text-white text-xs py-2 px-4 border-b border-slate-800/80 sticky top-0 z-40 backdrop-blur-md">
+    <header class="bg-slate-950/90 text-white text-xs py-2 px-4 border-b border-slate-800/80 sticky top-0 z-40 backdrop-blur-md">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
             <div class="flex items-center gap-2 sm:gap-3">
                 <span class="flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-sky-400"></i> <span id="topLocationText">El Coca, Orellana - Ecuador</span></span>
@@ -142,10 +145,10 @@
             </div>
             <div class="flex items-center gap-1.5 sm:gap-2">
                 <!-- BOTÓN EXCEL (EXCLUSIVO SOLO PARA ADMINISTRADOR) -->
-                <button onclick="openFinanceModal()" id="financeNavBtn" class="admin-only hidden bg-emerald-600 hover:bg-emerald-500 text-white px-2.5 py-1 rounded-lg text-xs font-extrabold shadow flex items-center gap-1">
-                    <i class="fa-solid fa-table-cells"></i> Control Excel 2026
+                <button onclick="openFinanceModal()" id="financeNavBtn" class="admin-only hidden bg-emerald-600 hover:bg-emerald-500 text-white px-2.5 py-1 rounded-lg text-xs font-extrabold shadow flex items-center gap-1 transition">
+                    <i class="fa-solid fa-file-invoice-dollar"></i> Matriz Financiera v2.0
                 </button>
-                <button onclick="openAddProductModal()" id="quickAddNavBtn" class="auth-only hidden bg-amber-500 hover:bg-amber-400 text-slate-950 px-2.5 py-1 rounded-lg text-xs font-extrabold shadow flex items-center gap-1">
+                <button onclick="openAddProductModal()" id="quickAddNavBtn" class="auth-only hidden bg-amber-500 hover:bg-amber-400 text-slate-950 px-2.5 py-1 rounded-lg text-xs font-extrabold shadow flex items-center gap-1 transition">
                     <i class="fa-solid fa-plus-circle"></i> + Captación
                 </button>
                 <a id="waCatalogLink" href="https://wa.me/c/593959190794" target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:text-amber-300 font-semibold transition hidden md:inline"><i class="fa-solid fa-store"></i> Catálogo WA</a>
@@ -166,11 +169,11 @@
     <div id="adminBanner" class="bg-gradient-to-r from-amber-500 via-amber-600 to-amber-500 text-slate-950 px-4 py-2.5 hidden shadow-md border-b border-amber-600 z-30 transition-all">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
             <div class="flex items-center gap-2 font-extrabold text-xs md:text-sm">
-                <i class="fa-solid fa-user-shield text-slate-950 text-base"></i> MODO ADMINISTRADOR GERENCIA ACTIVO
+                <i class="fa-solid fa-user-shield text-slate-950 text-base"></i> PANEL ADMINISTRADOR GENERAL ACTIVO
             </div>
             <div class="flex flex-wrap items-center gap-2">
-                <button onclick="openFinanceModal()" class="bg-emerald-800 text-white px-3.5 py-1.5 rounded-xl text-xs font-bold hover:bg-emerald-700 transition flex items-center gap-1.5 shadow">
-                    <i class="fa-solid fa-file-excel text-emerald-300"></i> Tabla Control Excel 2026
+                <button onclick="openFinanceModal()" class="bg-emerald-950 text-white border border-emerald-400/40 px-3.5 py-1.5 rounded-xl text-xs font-bold hover:bg-emerald-900 transition flex items-center gap-1.5 shadow">
+                    <i class="fa-solid fa-table-cells text-emerald-400"></i> Matriz Financiera Excel v2.0
                 </button>
                 <button onclick="openMasterPanel()" class="bg-slate-950 text-white px-3.5 py-1.5 rounded-xl text-xs font-bold hover:bg-slate-900 transition flex items-center gap-1.5 shadow">
                     <i class="fa-solid fa-sliders text-amber-400"></i> Panel Maestro Web
@@ -197,11 +200,11 @@
 
     <!-- HEADER / PERFIL CORPORATIVO -->
     <section class="max-w-7xl mx-auto w-full px-4 pt-4">
-        <div class="glass-card rounded-3xl shadow-xl overflow-hidden relative transition-all duration-300">
+        <div class="glass-panel rounded-3xl shadow-2xl overflow-hidden relative transition-all duration-300">
             <!-- PORTADA -->
-            <div class="h-48 sm:h-60 md:h-72 w-full relative bg-slate-900 group overflow-hidden">
+            <div class="h-48 sm:h-60 md:h-72 w-full relative bg-slate-950 group overflow-hidden">
                 <img id="coverImgDisplay" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80" alt="Portada Corporativa" class="w-full h-full object-cover transition duration-700" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80';">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-[#080c14] via-transparent to-transparent"></div>
                 <button onclick="triggerFileSelect('coverFileInput')" class="admin-only hidden absolute top-4 right-4 bg-slate-950/85 hover:bg-slate-900 text-white text-xs font-bold px-3.5 py-2 rounded-xl backdrop-blur-md border border-white/20 transition flex items-center gap-2 shadow-2xl">
                     <i class="fa-solid fa-camera text-sky-400"></i> Cambiar Portada
                 </button>
@@ -212,7 +215,7 @@
             <div class="px-6 pb-6 pt-4 relative">
                 <div class="flex flex-col md:flex-row items-center md:items-end justify-between gap-6 -mt-16 sm:-mt-20 mb-4">
                     <div class="flex flex-col sm:flex-row items-center sm:items-end gap-5 text-center sm:text-left">
-                        <div class="relative w-28 h-28 sm:w-36 sm:h-36 rounded-3xl border-4 border-white shadow-2xl overflow-hidden bg-slate-900 flex-shrink-0 group">
+                        <div class="relative w-28 h-28 sm:w-36 sm:h-36 rounded-3xl border-4 border-slate-900 shadow-2xl overflow-hidden bg-slate-900 flex-shrink-0 group">
                             <img id="profileLogoImg" src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=400&q=80" alt="Perfil Corporativo" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Alianza+Estrategica&background=0284c7&color=fff';">
                             <button onclick="triggerFileSelect('profileFileInput')" class="admin-only hidden absolute bottom-1 right-1 bg-slate-950/90 text-sky-400 p-2 rounded-full border border-white/30 shadow-xl hover:scale-110 transition" title="Cambiar Logotipo">
                                 <i class="fa-solid fa-camera text-xs"></i>
@@ -221,15 +224,15 @@
                         </div>
                         <div class="pt-2">
                             <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2">
-                                <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight" id="profileCompanyTitle">
-                                    ALIANZA ESTRATÉGICA <span class="text-sky-600">S.A.S.</span>
+                                <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight" id="profileCompanyTitle">
+                                    ALIANZA ESTRATÉGICA <span class="text-sky-400">S.A.S.</span>
                                 </h1>
-                                <span class="inline-flex items-center text-sky-500 text-lg" title="Empresa Verificada"><i class="fa-solid fa-circle-check"></i></span>
+                                <span class="inline-flex items-center text-sky-400 text-lg" title="Empresa Verificada"><i class="fa-solid fa-circle-check"></i></span>
                             </div>
-                            <p class="text-xs sm:text-sm font-bold text-sky-600 mt-1 flex items-center justify-center sm:justify-start gap-1.5" id="profileMotto">
-                                <i class="fa-solid fa-shield-halved text-amber-500"></i> Excelencia Jurídica, Confianza Profesional
+                            <p class="text-xs sm:text-sm font-bold text-sky-400 mt-1 flex items-center justify-center sm:justify-start gap-1.5" id="profileMotto">
+                                <i class="fa-solid fa-shield-halved text-amber-400"></i> Excelencia Jurídica, Confianza Profesional
                             </p>
-                            <p class="text-xs text-slate-500 mt-1 max-w-xl" id="profileSubtitle">
+                            <p class="text-xs text-slate-400 mt-1 max-w-xl" id="profileSubtitle">
                                 Corretaje Inmobiliario, Vehículos, Maquinaria Pesada & Saneamiento Notarial en El Coca, Orellana.
                             </p>
                         </div>
@@ -237,7 +240,7 @@
 
                     <!-- ACCIONES RÁPIDAS -->
                     <div class="flex flex-wrap items-center justify-center gap-2 pt-2">
-                        <button onclick="openModal('infoMenuModal')" class="bg-slate-900 hover:bg-slate-800 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow-md transition flex items-center gap-2">
+                        <button onclick="openModal('infoMenuModal')" class="bg-slate-900 hover:bg-slate-800 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow-md transition flex items-center gap-2 border border-slate-700">
                             <i class="fa-solid fa-circle-info text-sky-400"></i> Menú Informativo
                         </button>
                         <a id="heroWaDirectBtn" href="https://wa.me/593959190794?text=Hola,%20deseo%20contactarme%20con%20el%20equipo%20de%20agentes" target="_blank" rel="noopener noreferrer" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow-md transition flex items-center gap-2">
@@ -249,7 +252,7 @@
                     </div>
                 </div>
 
-                <div class="bg-slate-100/70 backdrop-blur-sm rounded-2xl p-4 border border-slate-200/80 text-xs sm:text-sm text-slate-600 leading-relaxed shadow-inner" id="profileBioBox">
+                <div class="bg-slate-900/80 backdrop-blur-sm rounded-2xl p-4 border border-slate-800 text-xs sm:text-sm text-slate-300 leading-relaxed shadow-inner" id="profileBioBox">
                     <p id="profileBioText">
                         Portal oficial de <strong>ALIANZA ESTRATÉGICA S.A.S.</strong> en El Coca, Orellana. Gerente General & Representante Legal: <strong>Adrián Arturo Íñiguez Lucio</strong> | Patrocinio Jurídico Externo: <strong>Abg. Carlos Alfredo Íñiguez Rodríguez</strong>. Transparencia, legalidad y seguridad transaccional garantizada.
                     </p>
@@ -260,12 +263,12 @@
 
     <!-- BANNER DINÁMICO PANORÁMICO DE ACTIVOS DESTACADOS (CARRUSEL AUTOMÁTICO) -->
     <section class="max-w-7xl mx-auto w-full px-4 py-6">
-        <div class="glass-card rounded-3xl shadow-xl border border-slate-200 overflow-hidden flex flex-col justify-between">
-            <div class="p-4 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-slate-900 to-sky-950 text-white">
+        <div class="glass-panel rounded-3xl shadow-2xl border border-slate-800 overflow-hidden flex flex-col justify-between">
+            <div class="p-4 border-b border-slate-800 flex items-center justify-between bg-gradient-to-r from-slate-950 via-slate-900 to-sky-950 text-white">
                 <span class="text-xs font-extrabold uppercase tracking-wider text-amber-400 flex items-center gap-2">
                     <i class="fa-solid fa-bolt"></i> Galería de Oportunidades & Activos Destacados
                 </span>
-                <span class="text-[11px] bg-sky-500/20 text-sky-300 border border-sky-400/30 px-3 py-0.5 rounded-full font-bold">
+                <span class="text-[11px] bg-sky-500/10 text-sky-400 border border-sky-400/30 px-3 py-0.5 rounded-full font-bold">
                     Rotación Automática
                 </span>
             </div>
@@ -273,7 +276,7 @@
             <div class="relative w-full h-72 sm:h-96 md:h-[420px] overflow-hidden bg-slate-950 group" id="carouselContainer">
                 <div id="carouselSlide" class="w-full h-full relative cursor-pointer" onclick="clickCarouselCurrentSlide()">
                     <img id="carouselImg" src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80" class="w-full h-full object-cover transition duration-700" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80';">
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent p-6 sm:p-8 flex flex-col justify-end">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent p-6 sm:p-8 flex flex-col justify-end">
                         <span id="carouselBadge" class="inline-block self-start text-[11px] font-mono font-extrabold bg-amber-500 text-slate-950 px-3 py-1 rounded-md mb-2 shadow">RE-001</span>
                         <h3 id="carouselTitle" class="text-lg sm:text-2xl md:text-3xl font-extrabold text-white leading-tight drop-shadow-md max-w-3xl">CASA Y LE REGALO EL TERRENO! 580 m² EN EL COCA 💥🏡</h3>
                         <p id="carouselSub" class="text-sm sm:text-base text-amber-300 font-bold mt-1.5 drop-shadow">$45,000 USD - El Coca, Orellana</p>
@@ -288,18 +291,18 @@
                 </button>
             </div>
 
-            <div class="p-3.5 bg-slate-50 text-xs text-slate-700 border-t border-slate-100 flex justify-between items-center px-6">
-                <span class="font-semibold text-slate-600"><i class="fa-solid fa-shield-halved text-sky-600 mr-1.5"></i> Inmuebles, vehículos y maquinaria verificados con estudio de títulos notarial.</span>
-                <span class="text-xs text-sky-700 font-extrabold font-mono flex items-center gap-1 cursor-pointer" onclick="clickCarouselCurrentSlide()">Ver Ficha Técnica <i class="fa-solid fa-arrow-right"></i></span>
+            <div class="p-3.5 bg-slate-950 text-xs text-slate-400 border-t border-slate-800 flex justify-between items-center px-6">
+                <span class="font-semibold text-slate-400"><i class="fa-solid fa-shield-halved text-sky-400 mr-1.5"></i> Inmuebles, vehículos y maquinaria verificados con estudio de títulos notarial.</span>
+                <span class="text-xs text-sky-400 font-extrabold font-mono flex items-center gap-1 cursor-pointer hover:underline" onclick="clickCarouselCurrentSlide()">Ver Ficha Técnica <i class="fa-solid fa-arrow-right"></i></span>
             </div>
         </div>
     </section>
 
-    <!-- TARJETA DEL ABOGADO PATROCINADOR (CON CARGA DIRECTA DE FOTO) -->
+    <!-- TARJETA DEL ABOGADO PATROCINADOR -->
     <section class="max-w-7xl mx-auto w-full px-4 mb-6">
-        <div class="glass-card-dark rounded-3xl p-6 text-white shadow-2xl relative overflow-hidden">
+        <div class="glass-panel rounded-3xl p-6 text-white shadow-2xl relative overflow-hidden">
             <div class="flex flex-col md:flex-row items-center gap-6 relative z-10">
-                <div class="relative w-32 h-32 md:w-44 md:h-44 rounded-3xl overflow-hidden border-2 border-sky-400/40 shadow-2xl flex-shrink-0 bg-slate-900 group">
+                <div class="relative w-32 h-32 md:w-44 md:h-44 rounded-3xl overflow-hidden border-2 border-sky-400/40 shadow-2xl flex-shrink-0 bg-slate-950 group">
                     <img id="lawyerCardImg" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80" alt="Abogado Patrocinador" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80';">
                     <button type="button" onclick="triggerFileSelect('lawyerFileInput')" class="admin-only hidden absolute bottom-2 right-2 bg-slate-950/90 text-sky-400 p-2.5 rounded-full border border-white/30 shadow-xl hover:scale-110 transition cursor-pointer" title="Cambiar Foto Abogado">
                         <i class="fa-solid fa-camera text-sm"></i>
@@ -317,21 +320,21 @@
                         Especialista en Derecho Inmobiliario, saneamiento de títulos de propiedad, promesas de compraventa y contratos de arrendamiento.
                     </p>
                     <div class="pt-2 flex flex-wrap items-center justify-center md:justify-start gap-4 text-xs font-mono text-sky-300">
-                        <span class="bg-slate-900/60 px-3 py-1 rounded-lg border border-slate-800"><i class="fa-solid fa-phone text-amber-400 mr-1.5"></i> <span id="lawyerPhoneDisplay">097 922 2328</span></span>
-                        <span class="bg-slate-900/60 px-3 py-1 rounded-lg border border-slate-800"><i class="fa-solid fa-envelope text-amber-400 mr-1.5"></i> <span id="lawyerEmailDisplay">carllos-alfredo88@hotmail.com</span></span>
+                        <span class="bg-slate-900 px-3 py-1 rounded-lg border border-slate-800"><i class="fa-solid fa-phone text-amber-400 mr-1.5"></i> <span id="lawyerPhoneDisplay">097 922 2328</span></span>
+                        <span class="bg-slate-900 px-3 py-1 rounded-lg border border-slate-800"><i class="fa-solid fa-envelope text-amber-400 mr-1.5"></i> <span id="lawyerEmailDisplay">carllos-alfredo88@hotmail.com</span></span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- MARKETPLACE Y FILTROS CON RESEÑA VISUAL SEÑALÉTICA -->
+    <!-- MARKETPLACE Y FILTROS -->
     <main class="max-w-7xl mx-auto px-4 py-4 flex-1 w-full">
         <!-- BUSCADOR CON SEÑALÉTICA INTERACTIVA GUIADA -->
-        <div class="bg-gradient-to-r from-slate-900 via-sky-950 to-slate-900 rounded-3xl p-6 mb-8 text-white shadow-xl border border-sky-900/40 relative overflow-hidden">
+        <div class="glass-panel rounded-3xl p-6 mb-8 text-white shadow-2xl relative overflow-hidden">
             <div class="max-w-2xl mx-auto text-center mb-4">
                 <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-1.5">Marketplace de Bienes & Activos</h2>
-                <p class="text-xs sm:text-sm text-sky-200">Consulte el catálogo verificado de ALIANZA ESTRATÉGICA S.A.S.</p>
+                <p class="text-xs sm:text-sm text-slate-400">Consulte el catálogo verificado de ALIANZA ESTRATÉGICA S.A.S.</p>
                 
                 <!-- RESEÑA VISUAL PARPADEANTE / SEÑALÉTICA GUÍA -->
                 <div class="mt-3 inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/20 via-sky-500/20 to-amber-500/20 border border-amber-400/50 px-3.5 py-1.5 rounded-full text-xs font-extrabold text-amber-300 shadow-lg animate-bounce-subtle">
@@ -344,18 +347,18 @@
             </div>
 
             <div class="max-w-xl mx-auto relative mb-4">
-                <input type="text" id="searchInput" onkeyup="filterItems()" placeholder="Buscar por código (ej: RE-001, VH-001), sector o palabra clave..." class="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-white/10 backdrop-blur-md text-white placeholder-slate-400 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 border border-sky-400/30 transition shadow-inner animate-pulse-glow">
+                <input type="text" id="searchInput" onkeyup="filterItems()" placeholder="Buscar por código (ej: RE-001, VH-001), sector o palabra clave..." class="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-slate-950/80 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 border border-sky-500/30 transition shadow-inner animate-pulse-glow">
                 <i class="fa-solid fa-magnifying-glass absolute left-4 top-4 text-sky-400"></i>
             </div>
 
             <!-- BOTONES CATEGORÍAS CON GUÍA VISUAL -->
             <div class="flex flex-wrap justify-center gap-2 text-xs font-bold" id="categoryTabGroup">
                 <button onclick="setCategoryFilter('ALL')" class="cat-btn bg-amber-500 text-slate-950 px-4 py-2 rounded-xl transition shadow-md hover:scale-105">Todos</button>
-                <button onclick="setCategoryFilter('VH')" class="cat-btn bg-slate-800 text-white hover:bg-slate-700 px-4 py-2 rounded-xl transition hover:scale-105">VH (Vehículos)</button>
-                <button onclick="setCategoryFilter('RE')" class="cat-btn bg-slate-800 text-white hover:bg-slate-700 px-4 py-2 rounded-xl transition hover:scale-105">RE (Ventas Raíces)</button>
-                <button onclick="setCategoryFilter('AR')" class="cat-btn bg-slate-800 text-white hover:bg-slate-700 px-4 py-2 rounded-xl transition hover:scale-105">AR (Arriendos)</button>
-                <button onclick="setCategoryFilter('MQ')" class="cat-btn bg-slate-800 text-white hover:bg-slate-700 px-4 py-2 rounded-xl transition hover:scale-105">MQ (Maquinaria)</button>
-                <button onclick="setCategoryFilter('LQ')" class="cat-btn bg-slate-800 text-white hover:bg-slate-700 px-4 py-2 rounded-xl transition hover:scale-105">LQ (Segunda Mano / Remate)</button>
+                <button onclick="setCategoryFilter('VH')" class="cat-btn bg-slate-900 border border-slate-700 text-white hover:bg-slate-800 px-4 py-2 rounded-xl transition hover:scale-105">VH (Vehículos)</button>
+                <button onclick="setCategoryFilter('RE')" class="cat-btn bg-slate-900 border border-slate-700 text-white hover:bg-slate-800 px-4 py-2 rounded-xl transition hover:scale-105">RE (Ventas Raíces)</button>
+                <button onclick="setCategoryFilter('AR')" class="cat-btn bg-slate-900 border border-slate-700 text-white hover:bg-slate-800 px-4 py-2 rounded-xl transition hover:scale-105">AR (Arriendos)</button>
+                <button onclick="setCategoryFilter('MQ')" class="cat-btn bg-slate-900 border border-slate-700 text-white hover:bg-slate-800 px-4 py-2 rounded-xl transition hover:scale-105">MQ (Maquinaria)</button>
+                <button onclick="setCategoryFilter('LQ')" class="cat-btn bg-slate-900 border border-slate-700 text-white hover:bg-slate-800 px-4 py-2 rounded-xl transition hover:scale-105">LQ (Segunda Mano / Remate)</button>
                 <button onclick="setCategoryFilter('SOLD')" class="cat-btn bg-rose-700 text-white hover:bg-rose-600 px-4 py-2 rounded-xl transition hover:scale-105"><i class="fa-solid fa-circle text-rose-300 mr-1"></i> 🔴💸 Vendidos</button>
             </div>
         </div>
@@ -392,8 +395,8 @@
 
     <!-- ASISTENTE COMERCIAL VIRTUAL (SOFÍA) -->
     <div id="virtualAssistantWidget" class="fixed bottom-5 right-5 z-40 flex flex-col items-end">
-        <div id="chatBoxWindow" class="hidden mb-3 w-80 sm:w-96 glass-card border border-slate-200/80 rounded-3xl shadow-2xl overflow-hidden flex flex-col text-xs transition-all duration-300">
-            <div class="bg-gradient-to-r from-slate-900 to-sky-950 text-white p-4 flex items-center justify-between">
+        <div id="chatBoxWindow" class="hidden mb-3 w-80 sm:w-96 glass-panel rounded-3xl shadow-2xl overflow-hidden flex flex-col text-xs transition-all duration-300">
+            <div class="bg-gradient-to-r from-slate-900 to-sky-950 text-white p-4 flex items-center justify-between border-b border-slate-800">
                 <div class="flex items-center gap-3">
                     <div class="relative w-9 h-9 rounded-full overflow-hidden border-2 border-sky-400">
                         <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80" alt="Sofía" class="w-full h-full object-cover">
@@ -406,14 +409,14 @@
                 <button onclick="toggleChatWindow()" class="text-slate-400 hover:text-white transition"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
 
-            <div id="chatMessages" class="p-4 h-64 overflow-y-auto space-y-3 bg-slate-50/70 modal-scroll">
-                <div class="bg-white p-3 rounded-2xl border border-slate-200/80 text-slate-700 shadow-sm leading-relaxed">
+            <div id="chatMessages" class="p-4 h-64 overflow-y-auto space-y-3 bg-slate-950/70 modal-scroll">
+                <div class="bg-slate-900 p-3 rounded-2xl border border-slate-800 text-slate-300 shadow-sm leading-relaxed">
                     ¡Hola! 👋 Te saluda Sofía de <strong>ALIANZA ESTRATÉGICA S.A.S.</strong> ¿Deseas consultar algún bien del catálogo o te gustaría consignar tu propiedad o vehículo con nosotros?
                 </div>
             </div>
 
-            <div class="p-3 bg-white border-t border-slate-100 flex items-center gap-2">
-                <input type="text" id="chatUserInput" placeholder="Escribe tu consulta..." onkeypress="handleChatKeyPress(event)" class="flex-1 bg-slate-100 rounded-xl px-3.5 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-sky-500">
+            <div class="p-3 bg-slate-900 border-t border-slate-800 flex items-center gap-2">
+                <input type="text" id="chatUserInput" placeholder="Escribe tu consulta..." onkeypress="handleChatKeyPress(event)" class="flex-1 bg-slate-950 border border-slate-700 text-white rounded-xl px-3.5 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-sky-500">
                 <button onclick="sendChatMessage()" class="bg-sky-600 hover:bg-sky-500 text-white p-2.5 rounded-xl transition shadow">
                     <i class="fa-solid fa-paper-plane"></i>
                 </button>
@@ -433,24 +436,24 @@
 
     <!-- MODAL ACCESO ROLES (LOGIN) -->
     <div id="loginModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="glass-card rounded-3xl max-w-sm w-full p-6 space-y-4 shadow-2xl border border-white/20">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
-                    <i class="fa-solid fa-shield-halved text-sky-600"></i> Acceso al Sistema
+        <div class="glass-panel rounded-3xl max-w-sm w-full p-6 space-y-4 shadow-2xl border border-slate-800">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h3 class="text-base font-extrabold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-shield-halved text-sky-400"></i> Acceso al Sistema
                 </h3>
-                <button onclick="closeModal('loginModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+                <button onclick="closeModal('loginModal')" class="text-slate-400 hover:text-slate-200"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <div class="space-y-3.5">
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Seleccionar Nivel de Acceso</label>
-                    <select id="loginRoleSelect" onchange="togglePassInput()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-sky-500">
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Seleccionar Nivel de Acceso</label>
+                    <select id="loginRoleSelect" onchange="togglePassInput()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white font-semibold focus:outline-none focus:ring-2 focus:ring-sky-500">
                         <option value="AGENT">Agente Comercial</option>
                         <option value="ADMIN">Administrador Principal (Gerencia General)</option>
                     </select>
                 </div>
                 <div id="passContainer">
-                    <label class="block text-xs font-bold text-slate-700 mb-1" id="passLabel">Contraseña de Agente Comercial</label>
-                    <input type="password" id="adminPassInput" placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500">
+                    <label class="block text-xs font-bold text-slate-300 mb-1" id="passLabel">Contraseña de Agente Comercial</label>
+                    <input type="password" id="adminPassInput" placeholder="••••••••" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
                 </div>
                 <button onclick="executeLogin()" class="w-full bg-sky-600 hover:bg-sky-500 text-white font-extrabold py-2.5 rounded-xl text-xs transition shadow-lg">
                     Ingresar al Panel
@@ -460,170 +463,161 @@
     </div>
 
     <!-- ================================================================================== -->
-    <!-- MÓDULO EXCEL 2026: HOJA DE CÁLCULO INTELIGENTE (EXCLUSIVA ADMINISTRADOR GERENCIA) -->
+    <!-- MÓDULO EXCEL FUSIONADO: MATRIZ FINANCIERA V2.0 ELITE (EXCLUSIVA ADMINISTRADOR) -->
     <!-- ================================================================================== -->
-    <div id="financeModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-2 sm:p-4">
-        <div class="bg-white rounded-3xl w-full max-w-[98vw] max-h-[96vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden" id="printableReportArea">
-            <!-- CABECERA EXCEL -->
-            <div class="bg-gradient-to-r from-slate-900 via-sky-950 to-emerald-950 text-white p-4 sm:p-5 flex flex-wrap items-center justify-between gap-3 border-b border-emerald-500/30">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-2xl bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-emerald-400 text-xl">
-                        <i class="fa-solid fa-file-excel"></i>
+    <div id="financeModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-2 md:p-5">
+        <div class="glass-panel rounded-3xl w-full max-w-[1700px] max-h-[96vh] flex flex-col shadow-2xl border border-slate-800 overflow-hidden" id="printableReportArea">
+            
+            <!-- HEADER DE CONTROL CORPORATIVO ELITE -->
+            <div class="p-4 md:p-5 border-b border-slate-800 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 bg-slate-950/70">
+                <div class="flex items-center gap-3.5">
+                    <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center text-white text-xl font-bold shadow-lg shadow-emerald-950/50">
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
                     </div>
                     <div>
-                        <h2 class="text-base sm:text-lg font-extrabold tracking-tight flex items-center gap-2">
-                            Hoja de Control Administrativo, Comisiones & Dividendos 2026
-                            <span class="bg-emerald-500/20 text-emerald-300 text-[10px] font-mono px-2 py-0.5 rounded-md border border-emerald-400/30">ALIANZA S.A.S.</span>
-                        </h2>
-                        <p class="text-xs text-slate-300">Regla: 50% Empresa | 50% Fuerza de Ventas (50% al captador si vende, o 25% y 25% si son distintos)</p>
+                        <div class="flex items-center gap-2">
+                            <h2 class="text-lg md:text-xl font-extrabold text-white tracking-tight">ALIANZA ESTRATÉGICA <span class="text-sky-400">S.A.S.</span></h2>
+                            <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold px-2.5 py-0.5 rounded-full">Matriz Financiera v2.0</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-0.5">
+                            <i class="fa-solid fa-scale-balanced text-amber-400 mr-1"></i> Regla de Distribución: <strong>50% Empresa</strong> | <strong>50% Fuerza de Ventas</strong> (25% Captador / 25% Vendedor)
+                        </p>
                     </div>
                 </div>
 
-                <div class="flex items-center gap-2 flex-wrap no-print">
-                    <div class="relative">
-                        <input type="text" id="excelSearchInput" onkeyup="filterExcelTable()" placeholder="Buscar universal (código, propietario, agente...)" class="pl-8 pr-3 py-1.5 text-xs rounded-xl bg-white/10 text-white placeholder-slate-400 border border-white/20 focus:outline-none focus:ring-1 focus:ring-emerald-400 w-48 sm:w-64">
-                        <i class="fa-solid fa-search absolute left-2.5 top-2 text-slate-400 text-xs"></i>
+                <div class="flex flex-wrap items-center gap-2 w-full lg:w-auto justify-end no-print">
+                    <div class="relative w-full sm:w-64">
+                        <input type="text" id="excelSearchInput" onkeyup="renderFinanceTable()" placeholder="Buscar código, bien, cliente o agente..." class="w-full bg-slate-900 border border-slate-700 rounded-xl pl-9 pr-3 py-1.5 text-xs text-white focus:outline-none focus:ring-1 focus:ring-sky-500">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-500 text-xs"></i>
                     </div>
-                    <button onclick="exportToCSV()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs px-3 py-1.5 rounded-xl transition shadow flex items-center gap-1.5">
-                        <i class="fa-solid fa-file-csv"></i> Descargar Excel (.csv)
+                    <select id="statusFilterExcel" onchange="renderFinanceTable()" class="bg-slate-900 border border-slate-700 text-white rounded-xl px-2.5 py-1.5 text-xs focus:outline-none">
+                        <option value="ALL">Todos los Estados</option>
+                        <option value="DISPONIBLE">DISPONIBLE</option>
+                        <option value="VENDIDO">🔴 VENDIDO</option>
+                    </select>
+                    <button onclick="exportToCSV()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-3.5 py-2 rounded-xl transition shadow flex items-center gap-1.5">
+                        <i class="fa-solid fa-file-csv text-sm"></i> Exportar Excel (.csv)
                     </button>
-                    <button onclick="printFinancialReport()" class="bg-sky-600 hover:bg-sky-500 text-white font-extrabold text-xs px-3 py-1.5 rounded-xl transition shadow flex items-center gap-1.5">
-                        <i class="fa-solid fa-print"></i> Imprimir Reporte (PDF)
+                    <button onclick="openAddProductModal()" class="bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs px-3.5 py-2 rounded-xl transition shadow flex items-center gap-1.5">
+                        <i class="fa-solid fa-plus"></i> Nuevo Registro Activo
                     </button>
-                    <button onclick="closeModal('financeModal')" class="text-slate-400 hover:text-white p-1.5 rounded-xl transition text-lg">
+                    <button onclick="printFinancialReport()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-2 rounded-xl text-xs font-bold transition">
+                        <i class="fa-solid fa-print"></i>
+                    </button>
+                    <button onclick="closeModal('financeModal')" class="text-slate-400 hover:text-white p-2 rounded-xl text-lg transition">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
             </div>
 
-            <!-- CUADRO DE KPIS Y MÉTRICAS SUPERIORES -->
-            <div class="bg-slate-50 p-4 border-b border-slate-200 grid grid-cols-2 sm:grid-cols-5 gap-3 text-xs">
-                <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
-                    <span class="block text-[10px] uppercase font-bold text-slate-400">1. Capital Inventario</span>
-                    <span id="statCapitalInventario" class="text-sm sm:text-base font-extrabold text-slate-900">$0.00</span>
+            <!-- DASHBOARD RESUMEN DE 5 CASILLAS HIGH-IMPACT -->
+            <div class="p-4 grid grid-cols-2 md:grid-cols-5 gap-2.5 border-b border-slate-800 bg-slate-950/40">
+                <div class="glass-panel p-3.5 rounded-xl border-l-4 border-l-slate-400">
+                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">1. Capital Inventario</div>
+                    <div id="statCapitalInventario" class="text-lg md:text-xl font-black text-white mt-0.5">$0.00</div>
+                    <div class="text-[10px] text-slate-500">Valor Mercado Total</div>
                 </div>
-                <div class="bg-white p-3 rounded-2xl border border-sky-200 shadow-sm">
-                    <span class="block text-[10px] uppercase font-bold text-sky-600">2. Proyección Comisiones</span>
-                    <span id="statProyeccionComisiones" class="text-sm sm:text-base font-extrabold text-sky-700">$0.00</span>
+
+                <div class="glass-panel p-3.5 rounded-xl border-l-4 border-l-sky-500">
+                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">2. Proyección Comisiones</div>
+                    <div id="statProyeccionComisiones" class="text-lg md:text-xl font-black text-sky-400 mt-0.5">$0.00</div>
+                    <div class="text-[10px] text-sky-300/70">Honorarios Esperados</div>
                 </div>
-                <div class="bg-white p-3 rounded-2xl border border-emerald-200 shadow-sm">
-                    <span class="block text-[10px] uppercase font-bold text-emerald-600">3. Comisiones Cobradas</span>
-                    <span id="statComisionesCobradas" class="text-sm sm:text-base font-extrabold text-emerald-700">$0.00</span>
+
+                <div class="glass-panel p-3.5 rounded-xl border-l-4 border-l-emerald-500">
+                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">3. Comisiones Cobradas</div>
+                    <div id="statComisionesCobradas" class="text-lg md:text-xl font-black text-emerald-400 mt-0.5">$0.00</div>
+                    <div class="text-[10px] text-emerald-300/70">Ingreso Real Efectivo</div>
                 </div>
-                <div class="bg-white p-3 rounded-2xl border border-amber-200 shadow-sm">
-                    <span class="block text-[10px] uppercase font-bold text-amber-600">4. Pago a Fuerza Ventas</span>
-                    <span id="statPagoFuerzaVentas" class="text-sm sm:text-base font-extrabold text-amber-700">$0.00</span>
+
+                <div class="glass-panel p-3.5 rounded-xl border-l-4 border-l-rose-500">
+                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">4. Pago Fuerza Ventas</div>
+                    <div id="statPagoFuerzaVentas" class="text-lg md:text-xl font-black text-rose-400 mt-0.5">$0.00</div>
+                    <div class="text-[10px] text-rose-300/70">50% para Agentes</div>
                 </div>
-                <div class="bg-white p-3 rounded-2xl border border-purple-200 shadow-sm col-span-2 sm:col-span-1">
-                    <span class="block text-[10px] uppercase font-bold text-purple-600">5. Ganancia Empresa</span>
-                    <span id="statGananciaNetaEmpresa" class="text-sm sm:text-base font-extrabold text-purple-700">$0.00</span>
+
+                <div class="glass-panel p-3.5 rounded-xl border-l-4 border-l-purple-500 col-span-2 md:col-span-1">
+                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">5. Ganancia Empresa</div>
+                    <div id="statGananciaNetaEmpresa" class="text-lg md:text-xl font-black text-purple-400 mt-0.5">$0.00</div>
+                    <div class="text-[10px] text-purple-300/70">50% ALIANZA S.A.S.</div>
                 </div>
             </div>
 
-            <!-- MATRIZ DE CAMPOS EXTENDIDA (21 COLUMNAS PARA POWER QUERY Y AUDITORÍA) -->
-            <div class="flex-1 overflow-x-auto overflow-y-auto excel-table-scroll p-4">
-                <table class="w-full text-left text-[11px] border-collapse whitespace-nowrap">
-                    <thead>
-                        <tr class="bg-slate-900 text-white font-extrabold border-b border-slate-800">
-                            <th onclick="sortExcelTable('code')" class="p-3 cursor-pointer hover:bg-slate-800 rounded-l-xl">Código <i class="fa-solid fa-sort ml-1"></i></th>
-                            <th onclick="sortExcelTable('dateCreated')" class="p-3 cursor-pointer hover:bg-slate-800">Fecha Captación <i class="fa-solid fa-sort ml-1"></i></th>
-                            <th onclick="sortExcelTable('category')" class="p-3 cursor-pointer hover:bg-slate-800">Categoría / Tipo <i class="fa-solid fa-sort ml-1"></i></th>
-                            <th class="p-3">Detalle / Descripción</th>
-                            <th class="p-3">Ubicación</th>
-                            <th class="p-3 text-sky-300">Nombre Propietario (Privado)</th>
-                            <th class="p-3 text-sky-300">Cédula / Teléfono</th>
-                            <th class="p-3">Tipo Contrato</th>
-                            <th class="p-3">Situación Legal</th>
-                            <th onclick="sortExcelTable('realSalePrice')" class="p-3 text-right cursor-pointer hover:bg-slate-800">Precio Venta ($) <i class="fa-solid fa-sort ml-1"></i></th>
-                            <th class="p-3 text-right">Comisión Pactada ($)</th>
-                            <th class="p-3 text-sky-400">Agente Captador</th>
-                            <th class="p-3 text-amber-400">Agente Vendedor</th>
-                            <th class="p-3 text-right text-sky-300 font-bold">Pago Captador ($)</th>
-                            <th class="p-3 text-right text-amber-300 font-bold">Pago Vendedor ($)</th>
-                            <th class="p-3 text-right text-emerald-300 font-bold">Ganancia Empresa ($)</th>
-                            <th class="p-3 text-center">Estado Comercial</th>
-                            <th class="p-3 text-center">Estado de Pago</th>
-                            <th class="p-3 text-center">Fecha Pago / Liquidación</th>
-                            <th class="p-3">Observaciones Notariales</th>
-                            <th class="p-3 text-center rounded-r-xl no-print">Acciones</th>
+            <!-- TABLA PRINCIPAL ULTRA-EFICIENTE -->
+            <div class="overflow-x-auto table-scroll flex-1 p-4">
+                <table class="w-full text-left border-collapse text-[11px] min-w-[1400px]">
+                    <thead class="bg-slate-950 text-slate-400 uppercase text-[10px] font-bold tracking-wider sticky top-0 z-10 border-b border-slate-800">
+                        <tr>
+                            <th onclick="sortExcelTable('code')" class="py-3 px-3 border-r border-slate-800 cursor-pointer hover:bg-slate-900">Código <i class="fa-solid fa-sort ml-1"></i></th>
+                            <th onclick="sortExcelTable('dateCreated')" class="py-3 px-3 border-r border-slate-800 cursor-pointer hover:bg-slate-900">Fecha <i class="fa-solid fa-sort ml-1"></i></th>
+                            <th onclick="sortExcelTable('category')" class="py-3 px-3 border-r border-slate-800 cursor-pointer hover:bg-slate-900">Categoría <i class="fa-solid fa-sort ml-1"></i></th>
+                            <th class="py-3 px-3 border-r border-slate-800 min-w-[240px]">Detalle / Descripción</th>
+                            <th class="py-3 px-3 border-r border-slate-800">Propietario</th>
+                            <th onclick="sortExcelTable('realSalePrice')" class="py-3 px-3 border-r border-slate-800 text-right cursor-pointer hover:bg-slate-900">Precio Venta ($) <i class="fa-solid fa-sort ml-1"></i></th>
+                            <th onclick="sortExcelTable('commissionPactada')" class="py-3 px-3 border-r border-slate-800 text-right text-sky-400 bg-sky-950/30 cursor-pointer hover:bg-slate-900">Comisión ($) <i class="fa-solid fa-sort ml-1"></i></th>
+                            <th class="py-3 px-3 border-r border-slate-800">Ag. Captador</th>
+                            <th class="py-3 px-3 border-r border-slate-800">Ag. Vendedor</th>
+                            <th class="py-3 px-3 border-r border-slate-800 text-right text-rose-400 bg-rose-950/20">$ Liq. Agentes</th>
+                            <th class="py-3 px-3 border-r border-slate-800 text-right text-purple-400 bg-purple-950/20">$ Liq. Empresa</th>
+                            <th class="py-3 px-3 border-r border-slate-800 text-center">Estado Comercial</th>
+                            <th class="py-3 px-3 text-center no-print">Acción Liquidación</th>
                         </tr>
                     </thead>
-                    <tbody id="financeTableBody" class="divide-y divide-slate-200 font-medium bg-white">
-                        <!-- FILAS DINÁMICAS GENERADAS EN TIEMPO REAL -->
+                    <tbody id="financeTableBody" class="divide-y divide-slate-800/80 font-medium text-slate-300">
+                        <!-- FILAS DINÁMICAS -->
                     </tbody>
                 </table>
             </div>
 
-            <!-- FOOTER MODAL -->
-            <div class="p-3 bg-slate-100 border-t border-slate-200 flex flex-wrap items-center justify-between text-xs text-slate-500 no-print">
-                <span><i class="fa-solid fa-link text-emerald-600 mr-1"></i> Conexión en Vivo PC: <strong>Datos &gt; Desde la web &gt; URL de exportación .csv</strong> para sincronización 24/7 automática.</span>
-                <span class="font-mono text-[11px] text-slate-700">Comisiones: 50% ALIANZA S.A.S. | 50% Fuerza de Ventas (50% un solo agente o 25%/25% dividido)</span>
+            <div class="bg-slate-950 p-2.5 text-[10px] text-slate-500 font-bold flex justify-between items-center border-t border-slate-800">
+                <span>Total Registros: <span id="recordCount" class="text-white">0</span></span>
+                <span>* Las liquidaciones se dividen automáticamente al presionar el estado del activo.</span>
             </div>
         </div>
     </div>
 
     <!-- MODAL REGISTRO DE VENDEDOR & CIERRE DE VENTA -->
     <div id="settleSoldModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="glass-card rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-white/20">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
-                    <i class="fa-solid fa-handshake-angle text-emerald-600"></i> Liquidación de Venta & Reparto
+        <div class="glass-panel rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-slate-800">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h3 class="text-base font-extrabold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-handshake-angle text-emerald-400"></i> Liquidación de Venta & Reparto
                 </h3>
-                <button onclick="closeModal('settleSoldModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+                <button onclick="closeModal('settleSoldModal')" class="text-slate-400 hover:text-slate-200"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
 
             <form id="settleSoldForm" onsubmit="handleConfirmSettleSold(event)" class="space-y-3 text-xs">
                 <input type="hidden" id="settleItemId">
 
                 <div>
-                    <span class="block text-slate-500 font-bold mb-1">Activo Cerrado:</span>
-                    <span id="settleItemTitle" class="block font-extrabold text-slate-800 bg-slate-100 p-2.5 rounded-xl">RE-001 - Inmueble</span>
+                    <span class="block text-slate-400 font-bold mb-1">Activo Cerrado:</span>
+                    <span id="settleItemTitle" class="block font-extrabold text-white bg-slate-900 border border-slate-700 p-2.5 rounded-xl">RE-001 - Inmueble</span>
                 </div>
 
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">Precio Venta Final ($ USD)</label>
-                        <input type="number" step="0.01" id="settleFinalPrice" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 font-bold text-slate-900" required>
+                        <label class="block font-bold text-slate-300 mb-1">Precio Venta Final ($ USD)</label>
+                        <input type="number" step="0.01" id="settleFinalPrice" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2 font-bold text-white" required>
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">Comisión Total Bruta ($ USD)</label>
-                        <input type="number" step="0.01" id="settleTotalCommission" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 font-bold text-emerald-700" required>
+                        <label class="block font-bold text-slate-300 mb-1">Comisión Total Bruta ($ USD)</label>
+                        <input type="number" step="0.01" id="settleTotalCommission" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2 font-bold text-emerald-400" required>
                     </div>
                 </div>
 
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">Agente Captador (Registrado)</label>
-                    <input type="text" id="settleCaptadorName" class="w-full bg-slate-100 border border-slate-200 rounded-xl p-2 font-bold text-sky-800" readonly>
+                    <label class="block font-bold text-slate-300 mb-1">Agente Captador (Registrado)</label>
+                    <input type="text" id="settleCaptadorName" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2 font-bold text-sky-400" readonly>
                 </div>
 
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">Agente Vendedor (Quién cerró el cliente)</label>
-                    <input type="text" id="settleVendedorName" placeholder="Escribe el nombre del agente vendedor..." class="w-full bg-white border border-amber-300 rounded-xl p-2.5 font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500" required>
+                    <label class="block font-bold text-slate-300 mb-1">Agente Vendedor (Quién cerró el cliente)</label>
+                    <input type="text" id="settleVendedorName" placeholder="Escribe el nombre del agente vendedor..." class="w-full bg-slate-950 border border-amber-400/50 rounded-xl p-2.5 font-bold text-white focus:outline-none focus:ring-2 focus:ring-amber-500" required>
                     <p class="text-[10px] text-slate-500 mt-1">Si es el mismo Agente Captador, escribe su mismo nombre para asignarle el 50% íntegro de la bolsa de ventas.</p>
                 </div>
 
-                <div class="grid grid-cols-2 gap-2">
-                    <div>
-                        <label class="block font-bold text-slate-700 mb-1">Fecha de Cierre</label>
-                        <input type="text" id="settleClosingDate" placeholder="DD/MM/AAAA" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 text-slate-800">
-                    </div>
-                    <div>
-                        <label class="block font-bold text-slate-700 mb-1">Estado de Pago a Agentes</label>
-                        <select id="settlePaymentStatus" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 font-bold text-slate-800">
-                            <option value="🔴 Pendiente">🔴 Pendiente</option>
-                            <option value="🟡 En Proceso">🟡 En Proceso</option>
-                            <option value="🟢 PAGADO">🟢 PAGADO</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block font-bold text-slate-700 mb-1">Observaciones Notariales / Legales</label>
-                    <input type="text" id="settleLegalNotes" placeholder="No. Protocolo notarial, trámite de cancelación..." class="w-full bg-white border border-slate-200 rounded-xl p-2 text-slate-800">
-                </div>
-
                 <div class="pt-2 flex justify-end gap-2">
-                    <button type="button" onclick="closeModal('settleSoldModal')" class="bg-slate-200 text-slate-700 font-bold px-4 py-2 rounded-xl text-xs hover:bg-slate-300 transition">Cancelar</button>
+                    <button type="button" onclick="closeModal('settleSoldModal')" class="bg-slate-800 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs hover:bg-slate-700 transition">Cancelar</button>
                     <button type="submit" class="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold px-5 py-2 rounded-xl text-xs transition shadow flex items-center gap-1.5">
                         <i class="fa-solid fa-calculator"></i> Liquidar y Guardar
                     </button>
@@ -632,89 +626,67 @@
         </div>
     </div>
 
-    <!-- MODAL PANEL MAESTRO (CONFIGURACIÓN GLOBAL WEB - PRECARGADO Y EDITABLE) -->
+    <!-- MODAL PANEL MAESTRO (CONFIGURACIÓN GLOBAL WEB) -->
     <div id="masterPanelModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="glass-card rounded-3xl max-w-2xl w-full p-6 space-y-4 shadow-2xl max-h-[90vh] flex flex-col border border-white/20">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
-                    <i class="fa-solid fa-sliders text-amber-500"></i> Panel Maestro de Configuración Web
+        <div class="glass-panel rounded-3xl max-w-2xl w-full p-6 space-y-4 shadow-2xl max-h-[90vh] flex flex-col border border-slate-800">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h3 class="text-base font-extrabold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-sliders text-amber-400"></i> Panel Maestro de Configuración Web
                 </h3>
-                <button onclick="closeModal('masterPanelModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+                <button onclick="closeModal('masterPanelModal')" class="text-slate-400 hover:text-slate-200"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
 
             <div class="flex-1 overflow-y-auto space-y-4 p-1 modal-scroll">
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Nombre Comercial de la Empresa</label>
-                    <input type="text" id="cfgCompanyTitle" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800">
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Nombre Comercial de la Empresa</label>
+                    <input type="text" id="cfgCompanyTitle" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Lema Corporativo</label>
-                        <input type="text" id="cfgMotto" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800">
+                        <label class="block text-xs font-bold text-slate-300 mb-1">Lema Corporativo</label>
+                        <input type="text" id="cfgMotto" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Ubicación de Cobertura</label>
-                        <input type="text" id="cfgLocation" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800">
+                        <label class="block text-xs font-bold text-slate-300 mb-1">Ubicación de Cobertura</label>
+                        <input type="text" id="cfgLocation" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Biografía / Texto Descriptivo Principal</label>
-                    <textarea id="cfgBioText" rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800"></textarea>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Biografía / Texto Descriptivo Principal</label>
+                    <textarea id="cfgBioText" rows="3" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs text-white"></textarea>
                 </div>
 
-                <hr class="border-slate-100">
-                <div class="bg-red-50/70 p-4 rounded-2xl border border-red-100 space-y-2.5">
-                    <h4 class="text-xs font-extrabold text-red-700 uppercase flex items-center gap-1.5">
-                        <i class="fa-brands fa-youtube text-base"></i> Video de YouTube Oficial
-                    </h4>
-                    <p class="text-[11px] text-slate-500">Pega cualquier enlace (estándar, shorts o embebido). Se sincroniza de inmediato.</p>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Enlace de YouTube</label>
-                        <input type="text" id="cfgVideoUrl" placeholder="https://www.youtube.com/watch?v=..." class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-800 font-mono">
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-                        <div>
-                            <label class="block text-[11px] font-bold text-slate-700 mb-1">Título del Video</label>
-                            <input type="text" id="cfgVideoTitle" class="w-full bg-white border border-slate-300 rounded-xl px-2.5 py-1.5 text-xs text-slate-800">
-                        </div>
-                        <div>
-                            <label class="block text-[11px] font-bold text-slate-700 mb-1">Descripción corta</label>
-                            <input type="text" id="cfgVideoDesc" class="w-full bg-white border border-slate-300 rounded-xl px-2.5 py-1.5 text-xs text-slate-800">
-                        </div>
-                    </div>
-                </div>
-
-                <hr class="border-slate-100">
-                <h4 class="text-xs font-extrabold text-sky-800 uppercase">Ficha del Asesor Jurídico</h4>
+                <hr class="border-slate-800">
+                <h4 class="text-xs font-extrabold text-sky-400 uppercase">Ficha del Asesor Jurídico</h4>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Nombre Completo</label>
-                        <input type="text" id="cfgLawyerName" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800">
+                        <label class="block text-xs font-bold text-slate-300 mb-1">Nombre Completo</label>
+                        <input type="text" id="cfgLawyerName" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Cargo Notarial / Título</label>
-                        <input type="text" id="cfgLawyerTitle" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800">
+                        <label class="block text-xs font-bold text-slate-300 mb-1">Cargo Notarial / Título</label>
+                        <input type="text" id="cfgLawyerTitle" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Teléfono Directo</label>
-                        <input type="text" id="cfgLawyerPhone" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800">
+                        <label class="block text-xs font-bold text-slate-300 mb-1">Teléfono Directo</label>
+                        <input type="text" id="cfgLawyerPhone" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Correo Electrónico</label>
-                        <input type="text" id="cfgLawyerEmail" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800">
+                        <label class="block text-xs font-bold text-slate-300 mb-1">Correo Electrónico</label>
+                        <input type="text" id="cfgLawyerEmail" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
                     </div>
                 </div>
                 <div class="pt-2">
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Foto del Abogado Patrocinador</label>
-                    <button type="button" onclick="triggerFileSelect('lawyerFileInputMaster')" class="w-full bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded-xl px-3 py-2 text-xs font-bold text-slate-800 flex items-center justify-center gap-2 cursor-pointer">
-                        <i class="fa-solid fa-camera text-sky-600"></i> Seleccionar Nueva Foto del Abogado
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Foto del Abogado Patrocinador</label>
+                    <button type="button" onclick="triggerFileSelect('lawyerFileInputMaster')" class="w-full bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs font-bold text-white flex items-center justify-center gap-2 cursor-pointer">
+                        <i class="fa-solid fa-camera text-sky-400"></i> Seleccionar Nueva Foto del Abogado
                     </button>
                     <input type="file" id="lawyerFileInputMaster" accept="image/*" class="hidden" onchange="handleImageUpload(event, 'lawyerImg')">
                 </div>
             </div>
 
-            <div class="border-t border-slate-100 pt-3 flex justify-end gap-2">
-                <button onclick="closeModal('masterPanelModal')" class="bg-slate-200 text-slate-700 font-bold px-4 py-2 rounded-xl text-xs hover:bg-slate-300 transition">Cancelar</button>
+            <div class="border-t border-slate-800 pt-3 flex justify-end gap-2">
+                <button onclick="closeModal('masterPanelModal')" class="bg-slate-800 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs hover:bg-slate-700 transition">Cancelar</button>
                 <button onclick="saveMasterConfig()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold px-5 py-2 rounded-xl text-xs transition shadow-md flex items-center gap-1.5">
                     <i class="fa-solid fa-floppy-disk"></i> Guardar Cambios
                 </button>
@@ -724,31 +696,31 @@
 
     <!-- MODAL REGISTRO / EDICIÓN DE CAPTACIÓN -->
     <div id="productModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="glass-card rounded-3xl max-w-2xl w-full p-6 space-y-4 shadow-2xl max-h-[90vh] flex flex-col border border-white/20">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                <h3 class="text-base font-extrabold text-slate-900" id="productModalTitle">Registrar Nueva Captación</h3>
-                <button onclick="closeModal('productModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+        <div class="glass-panel rounded-3xl max-w-2xl w-full p-6 space-y-4 shadow-2xl max-h-[90vh] flex flex-col border border-slate-800">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h3 class="text-base font-extrabold text-white" id="productModalTitle">Registrar Nueva Captación</h3>
+                <button onclick="closeModal('productModal')" class="text-slate-400 hover:text-slate-200"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
 
             <form id="productForm" onsubmit="handleSaveProduct(event)" class="flex-1 overflow-y-auto space-y-3.5 p-1 modal-scroll">
                 <input type="hidden" id="prodEditId">
 
                 <!-- SELECTOR DE DESTACADO PARA EL BANNER SUPERIOR -->
-                <div class="bg-amber-50 p-3 rounded-2xl border border-amber-300 flex items-center justify-between">
+                <div class="bg-amber-500/10 p-3 rounded-2xl border border-amber-500/30 flex items-center justify-between">
                     <div>
-                        <span class="block text-xs font-extrabold text-amber-950">⭐ Destacar en Galería de Oportunidades</span>
-                        <span class="text-[10px] text-amber-700">Aparecerá en el carrusel superior automático</span>
+                        <span class="block text-xs font-extrabold text-amber-400">⭐ Destacar en Galería de Oportunidades</span>
+                        <span class="text-[10px] text-slate-400">Aparecerá en el carrusel superior automático</span>
                     </div>
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input type="checkbox" id="prodIsFeatured" class="sr-only peer" checked>
-                        <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
+                        <div class="w-11 h-6 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
                     </label>
                 </div>
                 
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Categoría</label>
-                        <select id="prodCategory" onchange="toggleCategoryFields()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-bold">
+                        <label class="block text-xs font-bold text-slate-300 mb-1">Categoría</label>
+                        <select id="prodCategory" onchange="toggleCategoryFields()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white font-bold">
                             <option value="VH">VH - Vehículo (Carro / Moto / Camioneta)</option>
                             <option value="RE">RE - Bienes Raíces Venta</option>
                             <option value="AR">AR - Bienes Raíces Arriendo</option>
@@ -757,8 +729,8 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Estado de Disponibilidad</label>
-                        <select id="prodStatus" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 font-bold">
+                        <label class="block text-xs font-bold text-slate-300 mb-1">Estado de Disponibilidad</label>
+                        <select id="prodStatus" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white font-bold">
                             <option value="DISPONIBLE">✅ Disponible</option>
                             <option value="OFERTA">🔥 Oferta Especial</option>
                             <option value="REMATE">💥 Liquidación/Remate</option>
@@ -770,112 +742,112 @@
 
                 <div class="grid grid-cols-3 gap-2">
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Código Único (Automático)</label>
-                        <input type="text" id="prodCode" placeholder="VH-001" class="w-full bg-slate-100 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 font-mono font-extrabold">
+                        <label class="block text-xs font-bold text-slate-300 mb-1">Código Único (Automático)</label>
+                        <input type="text" id="prodCode" placeholder="VH-001" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-amber-400 font-mono font-extrabold">
                     </div>
                     <div class="col-span-2">
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Título / Detalle Corto</label>
-                        <input type="text" id="prodTitle" placeholder="Ej: Camioneta Chevrolet D-Max 4x4 Diésel" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800">
+                        <label class="block text-xs font-bold text-slate-300 mb-1">Título / Detalle Corto</label>
+                        <input type="text" id="prodTitle" placeholder="Ej: Camioneta Chevrolet D-Max 4x4 Diésel" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
                     </div>
                 </div>
 
                 <!-- UBICACIÓN GEOGRÁFICA Y PRECIOS -->
-                <div class="bg-slate-50/80 p-3.5 rounded-2xl border border-slate-200 space-y-2">
-                    <h5 class="text-xs font-extrabold text-sky-800 flex items-center gap-1.5"><i class="fa-solid fa-map-location-dot"></i> Ubicación Geográfica & Precios</h5>
+                <div class="bg-slate-900/60 p-3.5 rounded-2xl border border-slate-800 space-y-2">
+                    <h5 class="text-xs font-extrabold text-sky-400 flex items-center gap-1.5"><i class="fa-solid fa-map-location-dot"></i> Ubicación Geográfica & Precios</h5>
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                        <input type="text" id="prodCiudad" placeholder="Ciudad (ej: El Coca)" class="bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs">
-                        <input type="text" id="prodParroquia" placeholder="Parroquia" class="bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs">
-                        <input type="text" id="prodSector" placeholder="Sector / Barrio" class="bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs">
-                        <input type="text" id="prodPrice" placeholder="Precio ($ USD)" class="bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs font-bold text-amber-600">
+                        <input type="text" id="prodCiudad" placeholder="Ciudad (ej: El Coca)" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
+                        <input type="text" id="prodParroquia" placeholder="Parroquia" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
+                        <input type="text" id="prodSector" placeholder="Sector / Barrio" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
+                        <input type="text" id="prodPrice" placeholder="Precio ($ USD)" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs font-bold text-amber-400">
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        <input type="text" id="prodOfferPrice" placeholder="🔥 Precio Oferta ($ USD opcional)" class="bg-white border border-amber-300 rounded-xl px-2.5 py-1.5 text-xs font-bold text-amber-700">
-                        <input type="text" id="prodDireccion" placeholder="Dirección Exacta o Referencia" class="w-full bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs">
+                        <input type="text" id="prodOfferPrice" placeholder="🔥 Precio Oferta ($ USD opcional)" class="bg-slate-950 border border-amber-500/40 rounded-xl px-2.5 py-1.5 text-xs font-bold text-amber-400">
+                        <input type="text" id="prodDireccion" placeholder="Dirección Exacta o Referencia" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
                     </div>
                 </div>
 
                 <!-- DATOS DEL PROPIETARIO Y ACUERDO LEGAL (HOJA EXCEL) -->
-                <div class="bg-sky-50/70 p-3.5 rounded-2xl border border-sky-200 space-y-2 text-xs">
-                    <h5 class="font-extrabold text-sky-950 flex items-center gap-1.5"><i class="fa-solid fa-file-contract text-sky-600"></i> Propietario & Situación Jurídica (Hoja Excel)</h5>
+                <div class="bg-sky-950/20 p-3.5 rounded-2xl border border-sky-500/30 space-y-2 text-xs">
+                    <h5 class="font-extrabold text-sky-400 flex items-center gap-1.5"><i class="fa-solid fa-file-contract"></i> Propietario & Situación Jurídica (Hoja Excel)</h5>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                        <input type="text" id="prodOwnerName" placeholder="Nombre Completo Propietario" class="bg-white border border-sky-300 rounded-xl px-2.5 py-1.5">
-                        <input type="text" id="prodOwnerDocPhone" placeholder="Cédula / RUC / Teléfono" class="bg-white border border-sky-300 rounded-xl px-2.5 py-1.5">
-                        <select id="prodContractType" class="bg-white border border-sky-300 rounded-xl px-2.5 py-1.5 font-bold">
+                        <input type="text" id="prodOwnerName" placeholder="Nombre Completo Propietario" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-white">
+                        <input type="text" id="prodOwnerDocPhone" placeholder="Cédula / RUC / Teléfono" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-white">
+                        <select id="prodContractType" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 font-bold text-white">
                             <option value="Corretaje Libre">Corretaje Libre</option>
                             <option value="Exclusividad">Exclusividad</option>
                             <option value="Saneamiento Jurídico">Saneamiento Jurídico</option>
                         </select>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                        <select id="prodLegalStatus" class="bg-white border border-sky-300 rounded-xl px-2.5 py-1.5 font-bold">
+                        <select id="prodLegalStatus" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 font-bold text-white">
                             <option value="Escrituras al día">📜 Escrituras al día</option>
                             <option value="En Trámite">⏳ En Trámite</option>
                             <option value="Con Gravamen">⚠️ Con Gravamen / Hipoteca</option>
                         </select>
-                        <input type="text" id="prodComision" placeholder="Comisión (ej: 5% o 2500)" class="bg-white border border-sky-300 rounded-xl px-2.5 py-1.5 font-bold text-emerald-700">
-                        <input type="text" id="prodAgentName" placeholder="👤 Agente Captador Responsable" class="bg-white border border-sky-300 rounded-xl px-2.5 py-1.5 font-bold text-sky-900">
+                        <input type="text" id="prodComision" placeholder="Comisión ($ o %)" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 font-bold text-emerald-400">
+                        <input type="text" id="prodAgentName" placeholder="👤 Agente Captador Responsable" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 font-bold text-sky-400">
                     </div>
                 </div>
 
                 <!-- ESPECIFICACIONES DINÁMICAS -->
-                <div id="fieldsVehicles" class="bg-amber-50/60 p-3.5 rounded-2xl border border-amber-100 space-y-2">
-                    <h5 class="text-xs font-extrabold text-amber-900"><i class="fa-solid fa-truck-monster"></i> Ficha de Vehículo / Maquinaria</h5>
+                <div id="fieldsVehicles" class="bg-slate-900/60 p-3.5 rounded-2xl border border-slate-800 space-y-2">
+                    <h5 class="text-xs font-extrabold text-amber-400"><i class="fa-solid fa-truck-monster"></i> Ficha de Vehículo / Maquinaria</h5>
                     <div class="grid grid-cols-3 gap-2">
-                        <input type="text" id="vhAno" placeholder="Año / Modelo" class="bg-white border border-amber-200 rounded-xl px-2.5 py-1.5 text-xs">
-                        <input type="text" id="vhKm" placeholder="Kilometraje / Horas" class="bg-white border border-amber-200 rounded-xl px-2.5 py-1.5 text-xs">
-                        <input type="text" id="vhTransmision" placeholder="Transmisión / Motor" class="bg-white border border-amber-200 rounded-xl px-2.5 py-1.5 text-xs">
+                        <input type="text" id="vhAno" placeholder="Año / Modelo" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
+                        <input type="text" id="vhKm" placeholder="Kilometraje / Horas" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
+                        <input type="text" id="vhTransmision" placeholder="Transmisión / Motor" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
                     </div>
-                    <input type="text" id="vhDetalles" placeholder="Detalles mecánicos y extras" class="w-full bg-white border border-amber-200 rounded-xl px-2.5 py-1.5 text-xs">
+                    <input type="text" id="vhDetalles" placeholder="Detalles mecánicos y extras" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
                 </div>
 
-                <div id="fieldsRealEstate" class="hidden bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-2">
-                    <h5 class="text-xs font-extrabold text-slate-800"><i class="fa-solid fa-house"></i> Parámetros de Bienes Raíces</h5>
+                <div id="fieldsRealEstate" class="hidden bg-slate-900/60 p-3.5 rounded-2xl border border-slate-800 space-y-2">
+                    <h5 class="text-xs font-extrabold text-sky-400"><i class="fa-solid fa-house"></i> Parámetros de Bienes Raíces</h5>
                     <div class="grid grid-cols-3 gap-2">
-                        <input type="text" id="reMetros2" placeholder="Área Total (m²)" class="bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs">
-                        <input type="text" id="reFrente" placeholder="Metros Frente" class="bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs">
-                        <input type="text" id="reFondo" placeholder="Metros Fondo" class="bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs">
+                        <input type="text" id="reMetros2" placeholder="Área Total (m²)" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
+                        <input type="text" id="reFrente" placeholder="Metros Frente" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
+                        <input type="text" id="reFondo" placeholder="Metros Fondo" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
                     </div>
                     <div class="grid grid-cols-4 gap-2">
-                        <input type="text" id="reConstruccion" placeholder="Área Const. (m²)" class="bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs">
-                        <input type="text" id="rePisos" placeholder="Pisos" class="bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs">
-                        <input type="text" id="reHabitaciones" placeholder="Habitaciones" class="bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs">
-                        <input type="text" id="reBanos" placeholder="Baños" class="bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs">
+                        <input type="text" id="reConstruccion" placeholder="Área Const. (m²)" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
+                        <input type="text" id="rePisos" placeholder="Pisos" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
+                        <input type="text" id="reHabitaciones" placeholder="Habitaciones" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
+                        <input type="text" id="reBanos" placeholder="Baños" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
                     </div>
-                    <div class="flex flex-wrap items-center gap-3 text-xs text-slate-700 font-semibold pt-1">
+                    <div class="flex flex-wrap items-center gap-3 text-xs text-slate-300 font-semibold pt-1">
                         <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="srvAgua"> Agua</label>
                         <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="srvLuz"> Luz</label>
                         <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="srvInternet"> Internet</label>
                         <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="srvAlcantarillado"> Alcantarillado</label>
-                        <label class="flex items-center gap-1 ml-auto text-sky-800 font-bold cursor-pointer"><input type="checkbox" id="srvEscrituras"> 📜 Escrituras al día</label>
+                        <label class="flex items-center gap-1 ml-auto text-sky-400 font-bold cursor-pointer"><input type="checkbox" id="srvEscrituras"> 📜 Escrituras al día</label>
                     </div>
                 </div>
 
-                <div id="fieldsSecondHand" class="hidden bg-purple-50/60 p-3.5 rounded-2xl border border-purple-100 space-y-2">
-                    <h5 class="text-xs font-extrabold text-purple-900"><i class="fa-solid fa-boxes-packing"></i> Artículos Usados / Equipos</h5>
+                <div id="fieldsSecondHand" class="hidden bg-slate-900/60 p-3.5 rounded-2xl border border-slate-800 space-y-2">
+                    <h5 class="text-xs font-extrabold text-purple-400"><i class="fa-solid fa-boxes-packing"></i> Artículos Usados / Equipos</h5>
                     <div class="grid grid-cols-2 gap-2">
-                        <input type="text" id="lqEstado" placeholder="Estado técnico (ej: 10/10)" class="bg-white border border-purple-200 rounded-xl px-2.5 py-1.5 text-xs">
-                        <input type="text" id="lqTiempoUso" placeholder="Tiempo de uso" class="bg-white border border-purple-200 rounded-xl px-2.5 py-1.5 text-xs">
+                        <input type="text" id="lqEstado" placeholder="Estado técnico (ej: 10/10)" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
+                        <input type="text" id="lqTiempoUso" placeholder="Tiempo de uso" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
                     </div>
                 </div>
 
                 <!-- CARGA MÚLTIPLE HASTA 5 FOTOS -->
-                <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-2">
+                <div class="bg-slate-900/60 p-3.5 rounded-2xl border border-slate-800 space-y-2">
                     <div class="flex items-center justify-between">
-                        <label class="block text-xs font-bold text-slate-700">Fotos del Activo (Hasta 5 fotos optimizadas)</label>
-                        <span id="uploadStatusText" class="text-[11px] font-bold text-sky-700 hidden"></span>
+                        <label class="block text-xs font-bold text-slate-300">Fotos del Activo (Hasta 5 fotos optimizadas)</label>
+                        <span id="uploadStatusText" class="text-[11px] font-bold text-sky-400 hidden"></span>
                     </div>
-                    <input type="file" id="prodFilesInput" accept="image/*" multiple onchange="previewSelectedFiles(event)" class="w-full bg-white border border-slate-200 rounded-xl p-2 text-xs text-slate-700 file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-sky-600 file:text-white">
-                    <input type="text" id="prodUrlDirect" placeholder="O pega enlace directo de imagen (https://...)" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs text-slate-800">
+                    <input type="file" id="prodFilesInput" accept="image/*" multiple onchange="previewSelectedFiles(event)" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2 text-xs text-slate-300 file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-sky-600 file:text-white">
+                    <input type="text" id="prodUrlDirect" placeholder="O pega enlace directo de imagen (https://...)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white">
                     <div id="previewThumbsContainer" class="flex gap-2 overflow-x-auto pt-1 empty:hidden"></div>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Descripción / Ficha Técnica Completa</label>
-                    <textarea id="prodDesc" rows="3" placeholder="Detalles completos, comodidades, términos..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800"></textarea>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Descripción / Ficha Técnica Completa</label>
+                    <textarea id="prodDesc" rows="3" placeholder="Detalles completos, comodidades, términos..." class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs text-white"></textarea>
                 </div>
 
                 <div class="pt-2 flex justify-end gap-2">
-                    <button type="button" onclick="closeModal('productModal')" class="bg-slate-200 text-slate-700 font-bold px-4 py-2 rounded-xl text-xs hover:bg-slate-300 transition">Cancelar</button>
+                    <button type="button" onclick="closeModal('productModal')" class="bg-slate-800 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs hover:bg-slate-700 transition">Cancelar</button>
                     <button type="submit" id="btnSaveProduct" class="bg-sky-600 hover:bg-sky-500 text-white font-extrabold px-5 py-2 rounded-xl text-xs transition shadow-md flex items-center gap-1.5 cursor-pointer">
                         <i class="fa-solid fa-cloud-arrow-up"></i> Guardar Activo en la Nube
                     </button>
@@ -886,57 +858,57 @@
 
     <!-- MODAL VER FICHA TÉCNICA DETALLADA -->
     <div id="detailModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="glass-card rounded-3xl max-w-2xl w-full p-6 space-y-4 shadow-2xl max-h-[90vh] flex flex-col border border-white/20">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+        <div class="glass-panel rounded-3xl max-w-2xl w-full p-6 space-y-4 shadow-2xl max-h-[90vh] flex flex-col border border-slate-800">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
                 <div>
                     <span id="detCodeBadge" class="text-[10px] font-mono font-bold bg-amber-500 text-slate-950 px-2 py-0.5 rounded-md">RE-001</span>
                     <span id="detStatusBadge" class="text-[10px] font-bold bg-emerald-600 text-white px-2 py-0.5 rounded-md ml-1">✅ Disponible</span>
-                    <h3 id="detTitle" class="text-lg font-extrabold text-slate-900 mt-1">Título</h3>
+                    <h3 id="detTitle" class="text-lg font-extrabold text-white mt-1">Título</h3>
                 </div>
-                <button onclick="closeModal('detailModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+                <button onclick="closeModal('detailModal')" class="text-slate-400 hover:text-slate-200"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
 
             <div class="flex-1 overflow-y-auto space-y-4 p-1 modal-scroll">
-                <div class="relative w-full h-64 sm:h-72 bg-slate-900 rounded-2xl overflow-hidden flex items-center justify-center">
+                <div class="relative w-full h-64 sm:h-72 bg-slate-950 rounded-2xl overflow-hidden flex items-center justify-center">
                     <img id="detMainImg" src="" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80';">
                 </div>
                 <div id="detThumbsContainer" class="flex gap-2 overflow-x-auto pb-1"></div>
 
-                <div class="flex flex-wrap justify-between items-center gap-2 bg-slate-50/80 p-3.5 rounded-2xl border border-slate-200">
+                <div class="flex flex-wrap justify-between items-center gap-2 bg-slate-900/80 p-3.5 rounded-2xl border border-slate-800">
                     <div>
                         <span class="block text-[10px] uppercase font-bold text-slate-400">Precio Comercial</span>
                         <div class="flex items-center gap-2">
-                            <span id="detPrice" class="text-lg font-extrabold text-slate-900">$0.00 USD</span>
-                            <span id="detOfferPrice" class="text-base font-extrabold text-amber-600 hidden"></span>
+                            <span id="detPrice" class="text-lg font-extrabold text-white">$0.00 USD</span>
+                            <span id="detOfferPrice" class="text-base font-extrabold text-amber-400 hidden"></span>
                         </div>
                     </div>
                     <div>
                         <span class="block text-[10px] uppercase font-bold text-slate-400">Ubicación</span>
-                        <span id="detLocation" class="text-xs font-bold text-slate-800">El Coca</span>
+                        <span id="detLocation" class="text-xs font-bold text-slate-200">El Coca</span>
                     </div>
-                    <div class="bg-sky-100/70 border border-sky-300 text-sky-900 px-3 py-1 rounded-xl text-xs font-bold">
-                        <i class="fa-solid fa-user-tie text-sky-600 mr-1"></i> Captador: <span id="detAgentDisplay">Gerencia</span>
+                    <div class="bg-sky-950 border border-sky-400/30 text-sky-300 px-3 py-1 rounded-xl text-xs font-bold">
+                        <i class="fa-solid fa-user-tie text-sky-400 mr-1"></i> Captador: <span id="detAgentDisplay">Gerencia</span>
                     </div>
                 </div>
 
-                <div id="detTechnicalBox" class="bg-sky-50/80 p-3.5 rounded-2xl border border-sky-100 text-xs text-slate-700 space-y-1.5"></div>
+                <div id="detTechnicalBox" class="bg-slate-900/60 p-3.5 rounded-2xl border border-slate-800 text-xs text-slate-300 space-y-1.5"></div>
 
                 <div>
-                    <h4 class="text-xs font-extrabold text-slate-800 uppercase mb-1">Descripción Técnica</h4>
-                    <p id="detDesc" class="text-xs text-slate-600 leading-relaxed whitespace-pre-line bg-slate-50/80 p-3.5 rounded-2xl border border-slate-100"></p>
+                    <h4 class="text-xs font-extrabold text-white uppercase mb-1">Descripción Técnica</h4>
+                    <p id="detDesc" class="text-xs text-slate-300 leading-relaxed whitespace-pre-line bg-slate-900/60 p-3.5 rounded-2xl border border-slate-800"></p>
                 </div>
 
                 <!-- SECCIÓN PRIVADA DE DATOS INTERNOS -->
-                <div id="detPrivateSection" class="hidden bg-amber-50 p-3.5 rounded-2xl border border-amber-200 space-y-1 text-xs">
-                    <h5 class="font-extrabold text-amber-900 flex items-center gap-1"><i class="fa-solid fa-user-lock"></i> Datos Internos de Captación & Legal</h5>
-                    <p class="text-slate-700"><strong>Propietario:</strong> <span id="detPrivateOwner">-</span> (<span id="detPrivateDocPhone">-</span>)</p>
-                    <p class="text-slate-700"><strong>Tipo Contrato / Situación:</strong> <span id="detPrivateContract">-</span> | <span id="detPrivateLegal">-</span></p>
-                    <p class="text-slate-700"><strong>Acuerdo Comisión:</strong> <span id="detPrivateComision">-</span> | <strong>Agente Captador:</strong> <span id="detPrivateAgent">-</span></p>
+                <div id="detPrivateSection" class="hidden bg-amber-500/10 p-3.5 rounded-2xl border border-amber-500/30 space-y-1 text-xs">
+                    <h5 class="font-extrabold text-amber-400 flex items-center gap-1"><i class="fa-solid fa-user-lock"></i> Datos Internos de Captación & Legal</h5>
+                    <p class="text-slate-300"><strong>Propietario:</strong> <span id="detPrivateOwner">-</span> (<span id="detPrivateDocPhone">-</span>)</p>
+                    <p class="text-slate-300"><strong>Tipo Contrato / Situación:</strong> <span id="detPrivateContract">-</span> | <span id="detPrivateLegal">-</span></p>
+                    <p class="text-slate-300"><strong>Acuerdo Comisión:</strong> <span id="detPrivateComision">-</span> | <strong>Agente Captador:</strong> <span id="detPrivateAgent">-</span></p>
                 </div>
             </div>
 
-            <div class="border-t border-slate-100 pt-3 flex flex-wrap justify-between items-center gap-2">
-                <button onclick="closeModal('detailModal')" class="bg-slate-200 text-slate-700 font-bold px-4 py-2 rounded-xl text-xs hover:bg-slate-300 transition">Cerrar</button>
+            <div class="border-t border-slate-800 pt-3 flex flex-wrap justify-between items-center gap-2">
+                <button onclick="closeModal('detailModal')" class="bg-slate-800 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs hover:bg-slate-700 transition">Cerrar</button>
                 <a id="detWaConsultBtn" href="#" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-5 py-2 rounded-xl text-xs transition shadow-md flex items-center gap-2">
                     <i class="fa-brands fa-whatsapp text-sm"></i> Contactar a Gerencia
                 </a>
@@ -946,23 +918,23 @@
 
     <!-- MODAL DOSSIER INSTITUCIONAL -->
     <div id="infoMenuModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="glass-card rounded-3xl max-w-3xl w-full p-6 space-y-4 shadow-2xl max-h-[90vh] flex flex-col border border-white/20">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                <h3 class="text-lg font-extrabold text-slate-900 flex items-center gap-2">
-                    <i class="fa-solid fa-building text-sky-600"></i> Dossier Institucional & Garantía Legal
+        <div class="glass-panel rounded-3xl max-w-3xl w-full p-6 space-y-4 shadow-2xl max-h-[90vh] flex flex-col border border-slate-800">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h3 class="text-lg font-extrabold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-building text-sky-400"></i> Dossier Institucional & Garantía Legal
                 </h3>
-                <button onclick="closeModal('infoMenuModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+                <button onclick="closeModal('infoMenuModal')" class="text-slate-400 hover:text-slate-200"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
 
-            <div class="flex flex-wrap gap-2 border-b border-slate-100 pb-2 text-xs font-bold">
+            <div class="flex flex-wrap gap-2 border-b border-slate-800 pb-2 text-xs font-bold">
                 <button onclick="setInfoTab('MISION')" class="info-tab-btn bg-sky-600 text-white px-3.5 py-1.5 rounded-xl transition shadow-sm">Misión</button>
-                <button onclick="setInfoTab('HONORARIOS')" class="info-tab-btn bg-slate-100 text-slate-700 hover:bg-slate-200 px-3.5 py-1.5 rounded-xl transition">Cobro por Éxito</button>
-                <button onclick="setInfoTab('RESPALDO')" class="info-tab-btn bg-slate-100 text-slate-700 hover:bg-slate-200 px-3.5 py-1.5 rounded-xl transition">Respaldo Notarial</button>
+                <button onclick="setInfoTab('HONORARIOS')" class="info-tab-btn bg-slate-900 border border-slate-700 text-slate-300 hover:bg-slate-800 px-3.5 py-1.5 rounded-xl transition">Cobro por Éxito</button>
+                <button onclick="setInfoTab('RESPALDO')" class="info-tab-btn bg-slate-900 border border-slate-700 text-slate-300 hover:bg-slate-800 px-3.5 py-1.5 rounded-xl transition">Respaldo Notarial</button>
             </div>
 
-            <div id="infoTabContent" class="flex-1 overflow-y-auto space-y-3 p-1 modal-scroll text-xs text-slate-600 leading-relaxed"></div>
+            <div id="infoTabContent" class="flex-1 overflow-y-auto space-y-3 p-1 modal-scroll text-xs text-slate-300 leading-relaxed"></div>
 
-            <div class="border-t border-slate-100 pt-3 flex justify-end">
+            <div class="border-t border-slate-800 pt-3 flex justify-end">
                 <button onclick="closeModal('infoMenuModal')" class="bg-slate-900 text-white font-bold px-5 py-2 rounded-xl text-xs hover:bg-slate-800 transition">Entendido</button>
             </div>
         </div>
@@ -970,28 +942,28 @@
 
     <!-- MODAL CONSIGNAR ACTIVO (QUIERO VENDER UN ACTIVO) -->
     <div id="consignarModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="glass-card rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-white/20">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
-                    <i class="fa-solid fa-plus-circle text-amber-500"></i> Quiero vender un Activo
+        <div class="glass-panel rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-slate-800">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h3 class="text-base font-extrabold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-plus-circle text-amber-400"></i> Quiero vender un Activo
                 </h3>
-                <button onclick="closeModal('consignarModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+                <button onclick="closeModal('consignarModal')" class="text-slate-400 hover:text-slate-200"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
-            <p class="text-xs text-slate-600 leading-relaxed">
+            <p class="text-xs text-slate-300 leading-relaxed">
                 Envíe los detalles de su bien a la oficina de <strong>GESTIÓN COMERCIAL</strong> de ALIANZA ESTRATÉGICA S.A.S.
             </p>
             <div class="space-y-3">
-                <input type="text" id="csgOwnerName" placeholder="Su Nombre Completo" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs">
-                <select id="csgCategory" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold">
+                <input type="text" id="csgOwnerName" placeholder="Su Nombre Completo" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
+                <select id="csgCategory" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs font-semibold text-white">
                     <option value="Vehiculo">Vehículo / Camioneta</option>
                     <option value="Bienes Raices Venta">Bienes Raíces (Venta)</option>
                     <option value="Bienes Raices Arriendo">Bienes Raíces (Arriendo)</option>
                     <option value="Maquinaria">Maquinaria Pesada</option>
                     <option value="Segunda Mano">Artículo de Segunda Mano</option>
                 </select>
-                <input type="text" id="csgLocation" placeholder="Ubicación y Dirección Exacta" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs">
-                <input type="text" id="csgPrice" placeholder="Precio Estimado ($ USD)" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs">
-                <textarea id="csgDetails" rows="2" placeholder="Descripción breve del activo..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs"></textarea>
+                <input type="text" id="csgLocation" placeholder="Ubicación y Dirección Exacta" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
+                <input type="text" id="csgPrice" placeholder="Precio Estimado ($ USD)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
+                <textarea id="csgDetails" rows="2" placeholder="Descripción breve del activo..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"></textarea>
                 <button onclick="sendConsignarWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold py-2.5 rounded-xl text-xs transition shadow-lg flex items-center justify-center gap-2">
                     <i class="fa-brands fa-whatsapp text-base"></i> Enviar por WhatsApp a Gestión Comercial
                 </button>
@@ -1001,14 +973,14 @@
 
     <!-- MODAL COMPARTIR WEB -->
     <div id="shareModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="glass-card rounded-3xl max-w-sm w-full p-6 space-y-4 shadow-2xl text-center border border-white/20">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                <h3 class="text-base font-extrabold text-slate-900">Compartir Plataforma</h3>
-                <button onclick="closeModal('shareModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+        <div class="glass-panel rounded-3xl max-w-sm w-full p-6 space-y-4 shadow-2xl text-center border border-slate-800">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h3 class="text-base font-extrabold text-white">Compartir Plataforma</h3>
+                <button onclick="closeModal('shareModal')" class="text-slate-400 hover:text-slate-200"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
-            <p class="text-xs text-slate-600">Copie el enlace oficial para compartir en redes:</p>
+            <p class="text-xs text-slate-300">Copie el enlace oficial para compartir en redes:</p>
             <div class="flex gap-2">
-                <input type="text" id="shareUrlInput" readonly value="https://alianzaestrategica2026-byte.github.io/alianzaestrategica/" class="flex-1 bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-xs font-mono">
+                <input type="text" id="shareUrlInput" readonly value="https://alianzaestrategica2026-byte.github.io/alianzaestrategica/" class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs font-mono text-sky-400">
                 <button onclick="copyShareUrl()" class="bg-sky-600 text-white px-3 py-2 rounded-xl text-xs font-bold hover:bg-sky-500">Copiar</button>
             </div>
         </div>
@@ -1023,9 +995,6 @@
             bioText: "Portal oficial de ALIANZA ESTRATÉGICA S.A.S. en El Coca, Orellana. Gerente General & Representante Legal: Adrián Arturo Íñiguez Lucio | Patrocinio Jurídico Externo: Abg. Carlos Alfredo Íñiguez Rodríguez. Transparencia, legalidad y seguridad transaccional garantizada.",
             coverImg: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80",
             profileLogo: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=400&q=80",
-            videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-            videoTitle: "Operaciones transparentes en ALIANZA ESTRATÉGICA S.A.S.",
-            videoDesc: "Intermediación formal, contratos de compraventa y revisión documental en Notarías y Registro de la Propiedad.",
             lawyerName: "Abg. Carlos Alfredo Íñiguez Rodríguez",
             lawyerTitle: "Asesor Jurídico Externo & Especialista Notarial",
             lawyerPhone: "097 922 2328",
@@ -1057,49 +1026,15 @@
             console.warn('Firebase init fallback:', e);
         }
 
-        const INITIAL_INVENTORY = [
-            {
-                id: 'item_re_001',
-                code: 'RE-001',
-                dateCreated: '31/10/2026',
-                category: 'RE',
-                categoryType: 'Bienes Raíces Venta',
-                status: 'OFERTA',
-                isFeatured: true,
-                title: 'CASA Y LE REGALO EL TERRENO! 580 m² EN EL COCA 💥🏡',
-                ciudad: 'El Coca',
-                parroquia: 'Puerto Francisco de Orellana',
-                sector: 'Barrio Central',
-                direccion: 'Calle principal junto al parque',
-                priceStr: '$45,000 USD',
-                offerPriceStr: '$39,500 USD',
-                realSalePrice: 45000,
-                comisionStr: '5%',
-                commissionPactada: 2250,
-                ownerName: 'Familia Mendoza',
-                ownerDocPhone: '2200123456 / 0987654321',
-                contractType: 'Exclusividad',
-                legalStatus: 'Escrituras al día',
-                agentName: 'Adrián Arturo Íñiguez Lucio',
-                sellerAgentName: '',
-                payCaptador: 0,
-                payVendedor: 0,
-                netEmpresa: 0,
-                closingDate: '-',
-                paymentStatus: '🔴 Pendiente',
-                paidTimestamp: '-',
-                legalNotes: 'Minuta ingresada en Notaría Primera',
-                location: 'El Coca, Barrio Central',
-                images: ['https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80'],
-                desc: 'Excelente propiedad con amplios espacios. Terreno totalmente plano libre de gravámenes listo para escrituración inmediata.',
-                reMetros2: '580', reFrente: '15', reFondo: '38', reConstruccion: '120', rePisos: '1', reHabitaciones: '3', reBanos: '2',
-                srvAgua: true, srvLuz: true, srvInternet: true, srvAlcantarillado: true, srvEscrituras: true
-            }
+        let inventory = [
+            { id: "1", code: "VH-001", dateCreated: "31/10/2026", category: "VH", categoryType: "Vehículo", title: "🚗 CHEVROLET AVEO EMOTION 1.6L AL DÍA", ownerName: "Freddy Tuquerés", realSalePrice: 11000.00, priceStr: "$11,000 USD", commissionPactada: 500.00, comisionStr: "$500 USD", agentName: "Adrian Iñiguez", sellerAgentName: "", status: "DISPONIBLE", images: ["https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80"], location: "El Coca, Orellana", isFeatured: true },
+            { id: "2", code: "RE-001", dateCreated: "31/10/2026", category: "RE", categoryType: "Bienes Raíces Venta", title: "🏡 LOTE DE 240 m² CON CASITA EN EL COCA", ownerName: "Juan Lizuriaga", realSalePrice: 25000.00, priceStr: "$25,000 USD", commissionPactada: 1500.00, comisionStr: "$1,500 USD", agentName: "Adrian Iñiguez", sellerAgentName: "", status: "DISPONIBLE", images: ["https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80"], location: "El Coca, Barrio Central", isFeatured: true },
+            { id: "3", code: "VH-002", dateCreated: "01/11/2026", category: "VH", categoryType: "Vehículo", title: "🛻 CAMIONETA NISSAN DATSUN 1200", ownerName: "Juan Lizuriaga", realSalePrice: 5000.00, priceStr: "$5,000 USD", commissionPactada: 300.00, comisionStr: "$300 USD", agentName: "Adrian Iñiguez", sellerAgentName: "", status: "DISPONIBLE", images: ["https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=800&q=80"], location: "El Coca, Orellana", isFeatured: false },
+            { id: "4", code: "VH-003", dateCreated: "01/11/2026", category: "VH", categoryType: "Vehículo", title: "🏍️ MOTO SUKIDA STIFF 150 AL DÍA", ownerName: "Juan Lizuriaga", realSalePrice: 800.00, priceStr: "$800 USD", commissionPactada: 160.00, comisionStr: "$160 USD", agentName: "Pedro luis", sellerAgentName: "", status: "DISPONIBLE", images: ["https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=800&q=80"], location: "El Coca, Orellana", isFeatured: false }
         ];
 
         let currentRole = 'GUEST';
         let appConfig = { ...DEFAULT_STATE };
-        let inventory = [];
         let activeCategory = 'ALL';
         let carouselIndex = 0;
         let carouselTimer = null;
@@ -1128,12 +1063,6 @@
                         const numPart = code.replace(prefix + '-', '');
                         const n = parseInt(numPart, 10);
                         if (!isNaN(n) && n > maxNum) maxNum = n;
-                    } else if (item.category === prefix && code) {
-                        const match = code.match(/\d+/);
-                        if (match) {
-                            const n = parseInt(match[0], 10);
-                            if (!isNaN(n) && n > maxNum) maxNum = n;
-                        }
                     }
                 });
             }
@@ -1190,35 +1119,6 @@
             });
         }
 
-        /* PARSER DE YOUTUBE / SHORTS */
-        function formatYouTubeEmbed(url) {
-            if (!url) return 'https://www.youtube.com/embed/dQw4w9WgXcQ';
-            let cleanUrl = url.trim();
-
-            if (cleanUrl.includes('<iframe')) {
-                const matchSrc = cleanUrl.match(/src=["'](.*?)["']/);
-                if (matchSrc && matchSrc[1]) cleanUrl = matchSrc[1];
-            }
-
-            if (cleanUrl.includes('embed/')) {
-                const idPart = cleanUrl.split('embed/')[1].split('?')[0];
-                return `https://www.youtube.com/embed/${idPart}?rel=0`;
-            }
-
-            let videoId = '';
-            if (cleanUrl.includes('watch?v=')) {
-                videoId = cleanUrl.split('watch?v=')[1].split('&')[0];
-            } else if (cleanUrl.includes('youtu.be/')) {
-                videoId = cleanUrl.split('youtu.be/')[1].split('?')[0];
-            } else if (cleanUrl.includes('/shorts/')) {
-                videoId = cleanUrl.split('/shorts/')[1].split('?')[0];
-            } else if (cleanUrl.includes('/live/')) {
-                videoId = cleanUrl.split('/live/')[1].split('?')[0];
-            }
-
-            return videoId ? `https://www.youtube.com/embed/${videoId}?rel=0` : cleanUrl;
-        }
-
         /* PREVISUALIZADOR DE HASTA 5 FOTOS */
         async function previewSelectedFiles(event) {
             const container = document.getElementById('previewThumbsContainer');
@@ -1257,7 +1157,6 @@
             if (!db) return;
 
             try {
-                // Sincronización general
                 db.collection('alianza_settings').doc('appData').onSnapshot(doc => {
                     if (doc && doc.exists) {
                         const cloudData = doc.data();
@@ -1271,37 +1170,6 @@
                     }
                 }, err => console.warn('Sync settings:', err));
 
-                // Sincronización independiente de foto del abogado
-                db.collection('alianza_settings').doc('media_lawyer').onSnapshot(doc => {
-                    if (doc && doc.exists && doc.data().lawyerImg) {
-                        appConfig.lawyerImg = doc.data().lawyerImg;
-                        localStorage.setItem('alianza_lawyerImg', appConfig.lawyerImg);
-                        const el = document.getElementById('lawyerCardImg');
-                        if (el) el.src = appConfig.lawyerImg;
-                    }
-                }, () => {});
-
-                // Sincronización independiente de foto de portada
-                db.collection('alianza_settings').doc('media_cover').onSnapshot(doc => {
-                    if (doc && doc.exists && doc.data().coverImg) {
-                        appConfig.coverImg = doc.data().coverImg;
-                        localStorage.setItem('alianza_coverImg', appConfig.coverImg);
-                        const el = document.getElementById('coverImgDisplay');
-                        if (el) el.src = appConfig.coverImg;
-                    }
-                }, () => {});
-
-                // Sincronización independiente de foto de perfil
-                db.collection('alianza_settings').doc('media_profile').onSnapshot(doc => {
-                    if (doc && doc.exists && doc.data().profileLogo) {
-                        appConfig.profileLogo = doc.data().profileLogo;
-                        localStorage.setItem('alianza_profileLogo', appConfig.profileLogo);
-                        const el = document.getElementById('profileLogoImg');
-                        if (el) el.src = appConfig.profileLogo;
-                    }
-                }, () => {});
-
-                // Sincronización de inventario
                 db.collection('alianza_inventory').onSnapshot(snapshot => {
                     if (snapshot && !snapshot.empty) {
                         const cloudInv = [];
@@ -1313,12 +1181,6 @@
                             updateCarouselDisplay();
                             renderFinanceTable();
                         }
-                    } else if (inventory.length === 0) {
-                        inventory = [...INITIAL_INVENTORY];
-                        inventory.forEach(item => saveInventoryItemCloud(item));
-                        filterItems();
-                        updateCarouselDisplay();
-                        renderFinanceTable();
                     }
                 }, err => console.warn('Sync inventory:', err));
             } catch (e) {
@@ -1341,10 +1203,9 @@
                 if (savedLawyer) appConfig.lawyerImg = savedLawyer;
 
                 const savedInv = localStorage.getItem('alianza_inventory');
-                inventory = savedInv ? JSON.parse(savedInv) : [...INITIAL_INVENTORY];
+                if (savedInv) inventory = JSON.parse(savedInv);
             } catch (e) {
                 appConfig = { ...DEFAULT_STATE };
-                inventory = [...INITIAL_INVENTORY];
             }
         }
 
@@ -1380,17 +1241,13 @@
         }
 
         function renderAppUI() {
-            document.getElementById('profileCompanyTitle').innerHTML = (appConfig.companyTitle || DEFAULT_STATE.companyTitle).replace("S.A.S.", "<span class='text-sky-600'>S.A.S.</span>");
+            document.getElementById('profileCompanyTitle').innerHTML = (appConfig.companyTitle || DEFAULT_STATE.companyTitle).replace("S.A.S.", "<span class='text-sky-400'>S.A.S.</span>");
             document.getElementById('profileMotto').innerText = appConfig.motto || DEFAULT_STATE.motto;
             document.getElementById('topLocationText').innerText = appConfig.location || DEFAULT_STATE.location;
             document.getElementById('profileBioText').innerHTML = appConfig.bioText || DEFAULT_STATE.bioText;
             
             document.getElementById('coverImgDisplay').src = appConfig.coverImg || DEFAULT_STATE.coverImg;
             document.getElementById('profileLogoImg').src = appConfig.profileLogo || DEFAULT_STATE.profileLogo;
-
-            document.getElementById('videoIframe').src = formatYouTubeEmbed(appConfig.videoUrl);
-            document.getElementById('videoSectionTitle').innerText = appConfig.videoTitle || DEFAULT_STATE.videoTitle;
-            document.getElementById('videoSectionDesc').innerText = appConfig.videoDesc || DEFAULT_STATE.videoDesc;
 
             document.getElementById('lawyerCardImg').src = appConfig.lawyerImg || DEFAULT_STATE.lawyerImg;
             document.getElementById('lawyerNameDisplay').innerText = appConfig.lawyerName || DEFAULT_STATE.lawyerName;
@@ -1415,7 +1272,7 @@
             document.querySelectorAll('.admin-only').forEach(el => el.classList.add('hidden'));
 
             if (currentRole === 'ADMIN') {
-                roleBadgeText.innerText = "Modo Administrador";
+                roleBadgeText.innerText = "Administrador Principal";
                 adminBanner.classList.remove('hidden');
                 agentBanner.classList.add('hidden');
                 loginNavBtn.classList.add('hidden');
@@ -1485,15 +1342,12 @@
             showToast('Sesión cerrada.');
         }
 
-        /* PANEL MAESTRO CON DATOS PRECARGADOS (NUNCA VACÍO) */
+        /* PANEL MAESTRO */
         function openMasterPanel() {
             document.getElementById('cfgCompanyTitle').value = appConfig.companyTitle || DEFAULT_STATE.companyTitle;
             document.getElementById('cfgMotto').value = appConfig.motto || DEFAULT_STATE.motto;
             document.getElementById('cfgLocation').value = appConfig.location || DEFAULT_STATE.location;
             document.getElementById('cfgBioText').value = appConfig.bioText || DEFAULT_STATE.bioText;
-            document.getElementById('cfgVideoUrl').value = appConfig.videoUrl || DEFAULT_STATE.videoUrl;
-            document.getElementById('cfgVideoTitle').value = appConfig.videoTitle || DEFAULT_STATE.videoTitle;
-            document.getElementById('cfgVideoDesc').value = appConfig.videoDesc || DEFAULT_STATE.videoDesc;
             document.getElementById('cfgLawyerName').value = appConfig.lawyerName || DEFAULT_STATE.lawyerName;
             document.getElementById('cfgLawyerTitle').value = appConfig.lawyerTitle || DEFAULT_STATE.lawyerTitle;
             document.getElementById('cfgLawyerPhone').value = appConfig.lawyerPhone || DEFAULT_STATE.lawyerPhone;
@@ -1506,11 +1360,6 @@
             appConfig.motto = getVal('cfgMotto') || appConfig.motto;
             appConfig.location = getVal('cfgLocation') || appConfig.location;
             appConfig.bioText = getVal('cfgBioText') || appConfig.bioText;
-
-            const rawVideo = getVal('cfgVideoUrl');
-            appConfig.videoUrl = rawVideo ? formatYouTubeEmbed(rawVideo) : appConfig.videoUrl;
-            appConfig.videoTitle = getVal('cfgVideoTitle') || appConfig.videoTitle;
-            appConfig.videoDesc = getVal('cfgVideoDesc') || appConfig.videoDesc;
 
             appConfig.lawyerName = getVal('cfgLawyerName') || appConfig.lawyerName;
             appConfig.lawyerTitle = getVal('cfgLawyerTitle') || appConfig.lawyerTitle;
@@ -1528,7 +1377,7 @@
             if (el) el.click(); 
         }
 
-        /* MANEJADOR DE IMÁGENES GLOBALES (PORTADA, PERFIL, ABOGADO CON CANALES DEDICADOS) */
+        /* MANEJADOR DE IMÁGENES GLOBALES */
         async function handleImageUpload(event, targetProp) {
             const file = event.target.files[0];
             if (!file) return;
@@ -1537,7 +1386,6 @@
             if (base64) {
                 appConfig[targetProp] = base64;
                 
-                // Actualización inmediata en UI
                 if (targetProp === 'coverImg' && document.getElementById('coverImgDisplay')) {
                     document.getElementById('coverImgDisplay').src = base64;
                 }
@@ -1551,38 +1399,20 @@
                 localStorage.setItem('alianza_' + targetProp, base64);
                 localStorage.setItem('alianza_config', JSON.stringify(appConfig));
 
-                // Guardado dedicado en Firestore
                 if (db) {
                     try {
-                        if (targetProp === 'lawyerImg') {
-                            db.collection('alianza_settings').doc('media_lawyer').set({
-                                lawyerImg: base64,
-                                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                            }, { merge: true }).catch(() => {});
-                        } else if (targetProp === 'coverImg') {
-                            db.collection('alianza_settings').doc('media_cover').set({
-                                coverImg: base64,
-                                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                            }, { merge: true }).catch(() => {});
-                        } else if (targetProp === 'profileLogo') {
-                            db.collection('alianza_settings').doc('media_profile').set({
-                                profileLogo: base64,
-                                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                            }, { merge: true }).catch(() => {});
-                        }
-
                         db.collection('alianza_settings').doc('appData').set({
                             config: appConfig,
                             updatedAt: firebase.firestore.FieldValue.serverTimestamp()
                         }, { merge: true }).catch(() => {});
                     } catch (e) {}
                 }
-                showToast('¡Foto actualizada y guardada con éxito!');
+                showToast('¡Foto actualizada con éxito!');
             }
             event.target.value = '';
         }
 
-        /* CAMBIO DINÁMICO DE CATEGORÍA Y ASIGNACIÓN AUTOMÁTICA DE CÓDIGO SECUENCIAL */
+        /* CATEGORÍA Y GENERACIÓN SECUENCIAL AUTOMÁTICA */
         function toggleCategoryFields() {
             const cat = getVal('prodCategory') || 'VH';
             const fieldsVehicles = document.getElementById('fieldsVehicles');
@@ -1601,7 +1431,6 @@
                 if (fieldsSecondHand) fieldsSecondHand.classList.remove('hidden');
             }
 
-            // Si es un registro nuevo, auto-generar la numeración correlativa de esta categoría:
             const editId = getVal('prodEditId');
             if (!editId) {
                 const codeInput = document.getElementById('prodCode');
@@ -1632,81 +1461,15 @@
             const modalTitle = document.getElementById('productModalTitle');
             if (modalTitle) modalTitle.innerText = 'Registrar Nueva Captación';
 
-            // Por defecto VH o categoría inicial seleccionada:
             const cat = getVal('prodCategory') || 'VH';
             const codeInput = document.getElementById('prodCode');
-            if (codeInput) {
-                codeInput.value = generateNextCode(cat);
-            }
+            if (codeInput) codeInput.value = generateNextCode(cat);
 
             toggleCategoryFields();
             openModal('productModal');
         }
 
-        function openEditProductModal(id) {
-            const item = inventory.find(i => i.id === id);
-            if (!item) return;
-
-            document.getElementById('prodEditId').value = item.id;
-            document.getElementById('prodIsFeatured').checked = item.isFeatured !== false;
-            document.getElementById('prodCategory').value = item.category || 'VH';
-            document.getElementById('prodStatus').value = item.status || 'DISPONIBLE';
-            document.getElementById('prodCode').value = item.code || '';
-            document.getElementById('prodTitle').value = item.title || '';
-            document.getElementById('prodCiudad').value = item.ciudad || '';
-            document.getElementById('prodParroquia').value = item.parroquia || '';
-            document.getElementById('prodSector').value = item.sector || '';
-            document.getElementById('prodDireccion').value = item.direccion || '';
-            document.getElementById('prodPrice').value = item.priceStr || '';
-            document.getElementById('prodOfferPrice').value = item.offerPriceStr || '';
-            document.getElementById('prodDesc').value = item.desc || '';
-            document.getElementById('prodOwnerName').value = item.ownerName || '';
-            document.getElementById('prodOwnerDocPhone').value = item.ownerDocPhone || '';
-            document.getElementById('prodContractType').value = item.contractType || 'Corretaje Libre';
-            document.getElementById('prodLegalStatus').value = item.legalStatus || 'Escrituras al día';
-            document.getElementById('prodComision').value = item.comisionStr || '';
-            document.getElementById('prodAgentName').value = item.agentName || '';
-
-            // Parámetros técnicos
-            if (document.getElementById('reMetros2')) document.getElementById('reMetros2').value = item.reMetros2 || '';
-            if (document.getElementById('reFrente')) document.getElementById('reFrente').value = item.reFrente || '';
-            if (document.getElementById('reFondo')) document.getElementById('reFondo').value = item.reFondo || '';
-            if (document.getElementById('reConstruccion')) document.getElementById('reConstruccion').value = item.reConstruccion || '';
-            if (document.getElementById('rePisos')) document.getElementById('rePisos').value = item.rePisos || '';
-            if (document.getElementById('reHabitaciones')) document.getElementById('reHabitaciones').value = item.reHabitaciones || '';
-            if (document.getElementById('reBanos')) document.getElementById('reBanos').value = item.reBanos || '';
-            if (document.getElementById('srvAgua')) document.getElementById('srvAgua').checked = !!item.srvAgua;
-            if (document.getElementById('srvLuz')) document.getElementById('srvLuz').checked = !!item.srvLuz;
-            if (document.getElementById('srvInternet')) document.getElementById('srvInternet').checked = !!item.srvInternet;
-            if (document.getElementById('srvAlcantarillado')) document.getElementById('srvAlcantarillado').checked = !!item.srvAlcantarillado;
-            if (document.getElementById('srvEscrituras')) document.getElementById('srvEscrituras').checked = !!item.srvEscrituras;
-
-            if (document.getElementById('vhAno')) document.getElementById('vhAno').value = item.vhAno || '';
-            if (document.getElementById('vhKm')) document.getElementById('vhKm').value = item.vhKm || '';
-            if (document.getElementById('vhTransmision')) document.getElementById('vhTransmision').value = item.vhTransmision || '';
-            if (document.getElementById('vhDetalles')) document.getElementById('vhDetalles').value = item.vhDetalles || '';
-
-            if (document.getElementById('lqEstado')) document.getElementById('lqEstado').value = item.lqEstado || '';
-            if (document.getElementById('lqTiempoUso')) document.getElementById('lqTiempoUso').value = item.lqTiempoUso || '';
-
-            const previewContainer = document.getElementById('previewThumbsContainer');
-            if (previewContainer) {
-                previewContainer.innerHTML = '';
-                stagedImages = item.images ? [...item.images] : [];
-                stagedImages.forEach(imgUrl => {
-                    const thumb = document.createElement('img');
-                    thumb.src = imgUrl;
-                    thumb.className = 'w-14 h-14 object-cover rounded-xl border border-sky-400 shadow-sm flex-shrink-0';
-                    previewContainer.appendChild(thumb);
-                });
-            }
-
-            document.getElementById('productModalTitle').innerText = 'Editar Captación ' + (item.code || '');
-            toggleCategoryFields();
-            openModal('productModal');
-        }
-
-        /* GUARDADO CON LOCAL-FIRST INMEDIATO (CERO CONGELAMIENTO EN MÓVILES) */
+        /* GUARDADO CON LOCAL-FIRST INMEDIATO */
         async function handleSaveProduct(e) {
             e.preventDefault();
             const btnSave = document.getElementById('btnSaveProduct');
@@ -1718,7 +1481,7 @@
                 const isFeatured = getChecked('prodIsFeatured');
                 const category = getVal('prodCategory') || 'VH';
                 const status = getVal('prodStatus') || 'DISPONIBLE';
-                let code = getVal('prodCode');
+                let code = getVal('prodCode') || generateNextCode(category);
                 const title = getVal('prodTitle') || 'Captación sin título';
                 const ciudad = getVal('prodCiudad');
                 const parroquia = getVal('prodParroquia');
@@ -1735,10 +1498,6 @@
                 const agentName = getVal('prodAgentName') || 'Gerencia General';
                 const urlDirect = getVal('prodUrlDirect');
 
-                // Si no tiene código, auto-generar secuencial
-                if (!code) code = generateNextCode(category);
-
-                // Sanitización numérica
                 const cleanPriceNum = parseFloat(priceStr.replace(/[^0-9.]/g, '')) || 0;
                 let cleanComNum = 0;
                 if (comisionStr.includes('%')) {
@@ -1759,11 +1518,9 @@
                 }
 
                 if (finalImages.length === 0) {
-                    if (category === 'VH') {
-                        finalImages = ['https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=800&q=80'];
-                    } else {
-                        finalImages = ['https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80'];
-                    }
+                    finalImages = category === 'VH' 
+                        ? ['https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80'] 
+                        : ['https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80'];
                 }
 
                 const locationText = [ciudad, sector].filter(Boolean).join(', ') || 'El Coca';
@@ -1799,10 +1556,6 @@
                     payCaptador: editId ? (inventory.find(i => i.id === editId)?.payCaptador || 0) : 0,
                     payVendedor: editId ? (inventory.find(i => i.id === editId)?.payVendedor || 0) : 0,
                     netEmpresa: editId ? (inventory.find(i => i.id === editId)?.netEmpresa || 0) : 0,
-                    closingDate: editId ? (inventory.find(i => i.id === editId)?.closingDate || '-') : '-',
-                    paymentStatus: editId ? (inventory.find(i => i.id === editId)?.paymentStatus || '🔴 Pendiente') : '🔴 Pendiente',
-                    paidTimestamp: editId ? (inventory.find(i => i.id === editId)?.paidTimestamp || '-') : '-',
-                    legalNotes: editId ? (inventory.find(i => i.id === editId)?.legalNotes || '') : '',
                     reMetros2: getVal('reMetros2'),
                     reFrente: getVal('reFrente'),
                     reFondo: getVal('reFondo'),
@@ -1839,19 +1592,18 @@
                     inventory.unshift(targetItem);
                 }
 
-                // 1. Guardar de inmediato localmente
+                // Guardado inmediato en local
                 localStorage.setItem('alianza_inventory', JSON.stringify(inventory));
 
-                // 2. Actualizar interfaz al milisegundo (catálogo, banner y tabla)
+                // Actualizar interfaz
                 filterItems();
                 updateCarouselDisplay();
                 renderFinanceTable();
 
-                // 3. Cerrar modal y avisar con Toast
                 closeModal('productModal');
-                showToast(`¡Captación ${code} guardada y visible en catálogo y carrusel!`);
+                showToast(`¡Captación ${code} guardada y visible en catálogo!`);
 
-                // 4. Sincronización asíncrona en la nube protegida
+                // Sincronización asíncrona segura con Firestore
                 if (db && targetItem) {
                     try {
                         db.collection('alianza_inventory').doc(targetItem.id).set(targetItem, { merge: true }).catch(() => {});
@@ -1859,7 +1611,6 @@
                 }
             } catch (err) {
                 console.error('Error al procesar:', err);
-                showToast('Guardado completado con ajustes preventivos');
                 closeModal('productModal');
             } finally {
                 btnSave.disabled = false;
@@ -1867,42 +1618,31 @@
             }
         }
 
-        function deleteProduct(id) {
-            if (confirm('¿Está seguro de eliminar esta captación permanentemente?')) {
-                inventory = inventory.filter(i => i.id !== id);
-                localStorage.setItem('alianza_inventory', JSON.stringify(inventory));
+        /* LIQUIDACIÓN DE VENTA & ASIGNACIÓN DE COMISIONES (50% / 25% / 25%) */
+        function toggleSaleStatus(index) {
+            const item = inventory[index];
+            if (!item) return;
+
+            if (item.status === 'DISPONIBLE' || item.status === 'OFERTA' || item.status === 'RESERVADO') {
+                document.getElementById('settleItemId').value = item.id;
+                document.getElementById('settleItemTitle').innerText = `${item.code} - ${item.title}`;
+                document.getElementById('settleFinalPrice').value = item.realSalePrice || parseFloat(String(item.priceStr || '').replace(/[^0-9.]/g, '')) || 0;
+                document.getElementById('settleTotalCommission').value = item.commissionPactada || 0;
+                document.getElementById('settleCaptadorName').value = item.agentName || 'Gerencia General';
+                document.getElementById('settleVendedorName').value = item.sellerAgentName || item.agentName || '';
+                openModal('settleSoldModal');
+            } else {
+                item.status = 'DISPONIBLE';
+                item.sellerAgentName = '';
+                item.payCaptador = 0;
+                item.payVendedor = 0;
+                item.netEmpresa = 0;
+                saveInventoryItemCloud(item);
                 filterItems();
                 updateCarouselDisplay();
                 renderFinanceTable();
-                showToast('Activo eliminado.');
-
-                if (db) {
-                    try {
-                        db.collection('alianza_inventory').doc(id).delete().catch(() => {});
-                    } catch(e) {}
-                }
+                showToast('Estado revertido a DISPONIBLE');
             }
-        }
-
-        /* LIQUIDACIÓN DE VENTA & ASIGNACIÓN DE COMISIONES (50% / 25% / 25%) */
-        function openSettleSoldModal(id) {
-            const item = inventory.find(i => i.id === id);
-            if (!item) return;
-
-            document.getElementById('settleItemId').value = item.id;
-            document.getElementById('settleItemTitle').innerText = `${item.code} - ${item.title}`;
-            document.getElementById('settleFinalPrice').value = item.realSalePrice || parseFloat(item.priceStr.replace(/[^0-9.]/g, '')) || 0;
-            document.getElementById('settleTotalCommission').value = item.commissionPactada || 0;
-            document.getElementById('settleCaptadorName').value = item.agentName || 'Gerencia General';
-            document.getElementById('settleVendedorName').value = item.sellerAgentName || item.agentName || '';
-            
-            const now = new Date();
-            const todayStr = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`;
-            document.getElementById('settleClosingDate').value = item.closingDate !== '-' ? item.closingDate : todayStr;
-            document.getElementById('settlePaymentStatus').value = item.paymentStatus || '🔴 Pendiente';
-            document.getElementById('settleLegalNotes').value = item.legalNotes || '';
-
-            openModal('settleSoldModal');
         }
 
         function handleConfirmSettleSold(e) {
@@ -1915,68 +1655,37 @@
             const totalCommission = parseFloat(document.getElementById('settleTotalCommission').value) || 0;
             const captador = document.getElementById('settleCaptadorName').value.trim();
             const vendedor = document.getElementById('settleVendedorName').value.trim();
-            const closingDate = document.getElementById('settleClosingDate').value.trim();
-            const paymentStatus = document.getElementById('settlePaymentStatus').value;
-            const legalNotes = document.getElementById('settleLegalNotes').value.trim();
 
-            // REPARTO MATEMÁTICO:
-            // 50% RETENCIÓN OBLIGATORIA EMPRESA (ALIANZA ESTRATÉGICA S.A.S.)
+            // REGLA MATEMÁTICA: 50% EMPRESA | 50% FUERZA VENTAS
             const netEmpresa = totalCommission * 0.50;
             let payCaptador = 0;
             let payVendedor = 0;
 
             if (captador.toLowerCase() === vendedor.toLowerCase()) {
-                // ESCENARIO A: Mismo agente capta y vende -> 50% de la comisión total
                 payCaptador = totalCommission * 0.50;
                 payVendedor = 0;
             } else {
-                // ESCENARIO B: Agente captador != Agente vendedor -> 25% y 25%
                 payCaptador = totalCommission * 0.25;
                 payVendedor = totalCommission * 0.25;
             }
 
-            item.status = 'SOLD';
+            item.status = 'VENDIDO';
             item.realSalePrice = finalPrice;
             item.commissionPactada = totalCommission;
             item.sellerAgentName = vendedor;
             item.payCaptador = payCaptador;
             item.payVendedor = payVendedor;
             item.netEmpresa = netEmpresa;
-            item.closingDate = closingDate;
-            item.paymentStatus = paymentStatus;
-            item.legalNotes = legalNotes;
-            if (paymentStatus === '🟢 PAGADO' && item.paidTimestamp === '-') {
-                item.paidTimestamp = new Date().toLocaleString();
-            }
 
             saveInventoryItemCloud(item);
             filterItems();
             updateCarouselDisplay();
             renderFinanceTable();
             closeModal('settleSoldModal');
-            showToast('¡Venta liquidada y comisiones calculadas con éxito!');
+            showToast('¡Venta liquidada con regla 50%/25%/25% calculada!');
         }
 
-        /* CAMBIO RÁPIDO: MARCAR COMO PAGADO */
-        function toggleQuickPaidStatus(id) {
-            const item = inventory.find(i => i.id === id);
-            if (!item) return;
-
-            if (item.paymentStatus === '🟢 PAGADO') {
-                item.paymentStatus = '🔴 Pendiente';
-                item.paidTimestamp = '-';
-                showToast('Estado revertido a Pendiente');
-            } else {
-                item.paymentStatus = '🟢 PAGADO';
-                item.paidTimestamp = new Date().toLocaleString();
-                showToast('¡Comisiones marcadas como PAGADO a Agentes!');
-            }
-
-            saveInventoryItemCloud(item);
-            renderFinanceTable();
-        }
-
-        /* RENDER DE LA TABLA EXCEL (SOLO ADMIN) */
+        /* RENDER DE LA TABLA EXCEL FUSIONADA (MATRIZ FINANCIERA V2.0) */
         function openFinanceModal() {
             if (currentRole !== 'ADMIN') {
                 showToast('Acceso exclusivo para Gerencia General / Administrador', 'error');
@@ -1987,83 +1696,86 @@
         }
 
         function renderFinanceTable() {
-            const tbody = document.getElementById('financeTableBody');
+            const tbody = document.getElementById('tableBody') || document.getElementById('financeTableBody');
             if (!tbody) return;
+            const search = (document.getElementById('excelSearchInput')?.value || '').toLowerCase().trim();
+            const filter = document.getElementById('statusFilterExcel')?.value || 'ALL';
             tbody.innerHTML = '';
 
-            let capitalTotal = 0;
-            let proyeccionComisiones = 0;
-            let comisionesCobradas = 0;
-            let pagoFuerzaVentas = 0;
-            let gananciaNetaEmpresa = 0;
+            let totalCapital = 0;
+            let totalProyeccion = 0;
+            let totalCobradas = 0;
+            let totalAgentes = 0;
+            let totalEmpresa = 0;
+            let count = 0;
 
-            const sorted = [...inventory].sort((a, b) => {
-                let valA = a[excelSortField];
-                let valB = b[excelSortField];
-                if (typeof valA === 'string') valA = valA.toLowerCase();
-                if (typeof valB === 'string') valB = valB.toLowerCase();
-                if (valA < valB) return excelSortAsc ? -1 : 1;
-                if (valA > valB) return excelSortAsc ? 1 : -1;
-                return 0;
-            });
+            inventory.forEach((item, index) => {
+                const matchesSearch = (item.code || '').toLowerCase().includes(search) || 
+                                      (item.title || '').toLowerCase().includes(search) || 
+                                      (item.ownerName || '').toLowerCase().includes(search) || 
+                                      (item.agentName || '').toLowerCase().includes(search);
+                const isVendido = item.status === 'VENDIDO';
+                const matchesFilter = filter === 'ALL' || (filter === 'VENDIDO' ? isVendido : !isVendido);
 
-            sorted.forEach(item => {
-                const salePrice = item.realSalePrice || 0;
-                const comision = item.commissionPactada || 0;
-                const isSold = item.status === 'SOLD';
+                if (matchesSearch && matchesFilter) {
+                    count++;
+                    const priceVal = item.realSalePrice || parseFloat(String(item.priceStr || '').replace(/[^0-9.]/g, '')) || 0;
+                    const comisionVal = item.commissionPactada || 0;
 
-                capitalTotal += salePrice;
-                proyeccionComisiones += comision;
+                    totalCapital += priceVal;
+                    totalProyeccion += comisionVal;
 
-                if (isSold) {
-                    comisionesCobradas += comision;
-                    pagoFuerzaVentas += (item.payCaptador || 0) + (item.payVendedor || 0);
-                    gananciaNetaEmpresa += (item.netEmpresa || 0);
+                    let liqAgentes = 0;
+                    let liqEmpresa = 0;
+
+                    if (isVendido) {
+                        totalCobradas += comisionVal;
+                        liqEmpresa = item.netEmpresa || (comisionVal * 0.50);
+                        liqAgentes = (item.payCaptador || 0) + (item.payVendedor || 0) || (comisionVal * 0.50);
+                        totalAgentes += liqAgentes;
+                        totalEmpresa += liqEmpresa;
+                    }
+
+                    const rowHtml = `
+                        <tr class="hover:bg-slate-900/80 transition text-[11px] border-b border-slate-800/80">
+                            <td class="py-2.5 px-3 border-r border-slate-800/80 font-bold text-sky-400 font-mono">${item.code || '-'}</td>
+                            <td class="py-2.5 px-3 border-r border-slate-800/80 text-slate-400">${item.dateCreated || '-'}</td>
+                            <td class="py-2.5 px-3 border-r border-slate-800/80 text-slate-300 font-medium">${item.categoryType || item.category || '-'}</td>
+                            <td class="py-2.5 px-3 border-r border-slate-800/80 font-semibold text-white max-w-xs truncate" title="${item.title}">${item.title || '-'}</td>
+                            <td class="py-2.5 px-3 border-r border-slate-800/80 text-slate-300">${item.ownerName || '-'}</td>
+                            <td class="py-2.5 px-3 border-r border-slate-800/80 font-bold text-right text-slate-200">$${priceVal.toFixed(2)}</td>
+                            <td class="py-2.5 px-3 border-r border-slate-800/80 font-extrabold text-right text-sky-400 bg-sky-950/20">$${comisionVal.toFixed(2)}</td>
+                            <td class="py-2.5 px-3 border-r border-slate-800/80 text-slate-300">${item.agentName || '-'}</td>
+                            <td class="py-2.5 px-3 border-r border-slate-800/80 text-slate-300">${item.sellerAgentName || '-'}</td>
+                            <td class="py-2.5 px-3 border-r border-slate-800/80 font-bold text-right text-rose-400 bg-rose-950/10">$${liqAgentes.toFixed(2)}</td>
+                            <td class="py-2.5 px-3 border-r border-slate-800/80 font-bold text-right text-purple-400 bg-purple-950/10">$${liqEmpresa.toFixed(2)}</td>
+                            <td class="py-2.5 px-3 border-r border-slate-800/80 text-center">
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${isVendido ? 'bg-rose-950/80 text-rose-400 border border-rose-800' : 'bg-emerald-950/80 text-emerald-400 border border-emerald-800'}">
+                                    ${isVendido ? '🔴 VENDIDO' : '✅ DISPONIBLE'}
+                                </span>
+                            </td>
+                            <td class="py-2.5 px-3 text-center flex justify-center gap-1.5 no-print">
+                                <button onclick="toggleSaleStatus(${index})" class="px-2 py-1 rounded text-[10px] font-bold bg-slate-800 hover:bg-slate-700 text-sky-300 transition" title="Liquidar Estado">
+                                    <i class="fa-solid fa-arrows-rotate mr-1"></i> Liquidar
+                                </button>
+                                <button onclick="deleteItem(${index})" class="text-slate-500 hover:text-rose-400 px-1 transition" title="Eliminar">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                    tbody.innerHTML += rowHtml;
                 }
-
-                const tr = document.createElement('tr');
-                tr.className = "hover:bg-slate-50 transition border-b border-slate-200";
-
-                tr.innerHTML = `
-                    <td class="p-3 font-mono font-bold text-sky-700">${item.code || '-'}</td>
-                    <td class="p-3 text-slate-500">${item.dateCreated || '-'}</td>
-                    <td class="p-3">${item.categoryType || item.category || '-'}</td>
-                    <td class="p-3 font-bold text-slate-800 max-w-xs truncate" title="${item.title}">${item.title || '-'}</td>
-                    <td class="p-3 text-slate-600">${item.location || '-'}</td>
-                    <td class="p-3 text-sky-800 font-semibold">${item.ownerName || '-'}</td>
-                    <td class="p-3 text-slate-500">${item.ownerDocPhone || '-'}</td>
-                    <td class="p-3">${item.contractType || 'Corretaje Libre'}</td>
-                    <td class="p-3">${item.legalStatus || 'Escrituras al día'}</td>
-                    <td class="p-3 text-right font-extrabold text-slate-900">$${salePrice.toLocaleString('en-US', {minimumFractionDigits: 2})}</td>
-                    <td class="p-3 text-right font-extrabold text-amber-600">$${comision.toLocaleString('en-US', {minimumFractionDigits: 2})}</td>
-                    <td class="p-3 text-sky-800 font-bold">${item.agentName || '-'}</td>
-                    <td class="p-3 text-amber-800 font-bold">${item.sellerAgentName || '-'}</td>
-                    <td class="p-3 text-right font-extrabold text-sky-600">$${(item.payCaptador || 0).toLocaleString('en-US', {minimumFractionDigits: 2})}</td>
-                    <td class="p-3 text-right font-extrabold text-amber-600">$${(item.payVendedor || 0).toLocaleString('en-US', {minimumFractionDigits: 2})}</td>
-                    <td class="p-3 text-right font-extrabold text-emerald-700">$${(item.netEmpresa || 0).toLocaleString('en-US', {minimumFractionDigits: 2})}</td>
-                    <td class="p-3 text-center">${getStatusBadgeHTML(item.status)}</td>
-                    <td class="p-3 text-center">
-                        <button onclick="toggleQuickPaidStatus('${item.id}')" class="px-2 py-0.5 rounded-full text-[10px] font-bold transition ${item.paymentStatus === '🟢 PAGADO' ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200' : 'bg-rose-100 text-rose-800 hover:bg-rose-200'}" title="Toca para cambiar estado">
-                            ${item.paymentStatus || '🔴 Pendiente'}
-                        </button>
-                    </td>
-                    <td class="p-3 text-center text-slate-500">${item.paidTimestamp || '-'}</td>
-                    <td class="p-3 text-slate-600 italic max-w-xs truncate" title="${item.legalNotes || ''}">${item.legalNotes || '-'}</td>
-                    <td class="p-3 text-center no-print flex gap-1 justify-center">
-                        <button onclick="openSettleSoldModal('${item.id}')" class="bg-emerald-600 hover:bg-emerald-500 text-white px-2 py-1 rounded-lg text-[10px] font-bold transition shadow" title="Liquidar Venta">
-                            <i class="fa-solid fa-calculator"></i> Liquidar
-                        </button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
             });
 
             // Actualización de KPIs
-            document.getElementById('statCapitalInventario').innerText = `$${capitalTotal.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
-            document.getElementById('statProyeccionComisiones').innerText = `$${proyeccionComisiones.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
-            document.getElementById('statComisionesCobradas').innerText = `$${comisionesCobradas.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
-            document.getElementById('statPagoFuerzaVentas').innerText = `$${pagoFuerzaVentas.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
-            document.getElementById('statGananciaNetaEmpresa').innerText = `$${gananciaNetaEmpresa.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
+            const setEl = (id, val) => { const el = document.getElementById(id); if (el) el.innerText = val; };
+            setEl('statCapitalInventario', `$${totalCapital.toFixed(2)}`);
+            setEl('statProyeccionComisiones', `$${totalProyeccion.toFixed(2)}`);
+            setEl('statComisionesCobradas', `$${totalCobradas.toFixed(2)}`);
+            setEl('statPagoFuerzaVentas', `$${totalAgentes.toFixed(2)}`);
+            setEl('statGananciaNetaEmpresa', `$${totalEmpresa.toFixed(2)}`);
+            setEl('recordCount', count);
         }
 
         function sortExcelTable(field) {
@@ -2076,80 +1788,64 @@
             renderFinanceTable();
         }
 
-        function filterExcelTable() {
-            const query = document.getElementById('excelSearchInput').value.toLowerCase().trim();
-            const rows = document.querySelectorAll('#financeTableBody tr');
-            rows.forEach(row => {
-                const text = row.innerText.toLowerCase();
-                row.style.display = text.includes(query) ? '' : 'none';
-            });
+        function deleteItem(index) {
+            if (confirm("¿Estás seguro de eliminar este activo de la matriz financiera?")) {
+                const item = inventory[index];
+                inventory.splice(index, 1);
+                localStorage.setItem('alianza_inventory', JSON.stringify(inventory));
+                if (db && item && item.id) {
+                    try { db.collection('alianza_inventory').doc(item.id).delete().catch(() => {}); } catch (e) {}
+                }
+                filterItems();
+                updateCarouselDisplay();
+                renderFinanceTable();
+                showToast('Activo eliminado.');
+            }
         }
 
-        /* EXPORTADOR .CSV (UTF-8 COMPATIBLE CON EXCEL / POWER QUERY) */
+        /* EXPORTADOR PROFESIONAL A .CSV (COMPATIBLE CON EXCEL Y POWER QUERY) */
         function exportToCSV() {
             if (!inventory || inventory.length === 0) {
-                showToast('No hay activos para exportar', 'error');
+                showToast('No hay registros para exportar', 'error');
                 return;
             }
 
-            const headers = [
-                "ID Sistema",
-                "Código Activo",
-                "Fecha Captación",
-                "Categoría / Tipo",
-                "Detalle / Descripción",
-                "Ubicación",
-                "Nombre Propietario",
-                "Cédula / Teléfono",
-                "Tipo Contrato",
-                "Situación Legal",
-                "Precio Venta Pactado ($ USD)",
-                "Comisión Total Pactada ($ USD)",
-                "Agente Captador",
-                "Agente Vendedor",
-                "Pago Liquidado a Captador ($ USD)",
-                "Pago Liquidado a Vendedor ($ USD)",
-                "Ganancia Neta Empresa ($ USD)",
-                "Estado Comercial",
-                "Estado de Pago",
-                "Fecha Liquidación / Pago",
-                "Observaciones Notariales"
-            ];
+            let csvContent = "SEP=;\n";
+            const headers = ["Código", "Fecha", "Categoría", "Detalle / Descripción", "Propietario", "Precio Venta ($)", "Comisión ($)", "Ag. Captador", "Ag. Vendedor", "Liq. Agentes ($)", "Liq. Empresa ($)", "Estado Comercial"];
+            csvContent += headers.join(";") + "\n";
 
-            const rows = inventory.map(i => [
-                `"${i.id || ''}"`,
-                `"${i.code || ''}"`,
-                `"${i.dateCreated || ''}"`,
-                `"${i.categoryType || i.category || ''}"`,
-                `"${(i.title || '').replace(/"/g, '""')}"`,
-                `"${(i.location || '').replace(/"/g, '""')}"`,
-                `"${(i.ownerName || '').replace(/"/g, '""')}"`,
-                `"${(i.ownerDocPhone || '').replace(/"/g, '""')}"`,
-                `"${i.contractType || 'Corretaje Libre'}"`,
-                `"${i.legalStatus || 'Escrituras al día'}"`,
-                (i.realSalePrice || 0).toFixed(2),
-                (i.commissionPactada || 0).toFixed(2),
-                `"${(i.agentName || '').replace(/"/g, '""')}"`,
-                `"${(i.sellerAgentName || '').replace(/"/g, '""')}"`,
-                (i.payCaptador || 0).toFixed(2),
-                (i.payVendedor || 0).toFixed(2),
-                (i.netEmpresa || 0).toFixed(2),
-                `"${i.status || ''}"`,
-                `"${i.paymentStatus || '🔴 Pendiente'}"`,
-                `"${i.paidTimestamp || '-'}"`,
-                `"${(i.legalNotes || '').replace(/"/g, '""')}"`
-            ]);
+            inventory.forEach(item => {
+                const price = item.realSalePrice || parseFloat(String(item.priceStr || '').replace(/[^0-9.]/g, '')) || 0;
+                const comision = item.commissionPactada || 0;
+                const liqEmpresa = item.status === 'VENDIDO' ? (item.netEmpresa || comision * 0.5) : 0;
+                const liqAgentes = item.status === 'VENDIDO' ? ((item.payCaptador || 0) + (item.payVendedor || 0) || comision * 0.5) : 0;
 
-            const csvContent = "\uFEFF" + [headers.join(","), ...rows.map(r => r.join(","))].join("\r\n");
-            const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+                const row = [
+                    `"${item.code || ''}"`,
+                    `"${item.dateCreated || ''}"`,
+                    `"${item.categoryType || item.category || ''}"`,
+                    `"${(item.title || '').replace(/"/g, '""')}"`,
+                    `"${(item.ownerName || '').replace(/"/g, '""')}"`,
+                    `"${price.toFixed(2)}"`,
+                    `"${comision.toFixed(2)}"`,
+                    `"${item.agentName || ''}"`,
+                    `"${item.sellerAgentName || ''}"`,
+                    `"${liqAgentes.toFixed(2)}"`,
+                    `"${liqEmpresa.toFixed(2)}"`,
+                    `"${item.status || ''}"`
+                ];
+                csvContent += row.join(";") + "\n";
+            });
+
+            const blob = new Blob(["\uFEFF" + csvContent], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
-            const link = document.createElement("a");
-            link.setAttribute("href", url);
-            link.setAttribute("download", `Control_Financiero_Alianza_Estrategica_${new Date().toISOString().slice(0, 10)}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            showToast('¡Archivo Excel (.csv) descargado con éxito!');
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Control_Financiero_Alianza_${new Date().toISOString().slice(0, 10)}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            showToast('¡Archivo Excel (.csv) exportado con éxito!');
         }
 
         function printFinancialReport() {
@@ -2161,18 +1857,18 @@
             activeCategory = cat;
             document.querySelectorAll('.cat-btn').forEach(btn => {
                 btn.classList.remove('bg-amber-500', 'text-slate-950');
-                btn.classList.add('bg-slate-800', 'text-white');
+                btn.classList.add('bg-slate-900', 'text-white');
             });
             event.currentTarget.classList.add('bg-amber-500', 'text-slate-950');
-            event.currentTarget.classList.remove('bg-slate-800', 'text-white');
+            event.currentTarget.classList.remove('bg-slate-900', 'text-white');
             filterItems();
         }
 
         function filterItems() {
-            const query = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+            const query = (document.getElementById('searchInput')?.value || '').toLowerCase().trim();
             const filtered = inventory.filter(item => {
-                if (activeCategory === 'SOLD') return item.status === 'SOLD';
-                if (item.status === 'SOLD' && activeCategory !== 'ALL') return false;
+                if (activeCategory === 'SOLD') return item.status === 'VENDIDO' || item.status === 'SOLD';
+                if ((item.status === 'VENDIDO' || item.status === 'SOLD') && activeCategory !== 'ALL') return false;
 
                 const matchesCat = (activeCategory === 'ALL') || (item.category === activeCategory);
                 const matchesQuery = (item.title || '').toLowerCase().includes(query) ||
@@ -2189,6 +1885,7 @@
                 case 'OFERTA': return '<span class="bg-amber-500 text-slate-950 font-extrabold text-[10px] px-2.5 py-0.5 rounded-lg shadow">🔥 Oferta Especial</span>';
                 case 'REMATE': return '<span class="bg-purple-600 text-white font-extrabold text-[10px] px-2.5 py-0.5 rounded-lg shadow">💥 Remate</span>';
                 case 'RESERVADO': return '<span class="bg-amber-600 text-white font-extrabold text-[10px] px-2.5 py-0.5 rounded-lg shadow">⏳ Reservado</span>';
+                case 'VENDIDO':
                 case 'SOLD': return '<span class="bg-rose-700 text-white font-extrabold text-[10px] px-2.5 py-0.5 rounded-lg shadow">🔴💸 Vendido</span>';
                 default: return '<span class="bg-emerald-600 text-white font-extrabold text-[10px] px-2.5 py-0.5 rounded-lg shadow">✅ Disponible</span>';
             }
@@ -2201,8 +1898,8 @@
 
             if (items.length === 0) {
                 grid.innerHTML = `
-                    <div class="col-span-full text-center py-16 text-slate-400 glass-card rounded-3xl">
-                        <i class="fa-solid fa-folder-open text-4xl mb-2 text-slate-300"></i>
+                    <div class="col-span-full text-center py-16 text-slate-500 glass-panel rounded-3xl">
+                        <i class="fa-solid fa-folder-open text-4xl mb-2 text-slate-600"></i>
                         <p class="text-sm font-semibold">No se encontraron captaciones con este filtro.</p>
                     </div>
                 `;
@@ -2216,26 +1913,25 @@
                 if (currentRole === 'ADMIN') {
                     adminBtns = `
                         <div class="flex gap-1.5">
-                            <button onclick="openEditProductModal('${item.id}')" class="bg-amber-500 hover:bg-amber-600 text-slate-950 p-2 rounded-xl text-xs font-bold transition shadow" title="Editar Activo"><i class="fa-solid fa-pen-to-square"></i></button>
                             <button onclick="deleteProduct('${item.id}')" class="bg-rose-600 hover:bg-rose-700 text-white p-2 rounded-xl text-xs font-bold transition shadow" title="Eliminar Activo"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     `;
                 }
 
-                let priceHtml = `<p class="text-base font-extrabold text-slate-900">${item.priceStr || ''}</p>`;
+                let priceHtml = `<p class="text-base font-extrabold text-white">${item.priceStr || ('$' + (item.realSalePrice || 0) + ' USD')}</p>`;
                 if (item.offerPriceStr) {
                     priceHtml = `
                         <div class="flex items-center gap-2">
                             <span class="text-xs text-slate-400 line-through font-bold">${item.priceStr}</span>
-                            <span class="text-base font-extrabold text-amber-600 flex items-center gap-1">🔥 ${item.offerPriceStr}</span>
+                            <span class="text-base font-extrabold text-amber-400 flex items-center gap-1">🔥 ${item.offerPriceStr}</span>
                         </div>
                     `;
                 }
 
                 grid.innerHTML += `
-                    <div class="glass-card rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between border border-slate-200">
+                    <div class="glass-panel rounded-3xl overflow-hidden shadow-2xl transition-all duration-300 flex flex-col justify-between border border-slate-800 hover:border-slate-700">
                         <div>
-                            <div class="relative h-52 w-full bg-slate-900 overflow-hidden group">
+                            <div class="relative h-52 w-full bg-slate-950 overflow-hidden group">
                                 <img src="${mainImg}" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80';">
                                 <span class="absolute top-3 left-3 bg-slate-950/80 backdrop-blur-md text-amber-400 font-mono text-[10px] font-bold px-2.5 py-0.5 rounded-lg border border-amber-400/30">${item.code || ''}</span>
                                 <div class="absolute top-3 right-3 flex items-center gap-1">
@@ -2244,17 +1940,17 @@
                                 </div>
                             </div>
                             <div class="p-5 space-y-2">
-                                <h3 class="text-base font-extrabold text-slate-900 leading-tight">${item.title || ''}</h3>
-                                <div class="flex items-center justify-between text-xs text-slate-500">
+                                <h3 class="text-base font-extrabold text-white leading-tight">${item.title || ''}</h3>
+                                <div class="flex items-center justify-between text-xs text-slate-400">
                                     <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i> ${item.location || 'El Coca'}</span>
-                                    <span class="text-[11px] font-bold text-sky-700 bg-sky-50 px-2 py-0.5 rounded-md border border-sky-100"><i class="fa-solid fa-user-tie"></i> ${item.agentName || 'Gerencia'}</span>
+                                    <span class="text-[11px] font-bold text-sky-400 bg-sky-950/60 px-2 py-0.5 rounded-md border border-sky-400/30"><i class="fa-solid fa-user-tie"></i> ${item.agentName || 'Gerencia'}</span>
                                 </div>
                                 <div class="pt-1.5">${priceHtml}</div>
                             </div>
                         </div>
 
-                        <div class="p-5 pt-0 border-t border-slate-100 flex items-center justify-between gap-2 mt-2">
-                            <button onclick="openDetailModal('${item.id}')" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition flex-1 text-center shadow-md">
+                        <div class="p-5 pt-0 border-t border-slate-800/80 flex items-center justify-between gap-2 mt-2">
+                            <button onclick="openDetailModal('${item.id}')" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition flex-1 text-center shadow-md border border-slate-700">
                                 <i class="fa-solid fa-circle-info mr-1.5"></i> Ficha Técnica
                             </button>
                             ${adminBtns}
@@ -2275,17 +1971,16 @@
             document.getElementById('detDesc').innerText = item.desc || 'Sin descripción detallada.';
             document.getElementById('detAgentDisplay').innerText = item.agentName || 'Gerencia General';
 
-            // Precios en ficha
             const priceEl = document.getElementById('detPrice');
             const offerEl = document.getElementById('detOfferPrice');
             if (item.offerPriceStr) {
                 priceEl.className = "text-sm text-slate-400 line-through font-bold";
                 priceEl.innerText = item.priceStr;
-                offerEl.className = "text-xl font-extrabold text-amber-600 block";
+                offerEl.className = "text-xl font-extrabold text-amber-400 block";
                 offerEl.innerText = `🔥 Oferta: ${item.offerPriceStr}`;
             } else {
-                priceEl.className = "text-xl font-extrabold text-slate-900";
-                priceEl.innerText = item.priceStr || '$0.00 USD';
+                priceEl.className = "text-xl font-extrabold text-white";
+                priceEl.innerText = item.priceStr || ('$' + (item.realSalePrice || 0) + ' USD');
                 offerEl.className = "hidden";
             }
 
@@ -2297,7 +1992,7 @@
             if (item.images && item.images.length > 1) {
                 item.images.forEach(imgUrl => {
                     thumbsCont.innerHTML += `
-                        <img src="${imgUrl}" onclick="document.getElementById('detMainImg').src='${imgUrl}'" class="w-16 h-12 object-cover rounded-xl border border-slate-200 cursor-pointer hover:opacity-80 transition">
+                        <img src="${imgUrl}" onclick="document.getElementById('detMainImg').src='${imgUrl}'" class="w-16 h-12 object-cover rounded-xl border border-slate-700 cursor-pointer hover:opacity-80 transition">
                     `;
                 });
             }
@@ -2365,7 +2060,7 @@
             if (imgEl) imgEl.src = imgUrl;
             document.getElementById('carouselBadge').innerText = item.code || 'RE-001';
             document.getElementById('carouselTitle').innerText = item.title || '';
-            const priceShow = item.offerPriceStr ? `🔥 ${item.offerPriceStr}` : (item.priceStr || '');
+            const priceShow = item.offerPriceStr ? `🔥 ${item.offerPriceStr}` : (item.priceStr || ('$' + (item.realSalePrice || 0) + ' USD'));
             document.getElementById('carouselSub').innerText = `${priceShow} - ${item.location || 'El Coca'}`;
         }
 
@@ -2380,17 +2075,17 @@
             const content = document.getElementById('infoTabContent');
             if (tabKey === 'MISION') {
                 content.innerHTML = `
-                    <h4 class="text-sm font-bold text-slate-800 mb-1">Misión Institucional</h4>
+                    <h4 class="text-sm font-bold text-white mb-1">Misión Institucional</h4>
                     <p class="mb-3">Prestar servicios integrales de corretaje, intermediación y saneamiento notarial de bienes raíces, automotores y maquinaria en El Coca y la Amazonía ecuatoriana con transparencia y rigor técnico.</p>
                 `;
             } else if (tabKey === 'HONORARIOS') {
                 content.innerHTML = `
-                    <h4 class="text-sm font-bold text-slate-800 mb-1">Modelo de Gestión por Éxito ✅</h4>
+                    <h4 class="text-sm font-bold text-white mb-1">Modelo de Gestión por Éxito ✅</h4>
                     <p class="mb-2">En <strong>ALIANZA ESTRATÉGICA S.A.S.</strong> no cobramos valores previos por publicación o exhibición del activo. Nuestros honorarios se liquidan única y exclusivamente cuando la negociación se protocoliza exitosamente ante Notario Público.</p>
                 `;
             } else if (tabKey === 'RESPALDO') {
                 content.innerHTML = `
-                    <h4 class="text-sm font-bold text-slate-800 mb-1">Respaldo Notarial Permanente</h4>
+                    <h4 class="text-sm font-bold text-white mb-1">Respaldo Notarial Permanente</h4>
                     <p class="mb-2">Cada transacción está estructurada por el <strong>Abg. Carlos Alfredo Íñiguez Rodríguez</strong>.</p>
                     <p>Elaboración de minutas de compraventa, levantamiento de hipotecas, promesas notarizadas y gestión directa ante el Registro de la Propiedad y Mercantil.</p>
                 `;
@@ -2413,7 +2108,7 @@
             setTimeout(() => {
                 const waUrl = `https://wa.me/593959190794?text=${encodeURIComponent('Consulta Sofía: ' + text)}`;
                 messages.innerHTML += `
-                    <div class="bg-white p-3 rounded-2xl border border-slate-200/80 text-slate-700 shadow-sm leading-relaxed">
+                    <div class="bg-slate-900 border border-slate-800 text-slate-300 p-3 rounded-2xl shadow-sm leading-relaxed">
                         ¡Gracias por comunicarte! Puedes hablar con la Gerencia directamente en WhatsApp:
                         <div class="mt-2.5"><a href="${waUrl}" target="_blank" class="inline-block bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-3.5 py-1.5 rounded-xl text-[11px] shadow"><i class="fa-brands fa-whatsapp mr-1"></i> Continuar por WhatsApp</a></div>
                     </div>
