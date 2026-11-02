@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="htmlPageTitle">ALIANZA ESTRATÉGICA S.A.S. - Plataforma Corporativa & Matriz Financiera 2026</title>
 
-    <!-- METADATOS OPEN GRAPH DINÁMICOS (WHATSAPP Y REDES SOCIALES) -->
+    <!-- METADATOS OPEN GRAPH DINÁMICOS -->
     <meta property="og:type" content="website" />
     <meta property="og:title" id="og-title" content="ALIANZA ESTRATÉGICA S.A.S. | Portal Oficial" />
     <meta property="og:description" id="og-description" content="Excelencia Jurídica, Confianza Profesional. Catálogo de Bienes Raíces, Vehículos y Maquinaria en El Coca." />
@@ -18,7 +18,7 @@
     <meta name="twitter:description" id="twitter-description" content="Catálogo verificado de activos y corretaje en El Coca, Orellana.">
     <meta name="twitter:image" id="twitter-image" content="https://alianzaestrategica2026-byte.github.io/alianzaestrategica/108900.jpg">
 
-    <!-- CONFIGURACIÓN PWA Y APPLE TOUCH ICON DINÁMICO -->
+    <!-- CONFIGURACIÓN PWA Y MANIFEST -->
     <link id="dynamicManifestLink" rel="manifest" href="">
     <meta name="theme-color" content="#080c14">
     <meta name="mobile-web-app-capable" content="yes">
@@ -190,11 +190,11 @@
     <div id="adminBanner" class="bg-gradient-to-r from-amber-500 via-amber-600 to-amber-500 text-slate-950 px-4 py-2.5 hidden shadow-md border-b border-amber-600 z-30 transition-all">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
             <div class="flex items-center gap-2 font-extrabold text-xs md:text-sm">
-                <i class="fa-solid fa-user-shield text-slate-950 text-base"></i> PANEL ADMINISTRADOR GENERAL ACTIVO
+                <i class="fa-solid fa-user-shield text-slate-950 text-base"></i> MODO ADMINISTRADOR GERENCIA ACTIVO
             </div>
             <div class="flex flex-wrap items-center gap-2">
                 <button onclick="openFinanceModal()" class="bg-emerald-950 text-white border border-emerald-400/40 px-3.5 py-1.5 rounded-xl text-xs font-bold hover:bg-emerald-900 transition flex items-center gap-1.5 shadow">
-                    <i class="fa-solid fa-table-cells text-emerald-400"></i> Matriz Financiera Excel v2.0
+                    <i class="fa-solid fa-table-cells text-emerald-400"></i> Tabla Control Excel 2026
                 </button>
                 <button onclick="openMasterPanel()" class="bg-slate-950 text-white px-3.5 py-1.5 rounded-xl text-xs font-bold hover:bg-slate-900 transition flex items-center gap-1.5 shadow">
                     <i class="fa-solid fa-sliders text-amber-400"></i> Panel Maestro Web
@@ -483,19 +483,179 @@
         </div>
     </div>
 
-    <!-- MODAL DE DETALLE / FICHA TÉCNICA -->
-    <div id="detailModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4 overflow-y-auto">
-        <div class="glass-panel rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto modal-scroll p-6 relative border border-slate-700 text-white shadow-2xl" onclick="event.stopPropagation()">
-            <button onclick="closeModal('detailModal')" class="absolute top-4 right-4 bg-slate-900 text-slate-400 hover:text-white w-9 h-9 rounded-full flex items-center justify-center border border-slate-700 transition">
-                <i class="fa-solid fa-xmark text-lg"></i>
-            </button>
-            <div id="modalContentContainer"></div>
+    <!-- ================================================================================== -->
+    <!-- MÓDULO EXCEL FUSIONADO: MATRIZ FINANCIERA V2.0 ELITE & PORTAL DE TRANSPARENCIA POR AGENTE -->
+    <!-- ================================================================================== -->
+    <div id="financeModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-2 md:p-5">
+        <div class="glass-panel rounded-3xl w-full max-w-[1700px] max-h-[96vh] flex flex-col shadow-2xl border border-slate-800 overflow-hidden" id="printableReportArea">
+            
+            <!-- HEADER DE CONTROL CORPORATIVO ELITE -->
+            <div class="p-4 md:p-5 border-b border-slate-800 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 bg-slate-950/70">
+                <div class="flex items-center gap-3.5">
+                    <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center text-white text-xl font-bold shadow-lg shadow-emerald-950/50">
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h2 class="text-lg md:text-xl font-extrabold text-white tracking-tight">ALIANZA ESTRATÉGICA <span class="text-sky-400">S.A.S.</span></h2>
+                            <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold px-2.5 py-0.5 rounded-full">Matriz Financiera v2.0 & Portal Agentes</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-0.5">
+                            <i class="fa-solid fa-scale-balanced text-amber-400 mr-1"></i> Reparto: <strong>50% Empresa</strong> | <strong>50% Fuerza de Ventas</strong> (50% al captador si vende, o 25% y 25% si son distintos)
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-2 w-full lg:w-auto justify-end no-print">
+                    <div class="relative w-full sm:w-60">
+                        <input type="text" id="excelSearchInput" onkeyup="renderFinanceTable()" placeholder="Buscar en matriz..." class="w-full bg-slate-900 border border-slate-700 rounded-xl pl-9 pr-3 py-1.5 text-xs text-white focus:outline-none focus:ring-1 focus:ring-sky-500">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-500 text-xs"></i>
+                    </div>
+                    <select id="statusFilterExcel" onchange="renderFinanceTable()" class="bg-slate-900 border border-slate-700 text-white rounded-xl px-2.5 py-1.5 text-xs focus:outline-none">
+                        <option value="ALL">Todos los Estados</option>
+                        <option value="DISPONIBLE">DISPONIBLE</option>
+                        <option value="VENDIDO">🔴 VENDIDO</option>
+                    </select>
+                    <button onclick="exportToCSV()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-3.5 py-2 rounded-xl transition shadow flex items-center gap-1.5">
+                        <i class="fa-solid fa-file-csv text-sm"></i> Exportar Excel (.csv)
+                    </button>
+                    <button onclick="openAddProductModal()" class="bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs px-3.5 py-2 rounded-xl transition shadow flex items-center gap-1.5">
+                        <i class="fa-solid fa-plus"></i> + Captación
+                    </button>
+                    <button onclick="printFinancialReport()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-2 rounded-xl text-xs font-bold transition">
+                        <i class="fa-solid fa-print"></i>
+                    </button>
+                    <button onclick="closeModal('financeModal')" class="text-slate-400 hover:text-white p-2 rounded-xl text-lg transition">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- DASHBOARD RESUMEN DE 5 CASILLAS HIGH-IMPACT -->
+            <div class="p-4 grid grid-cols-2 md:grid-cols-5 gap-2.5 border-b border-slate-800 bg-slate-950/40">
+                <div class="glass-panel p-3.5 rounded-xl border-l-4 border-l-slate-400">
+                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">1. Capital Inventario</div>
+                    <div id="statCapitalInventario" class="text-lg md:text-xl font-black text-white mt-0.5">$0.00</div>
+                    <div class="text-[10px] text-slate-500">Valor Mercado Total</div>
+                </div>
+
+                <div class="glass-panel p-3.5 rounded-xl border-l-4 border-l-sky-500">
+                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">2. Proyección Comisiones</div>
+                    <div id="statProyeccionComisiones" class="text-lg md:text-xl font-black text-sky-400 mt-0.5">$0.00</div>
+                    <div class="text-[10px] text-sky-300/70">Honorarios Esperados</div>
+                </div>
+
+                <div class="glass-panel p-3.5 rounded-xl border-l-4 border-l-emerald-500">
+                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">3. Comisiones Cobradas</div>
+                    <div id="statComisionesCobradas" class="text-lg md:text-xl font-black text-emerald-400 mt-0.5">$0.00</div>
+                    <div class="text-[10px] text-emerald-300/70">Ingreso Real Efectivo</div>
+                </div>
+
+                <div class="glass-panel p-3.5 rounded-xl border-l-4 border-l-rose-500">
+                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">4. Pago Fuerza Ventas</div>
+                    <div id="statPagoFuerzaVentas" class="text-lg md:text-xl font-black text-rose-400 mt-0.5">$0.00</div>
+                    <div class="text-[10px] text-rose-300/70">50% para Agentes</div>
+                </div>
+
+                <div class="glass-panel p-3.5 rounded-xl border-l-4 border-l-purple-500 col-span-2 md:col-span-1">
+                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">5. Ganancia Empresa</div>
+                    <div id="statGananciaNetaEmpresa" class="text-lg md:text-xl font-black text-purple-400 mt-0.5">$0.00</div>
+                    <div class="text-[10px] text-purple-300/70">50% ALIANZA S.A.S.</div>
+                </div>
+            </div>
+
+            <!-- PESTAÑAS DE VISTA: MATRIZ CONTABLE VS PORTAL DE TRANSPARENCIA POR AGENTE -->
+            <div class="px-4 pt-3 bg-slate-900/60 border-b border-slate-800 flex gap-2 no-print">
+                <button onclick="switchFinanceTab('matriz')" id="btnTabMatriz" class="px-4 py-2 text-xs font-extrabold rounded-t-xl bg-slate-950 text-white border-t border-x border-slate-800 transition">
+                    <i class="fa-solid fa-table-list mr-1.5 text-sky-400"></i> Matriz Contable General
+                </button>
+                <button onclick="switchFinanceTab('transparencia')" id="btnTabTransparencia" class="px-4 py-2 text-xs font-extrabold rounded-t-xl bg-slate-900/80 text-slate-400 hover:text-white transition">
+                    <i class="fa-solid fa-user-shield mr-1.5 text-amber-400"></i> 🌟 Portal de Transparencia por Agente
+                </button>
+            </div>
+
+            <!-- VISTA 1: MATRIZ CONTABLE -->
+            <div id="viewMatriz" class="overflow-x-auto table-scroll flex-1 p-4">
+                <table class="w-full text-left border-collapse text-[11px] min-w-[1400px]">
+                    <thead class="bg-slate-950 text-slate-400 uppercase text-[10px] font-bold tracking-wider sticky top-0 z-10 border-b border-slate-800">
+                        <tr>
+                            <th onclick="sortExcelTable('code')" class="py-3 px-3 border-r border-slate-800 cursor-pointer hover:bg-slate-900">Código <i class="fa-solid fa-sort ml-1"></i></th>
+                            <th onclick="sortExcelTable('dateCreated')" class="py-3 px-3 border-r border-slate-800 cursor-pointer hover:bg-slate-900">Fecha <i class="fa-solid fa-sort ml-1"></i></th>
+                            <th onclick="sortExcelTable('category')" class="py-3 px-3 border-r border-slate-800 cursor-pointer hover:bg-slate-900">Categoría <i class="fa-solid fa-sort ml-1"></i></th>
+                            <th class="py-3 px-3 border-r border-slate-800 min-w-[220px]">Detalle / Descripción</th>
+                            <th class="py-3 px-3 border-r border-slate-800">Propietario</th>
+                            <th onclick="sortExcelTable('realSalePrice')" class="py-3 px-3 border-r border-slate-800 text-right cursor-pointer hover:bg-slate-900">Precio Venta ($) <i class="fa-solid fa-sort ml-1"></i></th>
+                            <th onclick="sortExcelTable('commissionPactada')" class="py-3 px-3 border-r border-slate-800 text-right text-sky-400 bg-sky-950/30 cursor-pointer hover:bg-slate-900">Comisión ($) <i class="fa-solid fa-sort ml-1"></i></th>
+                            <th class="py-3 px-3 border-r border-slate-800">Ag. Captador</th>
+                            <th class="py-3 px-3 border-r border-slate-800">Ag. Vendedor</th>
+                            <th class="py-3 px-3 border-r border-slate-800 text-right text-sky-300 bg-sky-950/10">$ Liq. Captador</th>
+                            <th class="py-3 px-3 border-r border-slate-800 text-right text-amber-300 bg-amber-950/10">$ Liq. Vendedor</th>
+                            <th class="py-3 px-3 border-r border-slate-800 text-right text-purple-400 bg-purple-950/20">$ Liq. Empresa</th>
+                            <th class="py-3 px-3 border-r border-slate-800 text-center">Estado</th>
+                            <th class="py-3 px-3 text-center no-print">Acción Liquidación</th>
+                        </tr>
+                    </thead>
+                    <tbody id="financeTableBody" class="divide-y divide-slate-800/80 font-medium text-slate-300">
+                        <!-- FILAS DINÁMICAS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- VISTA 2: PORTAL DE TRANSPARENCIA POR AGENTE -->
+            <div id="viewTransparencia" class="hidden flex-1 overflow-y-auto modal-scroll p-5 space-y-6 bg-slate-950/50">
+                <div class="flex flex-wrap items-center justify-between gap-4 bg-slate-900 p-4 rounded-2xl border border-slate-800">
+                    <div>
+                        <h3 class="font-extrabold text-white text-sm">Seleccione Agente Comercial para Auditoría:</h3>
+                        <p class="text-xs text-slate-400">Revise de forma transparente el acumulado de ganancias, captaciones y ventas cerradas.</p>
+                    </div>
+                    <select id="agentSelectAuditor" onchange="renderAgentTransparencyPortal()" class="bg-slate-950 border border-slate-700 text-sky-400 font-bold rounded-xl px-4 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-sky-500">
+                        <!-- Se llena dinámicamente -->
+                    </select>
+                </div>
+
+                <!-- Resumen KPi del Agente Seleccionado -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="glass-panel p-4 rounded-2xl border-l-4 border-l-sky-500">
+                        <span class="text-[10px] uppercase font-bold text-slate-400">Ganancias por Captaciones (25% o 50%)</span>
+                        <div id="agentStatCaptacion" class="text-xl font-black text-sky-400 mt-1">$0.00</div>
+                    </div>
+                    <div class="glass-panel p-4 rounded-2xl border-l-4 border-l-amber-500">
+                        <span class="text-[10px] uppercase font-bold text-slate-400">Ganancias por Ventas Cerradas (25%)</span>
+                        <div id="agentStatVenta" class="text-xl font-black text-amber-400 mt-1">$0.00</div>
+                    </div>
+                    <div class="glass-panel p-4 rounded-2xl border-l-4 border-l-emerald-500">
+                        <span class="text-[10px] uppercase font-bold text-slate-400">Total Acumulado a Pagar ($ USD)</span>
+                        <div id="agentStatTotal" class="text-xl font-black text-emerald-400 mt-1">$0.00</div>
+                    </div>
+                </div>
+
+                <!-- Pestañas de Detalle del Agente -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div class="bg-slate-900 p-4 rounded-2xl border border-slate-800 space-y-3">
+                        <h4 class="font-extrabold text-white text-xs uppercase flex items-center gap-2 border-b border-slate-800 pb-2">
+                            <i class="fa-solid fa-folder-plus text-sky-400"></i> Bienes Captados por el Agente
+                        </h4>
+                        <div id="agentCapturedList" class="space-y-2 max-h-64 overflow-y-auto modal-scroll text-xs"></div>
+                    </div>
+                    <div class="bg-slate-900 p-4 rounded-2xl border border-slate-800 space-y-3">
+                        <h4 class="font-extrabold text-white text-xs uppercase flex items-center gap-2 border-b border-slate-800 pb-2">
+                            <i class="fa-solid fa-handshake-angle text-amber-400"></i> Ventas Cerradas por el Agente
+                        </h4>
+                        <div id="agentSoldList" class="space-y-2 max-h-64 overflow-y-auto modal-scroll text-xs"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-950 p-2.5 text-[10px] text-slate-500 font-bold flex justify-between items-center border-t border-slate-800 no-print">
+                <span>Total Registros: <span id="recordCount" class="text-white">0</span></span>
+                <span>* Matriz Financiera v2.0 - ALIANZA ESTRATÉGICA S.A.S.</span>
+            </div>
         </div>
     </div>
 
-    <!-- MODAL LIQUIDACIÓN DE VENTA & REPARTO -->
+    <!-- MODAL REGISTRO DE VENDEDOR & CIERRE DE VENTA -->
     <div id="settleSoldModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="glass-panel rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-slate-800 text-white">
+        <div class="glass-panel rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-slate-800">
             <div class="flex justify-between items-center border-b border-slate-800 pb-3">
                 <h3 class="text-base font-extrabold text-white flex items-center gap-2">
                     <i class="fa-solid fa-handshake-angle text-emerald-400"></i> Liquidación de Venta & Reparto
@@ -703,7 +863,41 @@
                     </div>
                 </div>
 
-                <!-- CARGA MÚLTIPLE DE FOTOS -->
+                <!-- ESPECIFICACIONES DINÁMICAS -->
+                <div id="fieldsVehicles" class="bg-slate-900/60 p-3.5 rounded-2xl border border-slate-800 space-y-2">
+                    <h5 class="text-xs font-extrabold text-amber-400"><i class="fa-solid fa-truck-monster"></i> Ficha de Vehículo / Maquinaria</h5>
+                    <div class="grid grid-cols-3 gap-2">
+                        <input type="text" id="vhAno" placeholder="Año / Modelo" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
+                        <input type="text" id="vhKm" placeholder="Kilometraje / Horas" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
+                        <input type="text" id="vhTransmision" placeholder="Transmisión / Motor" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
+                    </div>
+                    <input type="text" id="vhDetalles" placeholder="Detalles mecánicos y extras" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
+                </div>
+
+                <div id="fieldsRealEstate" class="hidden bg-slate-900/60 p-3.5 rounded-2xl border border-slate-800 space-y-2">
+                    <h5 class="text-xs font-extrabold text-sky-400"><i class="fa-solid fa-house"></i> Parámetros de Bienes Raíces</h5>
+                    <div class="grid grid-cols-3 gap-2">
+                        <input type="text" id="reMetros2" placeholder="Área Total (m²)" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
+                        <input type="text" id="reFrente" placeholder="Metros Frente" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
+                        <input type="text" id="reFondo" placeholder="Metros Fondo" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
+                    </div>
+                    <div class="grid grid-cols-4 gap-2">
+                        <input type="text" id="reConstruccion" placeholder="Área Const. (m²)" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
+                        <input type="text" id="rePisos" placeholder="Pisos" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
+                        <input type="text" id="reHabitaciones" placeholder="Habitaciones" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
+                        <input type="text" id="reBanos" placeholder="Baños" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
+                    </div>
+                </div>
+
+                <div id="fieldsSecondHand" class="hidden bg-slate-900/60 p-3.5 rounded-2xl border border-slate-800 space-y-2">
+                    <h5 class="text-xs font-extrabold text-purple-400"><i class="fa-solid fa-boxes-packing"></i> Artículos Usados / Equipos</h5>
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="text" id="lqEstado" placeholder="Estado técnico (ej: 10/10)" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
+                        <input type="text" id="lqTiempoUso" placeholder="Tiempo de uso" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
+                    </div>
+                </div>
+
+                <!-- CARGA MÚLTIPLE HASTA 5 FOTOS -->
                 <div class="bg-slate-900/60 p-3.5 rounded-2xl border border-slate-800 space-y-2">
                     <div class="flex items-center justify-between">
                         <label class="block text-xs font-bold text-slate-300">Fotos del Activo (Hasta 5 fotos)</label>
@@ -726,6 +920,90 @@
                     </button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- MODAL VER FICHA TÉCNICA DETALLADA -->
+    <div id="detailModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-panel rounded-3xl max-w-2xl w-full p-6 space-y-4 shadow-2xl max-h-[90vh] flex flex-col border border-slate-800">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <div>
+                    <span id="detCodeBadge" class="text-[10px] font-mono font-bold bg-amber-500 text-slate-950 px-2 py-0.5 rounded-md">RE-001</span>
+                    <span id="detStatusBadge" class="text-[10px] font-bold bg-emerald-600 text-white px-2 py-0.5 rounded-md ml-1">✅ Disponible</span>
+                    <h3 id="detTitle" class="text-lg font-extrabold text-white mt-1">Título</h3>
+                </div>
+                <button onclick="closeModal('detailModal')" class="text-slate-400 hover:text-slate-200"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <div class="flex-1 overflow-y-auto space-y-4 p-1 modal-scroll">
+                <div class="relative w-full h-64 sm:h-72 bg-slate-950 rounded-2xl overflow-hidden flex items-center justify-center">
+                    <img id="detMainImg" src="" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80';">
+                </div>
+                <div id="detThumbsContainer" class="flex gap-2 overflow-x-auto pb-1"></div>
+
+                <div class="flex flex-wrap justify-between items-center gap-2 bg-slate-900/80 p-3.5 rounded-2xl border border-slate-800">
+                    <div>
+                        <span class="block text-[10px] uppercase font-bold text-slate-400">Precio Comercial</span>
+                        <div class="flex items-center gap-2">
+                            <span id="detPrice" class="text-lg font-extrabold text-white">$0.00 USD</span>
+                            <span id="detOfferPrice" class="text-base font-extrabold text-amber-400 hidden"></span>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="block text-[10px] uppercase font-bold text-slate-400">Ubicación</span>
+                        <span id="detLocation" class="text-xs font-bold text-slate-200">El Coca</span>
+                    </div>
+                    <div class="bg-sky-950 border border-sky-400/30 text-sky-300 px-3 py-1 rounded-xl text-xs font-bold">
+                        <i class="fa-solid fa-user-tie text-sky-400 mr-1"></i> Captador: <span id="detAgentDisplay">Gerencia</span>
+                    </div>
+                </div>
+
+                <div id="detTechnicalBox" class="bg-slate-900/60 p-3.5 rounded-2xl border border-slate-800 text-xs text-slate-300 space-y-1.5"></div>
+
+                <div>
+                    <h4 class="text-xs font-extrabold text-white uppercase mb-1">Descripción Técnica</h4>
+                    <p id="detDesc" class="text-xs text-slate-300 leading-relaxed whitespace-pre-line bg-slate-900/60 p-3.5 rounded-2xl border border-slate-800"></p>
+                </div>
+
+                <!-- SECCIÓN PRIVADA DE DATOS INTERNOS -->
+                <div id="detPrivateSection" class="hidden bg-amber-500/10 p-3.5 rounded-2xl border border-amber-500/30 space-y-1 text-xs">
+                    <h5 class="font-extrabold text-amber-400 flex items-center gap-1"><i class="fa-solid fa-user-lock"></i> Datos Internos de Captación & Legal</h5>
+                    <p class="text-slate-300"><strong>Propietario:</strong> <span id="detPrivateOwner">-</span></p>
+                    <p class="text-slate-300"><strong>Tipo Contrato:</strong> <span id="detPrivateContract">-</span> | <strong>Estado:</strong> <span id="detPrivateLegal">-</span></p>
+                    <p class="text-slate-300"><strong>Comisión:</strong> <span id="detPrivateComision">-</span> | <strong>Captador:</strong> <span id="detPrivateAgent">-</span></p>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-800 pt-3 flex flex-wrap justify-between items-center gap-2">
+                <button onclick="closeModal('detailModal')" class="bg-slate-800 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs hover:bg-slate-700 transition">Cerrar</button>
+                <a id="detWaConsultBtn" href="#" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-5 py-2 rounded-xl text-xs transition shadow-md flex items-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-sm"></i> Contactar a Gerencia
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DOSSIER INSTITUCIONAL -->
+    <div id="infoMenuModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-panel rounded-3xl max-w-3xl w-full p-6 space-y-4 shadow-2xl max-h-[90vh] flex flex-col border border-slate-800">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h3 class="text-lg font-extrabold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-building text-sky-400"></i> Dossier Institucional & Garantía Legal
+                </h3>
+                <button onclick="closeModal('infoMenuModal')" class="text-slate-400 hover:text-slate-200"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <div class="flex flex-wrap gap-2 border-b border-slate-800 pb-2 text-xs font-bold">
+                <button onclick="setInfoTab('MISION')" class="info-tab-btn bg-sky-600 text-white px-3.5 py-1.5 rounded-xl transition shadow-sm">Misión</button>
+                <button onclick="setInfoTab('HONORARIOS')" class="info-tab-btn bg-slate-900 border border-slate-700 text-slate-300 hover:bg-slate-800 px-3.5 py-1.5 rounded-xl transition">Cobro por Éxito</button>
+                <button onclick="setInfoTab('RESPALDO')" class="info-tab-btn bg-slate-900 border border-slate-700 text-slate-300 hover:bg-slate-800 px-3.5 py-1.5 rounded-xl transition">Respaldo Notarial</button>
+            </div>
+
+            <div id="infoTabContent" class="flex-1 overflow-y-auto space-y-3 p-1 modal-scroll text-xs text-slate-300 leading-relaxed"></div>
+
+            <div class="border-t border-slate-800 pt-3 flex justify-end">
+                <button onclick="closeModal('infoMenuModal')" class="bg-slate-900 text-white font-bold px-5 py-2 rounded-xl text-xs hover:bg-slate-800 transition">Entendido</button>
+            </div>
         </div>
     </div>
 
@@ -831,7 +1109,7 @@
         const getVal = (id) => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
         const getChecked = (id) => { const el = document.getElementById(id); return el ? el.checked : false; };
 
-        // REGISTRO AUTOMÁTICO DE SERVICE WORKER PARA HABILITAR PWA STANDALONE NATIVA
+        // REGISTRO SERVICE WORKER PWA
         if ('serviceWorker' in navigator) {
             const swCode = `
                 self.addEventListener('install', (e) => { self.skipWaiting(); });
@@ -843,7 +1121,6 @@
             navigator.serviceWorker.register(swUrl).catch(err => console.log('SW registration error:', err));
         }
 
-        // ICONO DINÁMICO VINCULADO AL LOGOTIPO DEL ADMINISTRADOR
         function updatePwaManifest(logoUrl) {
             const manifestData = {
                 name: "ALIANZA ESTRATÉGICA S.A.S.",
@@ -852,14 +1129,7 @@
                 display: "standalone",
                 background_color: "#080c14",
                 theme_color: "#0284c7",
-                icons: [
-                    {
-                        src: logoUrl,
-                        sizes: "192x192 512x512",
-                        type: "image/jpeg",
-                        purpose: "any maskable"
-                    }
-                ]
+                icons: [{ src: logoUrl, sizes: "192x192 512x512", type: "image/jpeg", purpose: "any maskable" }]
             };
             const stringified = JSON.stringify(manifestData);
             const blob = new Blob([stringified], { type: 'application/json' });
@@ -867,10 +1137,8 @@
             
             const link = document.getElementById('dynamicManifestLink');
             if (link) link.href = manifestUrl;
-
             const appleIcon = document.getElementById('appleTouchIconLink');
             if (appleIcon) appleIcon.href = logoUrl;
-
             const favicon = document.getElementById('faviconLink');
             if (favicon) favicon.href = logoUrl;
         }
@@ -1018,16 +1286,25 @@
             }
         }
 
-        function saveConfigToStorage() {
+        function saveConfigToStorage(isSilent = false) {
             localStorage.setItem('alianza_config', JSON.stringify(appConfig));
             updatePwaManifest(appConfig.profileLogo || DEFAULT_STATE.profileLogo);
+
             if (db) {
                 try {
                     db.collection('alianza_settings').doc('appData').set({
                         config: appConfig,
                         updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                    }, { merge: true }).catch(() => {});
+                    }, { merge: true })
+                    .then(() => {
+                        if (!isSilent) showToast('¡Sincronizado en la Nube con éxito!');
+                    })
+                    .catch(() => {
+                        if (!isSilent) showToast('Guardado localmente', 'success');
+                    });
                 } catch(e) {}
+            } else if (!isSilent) {
+                showToast('Guardado localmente');
             }
         }
 
@@ -1271,7 +1548,6 @@
         }
 
         function openEditProductModal(id) {
-            // RESTRICCIÓN: Solo Admin o el Agente Propietario (aquí permitido para ADMIN en tarjetas)
             const item = inventory.find(i => i.id === id);
             if (!item) return;
 
@@ -1537,13 +1813,118 @@
             showToast('¡Venta liquidada y guardada de forma persistente!');
         }
 
+        /* RENDER DE LA TABLA EXCEL CON DESGLOSE EXPLÍCITO Y PANEL ACUMULADO POR AGENTE */
         function openFinanceModal() {
             if (currentRole !== 'ADMIN') {
                 showToast('Acceso exclusivo para Gerencia General / Administrador', 'error');
                 return;
             }
             renderFinanceTable();
+            populateAgentAuditorSelect();
+            renderAgentTransparencyPortal();
             openModal('financeModal');
+        }
+
+        function switchFinanceTab(tab) {
+            const btnMatriz = document.getElementById('btnTabMatriz');
+            const btnTrans = document.getElementById('btnTabTransparencia');
+            const viewMatriz = document.getElementById('viewMatriz');
+            const viewTrans = document.getElementById('viewTransparencia');
+
+            if (tab === 'matriz') {
+                btnMatriz.className = "px-4 py-2 text-xs font-extrabold rounded-t-xl bg-slate-950 text-white border-t border-x border-slate-800 transition";
+                btnTrans.className = "px-4 py-2 text-xs font-extrabold rounded-t-xl bg-slate-900/80 text-slate-400 hover:text-white transition";
+                viewMatriz.classList.remove('hidden');
+                viewTrans.classList.add('hidden');
+            } else {
+                btnTrans.className = "px-4 py-2 text-xs font-extrabold rounded-t-xl bg-slate-950 text-white border-t border-x border-slate-800 transition";
+                btnMatriz.className = "px-4 py-2 text-xs font-extrabold rounded-t-xl bg-slate-900/80 text-slate-400 hover:text-white transition";
+                viewTrans.classList.remove('hidden');
+                viewMatriz.classList.add('hidden');
+                renderAgentTransparencyPortal();
+            }
+        }
+
+        function populateAgentAuditorSelect() {
+            const select = document.getElementById('agentSelectAuditor');
+            if (!select) return;
+            const agentsSet = new Set();
+            inventory.forEach(i => {
+                if (i.agentName) agentsSet.add(i.agentName);
+                if (i.sellerAgentName) agentsSet.add(i.sellerAgentName);
+            });
+            const agents = Array.from(agentsSet);
+            select.innerHTML = agents.map(ag => `<option value="${escapeHtml(ag)}">${escapeHtml(ag)}</option>`).join('');
+            if (agents.length > 0) select.value = agents[0];
+        }
+
+        function renderAgentTransparencyPortal() {
+            const select = document.getElementById('agentSelectAuditor');
+            if (!select) return;
+            const selectedAgent = select.value;
+            if (!selectedAgent) return;
+
+            let totalCaptacionEarnings = 0;
+            let totalVentaEarnings = 0;
+            const capturedListEl = document.getElementById('agentCapturedList');
+            const soldListEl = document.getElementById('agentSoldList');
+            
+            capturedListEl.innerHTML = '';
+            soldListEl.innerHTML = '';
+
+            let capCount = 0;
+            let soldCount = 0;
+
+            inventory.forEach(item => {
+                const isCaptador = (item.agentName || '').toLowerCase() === selectedAgent.toLowerCase();
+                const isVendedor = (item.sellerAgentName || '').toLowerCase() === selectedAgent.toLowerCase();
+                const isVendido = item.status === 'VENDIDO' || item.status === 'SOLD';
+
+                if (isCaptador) {
+                    capCount++;
+                    const earned = isVendido ? (item.payCaptador || 0) : 0;
+                    if (isVendido) totalCaptacionEarnings += earned;
+
+                    capturedListEl.innerHTML += `
+                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 flex items-center justify-between">
+                            <div>
+                                <span class="font-mono font-bold text-sky-400">${item.code}</span> - <span class="text-white font-semibold">${escapeHtml(item.title)}</span>
+                                <div class="text-[10px] text-slate-400 mt-0.5">Captado: ${item.dateCreated || '-'} | Estado: ${item.status}</div>
+                            </div>
+                            <div class="text-right">
+                                <span class="block text-sky-300 font-extrabold">$${earned.toFixed(2)}</span>
+                                <span class="text-[9px] text-slate-500">${isVendido ? 'Liquidado' : 'Pendiente'}</span>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                if (isVendedor && isVendido) {
+                    soldCount++;
+                    const earnedV = item.payVendedor || 0;
+                    totalVentaEarnings += earnedV;
+
+                    soldListEl.innerHTML += `
+                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 flex items-center justify-between">
+                            <div>
+                                <span class="font-mono font-bold text-amber-400">${item.code}</span> - <span class="text-white font-semibold">${escapeHtml(item.title)}</span>
+                                <div class="text-[10px] text-slate-400 mt-0.5">Vendido por ti | Cierre: ${item.closingDate || '-'}</div>
+                            </div>
+                            <div class="text-right">
+                                <span class="block text-amber-300 font-extrabold">$${earnedV.toFixed(2)}</span>
+                                <span class="text-[9px] text-emerald-400 font-bold">Liquidado 25%</span>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+            if (capCount === 0) capturedListEl.innerHTML = '<p class="text-slate-500 italic p-2">Sin bienes captados registrados.</p>';
+            if (soldCount === 0) soldListEl.innerHTML = '<p class="text-slate-500 italic p-2">Sin ventas cerradas registradas.</p>';
+
+            document.getElementById('agentStatCaptacion').innerText = `$${totalCaptacionEarnings.toFixed(2)}`;
+            document.getElementById('agentStatVenta').innerText = `$${totalVentaEarnings.toFixed(2)}`;
+            document.getElementById('agentStatTotal').innerText = `$${(totalCaptacionEarnings + totalVentaEarnings).toFixed(2)}`;
         }
 
         function renderFinanceTable() {
@@ -1576,14 +1957,16 @@
                     totalCapital += priceVal;
                     totalProyeccion += comisionVal;
 
-                    let liqAgentes = 0;
+                    let liqCaptador = 0;
+                    let liqVendedor = 0;
                     let liqEmpresa = 0;
 
                     if (isVendido) {
                         totalCobradas += comisionVal;
                         liqEmpresa = item.netEmpresa || (comisionVal * 0.50);
-                        liqAgentes = (item.payCaptador || 0) + (item.payVendedor || 0) || (comisionVal * 0.50);
-                        totalAgentes += liqAgentes;
+                        liqCaptador = item.payCaptador || 0;
+                        liqVendedor = item.payVendedor || 0;
+                        totalAgentes += (liqCaptador + liqVendedor);
                         totalEmpresa += liqEmpresa;
                     }
 
@@ -1598,8 +1981,9 @@
                             <td class="py-2.5 px-3 border-r border-slate-800/80 font-extrabold text-right text-sky-400 bg-sky-950/20">$${comisionVal.toFixed(2)}</td>
                             <td class="py-2.5 px-3 border-r border-slate-800/80 text-slate-300">${item.agentName || '-'}</td>
                             <td class="py-2.5 px-3 border-r border-slate-800/80 text-slate-300">${item.sellerAgentName || '-'}</td>
-                            <td class="py-2.5 px-3 border-r border-slate-800/80 font-bold text-right text-rose-400 bg-rose-950/10">$${liqAgentes.toFixed(2)}</td>
-                            <td class="py-2.5 px-3 border-r border-slate-800/80 font-bold text-right text-purple-400 bg-purple-950/10">$${liqEmpresa.toFixed(2)}</td>
+                            <td class="py-2.5 px-3 border-r border-slate-800/80 font-bold text-right text-sky-300 bg-sky-950/10">$${liqCaptador.toFixed(2)}</td>
+                            <td class="py-2.5 px-3 border-r border-slate-800/80 font-bold text-right text-amber-300 bg-amber-950/10">$${liqVendedor.toFixed(2)}</td>
+                            <td class="py-2.5 px-3 border-r border-slate-800/80 font-bold text-right text-purple-400 bg-purple-950/20">$${liqEmpresa.toFixed(2)}</td>
                             <td class="py-2.5 px-3 border-r border-slate-800/80 text-center">
                                 <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${isVendido ? 'bg-rose-950/80 text-rose-400 border border-rose-800' : 'bg-emerald-950/80 text-emerald-400 border border-emerald-800'}">
                                     ${isVendido ? '🔴 VENDIDO' : '✅ DISPONIBLE'}
@@ -1660,7 +2044,7 @@
             }
 
             let csvContent = "SEP=;\n";
-            const headers = ["Código", "Fecha", "Categoría", "Detalle / Descripción", "Propietario", "Precio Venta ($)", "Comisión ($)", "Ag. Captador", "Ag. Vendedor", "Liq. Agentes ($)", "Liq. Empresa ($)", "Estado Comercial"];
+            const headers = ["Código", "Fecha", "Categoría", "Detalle / Descripción", "Propietario", "Precio Venta ($)", "Comisión ($)", "Ag. Captador", "Ag. Vendedor", "Liq. Captador ($)", "Liq. Vendedor ($)", "Liq. Empresa ($)", "Estado Comercial"];
             csvContent += headers.join(";") + "\n";
 
             inventory.forEach(item => {
@@ -1668,7 +2052,8 @@
                 const comision = item.commissionPactada || 0;
                 const isVendido = item.status === 'VENDIDO' || item.status === 'SOLD';
                 const liqEmpresa = isVendido ? (item.netEmpresa || comision * 0.5) : 0;
-                const liqAgentes = isVendido ? ((item.payCaptador || 0) + (item.payVendedor || 0) || comision * 0.5) : 0;
+                const liqCap = isVendido ? (item.payCaptador || 0) : 0;
+                const liqVen = isVendido ? (item.payVendedor || 0) : 0;
 
                 const row = [
                     `"${item.code || ''}"`,
@@ -1680,7 +2065,8 @@
                     `"${comision.toFixed(2)}"`,
                     `"${item.agentName || ''}"`,
                     `"${item.sellerAgentName || ''}"`,
-                    `"${liqAgentes.toFixed(2)}"`,
+                    `"${liqCap.toFixed(2)}"`,
+                    `"${liqVen.toFixed(2)}"`,
                     `"${liqEmpresa.toFixed(2)}"`,
                     `"${item.status || ''}"`
                 ];
@@ -1760,15 +2146,14 @@
 
             items.forEach(item => {
                 const mainImg = (item.images && item.images.length > 0) ? item.images[0] : 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80';
-                const isVendido = item.status === 'VENDIDO' || item.status === 'SOLD';
 
-                let adminBtns = '';
+                // BOTÓN DE EDICIÓN EXCLUSIVO PARA ADMINISTRADOR PRINCIPAL (GERENTE)
+                let adminEditBtn = '';
                 if (currentRole === 'ADMIN') {
-                    adminBtns = `
-                        <div class="flex gap-1.5">
-                            <button onclick="openEditProductModal('${item.id}')" class="bg-amber-500 hover:bg-amber-600 text-slate-950 p-2 rounded-xl text-xs font-bold transition shadow" title="Editar Activo"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <button onclick="deleteProduct('${item.id}')" class="bg-rose-600 hover:bg-rose-700 text-white p-2 rounded-xl text-xs font-bold transition shadow" title="Eliminar Activo"><i class="fa-solid fa-trash"></i></button>
-                        </div>
+                    adminEditBtn = `
+                        <button onclick="openEditProductModal('${item.id}')" class="bg-amber-500 hover:bg-amber-600 text-slate-950 p-2 rounded-xl text-xs font-bold transition shadow cursor-pointer" title="Modificar Activo (Admin)">
+                            <i class="fa-solid fa-pen"></i> ✏️ Editar
+                        </button>
                     `;
                 }
 
@@ -1789,7 +2174,7 @@
                                 <img src="${mainImg}" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80';">
                                 <span class="absolute top-3 left-3 bg-slate-950/80 backdrop-blur-md text-amber-400 font-mono text-[10px] font-bold px-2.5 py-0.5 rounded-lg border border-amber-400/30">${item.code || ''}</span>
                                 <div class="absolute top-3 right-3 flex items-center gap-1">
-                                    ${item.isFeatured ? '<span class="bg-amber-400 text-slate-950 text-[10px] font-extrabold px-1.5 py-0.5 rounded shadow">⭐</span>' : ''}
+                                    ${item.isFeatured ? '<span class="bg-amber-400 text-slate-950 text-[10px] font-extrabold px-1.5 py-0.5 rounded shadow">⭐ Destacado</span>' : ''}
                                     ${getStatusBadgeHTML(item.status)}
                                 </div>
                             </div>
@@ -1810,7 +2195,7 @@
                             <button onclick="compartirActivoWhatsApp('${item.id}')" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-3.5 py-2.5 rounded-xl transition shadow flex items-center justify-center gap-1.5" title="Compartir Ficha por WhatsApp">
                                 <i class="fa-brands fa-whatsapp text-sm"></i>
                             </button>
-                            ${adminBtns}
+                            ${adminEditBtn}
                         </div>
                     </div>
                 `;
@@ -1895,17 +2280,14 @@
 
         function actualizarOpenGraphDinamico(titulo, descripcion, imagenUrl, codigoActivo) {
             const urlCompleta = window.location.origin + window.location.pathname + (codigoActivo ? '?id=' + codigoActivo : '');
-
             const setMeta = (id, attr, val) => {
                 const el = document.getElementById(id);
                 if (el) el.setAttribute(attr, val);
             };
-
             setMeta('og-title', 'content', `${titulo} | ALIANZA ESTRATÉGICA S.A.S.`);
             setMeta('og-description', 'content', descripcion);
             setMeta('og-image', 'content', imagenUrl);
             setMeta('og-url', 'content', urlCompleta);
-
             setMeta('twitter-title', 'content', titulo);
             setMeta('twitter-description', 'content', descripcion);
             setMeta('twitter-image', 'content', imagenUrl);
@@ -1922,7 +2304,6 @@
             const textoMensaje = encodeURIComponent(
                 `¡Hola! Te comparto este activo verificado de ALIANZA ESTRATÉGICA S.A.S. (El Coca):\n\n📌 *${activo.title}*\n💵 Precio: ${activo.priceStr || '$' + activo.realSalePrice + ' USD'}\n🏷️ Código: ${activo.code || activo.id}\n\nConsulta la ficha técnica completa aquí:\n${urlCompartir}`
             );
-
             window.open(`https://api.whatsapp.com/send?text=${textoMensaje}`, '_blank');
         }
 
@@ -1939,7 +2320,6 @@
             }
         }
 
-        /* CARRUSEL Y MARQUESINA CONTINUA */
         function getFeaturedItems() {
             const featured = inventory.filter(i => i.isFeatured === true);
             return featured.length > 0 ? featured : inventory;
@@ -1972,27 +2352,6 @@
         function clickCarouselCurrentSlide() {
             const items = getFeaturedItems();
             if (items[carouselIndex]) openDetailModal(items[carouselIndex].id);
-        }
-
-        function setInfoTab(tabKey) {
-            const content = document.getElementById('infoTabContent');
-            if (tabKey === 'MISION') {
-                content.innerHTML = `
-                    <h4 class="text-sm font-bold text-white mb-1">Misión Institucional</h4>
-                    <p class="mb-3">Prestar servicios integrales de corretaje, intermediación y saneamiento notarial de bienes raíces, automotores y maquinaria en El Coca y la Amazonía ecuatoriana con transparencia y rigor técnico.</p>
-                `;
-            } else if (tabKey === 'HONORARIOS') {
-                content.innerHTML = `
-                    <h4 class="text-sm font-bold text-white mb-1">Modelo de Gestión por Éxito ✅</h4>
-                    <p class="mb-2">En <strong>ALIANZA ESTRATÉGICA S.A.S.</strong> no cobramos valores previos por publicación o exhibición del activo. Nuestros honorarios se liquidan única y exclusivamente cuando la negociación se protocoliza exitosamente ante Notario Público.</p>
-                `;
-            } else if (tabKey === 'RESPALDO') {
-                content.innerHTML = `
-                    <h4 class="text-sm font-bold text-white mb-1">Respaldo Notarial Permanente</h4>
-                    <p class="mb-2">Cada transacción está estructurada por el <strong>Abg. Carlos Alfredo Íñiguez Rodríguez</strong>.</p>
-                    <p>Elaboración de minutas de compraventa, levantamiento de hipotecas, promesas notarizadas y gestión directa ante el Registro de la Propiedad y Mercantil.</p>
-                `;
-            }
         }
 
         function toggleChatWindow() { document.getElementById('chatBoxWindow').classList.toggle('hidden'); }
