@@ -227,16 +227,28 @@
     <!-- HEADER / PERFIL CORPORATIVO -->
     <section class="max-w-7xl mx-auto w-full px-4 pt-4">
         <div class="glass-panel rounded-3xl shadow-2xl overflow-hidden relative transition-all duration-300">
-            <!-- PORTADA -->
-            <div class="h-48 sm:h-64 md:h-80 w-full relative bg-slate-950 group overflow-hidden">
-                <img id="coverImgDisplay" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80" alt="Portada Corporativa" class="w-full h-full object-cover transition duration-700" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80';">
-                <div class="absolute inset-0 bg-gradient-to-t from-[#080c14] via-transparent to-transparent"></div>
+            <!-- PORTADA ULTRA-ADAPTABLE -->
+            <div class="h-56 sm:h-72 md:h-88 lg:h-96 w-full relative bg-slate-950 group overflow-hidden flex items-center justify-center">
+                <!-- Capa ambiental difuminada para relleno estético en pantallas panorámicas -->
+                <img id="coverImgBgDisplay" src="/assets/aistudio/portada_alianza_hd.png" alt="" class="absolute inset-0 w-full h-full object-cover filter blur-2xl opacity-40 scale-110 pointer-events-none select-none">
                 
-                <label for="coverFileInput" id="coverChangeBtn" class="cover-change-btn admin-only hidden absolute top-3 right-3 sm:top-4 sm:right-4 bg-slate-950/85 hover:bg-slate-900 text-white text-xs font-bold px-3 py-2 rounded-xl backdrop-blur-md border border-white/20 transition flex items-center gap-2 shadow-2xl cursor-pointer hover:scale-105 active:scale-95">
-                    <i class="fa-solid fa-camera text-sky-400 text-sm"></i>
-                    <span>Cambiar Portada</span>
-                    <input type="file" id="coverFileInput" accept="image/*" class="hidden" onchange="handleImageUpload(event, 'coverImg')">
-                </label>
+                <!-- Imagen de portada principal: nunca se recorta el texto ni el emblema -->
+                <img id="coverImgDisplay" src="/assets/aistudio/portada_alianza_hd.png" alt="Portada Corporativa" class="relative z-10 w-full h-full object-contain object-center transition duration-500 shadow-2xl">
+                
+                <div class="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#080c14] via-[#080c14]/60 to-transparent z-10 pointer-events-none"></div>
+                
+                <!-- Controles de Portada (Admin) -->
+                <div class="admin-only hidden absolute top-3 right-3 sm:top-4 sm:right-4 z-20 flex items-center gap-2">
+                    <button type="button" onclick="toggleCoverFitMode()" id="coverFitBtn" class="bg-slate-950/85 hover:bg-slate-900 text-white text-xs font-bold px-3 py-2 rounded-xl backdrop-blur-md border border-white/20 transition flex items-center gap-1.5 shadow-2xl cursor-pointer" title="Alternar modo de ajuste: Contener (completo) / Rellenar todo">
+                        <i class="fa-solid fa-expand text-sky-400"></i>
+                        <span id="coverFitBtnText">Ajuste: Completo</span>
+                    </button>
+                    <label for="coverFileInput" id="coverChangeBtn" class="cover-change-btn bg-slate-950/85 hover:bg-slate-900 text-white text-xs font-bold px-3 py-2 rounded-xl backdrop-blur-md border border-white/20 transition flex items-center gap-2 shadow-2xl cursor-pointer hover:scale-105 active:scale-95">
+                        <i class="fa-solid fa-camera text-sky-400 text-sm"></i>
+                        <span>Cambiar Portada</span>
+                        <input type="file" id="coverFileInput" accept="image/*" class="hidden" onchange="handleImageUpload(event, 'coverImg')">
+                    </label>
+                </div>
             </div>
 
             <!-- DETALLES DE PERFIL -->
@@ -505,12 +517,12 @@
                 <div>
                     <label class="block text-xs font-bold text-slate-300 mb-1">Nivel de Acceso</label>
                     <select id="loginRoleSelect" onchange="togglePassInput()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white font-semibold focus:outline-none focus:ring-2 focus:ring-sky-500">
-                        <option value="AGENT">Agente Comercial (Clave: agente12345@)</option>
-                        <option value="ADMIN">Administrador Principal (Clave: admin123 o alianza2026)</option>
+                        <option value="AGENT">INGRESO DE AGENTE</option>
+                        <option value="ADMIN">INGRESO ADMINISTRADOR</option>
                     </select>
                 </div>
                 <div id="passContainer">
-                    <label class="block text-xs font-bold text-slate-300 mb-1" id="passLabel">Contraseña de Agente Comercial</label>
+                    <label class="block text-xs font-bold text-slate-300 mb-1" id="passLabel">Contraseña: INGRESO DE AGENTE</label>
                     <input type="password" id="adminPassInput" placeholder="••••••••" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
                 </div>
                 <button onclick="executeLogin()" class="w-full bg-sky-600 hover:bg-sky-500 text-white font-extrabold py-2.5 rounded-xl text-xs transition shadow-lg cursor-pointer">
@@ -1499,7 +1511,8 @@
             motto: "Excelencia Jurídica, Confianza Profesional",
             location: "El Coca, Orellana - Ecuador",
             bioText: "Portal oficial de <strong>ALIANZA ESTRATÉGICA S.A.S.</strong> en El Coca, Orellana. Administrador Líder & Representante Legal: <strong>(A.A.I.L.)</strong> | Patrocinio Jurídico Externo: <strong>Abg. C.A.I.R.</strong> Transparencia, legalidad y seguridad transaccional garantizada.",
-            coverImg: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80",
+            coverImg: "/assets/aistudio/portada_alianza_hd.png",
+            coverFit: "contain",
             profileLogo: "https://alianzaestrategica2026-byte.github.io/alianzaestrategica/108900.jpg"
         };
 
@@ -1764,10 +1777,43 @@
             if (locEl) locEl.innerText = appConfig.location || DEFAULT_STATE.location;
             const bioEl = document.getElementById('profileBioText');
             if (bioEl) bioEl.innerHTML = appConfig.bioText || DEFAULT_STATE.bioText;
+            
+            // Portada ultra-nítida con ajuste perfecto
             const coverEl = document.getElementById('coverImgDisplay');
-            if (coverEl) coverEl.src = appConfig.coverImg || DEFAULT_STATE.coverImg;
+            const coverBgEl = document.getElementById('coverImgBgDisplay');
+            let currentCoverSrc = appConfig.coverImg || DEFAULT_STATE.coverImg;
+            if (currentCoverSrc.includes('unsplash.com')) {
+                currentCoverSrc = DEFAULT_STATE.coverImg;
+                appConfig.coverImg = currentCoverSrc;
+            }
+            if (coverEl) {
+                coverEl.src = currentCoverSrc;
+                if (appConfig.coverFit === 'cover') {
+                    coverEl.className = "relative z-10 w-full h-full object-cover object-center transition duration-500 shadow-2xl";
+                    const fitTxt = document.getElementById('coverFitBtnText');
+                    if (fitTxt) fitTxt.innerText = 'Ajuste: Rellenar';
+                } else {
+                    coverEl.className = "relative z-10 w-full h-full object-contain object-center transition duration-500 shadow-2xl";
+                    const fitTxt = document.getElementById('coverFitBtnText');
+                    if (fitTxt) fitTxt.innerText = 'Ajuste: Completo';
+                }
+            }
+            if (coverBgEl) coverBgEl.src = currentCoverSrc;
+
             const logoEl = document.getElementById('profileLogoImg');
             if (logoEl) logoEl.src = appConfig.profileLogo || DEFAULT_STATE.profileLogo;
+        }
+
+        function toggleCoverFitMode() {
+            if (appConfig.coverFit === 'cover') {
+                appConfig.coverFit = 'contain';
+                showToast('Modo Ajuste: Completo (Sin recortar)');
+            } else {
+                appConfig.coverFit = 'cover';
+                showToast('Modo Ajuste: Rellenar pantalla');
+            }
+            saveConfigToStorage();
+            renderHeaderAndConfig();
         }
 
         function renderAppUI() {
@@ -1823,7 +1869,7 @@
             const select = document.getElementById('loginRoleSelect');
             const label = document.getElementById('passLabel');
             if (label && select) {
-                label.innerText = select.value === 'ADMIN' ? "Contraseña de Administrador (admin123 o alianza2026)" : "Contraseña de Agente (agente12345@)";
+                label.innerText = select.value === 'ADMIN' ? "Contraseña: INGRESO ADMINISTRADOR" : "Contraseña: INGRESO DE AGENTE";
             }
         }
 
@@ -1868,13 +1914,14 @@
         async function handleImageUpload(event, targetProp) {
             const file = event.target.files[0];
             if (!file) return;
-            showToast('Comprimiendo y guardando foto...');
-            const b64 = await compressSmartImage(file, 1000, 0.8);
+            showToast('Comprimiendo y guardando imagen...');
+            const maxDim = targetProp === 'coverImg' ? 1600 : 1000;
+            const b64 = await compressSmartImage(file, maxDim, 0.85);
             if (b64) {
                 appConfig[targetProp] = b64;
                 saveConfigToStorage();
                 renderHeaderAndConfig();
-                showToast('¡Imagen actualizada con éxito!');
+                showToast('¡Imagen de portada actualizada con éxito!');
             }
             event.target.value = '';
         }
@@ -2618,6 +2665,39 @@ ALIANZA ESTRATÉGICA S.A.S.`;
             const msg = `Hola ALIANZA ESTRATÉGICA S.A.S. (Gestión Comercial):\nMi nombre es ${name}.\nDeseo consignar un activo:\n• Categoría: ${cat}\n• Ubicación: ${loc}\n• Precio: ${price}\n• Detalles: ${details}`;
             window.open(`https://wa.me/${OFFICIAL_WA_CLEAN}?text=${encodeURIComponent(msg)}`, '_blank');
             closeModal('consignarModal');
+        }
+
+        function openFinanceModal() {
+            if (currentRole !== 'ADMIN') {
+                showToast('Acceso exclusivo para el Administrador Principal (A.A.I.L.)', 'error');
+                return;
+            }
+            renderFinanceTable();
+            populateAgentAuditorSelect();
+            renderAgentTransparencyPortal();
+            openModal('financeModal');
+        }
+
+        function sortExcelTable(field) {
+            if (excelSortField === field) {
+                excelSortAsc = !excelSortAsc;
+            } else {
+                excelSortField = field;
+                excelSortAsc = true;
+            }
+            inventory.sort((a, b) => {
+                let valA = a[field] !== undefined ? a[field] : '';
+                let valB = b[field] !== undefined ? b[field] : '';
+                if (typeof valA === 'number' && typeof valB === 'number') {
+                    return excelSortAsc ? valA - valB : valB - valA;
+                }
+                valA = String(valA).toLowerCase();
+                valB = String(valB).toLowerCase();
+                if (valA < valB) return excelSortAsc ? -1 : 1;
+                if (valA > valB) return excelSortAsc ? 1 : -1;
+                return 0;
+            });
+            renderFinanceTable();
         }
 
         function renderFinanceTable() {
