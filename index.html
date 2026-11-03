@@ -169,6 +169,9 @@
                 <button onclick="openApplyAgentModal()" id="agentApplyNavBtn" class="bg-emerald-600 hover:bg-emerald-500 text-white font-black px-2.5 py-1 rounded-lg text-xs shadow-md transition flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95" title="Postulación Agentes">
                     <i class="fa-solid fa-paper-plane text-xs"></i> <span>Postular Agente</span>
                 </button>
+                <button onclick="openAssistantModal()" class="bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white font-black px-2.5 py-1 rounded-lg text-xs shadow-md transition flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95" title="Asistente IA (Sofía)">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80" alt="Sofía" class="w-5 h-5 rounded-full object-cover border border-amber-400 shadow-sm"> <span>Asistente IA (Sofía)</span>
+                </button>
                 <button onclick="openModal('shareModal')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-2.5 py-1 rounded-lg text-xs font-semibold transition flex items-center gap-1 shadow-sm cursor-pointer" title="Compartir Plataforma">
                     <i class="fa-solid fa-share-nodes text-sky-400"></i> <span class="hidden sm:inline">Compartir</span>
                 </button>
@@ -211,93 +214,154 @@
     <div id="agentBanner" class="bg-gradient-to-r from-sky-800 via-sky-700 to-sky-800 text-white px-4 py-2.5 hidden shadow-md border-b border-sky-600 z-30 transition-all">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
             <div class="flex items-center gap-2 font-bold text-xs md:text-sm">
-                <i class="fa-solid fa-user-tie text-amber-300"></i> MODO AGENTE COMERCIAL - REGISTRO DE CAPTACIONES & COMISIONES
+                <i class="fa-solid fa-user-tie text-amber-300"></i> MODO AGENTE COMERCIAL - ACCESO A FICHAS TÉCNICAS, DATOS INTERNOS & COMISIONES
             </div>
-            <div class="flex flex-wrap items-center gap-2">
-                <a href="https://chat.whatsapp.com/LWnH4P4Q4LuLDnRSLNXRYn?s=cl&p=a&iam=2" target="_blank" rel="noopener noreferrer" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 px-3.5 py-1.5 rounded-xl text-xs font-black transition shadow-lg flex items-center gap-1.5 hover:scale-105 active:scale-95">
-                    <i class="fa-brands fa-whatsapp text-sm font-black text-slate-950"></i> GRUPO WhatsApp AGENTES
-                </a>
-                <button onclick="openAddProductModal()" class="bg-amber-400 text-slate-950 px-3.5 py-1.5 rounded-xl text-xs font-extrabold hover:bg-amber-300 transition shadow flex items-center gap-1.5 cursor-pointer">
-                    <i class="fa-solid fa-folder-plus"></i> + Registrar Nueva Captación
-                </button>
+            <div class="flex items-center gap-2">
+                <span class="text-[11px] bg-sky-950/70 border border-sky-400/40 text-sky-200 px-3 py-1 rounded-full font-bold flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Sesión Agente Autorizada
+                </span>
             </div>
         </div>
     </div>
 
-    <!-- HEADER / PERFIL CORPORATIVO -->
-    <section class="max-w-7xl mx-auto w-full px-4 pt-4">
-        <div class="glass-panel rounded-3xl shadow-2xl overflow-hidden relative transition-all duration-300">
-            <!-- PORTADA ULTRA-ADAPTABLE -->
-            <div class="h-56 sm:h-72 md:h-88 lg:h-96 w-full relative bg-slate-950 group overflow-hidden flex items-center justify-center">
-                <!-- Capa ambiental difuminada para relleno estético en pantallas panorámicas -->
-                <img id="coverImgBgDisplay" src="/assets/aistudio/portada_alianza_hd.png" alt="" class="absolute inset-0 w-full h-full object-cover filter blur-2xl opacity-40 scale-110 pointer-events-none select-none">
+    <!-- HEADER / PERFIL CORPORATIVO: PRESENTACIÓN TIPO PÁGINA DE FACEBOOK -->
+    <section class="max-w-7xl mx-auto w-full px-2 sm:px-4 pt-4">
+        <div class="glass-panel rounded-3xl shadow-2xl overflow-hidden relative transition-all duration-300 border border-slate-800/80 bg-slate-950/95">
+            <!-- 1. PORTADA TIPO FACEBOOK -->
+            <div class="h-60 sm:h-72 md:h-84 lg:h-96 w-full relative bg-slate-950 overflow-hidden group">
+                <!-- Capa ambiental difuminada para pantalla completa -->
+                <img id="coverImgBgDisplay" src="/assets/aistudio/portada_alianza_hd.png" alt="" class="absolute inset-0 w-full h-full object-cover filter blur-2xl opacity-50 scale-110 pointer-events-none select-none">
                 
-                <!-- Imagen de portada principal: nunca se recorta el texto ni el emblema -->
-                <img id="coverImgDisplay" src="/assets/aistudio/portada_alianza_hd.png" alt="Portada Corporativa" class="relative z-10 w-full h-full object-contain object-center transition duration-500 shadow-2xl">
+                <!-- Imagen de portada principal -->
+                <img id="coverImgDisplay" src="/assets/aistudio/portada_alianza_hd.png" alt="Portada Corporativa" class="w-full h-full object-cover object-center transition duration-500">
                 
-                <div class="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#080c14] via-[#080c14]/60 to-transparent z-10 pointer-events-none"></div>
-                
-                <!-- Controles de Portada (Admin) -->
-                <div class="admin-only hidden absolute top-3 right-3 sm:top-4 sm:right-4 z-20 flex items-center gap-2">
-                    <button type="button" onclick="toggleCoverFitMode()" id="coverFitBtn" class="bg-slate-950/85 hover:bg-slate-900 text-white text-xs font-bold px-3 py-2 rounded-xl backdrop-blur-md border border-white/20 transition flex items-center gap-1.5 shadow-2xl cursor-pointer" title="Alternar modo de ajuste: Contener (completo) / Rellenar todo">
-                        <i class="fa-solid fa-expand text-sky-400"></i>
-                        <span id="coverFitBtnText">Ajuste: Completo</span>
+                <!-- Botones flotantes superiores estilo Facebook -->
+                <div class="absolute top-3 left-3 z-20 flex items-center gap-2">
+                    <button type="button" onclick="window.scrollTo({top:0, behavior:'smooth'})" class="w-9 h-9 rounded-full bg-slate-950/70 hover:bg-slate-900 backdrop-blur-md text-white flex items-center justify-center transition border border-white/20 shadow-xl cursor-pointer" title="Inicio / Arriba">
+                        <i class="fa-solid fa-arrow-left text-sm"></i>
                     </button>
-                    <label for="coverFileInput" id="coverChangeBtn" class="cover-change-btn bg-slate-950/85 hover:bg-slate-900 text-white text-xs font-bold px-3 py-2 rounded-xl backdrop-blur-md border border-white/20 transition flex items-center gap-2 shadow-2xl cursor-pointer hover:scale-105 active:scale-95">
+                </div>
+                <div class="absolute top-3 right-3 z-20 flex items-center gap-2">
+                    <button type="button" onclick="document.getElementById('searchInput').focus(); document.getElementById('searchInput').scrollIntoView({behavior:'smooth', block:'center'});" class="w-9 h-9 rounded-full bg-slate-950/70 hover:bg-slate-900 backdrop-blur-md text-white flex items-center justify-center transition border border-white/20 shadow-xl cursor-pointer" title="Buscar Activos">
+                        <i class="fa-solid fa-magnifying-glass text-sm"></i>
+                    </button>
+                    <button type="button" onclick="openModal('shareModal')" class="w-9 h-9 rounded-full bg-slate-950/70 hover:bg-slate-900 backdrop-blur-md text-white flex items-center justify-center transition border border-white/20 shadow-xl cursor-pointer" title="Compartir Perfil">
+                        <i class="fa-solid fa-share-nodes text-sm text-sky-400"></i>
+                    </button>
+                </div>
+
+                <!-- Botón de Cámara estilo Facebook en esquina inferior derecha de la Portada (Solo Admin) -->
+                <div class="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 z-20 flex items-center gap-2">
+                    <button type="button" onclick="toggleCoverFitMode()" id="coverFitBtn" class="admin-only hidden bg-slate-950/85 hover:bg-slate-900 text-white text-xs font-bold px-3 py-1.5 rounded-xl backdrop-blur-md border border-white/20 transition flex items-center gap-1.5 shadow-2xl cursor-pointer" title="Alternar modo de ajuste: Rellenar todo / Contener">
+                        <i class="fa-solid fa-expand text-sky-400"></i>
+                        <span id="coverFitBtnText">Ajuste: Rellenar</span>
+                    </button>
+                    <label for="coverFileInput" id="coverChangeBtn" class="cover-change-btn admin-only hidden bg-slate-950/85 hover:bg-slate-900 text-white text-xs font-bold px-3.5 py-1.5 rounded-xl backdrop-blur-md border border-white/20 transition flex items-center gap-2 shadow-2xl cursor-pointer hover:scale-105 active:scale-95" title="Editar foto de portada">
                         <i class="fa-solid fa-camera text-sky-400 text-sm"></i>
-                        <span>Cambiar Portada</span>
+                        <span class="hidden sm:inline">Editar foto de portada</span>
                         <input type="file" id="coverFileInput" accept="image/*" class="hidden" onchange="handleImageUpload(event, 'coverImg')">
                     </label>
                 </div>
             </div>
 
-            <!-- DETALLES DE PERFIL -->
-            <div class="px-6 pb-6 pt-4 relative">
-                <div class="flex flex-col md:flex-row items-center md:items-end justify-between gap-6 -mt-16 sm:-mt-20 mb-4">
-                    <div class="flex flex-col sm:flex-row items-center sm:items-end gap-5 text-center sm:text-left">
-                        <div class="relative w-28 h-28 sm:w-36 sm:h-36 rounded-3xl border-4 border-slate-900 shadow-2xl overflow-hidden bg-slate-900 flex-shrink-0 group">
-                            <img id="profileLogoImg" src="https://alianzaestrategica2026-byte.github.io/alianzaestrategica/108900.jpg" alt="Perfil Corporativo" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Alianza+Estrategica&background=0284c7&color=fff';">
-                            
-                            <label for="profileFileInput" class="profile-change-btn admin-only hidden absolute inset-0 bg-black/60 hover:bg-black/80 text-white text-xs font-bold flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition cursor-pointer" title="Cambiar Logo/Foto">
-                                <i class="fa-solid fa-camera text-xl text-sky-400 mb-1"></i>
-                                <span class="text-[10px] uppercase tracking-wider font-extrabold">Cambiar Logo</span>
-                                <input type="file" id="profileFileInput" accept="image/*" class="hidden" onchange="handleImageUpload(event, 'profileLogo')">
-                            </label>
-                        </div>
-                        <div class="pt-2">
-                            <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2">
-                                <h1 class="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight box-celeste-metalico px-4 py-1.5 rounded-2xl inline-flex items-center gap-1.5 shadow-xl" id="profileCompanyTitle">
-                                    <span class="celeste-metalico">ALIANZA ESTRATÉGICA</span> <span class="celeste-metalico-accent font-black">S.A.S.</span>
-                                </h1>
-                                <span class="inline-flex items-center text-sky-400 text-lg" title="Empresa Constituida y Verificada"><i class="fa-solid fa-circle-check"></i></span>
-                            </div>
-                            <p class="text-xs sm:text-sm font-bold text-sky-400 mt-1 flex items-center justify-center sm:justify-start gap-1.5" id="profileMotto">
-                                <i class="fa-solid fa-shield-halved text-amber-400"></i> Excelencia Jurídica, Confianza Profesional
-                            </p>
-                            <p class="text-xs text-slate-400 mt-1 max-w-xl" id="profileSubtitle">
-                                Corretaje Inmobiliario, Vehículos, Maquinaria Pesada & Saneamiento Notarial en El Coca, Orellana.
-                            </p>
+            <!-- 2. AVATAR CIRCULAR TIPO FACEBOOK SOBREPUESTO -->
+            <div class="relative -mt-20 sm:-mt-24 md:-mt-28 flex flex-col items-center z-10 px-4">
+                <div class="relative w-36 h-36 sm:w-44 sm:h-44 md:w-48 md:h-48 rounded-full border-4 sm:border-[6px] border-slate-900 bg-slate-950 shadow-[0_20px_45px_rgba(0,0,0,0.9)] overflow-hidden ring-4 ring-sky-500/40 group flex-shrink-0">
+                    <img id="profileLogoImg" src="https://alianzaestrategica2026-byte.github.io/alianzaestrategica/108900.jpg" alt="Perfil Corporativo" class="w-full h-full object-cover transition duration-300 group-hover:scale-105" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Alianza+Estrategica&background=0284c7&color=fff';">
+                    
+                    <!-- Botón flotante de Cámara en el Avatar tipo Facebook (Solo Admin) -->
+                    <label for="profileFileInput" class="profile-change-btn admin-only hidden absolute bottom-1 right-2 sm:bottom-2 sm:right-3 bg-slate-800 hover:bg-slate-700 text-white w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-slate-900 flex items-center justify-center shadow-2xl transition cursor-pointer hover:scale-110 active:scale-95" title="Actualizar foto de perfil">
+                        <i class="fa-solid fa-camera text-sky-400 text-xs sm:text-sm"></i>
+                        <input type="file" id="profileFileInput" accept="image/*" class="hidden" onchange="handleImageUpload(event, 'profileLogo')">
+                    </label>
+                </div>
+
+                <!-- 3. TÍTULO, SUBTÍTULO Y MÉTRICAS DE PÁGINA (ESTILO FACEBOOK EXACTO) -->
+                <div class="text-center mt-3 max-w-3xl">
+                    <h1 class="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight flex items-center justify-center gap-2">
+                        <span id="profileCompanyTitle">Alianza Estrategica</span>
+                        <span class="text-sky-400 text-xl sm:text-2xl" title="Página Corporativa Verificada"><i class="fa-solid fa-circle-check"></i></span>
+                    </h1>
+                    <p class="text-base sm:text-xl font-extrabold text-sky-300 mt-1" id="profileMotto">
+                        "intermediación de compra y venta"
+                    </p>
+
+                    <!-- Calificación con 5 Estrellas Doradas -->
+                    <div class="flex items-center justify-center gap-1.5 mt-2 text-amber-400 text-sm sm:text-base drop-shadow">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <span class="text-xs font-bold text-slate-300 ml-1.5">5.0 (Excelente Calificación Notarial)</span>
+                    </div>
+
+                    <!-- Descripción / Bio con Ver más expandible -->
+                    <div class="mt-3 text-xs sm:text-sm text-slate-300 leading-relaxed px-2" id="profileBioBox">
+                        <span id="profileBioText">En <strong>ALIANZA ESTRATÉGICA</strong> te ayudamos a negociar y monetizar tus activos: Inmuebles, Vehículos y Maquinaria Pesada con blindaje legal notarial.</span>
+                        <button type="button" onclick="toggleBioExpand()" id="btnBioMore" class="text-sky-400 font-bold hover:underline ml-1 cursor-pointer">... Ver más</button>
+                        
+                        <div id="bioExpandedExtra" class="hidden mt-3 p-3.5 bg-slate-900/90 rounded-2xl border border-slate-800 text-left text-xs text-slate-300 space-y-2 shadow-inner">
+                            <p><i class="fa-solid fa-scale-balanced text-amber-400 mr-1.5"></i> <strong>Patrocinio Jurídico Externo:</strong> Abg. Carlos Alfredo Íñiguez Rodríguez (Estudio Jurídico Especializado en Saneamiento Notarial y Contratos de Compraventa).</p>
+                            <p><i class="fa-solid fa-user-tie text-sky-400 mr-1.5"></i> <strong>Representación Legal & Gerencia:</strong> (A.A.I.L.) — Transparencia, legalidad y seguridad transaccional garantizada.</p>
+                            <p><i class="fa-solid fa-shield-halved text-emerald-400 mr-1.5"></i> <strong>Cero Riesgo de Fraudes:</strong> Toda consignación, reserva y traspaso se realiza con supervisión legal comprobada.</p>
                         </div>
                     </div>
 
-                    <!-- ACCIONES RÁPIDAS EN MODO PÚBLICO -->
-                    <div id="heroActionButtons" class="flex flex-wrap items-center justify-center gap-2.5 pt-2">
-                        <button id="btnInfoMenu" onclick="openModal('infoMenuModal')" class="bg-slate-900 hover:bg-slate-800 text-white font-bold px-3.5 py-2.5 rounded-xl text-xs sm:text-sm shadow-md transition flex items-center gap-2 border border-slate-700 cursor-pointer">
-                            <i class="fa-solid fa-circle-info text-sky-400"></i> Menú Informativo
-                        </button>
-                        <a id="btnContactAgentes" href="https://wa.me/593959190794?text=Hola%20Alianza%20Estrat%C3%A9gica%20S.A.S.,%20deseo%20contactar%20con%20un%20agente%20comercial." target="_blank" rel="noopener noreferrer" class="bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-bold px-3.5 py-2.5 rounded-xl text-xs sm:text-sm shadow-md transition flex items-center gap-2 cursor-pointer">
-                            <i class="fa-brands fa-whatsapp text-sm"></i> Contactar Agentes
-                        </a>
-                        <button id="btnConsignar" onclick="openModal('consignarModal')" class="bg-slate-900 hover:bg-slate-800 text-amber-400 font-extrabold px-3.5 py-2.5 rounded-xl text-xs sm:text-sm shadow-md transition flex items-center gap-2 border border-amber-500/40 cursor-pointer">
-                            <i class="fa-solid fa-plus-circle"></i> Quiero vender un Activo
-                        </button>
+                    <!-- Etiquetas de Categoría y Ubicación estilo Facebook -->
+                    <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs text-slate-400 mt-3 pt-1">
+                        <span class="inline-flex items-center gap-1.5 font-medium"><i class="fa-solid fa-briefcase text-slate-400"></i> Producto/servicio</span>
+                        <span class="text-slate-600">•</span>
+                        <span class="inline-flex items-center gap-1.5 font-medium"><i class="fa-solid fa-location-dot text-rose-400"></i> <span id="topLocationText">Puerto Francisco de Orellana</span></span>
+                        <span class="text-slate-600">•</span>
+                        <span class="inline-flex items-center gap-1.5 text-amber-400 font-semibold"><i class="fa-solid fa-file-contract"></i> Empresa Constituida S.A.S.</span>
+                    </div>
+
+                    <!-- Prueba Social estilo Facebook ("Expres Segura SA sigue este perfil") -->
+                    <div class="flex items-center justify-center gap-2 mt-3 text-xs text-slate-400 bg-slate-900/80 py-1.5 px-4 rounded-full max-w-fit mx-auto border border-slate-800 shadow-sm">
+                        <div class="w-5 h-5 rounded-full overflow-hidden bg-sky-600 flex items-center justify-center text-[10px] text-white font-bold flex-shrink-0">
+                            <i class="fa-solid fa-truck-fast"></i>
+                        </div>
+                        <span><strong class="text-white">Expres Segura SA</strong> y aliados comerciales siguen este perfil</span>
                     </div>
                 </div>
 
-                <div class="bg-slate-900/80 backdrop-blur-sm rounded-2xl p-4 border border-slate-800 text-xs sm:text-sm text-slate-300 leading-relaxed shadow-inner" id="profileBioBox">
-                    <p id="profileBioText">
-                        Portal oficial de <strong>ALIANZA ESTRATÉGICA S.A.S.</strong> en El Coca, Orellana. Administrador Líder & Representante Legal: <strong>(A.A.I.L.)</strong> | Patrocinio Jurídico Externo: <strong>Abg. C.A.I.R.</strong> Transparencia, legalidad y seguridad transaccional garantizada.
-                    </p>
+                <!-- 4. BOTONES DE ACCIÓN PRINCIPALES ESTILO FACEBOOK PAGE -->
+                <div id="heroActionButtons" class="flex flex-wrap items-center justify-center gap-2.5 mt-5 w-full max-w-2xl mx-auto">
+                    <a id="btnContactAgentes" href="https://wa.me/593959190794?text=Hola%20Alianza%20Estrat%C3%A9gica%20S.A.S.,%20deseo%20contactar%20con%20un%20agente%20comercial." target="_blank" rel="noopener noreferrer" class="hidden flex-1 min-w-[140px] bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow-lg transition flex items-center justify-center gap-2 cursor-pointer hover:scale-105 active:scale-95">
+                        <i class="fa-brands fa-whatsapp text-base"></i> WhatsApp
+                    </a>
+                    <button type="button" id="heroMsgBtn" onclick="toggleChatWindow()" class="flex-1 min-w-[130px] bg-slate-800 hover:bg-slate-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow transition flex items-center justify-center gap-2 border border-slate-700 cursor-pointer hover:scale-105 active:scale-95">
+                        <i class="fa-solid fa-comment-dots text-sky-400"></i> Mensaje (Sofía)
+                    </button>
+                    <button type="button" id="btnConsignar" onclick="openModal('consignarModal')" class="flex-1 min-w-[140px] bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow transition flex items-center justify-center gap-2 cursor-pointer hover:scale-105 active:scale-95">
+                        <i class="fa-solid fa-plus-circle"></i> Vender Activo
+                    </button>
+                    <button type="button" id="btnInfoMenu" onclick="openModal('infoMenuModal')" class="bg-slate-800 hover:bg-slate-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow transition flex items-center justify-center gap-2 border border-slate-700 cursor-pointer hover:scale-105 active:scale-95">
+                        <i class="fa-solid fa-circle-info text-amber-400"></i> Menú
+                    </button>
+                    <button type="button" onclick="openModal('shareModal')" class="bg-slate-800 hover:bg-slate-700 text-white w-10 h-10 rounded-xl flex items-center justify-center border border-slate-700 shadow cursor-pointer transition hover:scale-105 active:scale-95" title="Más opciones / Compartir">
+                        <i class="fa-solid fa-ellipsis text-base"></i>
+                    </button>
+                </div>
+
+                <!-- 5. BARRA DE PESTAÑAS DE NAVEGACIÓN ESTILO FACEBOOK -->
+                <div class="w-full mt-6 border-t border-slate-800/80 px-2 flex items-center justify-center sm:justify-start overflow-x-auto modal-scroll gap-1 sm:gap-2 pt-2 pb-1">
+                    <button type="button" onclick="scrollToCatalog()" class="px-3.5 py-2 text-xs font-bold text-sky-400 border-b-2 border-sky-400 flex items-center gap-1.5 flex-shrink-0 cursor-pointer">
+                        <i class="fa-solid fa-table-cells"></i> Publicaciones (<span id="fbTabCount">46</span>)
+                    </button>
+                    <button type="button" onclick="scrollToCarousel()" class="px-3.5 py-2 text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-1.5 flex-shrink-0 cursor-pointer">
+                        <i class="fa-solid fa-bolt text-amber-400"></i> Oportunidades VIP
+                    </button>
+                    <button type="button" onclick="openModal('infoMenuModal')" class="px-3.5 py-2 text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-1.5 flex-shrink-0 cursor-pointer">
+                        <i class="fa-solid fa-shield-halved text-emerald-400"></i> Información Legal
+                    </button>
+                    <button type="button" onclick="setCategoryFilter('SOLD')" class="px-3.5 py-2 text-xs font-bold text-slate-400 hover:text-rose-400 transition flex items-center gap-1.5 flex-shrink-0 cursor-pointer">
+                        <i class="fa-solid fa-sack-dollar text-rose-400"></i> Vendidos / Éxito
+                    </button>
+                    <button type="button" id="tabFbSponsors" onclick="scrollToSponsors()" class="px-3.5 py-2 text-xs font-bold text-slate-400 hover:text-amber-400 transition flex items-center gap-1.5 flex-shrink-0 cursor-pointer">
+                        <i class="fa-solid fa-handshake text-sky-400"></i> Patrocinadores
+                    </button>
                 </div>
             </div>
         </div>
@@ -385,7 +449,7 @@
                 <div class="flex items-center gap-2">
                     <span class="w-2.5 h-2.5 rounded-full bg-sky-400 animate-pulse"></span>
                     <h3 class="text-xs sm:text-sm font-extrabold text-white uppercase tracking-wider flex items-center gap-2">
-                        <i class="fa-solid fa-handshake text-sky-400"></i> Aliados Estratégicos & Auspiciantes Oficiales
+                        <i class="fa-solid fa-handshake text-sky-400"></i> ALIADOS ESTRATEGICOS
                     </h3>
                 </div>
                 <div class="flex items-center gap-2">
@@ -462,47 +526,6 @@
             © <span id="copyrightYear">2026</span> <span id="footerCopyrightText">ALIANZA ESTRATÉGICA S.A.S. - Todos los derechos reservados.</span>
         </div>
     </footer>
-
-    <!-- ASISTENTE COMERCIAL VIRTUAL (SOFÍA) -->
-    <div id="virtualAssistantWidget" class="fixed bottom-5 right-5 z-40 flex flex-col items-end">
-        <div id="chatBoxWindow" class="hidden mb-3 w-80 sm:w-96 glass-panel rounded-3xl shadow-2xl overflow-hidden flex flex-col text-xs transition-all duration-300">
-            <div class="bg-gradient-to-r from-slate-900 to-sky-950 text-white p-4 flex items-center justify-between border-b border-slate-800">
-                <div class="flex items-center gap-3">
-                    <div class="relative w-9 h-9 rounded-full overflow-hidden border-2 border-sky-400">
-                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80" alt="Sofía" class="w-full h-full object-cover">
-                    </div>
-                    <div>
-                        <h4 class="font-bold leading-tight text-white">Sofía - Asistente Alianza</h4>
-                        <span class="text-[10px] text-emerald-400 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Atención en línea</span>
-                    </div>
-                </div>
-                <button onclick="toggleChatWindow()" class="text-slate-400 hover:text-white transition cursor-pointer" aria-label="Cerrar"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
-
-            <div id="chatMessages" class="p-4 h-64 overflow-y-auto space-y-3 bg-slate-950/70 modal-scroll">
-                <div class="bg-slate-900 p-3 rounded-2xl border border-slate-800 text-slate-300 shadow-sm leading-relaxed">
-                    ¡Hola! 👋 Te saluda Sofía de <strong>ALIANZA ESTRATÉGICA S.A.S.</strong> ¿Deseas consultar sobre algún bien del catálogo o te gustaría consignar tu propiedad o vehículo con nosotros?
-                </div>
-            </div>
-
-            <div class="p-3 bg-slate-900 border-t border-slate-800 flex items-center gap-2">
-                <input type="text" id="chatUserInput" placeholder="Escribe tu consulta..." onkeypress="handleChatKeyPress(event)" class="flex-1 bg-slate-950 border border-slate-700 text-white rounded-xl px-3.5 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-sky-500">
-                <button onclick="sendChatMessage()" class="bg-sky-600 hover:bg-sky-500 text-white p-2.5 rounded-xl transition shadow cursor-pointer" aria-label="Enviar">
-                    <i class="fa-solid fa-paper-plane"></i>
-                </button>
-            </div>
-        </div>
-
-        <button onclick="toggleChatWindow()" class="bg-slate-950 text-white p-2 pr-5 rounded-full shadow-2xl flex items-center gap-3 hover:scale-105 transition border-2 border-sky-400/40 cursor-pointer" aria-label="Abrir Asistente">
-            <div class="relative w-10 h-10 rounded-full overflow-hidden border border-sky-300 flex-shrink-0">
-                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80" alt="Ejecutiva" class="w-full h-full object-cover">
-            </div>
-            <div class="text-left">
-                <span class="block text-[9px] uppercase tracking-wider text-amber-400 font-bold leading-none">Asistente Virtual</span>
-                <span class="block text-xs font-extrabold leading-tight text-white">ASISTENTE COMERCIAL</span>
-            </div>
-        </button>
-    </div>
 
     <!-- MODAL ACCESO ROLES (LOGIN) -->
     <div id="loginModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
@@ -641,9 +664,11 @@
 
             <div id="viewTransparencia" class="hidden flex-1 overflow-y-auto modal-scroll p-5 space-y-6 bg-slate-950/50">
                 <div class="flex flex-wrap items-center justify-between gap-4 bg-slate-900 p-4 rounded-2xl border border-slate-800">
-                    <div>
-                        <h3 class="font-extrabold text-white text-sm">Seleccione Agente Comercial para Auditoría:</h3>
-                        <p class="text-xs text-slate-400">Revise ganancias por captaciones y ventas cerradas.</p>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="text-xs font-extrabold text-white mr-2">Acceso Directo:</span>
+                        <button onclick="setTransparencyFilter('ALL')" id="transBtnAll" class="bg-sky-600 text-white font-bold px-3 py-1.5 rounded-xl text-xs transition cursor-pointer">Todos</button>
+                        <button onclick="setTransparencyFilter('CAPTADOS')" id="transBtnCap" class="bg-slate-950 hover:bg-slate-800 text-slate-300 font-bold px-3 py-1.5 rounded-xl text-xs transition cursor-pointer"><i class="fa-solid fa-folder-plus text-sky-400 mr-1"></i> Bienes Captados</button>
+                        <button onclick="setTransparencyFilter('VENTAS')" id="transBtnVen" class="bg-slate-950 hover:bg-slate-800 text-slate-300 font-bold px-3 py-1.5 rounded-xl text-xs transition cursor-pointer"><i class="fa-solid fa-handshake-angle text-amber-400 mr-1"></i> Ventas Cerradas</button>
                     </div>
                     <select id="agentSelectAuditor" onchange="renderAgentTransparencyPortal()" class="bg-slate-950 border border-slate-700 text-sky-400 font-bold rounded-xl px-4 py-2 text-xs focus:outline-none"></select>
                 </div>
@@ -663,18 +688,20 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    <div class="bg-slate-900 p-4 rounded-2xl border border-slate-800 space-y-3">
-                        <h4 class="font-extrabold text-white text-xs uppercase flex items-center gap-2 border-b border-slate-800 pb-2">
-                            <i class="fa-solid fa-folder-plus text-sky-400"></i> Bienes Captados
+                <div id="transparencyGridContainer" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div id="colCapturedWrapper" class="bg-slate-900 p-4 rounded-2xl border border-slate-800 space-y-3">
+                        <h4 class="font-extrabold text-white text-xs uppercase flex items-center justify-between border-b border-slate-800 pb-2">
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-folder-plus text-sky-400"></i> Bienes Captados</span>
+                            <span class="text-[10px] text-sky-400 bg-sky-950/60 px-2 py-0.5 rounded">🟢 Pagado / 🔴 Inpago</span>
                         </h4>
-                        <div id="agentCapturedList" class="space-y-2 max-h-64 overflow-y-auto modal-scroll text-xs"></div>
+                        <div id="agentCapturedList" class="space-y-2 max-h-72 overflow-y-auto modal-scroll text-xs"></div>
                     </div>
-                    <div class="bg-slate-900 p-4 rounded-2xl border border-slate-800 space-y-3">
-                        <h4 class="font-extrabold text-white text-xs uppercase flex items-center gap-2 border-b border-slate-800 pb-2">
-                            <i class="fa-solid fa-handshake-angle text-amber-400"></i> Ventas Cerradas
+                    <div id="colSoldWrapper" class="bg-slate-900 p-4 rounded-2xl border border-slate-800 space-y-3">
+                        <h4 class="font-extrabold text-white text-xs uppercase flex items-center justify-between border-b border-slate-800 pb-2">
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-handshake-angle text-amber-400"></i> Ventas Cerradas</span>
+                            <span class="text-[10px] text-amber-400 bg-amber-950/60 px-2 py-0.5 rounded">🟢 Pagado / 🔴 Inpago</span>
                         </h4>
-                        <div id="agentSoldList" class="space-y-2 max-h-64 overflow-y-auto modal-scroll text-xs"></div>
+                        <div id="agentSoldList" class="space-y-2 max-h-72 overflow-y-auto modal-scroll text-xs"></div>
                     </div>
                 </div>
             </div>
@@ -1210,6 +1237,83 @@
         </div>
     </div>
 
+    <!-- MODAL ASISTENTE IA (SOFÍA) -->
+    <div id="assistantModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 md:p-6">
+        <div class="glass-panel rounded-3xl max-w-xl w-full p-4 sm:p-5 space-y-3 shadow-2xl h-[85vh] max-h-[750px] flex flex-col border border-sky-500/40 text-white relative">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <div class="flex items-center gap-3">
+                    <div class="relative w-10 h-10 rounded-full overflow-hidden border-2 border-amber-400 bg-slate-900 flex items-center justify-center shadow-md">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80" alt="Sofía — Agente Virtual" class="w-full h-full object-cover">
+                        <span class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-400 border-2 border-slate-950 animate-pulse"></span>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-black text-white flex items-center gap-2">
+                            Sofía — IA Alianza
+                        </h3>
+                        <p class="text-[11px] text-sky-400 font-bold">Asistente Virtual 24/7 en El Coca</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="closeModal('assistantModal')" class="text-slate-400 hover:text-white p-1.5 rounded-lg transition cursor-pointer" aria-label="Cerrar">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- CHAT MESSAGES CONTAINER -->
+            <div id="geminiChatMessages" class="flex-1 overflow-y-auto space-y-3 p-3 bg-slate-950/80 rounded-2xl border border-slate-800/80 modal-scroll text-xs">
+                <div class="bg-slate-900/90 p-3.5 rounded-2xl border border-slate-800 text-slate-200 leading-relaxed shadow-sm space-y-2">
+                    <p>¡Hola! 👋 Soy <strong>Sofía</strong>, tu Asistente Virtual con Inteligencia Artificial de <strong>ALIANZA ESTRATÉGICA S.A.S.</strong> (El Coca, Orellana). Puedo informarte sobre nuestros activos (bienes raíces, vehículos, maquinaria), comisiones 50%/50%, requisitos para agentes o coordinar inspecciones con nuestra gerencia.</p>
+                    <div class="flex flex-wrap gap-1.5 pt-1">
+                        <button onclick="sendQuickPrompt('¿Qué propiedades de Bienes Raíces o arriendos tienen disponibles en El Coca?')" class="bg-slate-950 hover:bg-slate-800 text-sky-300 border border-sky-500/40 px-2.5 py-1 rounded-full text-[11px] font-semibold transition cursor-pointer flex items-center gap-1 shadow-sm">
+                            🏠 Bienes Raíces / Arriendos
+                        </button>
+                        <button onclick="sendQuickPrompt('¿Cómo funciona el esquema de comisiones del 50% para agentes?')" class="bg-slate-950 hover:bg-slate-800 text-emerald-300 border border-emerald-500/40 px-2.5 py-1 rounded-full text-[11px] font-semibold transition cursor-pointer flex items-center gap-1 shadow-sm">
+                            💰 Comisiones 50/50
+                        </button>
+                        <button onclick="sendQuickPrompt('¿Cuáles son los requisitos para ser Agente Comercial en El Coca?')" class="bg-slate-950 hover:bg-slate-800 text-amber-300 border border-amber-500/40 px-2.5 py-1 rounded-full text-[11px] font-semibold transition cursor-pointer flex items-center gap-1 shadow-sm">
+                            💼 Requisitos Agentes
+                        </button>
+                        <button onclick="sendQuickPrompt('¿Cómo puedo consignar gratis mi vehículo, maquinaria o inmueble?')" class="bg-slate-950 hover:bg-slate-800 text-indigo-300 border border-indigo-500/40 px-2.5 py-1 rounded-full text-[11px] font-semibold transition cursor-pointer flex items-center gap-1 shadow-sm">
+                            🚜 Consignación Gratuita
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- INPUT AREA -->
+            <div class="p-2 bg-slate-900/90 border border-slate-800 rounded-2xl flex items-center gap-2 shadow-inner">
+                <input type="text" id="geminiUserInput" placeholder="Pregúntale a Sofía sobre propiedades, vehículos o requisitos..." onkeypress="handleGeminiKeyPress(event)" class="flex-1 bg-slate-950 border border-slate-700 text-white rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-sky-500">
+                <button onclick="sendGeminiMessage()" class="bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white font-bold px-4 py-2.5 rounded-xl transition shadow flex items-center justify-center gap-1.5 cursor-pointer">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </div>
+            <div class="text-center text-[10px] text-slate-500">
+                Alianza Estratégica S.A.S. • RUC: 2200260967001 • WhatsApp Gerencia: 099 216 0967
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL CONFIGURAR API KEY GEMINI -->
+    <div id="apiKeyModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-panel rounded-3xl max-w-sm w-full p-5 space-y-4 shadow-2xl border border-slate-800 text-white">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h3 class="text-base font-extrabold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-key text-amber-400"></i> Configurar Google Gemini API Key
+                </h3>
+                <button onclick="closeModal('apiKeyModal')" class="text-slate-400 hover:text-white cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <p class="text-xs text-slate-300">
+                Ingrese su clave de API de Google Gemini para habilitar las respuestas en tiempo real de Sofía con el modelo <code class="text-sky-400">gemini-3-flash-preview</code>.
+            </p>
+            <input type="password" id="geminiApiKeyInput" placeholder="AIzaSy..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+            <div class="flex justify-end gap-2 pt-2">
+                <button onclick="closeModal('apiKeyModal')" class="bg-slate-800 text-slate-300 font-bold px-3.5 py-2 rounded-xl text-xs cursor-pointer">Cancelar</button>
+                <button onclick="saveGeminiApiKey()" class="bg-sky-600 hover:bg-sky-500 text-white font-extrabold px-4 py-2 rounded-xl text-xs transition cursor-pointer">Guardar Key</button>
+            </div>
+        </div>
+    </div>
+
     <!-- MODAL AGREGAR / EDITAR PATROCINADOR -->
     <div id="sponsorModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 md:p-6">
         <div class="glass-panel rounded-3xl max-w-lg w-full p-5 space-y-4 shadow-2xl border border-slate-800 text-white max-h-[92vh] flex flex-col">
@@ -1369,39 +1473,142 @@
 
     <!-- MODAL INSTITUCIONAL: PERFIL DE INTEGRACIÓN PARA AGENTES -->
     <div id="agentProfileModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 md:p-6">
-        <div class="glass-panel rounded-3xl max-w-3xl w-full p-4 sm:p-6 space-y-4 shadow-2xl max-h-[92vh] flex flex-col border border-slate-800 text-white">
+        <div class="glass-panel rounded-3xl max-w-3xl w-full p-4 sm:p-6 space-y-4 shadow-2xl max-h-[92vh] flex flex-col border border-emerald-500/30 text-white">
             <div class="flex justify-between items-center border-b border-slate-800 pb-3">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-amber-500 text-slate-950 flex items-center justify-center text-lg font-black">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 text-slate-950 flex items-center justify-center text-lg font-black shadow-lg">
                         <i class="fa-solid fa-id-card-clip"></i>
                     </div>
                     <div>
-                        <h3 class="text-base sm:text-lg font-black text-white">🏢 PERFIL DE INTEGRACIÓN PARA AGENTES</h3>
-                        <p class="text-xs text-amber-400 font-bold">ALIANZA ESTRATÉGICA S.A.S. — El Coca</p>
+                        <h3 class="text-base sm:text-lg font-black text-white flex items-center gap-2">
+                            🏢 PERFIL DE INTEGRACIÓN PARA AGENTES COMERCIALES
+                        </h3>
+                        <p class="text-xs text-amber-400 font-bold">ALIANZA ESTRATÉGICA S.A.S. — El Coca, Orellana, Ecuador</p>
                     </div>
                 </div>
-                <button onclick="closeModal('agentProfileModal')" class="text-slate-400 hover:text-slate-200 cursor-pointer" aria-label="Cerrar"><i class="fa-solid fa-xmark text-xl"></i></button>
+                <button onclick="closeModal('agentProfileModal')" class="text-slate-400 hover:text-slate-200 cursor-pointer p-1" aria-label="Cerrar"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
 
-            <div class="flex-1 overflow-y-auto space-y-3 p-1 modal-scroll text-xs text-slate-300 leading-relaxed">
-                <div class="bg-slate-900/90 rounded-2xl p-4 border border-sky-500/30">
-                    <h4 class="font-bold text-white text-sm mb-1">🎓 Requisitos de Vinculación</h4>
-                    <p>Título de Bachiller o Acta de Grado debidamente registrada, cédula de identidad, certificado de antecedentes penales actualizado y croquis de domicilio.</p>
+            <div class="flex-1 overflow-y-auto space-y-4 p-1 modal-scroll text-xs text-slate-300 leading-relaxed">
+                <!-- Introducción -->
+                <div class="bg-slate-900/90 rounded-2xl p-4 border border-slate-800 text-slate-300 shadow-sm">
+                    <p class="italic text-slate-200">
+                        El presente documento establece el conjunto de aptitudes técnicas, competencias profesionales y cualidades personales requeridas para formar parte de la fuerza de ventas y corretaje de la plataforma <strong class="text-amber-400">ALIANZA ESTRATÉGICA S.A.S.</strong>
+                    </p>
                 </div>
-                <div class="bg-slate-900/90 rounded-2xl p-4 border border-emerald-500/30">
-                    <h4 class="font-bold text-emerald-400 text-sm mb-1">💰 Plan de Comisiones 50% / 50%</h4>
-                    <p>50% para la empresa y 50% para la fuerza de ventas. Si el mismo agente capta y vende recibe el 50% completo; si uno capta y otro vende reciben 25% y 25% con liquidación inmediata garantizada.</p>
+
+                <!-- 1. APTITUDES Y COMPETENCIAS TÉCNICAS -->
+                <div class="bg-slate-900/90 rounded-2xl p-4 border border-sky-500/30 space-y-3">
+                    <h4 class="font-black text-sky-400 text-sm flex items-center gap-2 uppercase tracking-wide">
+                        🧠 1. Aptitudes y Competencias Técnicas <span class="text-slate-400 text-xs font-normal capitalize">(Saber Hacer)</span>
+                    </h4>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+                        <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800 space-y-1">
+                            <span class="font-bold text-white block text-xs"><i class="fa-solid fa-laptop-code text-sky-400 mr-1.5"></i> Manejo de la Plataforma Web & PWA</span>
+                            <p class="text-slate-300 text-xs">Capacidad para registrar captaciones en tiempo real con datos geográficos precisos (sector, dirección, coordenadas). Manejo fluido de herramientas digitales corporativas (WhatsApp Business, lectura de matrices de liquidación y seguimiento de estados).</p>
+                        </div>
+                        <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800 space-y-1">
+                            <span class="font-bold text-white block text-xs"><i class="fa-solid fa-handshake-simple text-emerald-400 mr-1.5"></i> Capacidad de Captación & Negociación</span>
+                            <p class="text-slate-300 text-xs">Habilidad para prospectar y captar bienes raíces, vehículos y maquinaria pesada en la región amazónica. Dominio de técnicas de venta consultiva y cierre de negocios bajo acuerdos transparentes de comisión (<strong class="text-emerald-400">50% / 50%</strong>).</p>
+                        </div>
+                        <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800 space-y-1">
+                            <span class="font-bold text-white block text-xs"><i class="fa-solid fa-map-location-dot text-amber-400 mr-1.5"></i> Conocimiento del Mercado Local</span>
+                            <p class="text-slate-300 text-xs">Comprensión del valor comercial por metro cuadrado (m²) en El Coca, Joya de los Sachas y zonas aledañas. Conocimiento básico sobre el mercado automotriz (camionetas 4×4, vehículos de trabajo y maquinaria petrolera/agrícola).</p>
+                        </div>
+                        <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800 space-y-1">
+                            <span class="font-bold text-white block text-xs"><i class="fa-solid fa-scale-balanced text-purple-400 mr-1.5"></i> Nociones Jurídicas y Notariales Básicas</span>
+                            <p class="text-slate-300 text-xs">Identificación básica de documentación legal (certificados del Registro de la Propiedad, matriculación vehicular, cédulas y escrituras). Capacidad para guiar al cliente en el proceso de saneamiento notarial en coordinación con el Patrocinio Jurídico de la empresa.</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="bg-slate-900/90 rounded-2xl p-4 border border-amber-500/30">
-                    <h4 class="font-bold text-amber-400 text-sm mb-1">📱 Herramientas de Trabajo</h4>
-                    <p>Uso de Smartphone para registrar captaciones con fotos comprimidas en la web app, seguimiento de clientes y coordinación notarial.</p>
+
+                <!-- 2. CUALIDADES Y VALORES PERSONALES -->
+                <div class="bg-slate-900/90 rounded-2xl p-4 border border-amber-500/30 space-y-3">
+                    <h4 class="font-black text-amber-400 text-sm flex items-center gap-2 uppercase tracking-wide">
+                        ⭐ 2. Cualidades y Valores Personales <span class="text-slate-400 text-xs font-normal capitalize">(Ser)</span>
+                    </h4>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+                        <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800 space-y-1">
+                            <span class="font-bold text-white block text-xs"><i class="fa-solid fa-shield-halved text-amber-400 mr-1.5"></i> Integridad y Transparencia Comercial</span>
+                            <p class="text-slate-300 text-xs">Ética intachable en el manejo de precios pactados con los propietarios, sin incurrir en inflaciones de precios ("sobreprecios") no autorizadas. Compromiso absoluto con el cobro legal de comisiones y el respeto a la bolsa de reparto corporativa.</p>
+                        </div>
+                        <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800 space-y-1">
+                            <span class="font-bold text-white block text-xs"><i class="fa-solid fa-bolt text-yellow-400 mr-1.5"></i> Proactividad y Autogestión</span>
+                            <p class="text-slate-300 text-xs">Iniciativa propia para buscar nuevas oportunidades comerciales en territorio sin necesidad de supervisión constante. Orientación a resultados y constancia en el seguimiento de prospectos interesados.</p>
+                        </div>
+                        <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800 space-y-1">
+                            <span class="font-bold text-white block text-xs"><i class="fa-solid fa-comments text-sky-400 mr-1.5"></i> Comunicación Asertiva y Empatía</span>
+                            <p class="text-slate-300 text-xs">Trato cordial, profesional y persuasivo tanto con propietarios como con compradores e inversionistas. Habilidad para trabajar en equipo compartiendo captaciones con otros agentes bajo la regla <strong class="text-sky-400">25% / 25%</strong>.</p>
+                        </div>
+                        <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800 space-y-1">
+                            <span class="font-bold text-white block text-xs"><i class="fa-solid fa-clock text-emerald-400 mr-1.5"></i> Responsabilidad y Puntualidad</span>
+                            <p class="text-slate-300 text-xs">Cumplimiento estricto de citas para muestra de inmuebles o inspección de vehículos. Cuidado de la imagen corporativa de ALIANZA ESTRATÉGICA S.A.S. en cada interacción pública.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. DECÁLOGO DEL AGENTE ALIANZA -->
+                <div class="bg-slate-900/90 rounded-2xl p-4 border border-emerald-500/30 space-y-3">
+                    <h4 class="font-black text-emerald-400 text-sm flex items-center gap-2 uppercase tracking-wide">
+                        📋 3. Decálogo del Agente Alianza
+                    </h4>
+
+                    <div class="space-y-2 pt-1">
+                        <div class="flex items-start gap-2.5 bg-slate-950/70 p-2.5 rounded-xl border border-slate-800">
+                            <span class="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold shrink-0 text-xs">1</span>
+                            <div>
+                                <strong class="text-white">El cliente es primero:</strong> Brindar asesoría honesta y transparente desde el primer contacto.
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2.5 bg-slate-950/70 p-2.5 rounded-xl border border-slate-800">
+                            <span class="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold shrink-0 text-xs">2</span>
+                            <div>
+                                <strong class="text-white">Sincronización total:</strong> Toda captación debe registrarse inmediatamente en la plataforma web para garantizar prioridad y transparencia.
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2.5 bg-slate-950/70 p-2.5 rounded-xl border border-slate-800">
+                            <span class="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold shrink-0 text-xs">3</span>
+                            <div>
+                                <strong class="text-white">Respaldo legal:</strong> Ningún acuerdo se cierra en palabra; todo se formaliza mediante los canales y documentación oficial de la empresa.
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2.5 bg-slate-950/70 p-2.5 rounded-xl border border-slate-800">
+                            <span class="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold shrink-0 text-xs">4</span>
+                            <div>
+                                <strong class="text-white">Trabajo colaborativo:</strong> Fomentar el cruce de ventas con compañeros agentes para acelerar el volumen de cierres en El Coca.
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2.5 bg-slate-950/70 p-2.5 rounded-xl border border-slate-800">
+                            <span class="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold shrink-0 text-xs">5</span>
+                            <div>
+                                <strong class="text-white">Excelencia constante:</strong> Mantenerse actualizado en el uso de la app web y las herramientas de marketing digital corporativo.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN ESPECIAL CONFIGURADA POR EL ADMINISTRADOR (VISTA PÚBLICA LIMPIA SIN EL TÍTULO "D. APARTADO ESPECIAL") -->
+                <div id="adminSpecialCard" class="bg-slate-900/90 rounded-2xl p-4 border border-purple-500/40 space-y-2.5 shadow-sm">
+                    <div class="flex justify-between items-start gap-2">
+                        <h4 class="font-black text-purple-400 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-star text-purple-400"></i> <span id="displaySpecialTopic">Directrices Especiales y Acuerdos de Fuerza de Ventas</span>
+                        </h4>
+                        <button id="btnEditSpecialAdmin" onclick="openEditSpecialModal()" class="hidden bg-purple-600/30 hover:bg-purple-600 text-purple-200 border border-purple-400/50 px-3 py-1 rounded-xl text-[11px] font-bold transition flex items-center gap-1.5 shrink-0 cursor-pointer" title="Editar este tema y descripción como Administrador">
+                            <i class="fa-solid fa-pen-to-square"></i> Editar Apartado
+                        </button>
+                    </div>
+                    <p id="displaySpecialDesc" class="text-slate-300 text-xs whitespace-pre-line leading-relaxed">
+                        Toda captación o prospecto comercial registrado en la plataforma cuenta con acompañamiento directo del Patrocinio Jurídico de ALIANZA ESTRATÉGICA S.A.S. Los incentivos comerciales y bonificaciones especiales se procesan de conformidad con el volumen mensual de cierres notariales.
+                    </p>
                 </div>
             </div>
 
             <div class="border-t border-slate-800 pt-3 flex justify-between items-center">
-                <button onclick="closeModal('agentProfileModal')" class="bg-slate-900 text-slate-300 px-4 py-2 rounded-xl text-xs cursor-pointer">Cerrar</button>
-                <button onclick="openApplyAgentModal()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold px-5 py-2 rounded-xl text-xs transition shadow flex items-center gap-1.5 cursor-pointer">
-                    <i class="fa-solid fa-paper-plane"></i> Postular Ahora
+                <button onclick="closeModal('agentProfileModal')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs cursor-pointer transition">Cerrar</button>
+                <button onclick="closeModal('agentProfileModal'); openApplyAgentModal();" class="bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-black px-6 py-2.5 rounded-xl text-xs transition shadow-lg flex items-center gap-2 cursor-pointer">
+                    <i class="fa-solid fa-paper-plane"></i> Postular Ahora como Agente
                 </button>
             </div>
         </div>
@@ -1448,6 +1655,34 @@
                     <button type="button" onclick="closeModal('applyAgentModal')" class="bg-slate-800 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs cursor-pointer">Cancelar</button>
                     <button type="submit" id="btnSubmitAgentApp" class="bg-emerald-600 hover:bg-emerald-500 text-white font-black px-6 py-2 rounded-xl text-xs transition shadow-xl cursor-pointer">
                         <i class="fa-brands fa-whatsapp text-sm mr-1"></i> Enviar al Administrador (095 919 0794)
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL EDITAR APARTADO ESPECIAL (SOLO ADMINISTRADOR PRINCIPAL) -->
+    <div id="editSpecialModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 md:p-6">
+        <div class="glass-panel rounded-3xl max-w-lg w-full p-5 space-y-4 shadow-2xl border border-purple-500/40 text-white">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h3 class="text-base font-extrabold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-pen-to-square text-purple-400"></i> Edición de Apartado Especial (Administrador)
+                </h3>
+                <button onclick="closeModal('editSpecialModal')" class="text-slate-400 hover:text-slate-200 cursor-pointer" aria-label="Cerrar"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form onsubmit="handleSaveSpecialSection(event)" class="space-y-3.5 text-xs">
+                <div>
+                    <label class="block font-bold text-purple-300 mb-1">Tema / Asunto Especial *</label>
+                    <input type="text" id="inputSpecialTopic" placeholder="Ej: Directrices Especiales y Acuerdos de Fuerza de Ventas" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white text-xs font-semibold" required>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-300 mb-1">Descripción Detallada *</label>
+                    <textarea id="inputSpecialDesc" rows="4" placeholder="Escriba aquí la descripción detallada que verán los visitantes..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white text-xs leading-relaxed" required></textarea>
+                </div>
+                <div class="border-t border-slate-800 pt-3 flex justify-end gap-2">
+                    <button type="button" onclick="closeModal('editSpecialModal')" class="bg-slate-800 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs cursor-pointer">Cancelar</button>
+                    <button type="submit" class="bg-purple-600 hover:bg-purple-500 text-white font-black px-5 py-2 rounded-xl text-xs cursor-pointer flex items-center gap-1.5 shadow-lg">
+                        <i class="fa-solid fa-floppy-disk"></i> Guardar Cambios
                     </button>
                 </div>
             </form>
@@ -1507,12 +1742,12 @@
         }
 
         const DEFAULT_STATE = {
-            companyTitle: "ALIANZA ESTRATÉGICA S.A.S.",
-            motto: "Excelencia Jurídica, Confianza Profesional",
-            location: "El Coca, Orellana - Ecuador",
-            bioText: "Portal oficial de <strong>ALIANZA ESTRATÉGICA S.A.S.</strong> en El Coca, Orellana. Administrador Líder & Representante Legal: <strong>(A.A.I.L.)</strong> | Patrocinio Jurídico Externo: <strong>Abg. C.A.I.R.</strong> Transparencia, legalidad y seguridad transaccional garantizada.",
+            companyTitle: "Alianza Estratégica",
+            motto: '"intermediación de compra y venta"',
+            location: "Puerto Francisco de Orellana",
+            bioText: "En <strong>ALIANZA ESTRATÉGICA</strong> te ayudamos a negociar y monetizar tus activos: Inmuebles, Vehículos y Maquinaria Pesada con blindaje legal notarial.",
             coverImg: "/assets/aistudio/portada_alianza_hd.png",
-            coverFit: "contain",
+            coverFit: "cover",
             profileLogo: "https://alianzaestrategica2026-byte.github.io/alianzaestrategica/108900.jpg"
         };
 
@@ -1538,6 +1773,11 @@
             sec4_comisiones: "Distribución Corporativa:\n• 50% Empresa (ALIANZA S.A.S.)\n• 50% Fuerza de Ventas (Agentes Comerciales)\n\nSi el mismo agente capta y vende recibe el 50% completo. Si trabajan en equipo: 25% para el agente captador y 25% para el agente que cerró la venta.",
             sec5_seguridad: "Cero riesgo de estafas: no receptamos dinero a cuentas de terceros; las reservas y acuerdos se protocolizan con supervisión legal y notarial comprobada.",
             sec7_contacto: "• Dirección: Francisco de Orellana (El Coca), Ecuador\n• WhatsApp Administrador Líder: 095 919 0794\n• Correo: alianzaestrategica2026@gmail.com"
+        };
+
+        const DEFAULT_SPECIAL_SECTION = {
+            topic: "Directrices Especiales y Acuerdos de Fuerza de Ventas",
+            desc: "Toda captación o prospecto comercial registrado en la plataforma cuenta con acompañamiento directo del Patrocinio Jurídico de ALIANZA ESTRATÉGICA S.A.S. Los incentivos comerciales y bonificaciones especiales se procesan de conformidad con el volumen mensual de cierres notariales."
         };
 
         const DEFAULT_ALLIES = [
@@ -1619,6 +1859,7 @@
         let appConfig = { ...DEFAULT_STATE, ...(JSON.parse(localStorage.getItem('alianza_config') || '{}')) };
         let appFooter = { ...DEFAULT_FOOTER, ...(JSON.parse(localStorage.getItem('alianza_footer') || '{}')) };
         let appDossier = { ...DEFAULT_DOSSIER, ...(JSON.parse(localStorage.getItem('alianza_dossier') || '{}')) };
+        let appSpecialSection = { ...DEFAULT_SPECIAL_SECTION, ...(JSON.parse(localStorage.getItem('alianza_special') || '{}')) };
         let sponsorsList = JSON.parse(localStorage.getItem('alianza_sponsors') || '[]');
         let alliesList = JSON.parse(localStorage.getItem('alianza_allies') || JSON.stringify(DEFAULT_ALLIES));
 
@@ -1687,6 +1928,7 @@
             renderMarquee();
             renderSponsorsCards();
             renderFooterUI();
+            renderSpecialSectionUI();
             setInfoTab('QUIENES_SOMOS');
 
             const yearEl = document.getElementById('copyrightYear');
@@ -1713,6 +1955,11 @@
                             appDossier = { ...DEFAULT_DOSSIER, ...data.dossier };
                             localStorage.setItem('alianza_dossier', JSON.stringify(appDossier));
                             if (!isDossierEditing) setInfoTab(currentInfoTab);
+                        }
+                        if (data.specialSection) {
+                            appSpecialSection = { ...DEFAULT_SPECIAL_SECTION, ...data.specialSection };
+                            localStorage.setItem('alianza_special', JSON.stringify(appSpecialSection));
+                            renderSpecialSectionUI();
                         }
                         if (data.sponsors && Array.isArray(data.sponsors)) {
                             sponsorsList = data.sponsors;
@@ -1766,17 +2013,27 @@
             if (titleEl) {
                 if (rawTitle.includes("S.A.S.")) {
                     const base = rawTitle.replace("S.A.S.", "").trim();
-                    titleEl.innerHTML = `<span class="celeste-metalico">${base}</span> <span class="celeste-metalico-accent font-black">S.A.S.</span>`;
+                    titleEl.innerHTML = `<span>${escapeHtml(base)}</span> <span class="celeste-metalico-accent font-black">S.A.S.</span>`;
                 } else {
-                    titleEl.innerHTML = `<span class="celeste-metalico">${rawTitle}</span>`;
+                    titleEl.innerText = rawTitle;
                 }
             }
             const mottoEl = document.getElementById('profileMotto');
-            if (mottoEl) mottoEl.innerHTML = `<i class="fa-solid fa-shield-halved text-amber-400"></i> ${appConfig.motto || DEFAULT_STATE.motto}`;
+            if (mottoEl) {
+                let m = appConfig.motto || DEFAULT_STATE.motto;
+                if (!m.startsWith('"') && !m.startsWith('“')) m = `"${m}"`;
+                mottoEl.innerText = m;
+            }
             const locEl = document.getElementById('topLocationText');
             if (locEl) locEl.innerText = appConfig.location || DEFAULT_STATE.location;
             const bioEl = document.getElementById('profileBioText');
             if (bioEl) bioEl.innerHTML = appConfig.bioText || DEFAULT_STATE.bioText;
+
+            // Actualizar contador dinámico de publicaciones estilo Facebook
+            const pubCountEl = document.getElementById('fbPubCount');
+            if (pubCountEl) pubCountEl.innerText = inventory.length;
+            const tabCountEl = document.getElementById('fbTabCount');
+            if (tabCountEl) tabCountEl.innerText = inventory.length;
             
             // Portada ultra-nítida con ajuste perfecto
             const coverEl = document.getElementById('coverImgDisplay');
@@ -1788,20 +2045,48 @@
             }
             if (coverEl) {
                 coverEl.src = currentCoverSrc;
-                if (appConfig.coverFit === 'cover') {
-                    coverEl.className = "relative z-10 w-full h-full object-cover object-center transition duration-500 shadow-2xl";
-                    const fitTxt = document.getElementById('coverFitBtnText');
-                    if (fitTxt) fitTxt.innerText = 'Ajuste: Rellenar';
-                } else {
-                    coverEl.className = "relative z-10 w-full h-full object-contain object-center transition duration-500 shadow-2xl";
+                if (appConfig.coverFit === 'contain') {
+                    coverEl.className = "w-full h-full object-contain object-center transition duration-500";
                     const fitTxt = document.getElementById('coverFitBtnText');
                     if (fitTxt) fitTxt.innerText = 'Ajuste: Completo';
+                } else {
+                    coverEl.className = "w-full h-full object-cover object-center transition duration-500";
+                    const fitTxt = document.getElementById('coverFitBtnText');
+                    if (fitTxt) fitTxt.innerText = 'Ajuste: Rellenar';
                 }
             }
             if (coverBgEl) coverBgEl.src = currentCoverSrc;
 
             const logoEl = document.getElementById('profileLogoImg');
             if (logoEl) logoEl.src = appConfig.profileLogo || DEFAULT_STATE.profileLogo;
+        }
+
+        function toggleBioExpand() {
+            const extra = document.getElementById('bioExpandedExtra');
+            const btn = document.getElementById('btnBioMore');
+            if (!extra) return;
+            if (extra.classList.contains('hidden')) {
+                extra.classList.remove('hidden');
+                if (btn) btn.innerText = 'Ver menos';
+            } else {
+                extra.classList.add('hidden');
+                if (btn) btn.innerText = '... Ver más';
+            }
+        }
+
+        function scrollToCatalog() {
+            const el = document.getElementById('searchInput') || document.getElementById('catalogSection');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function scrollToCarousel() {
+            const el = document.getElementById('carouselContainer');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function scrollToSponsors() {
+            const el = document.getElementById('sponsorsCardsContainer') || document.getElementById('alliesMarquee');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         function toggleCoverFitMode() {
@@ -1832,6 +2117,11 @@
             const quickAddNavBtn = document.getElementById('quickAddNavBtn');
             const financeNavBtn = document.getElementById('financeNavBtn');
             const agentGroupNavBtn = document.getElementById('agentGroupNavBtn');
+            const virtualAssistantWidget = document.getElementById('virtualAssistantWidget');
+            const heroMsgBtn = document.getElementById('heroMsgBtn');
+            const btnContactAgentes = document.getElementById('btnContactAgentes');
+            const lawyerCardSection = document.getElementById('lawyerCardSection');
+            const tabFbSponsors = document.getElementById('tabFbSponsors');
 
             document.querySelectorAll('.admin-only').forEach(el => el.classList.add('hidden'));
 
@@ -1839,30 +2129,74 @@
                 if (roleBadgeText) roleBadgeText.innerText = "Modo Administrador";
                 if (adminBanner) adminBanner.classList.remove('hidden');
                 if (agentBanner) agentBanner.classList.add('hidden');
-                if (loginNavBtn) loginNavBtn.classList.add('hidden');
+                if (loginNavBtn) {
+                    loginNavBtn.classList.add('hidden');
+                    loginNavBtn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Acceso Sistema';
+                }
                 if (logoutNavBtn) logoutNavBtn.classList.remove('hidden');
                 if (quickAddNavBtn) quickAddNavBtn.classList.remove('hidden');
                 if (financeNavBtn) financeNavBtn.classList.remove('hidden');
+                if (agentGroupNavBtn) agentGroupNavBtn.classList.add('hidden');
+                
+                // En modo Administrador quitar WhatsApp, Mensaje SOFIA, ASISTENTE VIRTUAL de la interfaz hero
+                if (btnContactAgentes) btnContactAgentes.classList.add('hidden');
+                if (heroMsgBtn) heroMsgBtn.classList.add('hidden');
+                if (virtualAssistantWidget) virtualAssistantWidget.classList.add('hidden');
+
+                if (lawyerCardSection) lawyerCardSection.classList.remove('hidden');
+                if (tabFbSponsors) tabFbSponsors.classList.remove('hidden');
                 document.querySelectorAll('.admin-only').forEach(el => el.classList.remove('hidden'));
             } else if (currentRole === 'AGENT') {
                 if (roleBadgeText) roleBadgeText.innerText = "Modo Agente Comercial";
                 if (adminBanner) adminBanner.classList.add('hidden');
                 if (agentBanner) agentBanner.classList.remove('hidden');
-                if (loginNavBtn) loginNavBtn.classList.add('hidden');
-                if (logoutNavBtn) logoutNavBtn.classList.remove('hidden');
-                if (quickAddNavBtn) quickAddNavBtn.classList.remove('hidden');
+                
+                // En modo AGENTE COMERCIAL:
+                // 1. ELIMINAR (GRUPO WA AGENTE)
+                if (agentGroupNavBtn) agentGroupNavBtn.classList.add('hidden');
+
+                // 2. MOSTRAR "SALIR" AL LADO DE "AGENTE ACTIVO"
+                if (logoutNavBtn) {
+                    logoutNavBtn.classList.remove('hidden');
+                    logoutNavBtn.innerHTML = '<i class="fa-solid fa-power-off"></i> Cerrar Sesión';
+                }
+                if (loginNavBtn) {
+                    loginNavBtn.classList.remove('hidden');
+                    loginNavBtn.innerHTML = '<i class="fa-solid fa-user-tie text-amber-300"></i> Agente Activo';
+                }
+
+                // 3. ELIMINAR (NUEVA CAPTACION)
+                if (quickAddNavBtn) quickAddNavBtn.classList.add('hidden');
+
+                // 4 & 6. ELIMINAR (QUITAR PATROCINADORES) Y (ESPACIO PUBLICITARIOPATROCINADORES)
+                if (lawyerCardSection) lawyerCardSection.classList.add('hidden');
+                if (tabFbSponsors) tabFbSponsors.classList.add('hidden');
+
+                // 5. ELIMINAR (AGENTE VIRTUAL)
+                if (virtualAssistantWidget) virtualAssistantWidget.classList.add('hidden');
+                if (heroMsgBtn) heroMsgBtn.classList.add('hidden');
+                if (btnContactAgentes) btnContactAgentes.classList.add('hidden');
+
                 if (financeNavBtn) financeNavBtn.classList.add('hidden');
-                if (agentGroupNavBtn) agentGroupNavBtn.classList.remove('hidden');
             } else {
                 if (roleBadgeText) roleBadgeText.innerText = "Modo Público";
                 if (adminBanner) adminBanner.classList.add('hidden');
                 if (agentBanner) agentBanner.classList.add('hidden');
-                if (loginNavBtn) loginNavBtn.classList.remove('hidden');
+                if (loginNavBtn) {
+                    loginNavBtn.classList.remove('hidden');
+                    loginNavBtn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Acceso Sistema';
+                }
                 if (logoutNavBtn) logoutNavBtn.classList.add('hidden');
                 if (quickAddNavBtn) quickAddNavBtn.classList.add('hidden');
                 if (financeNavBtn) financeNavBtn.classList.add('hidden');
                 if (agentGroupNavBtn) agentGroupNavBtn.classList.add('hidden');
+                if (virtualAssistantWidget) virtualAssistantWidget.classList.remove('hidden');
+                if (heroMsgBtn) heroMsgBtn.classList.remove('hidden');
+                if (btnContactAgentes) btnContactAgentes.classList.add('hidden');
+                if (lawyerCardSection) lawyerCardSection.classList.remove('hidden');
+                if (tabFbSponsors) tabFbSponsors.classList.remove('hidden');
             }
+            renderSpecialSectionUI();
         }
 
         function togglePassInput() {
@@ -1912,6 +2246,12 @@
         }
 
         async function handleImageUpload(event, targetProp) {
+            if (currentRole !== 'ADMIN') {
+                openModal('loginModal');
+                showToast('Acceso restringido. Solo el Administrador puede editar imágenes.', 'error');
+                if (event && event.target) event.target.value = '';
+                return;
+            }
             const file = event.target.files[0];
             if (!file) return;
             showToast('Comprimiendo y guardando imagen...');
@@ -1921,13 +2261,17 @@
                 appConfig[targetProp] = b64;
                 saveConfigToStorage();
                 renderHeaderAndConfig();
-                showToast('¡Imagen de portada actualizada con éxito!');
+                showToast('¡Imagen actualizada con éxito!');
             }
             event.target.value = '';
         }
 
         function openMasterPanel() {
-            if (currentRole !== 'ADMIN') return;
+            if (currentRole !== 'ADMIN') {
+                openModal('loginModal');
+                showToast('Acceso restringido. Inicie sesión como Administrador.', 'error');
+                return;
+            }
             document.getElementById('cfgCompanyTitle').value = appConfig.companyTitle || DEFAULT_STATE.companyTitle;
             document.getElementById('cfgMotto').value = appConfig.motto || DEFAULT_STATE.motto;
             document.getElementById('cfgLocation').value = appConfig.location || DEFAULT_STATE.location;
@@ -1991,6 +2335,13 @@
             if (currentRole !== 'ADMIN') return;
             const name = document.getElementById('allyNameInput').value.trim();
             if (!name) return;
+
+            const existing = alliesList.find(a => a.name.toLowerCase() === name.toLowerCase());
+            if (existing) {
+                showToast('Ya existe un aliado registrado con ese nombre', 'error');
+                return;
+            }
+
             const logo = stagedAllyImageB64 || `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=0284c7&color=fff`;
             const newAlly = {
                 id: 'ally_' + Date.now(),
@@ -2243,6 +2594,48 @@
             showToast('¡Pie de página actualizado!');
         }
 
+        function renderSpecialSectionUI() {
+            const topicEl = document.getElementById('displaySpecialTopic');
+            const descEl = document.getElementById('displaySpecialDesc');
+            const btnEdit = document.getElementById('btnEditSpecialAdmin');
+
+            if (topicEl) topicEl.innerText = appSpecialSection.topic || DEFAULT_SPECIAL_SECTION.topic;
+            if (descEl) descEl.innerText = appSpecialSection.desc || DEFAULT_SPECIAL_SECTION.desc;
+            if (btnEdit) {
+                if (currentRole === 'ADMIN') {
+                    btnEdit.classList.remove('hidden');
+                } else {
+                    btnEdit.classList.add('hidden');
+                }
+            }
+        }
+
+        function openEditSpecialModal() {
+            if (currentRole !== 'ADMIN') return;
+            document.getElementById('inputSpecialTopic').value = appSpecialSection.topic || DEFAULT_SPECIAL_SECTION.topic;
+            document.getElementById('inputSpecialDesc').value = appSpecialSection.desc || DEFAULT_SPECIAL_SECTION.desc;
+            openModal('editSpecialModal');
+        }
+
+        function handleSaveSpecialSection(event) {
+            event.preventDefault();
+            if (currentRole !== 'ADMIN') return;
+            appSpecialSection.topic = getVal('inputSpecialTopic');
+            appSpecialSection.desc = getVal('inputSpecialDesc');
+
+            localStorage.setItem('alianza_special', JSON.stringify(appSpecialSection));
+            if (db) {
+                db.collection('alianza_settings').doc('appData').set({
+                    specialSection: appSpecialSection,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true }).catch(() => {});
+            }
+
+            renderSpecialSectionUI();
+            closeModal('editSpecialModal');
+            showToast('¡Apartado Especial actualizado por el Administrador!');
+        }
+
         function generateNextCode(cat) {
             const prefix = (cat || 'RE').toUpperCase();
             let maxN = 0;
@@ -2461,9 +2854,15 @@
                 btn.classList.remove('bg-amber-500', 'text-slate-950');
                 btn.classList.add('bg-slate-900', 'text-white');
             });
-            event.currentTarget.classList.add('bg-amber-500', 'text-slate-950');
-            event.currentTarget.classList.remove('bg-slate-900', 'text-white');
+            if (window.event && window.event.currentTarget && window.event.currentTarget.classList) {
+                window.event.currentTarget.classList.add('bg-amber-500', 'text-slate-950');
+                window.event.currentTarget.classList.remove('bg-slate-900', 'text-white');
+            }
             filterItems();
+        }
+
+        function filterCategory(cat) {
+            setCategoryFilter(cat);
         }
 
         function filterItems() {
@@ -2883,6 +3282,40 @@ ALIANZA ESTRATÉGICA S.A.S.`;
             if (arr.length > 0) sel.value = arr[0];
         }
 
+        let transparencyFilter = 'ALL';
+
+        function setTransparencyFilter(filter) {
+            transparencyFilter = filter;
+            const bAll = document.getElementById('transBtnAll');
+            const bCap = document.getElementById('transBtnCap');
+            const bVen = document.getElementById('transBtnVen');
+            
+            [bAll, bCap, bVen].forEach(b => {
+                if (b) {
+                    b.className = "bg-slate-950 hover:bg-slate-800 text-slate-300 font-bold px-3 py-1.5 rounded-xl text-xs transition cursor-pointer";
+                }
+            });
+
+            if (filter === 'ALL' && bAll) bAll.className = "bg-sky-600 text-white font-bold px-3 py-1.5 rounded-xl text-xs transition cursor-pointer";
+            if (filter === 'CAPTADOS' && bCap) bCap.className = "bg-sky-600 text-white font-bold px-3 py-1.5 rounded-xl text-xs transition cursor-pointer";
+            if (filter === 'VENTAS' && bVen) bVen.className = "bg-sky-600 text-white font-bold px-3 py-1.5 rounded-xl text-xs transition cursor-pointer";
+
+            renderAgentTransparencyPortal();
+        }
+
+        function togglePaymentStatus(itemId, type) {
+            const item = inventory.find(i => i.id === itemId);
+            if (!item) return;
+            if (type === 'captador') {
+                item.paymentStatusCaptador = (item.paymentStatusCaptador === 'PAID') ? 'UNPAID' : 'PAID';
+            } else {
+                item.paymentStatusVendedor = (item.paymentStatusVendedor === 'PAID') ? 'UNPAID' : 'PAID';
+            }
+            saveInventoryItemCloud(item);
+            renderAgentTransparencyPortal();
+            showToast('Estado de pago actualizado');
+        }
+
         function renderAgentTransparencyPortal() {
             const sel = document.getElementById('agentSelectAuditor');
             if (!sel || !sel.value) return;
@@ -2891,40 +3324,87 @@ ALIANZA ESTRATÉGICA S.A.S.`;
             let totalCap = 0, totalVen = 0;
             const capList = document.getElementById('agentCapturedList');
             const soldList = document.getElementById('agentSoldList');
-            capList.innerHTML = '';
-            soldList.innerHTML = '';
+            if (capList) capList.innerHTML = '';
+            if (soldList) soldList.innerHTML = '';
+
+            const gridContainer = document.getElementById('transparencyGridContainer');
+            if (gridContainer) {
+                if (transparencyFilter === 'CAPTADOS') {
+                    gridContainer.className = "grid grid-cols-1 gap-5";
+                    document.getElementById('colCapturedWrapper').classList.remove('hidden');
+                    document.getElementById('colSoldWrapper').classList.add('hidden');
+                } else if (transparencyFilter === 'VENTAS') {
+                    gridContainer.className = "grid grid-cols-1 gap-5";
+                    document.getElementById('colCapturedWrapper').classList.add('hidden');
+                    document.getElementById('colSoldWrapper').classList.remove('hidden');
+                } else {
+                    gridContainer.className = "grid grid-cols-1 md:grid-cols-2 gap-5";
+                    document.getElementById('colCapturedWrapper').classList.remove('hidden');
+                    document.getElementById('colSoldWrapper').classList.remove('hidden');
+                }
+            }
 
             inventory.forEach(item => {
                 const isCap = (item.agentName || '').toLowerCase() === agent.toLowerCase();
                 const isVen = (item.sellerAgentName || '').toLowerCase() === agent.toLowerCase();
                 const isVendido = item.status === 'VENDIDO' || item.status === 'SOLD';
 
-                if (isCap) {
+                if (isCap && capList) {
                     const earned = isVendido ? (item.payCaptador || 0) : 0;
                     totalCap += earned;
+                    const isPaid = item.paymentStatusCaptador === 'PAID';
+                    const statusBadge = isPaid 
+                        ? `<button onclick="togglePaymentStatus('${item.id}', 'captador')" class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-2.5 py-1 rounded-lg text-[10px] font-bold flex items-center gap-1.5 cursor-pointer hover:bg-emerald-500/30 transition" title="Cambiar a Inpago"><span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span> Pagado</button>`
+                        : `<button onclick="togglePaymentStatus('${item.id}', 'captador')" class="bg-rose-500/20 text-rose-400 border border-rose-500/40 px-2.5 py-1 rounded-lg text-[10px] font-bold flex items-center gap-1.5 cursor-pointer hover:bg-rose-500/30 transition" title="Marcar como Pagado"><span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse"></span> Inpago</button>`;
+
                     capList.innerHTML += `
-                        <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800 flex justify-between items-center">
-                            <div><strong class="text-sky-400 font-mono">${item.code}</strong> - <span class="text-white">${escapeHtml(item.title)}</span></div>
-                            <span class="text-sky-300 font-bold">$${earned.toFixed(2)}</span>
+                        <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800 space-y-2">
+                            <div class="flex justify-between items-start">
+                                <div><strong class="text-sky-400 font-mono">${item.code}</strong> - <span class="text-white font-bold">${escapeHtml(item.title)}</span></div>
+                                <span class="text-sky-300 font-black text-sm">$${earned.toFixed(2)}</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-1 text-[11px] text-slate-400 pt-1 border-t border-slate-900">
+                                <span>Propietario: ${escapeHtml(item.ownerName || '-')}</span>
+                                <span class="text-right">Ubicación: ${escapeHtml(item.location || 'El Coca')}</span>
+                            </div>
+                            <div class="flex justify-between items-center text-[11px] text-slate-400 pt-1">
+                                <span>Cat: ${escapeHtml(item.categoryType || item.category)} | Precio: ${item.priceStr || '$' + item.realSalePrice} (${item.status})</span>
+                                ${statusBadge}
+                            </div>
                         </div>
                     `;
                 }
 
-                if (isVen && isVendido) {
+                if (isVen && isVendido && soldList) {
                     const earnedV = item.payVendedor || 0;
                     totalVen += earnedV;
+                    const isPaidV = item.paymentStatusVendedor === 'PAID';
+                    const statusBadgeV = isPaidV 
+                        ? `<button onclick="togglePaymentStatus('${item.id}', 'vendedor')" class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-2.5 py-1 rounded-lg text-[10px] font-bold flex items-center gap-1.5 cursor-pointer hover:bg-emerald-500/30 transition" title="Cambiar a Inpago"><span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span> Pagado</button>`
+                        : `<button onclick="togglePaymentStatus('${item.id}', 'vendedor')" class="bg-rose-500/20 text-rose-400 border border-rose-500/40 px-2.5 py-1 rounded-lg text-[10px] font-bold flex items-center gap-1.5 cursor-pointer hover:bg-rose-500/30 transition" title="Marcar como Pagado"><span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse"></span> Inpago</button>`;
+
                     soldList.innerHTML += `
-                        <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800 flex justify-between items-center">
-                            <div><strong class="text-amber-400 font-mono">${item.code}</strong> - <span class="text-white">${escapeHtml(item.title)}</span></div>
-                            <span class="text-amber-300 font-bold">$${earnedV.toFixed(2)}</span>
+                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2">
+                            <div class="flex justify-between items-start">
+                                <div><strong class="text-amber-400 font-mono">${item.code}</strong> - <span class="text-white font-bold">${escapeHtml(item.title)}</span></div>
+                                <span class="text-amber-300 font-black text-sm">$${earnedV.toFixed(2)}</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-1 text-[11px] text-slate-400 pt-1 border-t border-slate-900">
+                                <span>Venta Final: $${(item.realSalePrice || 0).toFixed(2)}</span>
+                                <span class="text-right">Comisión Total: $${(item.commissionPactada || 0).toFixed(2)}</span>
+                            </div>
+                            <div class="flex justify-between items-center pt-1">
+                                <span class="text-[10px] text-slate-400">Propietario: ${escapeHtml(item.ownerName || '-')}</span>
+                                ${statusBadgeV}
+                            </div>
                         </div>
                     `;
                 }
             });
 
-            document.getElementById('agentStatCaptacion').innerText = `$${totalCap.toFixed(2)}`;
-            document.getElementById('agentStatVenta').innerText = `$${totalVen.toFixed(2)}`;
-            document.getElementById('agentStatTotal').innerText = `$${(totalCap + totalVen).toFixed(2)}`;
+            if (document.getElementById('agentStatCaptacion')) document.getElementById('agentStatCaptacion').innerText = `$${totalCap.toFixed(2)}`;
+            if (document.getElementById('agentStatVenta')) document.getElementById('agentStatVenta').innerText = `$${totalVen.toFixed(2)}`;
+            if (document.getElementById('agentStatTotal')) document.getElementById('agentStatTotal').innerText = `$${(totalCap + totalVen).toFixed(2)}`;
         }
 
         function exportToCSV() {
@@ -3033,6 +3513,8 @@ ALIANZA ESTRATÉGICA S.A.S.`;
             const ref1 = getVal('ref1Data');
             const ref2 = getVal('ref2Data');
             const ref3 = getVal('ref3Data');
+            const topic = getVal('appAgentTopic');
+            const desc = getVal('appAgentDesc');
 
             const msg = 
 `🏢 *SOLICITUD DE AGENTE COMERCIAL*
@@ -3046,7 +3528,11 @@ ALIANZA ESTRATÉGICA S.A.S.`;
 👥 Referencias:
 1. ${ref1}
 2. ${ref2}
-3. ${ref3}`;
+3. ${ref3}
+
+📌 *APARTADO ESPECIAL:*
+• Tema / Asunto: ${topic}
+• Descripción: ${desc}`;
             window.open(`https://wa.me/${OFFICIAL_WA_CLEAN}?text=${encodeURIComponent(msg)}`, '_blank');
             closeModal('applyAgentModal');
             showToast('¡Solicitud enviada por WhatsApp al Administrador!');
@@ -3100,6 +3586,139 @@ ALIANZA ESTRATÉGICA S.A.S.`;
                 .replace(/>/g, "&gt;")
                 .replace(/"/g, "&quot;")
                 .replace(/'/g, "&#039;");
+        }
+
+        const SYSTEM_INSTRUCTION_SOFIA = `Eres Sofía, la Asistente Virtual Oficial e Inteligente de ALIANZA ESTRATÉGICA S.A.S., plataforma corporativa de corretaje e intermediación en El Coca (Puerto Francisco de Orellana), Provincia de Orellana, Ecuador.
+
+DATOS INSTITUCIONALES:
+- Gerente General & Representante Legal: Adrián Arturo Íñiguez Lucio.
+- Patrocinio Jurídico Especializado: Abg. Carlos Alfredo Íñiguez Rodríguez.
+- Ubicación: El Coca (Puerto Francisco de Orellana), Orellana, Ecuador.
+- RUC Corporativo: 2200260967001.
+- Teléfono Oficial / WhatsApp de Contacto: 099 216 0967 (y 095 919 0794).
+
+CATEGORÍAS COMERCIALES DE ACTIVOS Y DERIVADOS:
+1. RE (Bienes Raíces Venta): Casas, lotes urbanos, fincas, terrenos comerciales, quintas.
+2. AR (Arriendos): Departamentos, locales comerciales, oficinas, galpones industriales.
+3. VH (Vehículos): Camionetas 4x4, autos familiares, camiones de carga, motocicletas.
+4. MQ (Maquinaria Pesada): Maquinaria para sector petrolero, agrícola y de construcción (retroexcavadoras, tractores, generadores).
+5. LQ (Segunda Mano / Remate): Activos inactivos, herramientas de trabajo y artículos de oportunidad.
+
+PROCEDIMIENTOS DE CAPTACIÓN Y ENGANCHES:
+- Consignación / Captación de Bienes: 100% Gratuita. No se cobra nada por publicar ni por tomar las fotos.
+- Asesoría Legal e Inspección: Se verifica que el activo cuente con documentación en regla (escrituras sin gravámenes en RE/AR, matrículas al día y antecedentes limpios en VH/MQ).
+- Cierre y Enganches: Se firman promesas de compraventa notariadas y contratos de corretaje formal con seguro jurídico.
+
+ESQUEMA DE COMISIONES & REQUISITOS DE AGENTES:
+- Regla de Reparto: 50% Empresa (ALIANZA S.A.S.) y 50% Fuerza de Ventas (25% Agente Captador / 25% Agente Vendedor, o 50% completo si el mismo agente capta y vende).
+- Requisitos de Reclutamiento para Agentes: Título de Bachiller (indispensable), Hoja de Vida, Certificado de Antecedentes Penales actualizado, Croquis de residencia en El Coca, 3 referencias familiares verificables, copia de cédula/votación y selfie sosteniendo documentos.
+
+DERIVACIÓN A CONTACTO AGENTE:
+Cuando el cliente solicite acordar citas de inspección, negociar ofertas o consignar un bien, oriéntalo amablemente a contactar por WhatsApp directo a la Gerencia o con un Agente Comercial al número 099 216 0967.`;
+
+        function openAssistantModal() {
+            openModal('assistantModal');
+        }
+
+        function toggleChatWindow() {
+            openAssistantModal();
+        }
+
+        function sendChatMessage() {
+            sendGeminiMessage();
+        }
+
+        function handleChatKeyPress(e) {
+            handleGeminiKeyPress(e);
+        }
+
+        function openApiKeyModal() {
+            const current = localStorage.getItem('alianza_gemini_key') || '';
+            document.getElementById('geminiApiKeyInput').value = current;
+            openModal('apiKeyModal');
+        }
+
+        function saveGeminiApiKey() {
+            const key = document.getElementById('geminiApiKeyInput').value.trim();
+            if (!key) {
+                showToast('Ingrese una API Key válida', 'error');
+                return;
+            }
+            localStorage.setItem('alianza_gemini_key', key);
+            closeModal('apiKeyModal');
+            showToast('¡Google Gemini API Key guardada con éxito!');
+        }
+
+        function sendQuickPrompt(promptText) {
+            const input = document.getElementById('geminiUserInput');
+            if (input) input.value = promptText;
+            sendGeminiMessage();
+        }
+
+        function formatSofiaMessage(raw) {
+            if (!raw) return '';
+            let text = escapeHtml(raw);
+            text = text.replace(/\*\*(.*?)\*\*/g, '<strong class="text-amber-300 font-bold">$1</strong>');
+            text = text.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            text = text.replace(/\n/g, '<br>');
+            return text;
+        }
+
+        function handleGeminiKeyPress(e) {
+            if (e.key === 'Enter') sendGeminiMessage();
+        }
+
+        async function sendGeminiMessage() {
+            const input = document.getElementById('geminiUserInput');
+            const txt = input.value.trim();
+            if (!txt) return;
+
+            const messagesContainer = document.getElementById('geminiChatMessages');
+            messagesContainer.innerHTML += `
+                <div class="bg-sky-600 text-white p-3 rounded-2xl text-right ml-8 shadow-sm">
+                    ${escapeHtml(txt)}
+                </div>
+            `;
+            input.value = '';
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            const loadingId = 'loading_' + Date.now();
+            messagesContainer.innerHTML += `
+                <div id="${loadingId}" class="bg-slate-900 border border-slate-800 text-slate-400 p-3 rounded-2xl shadow-sm flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-sky-400 animate-ping"></span> Sofía está procesando tu consulta...
+                </div>
+            `;
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt: txt })
+                });
+
+                const data = await response.json();
+                document.getElementById(loadingId)?.remove();
+
+                const reply = data.text || 'Estimado usuario, con gusto puedo orientarle sobre nuestras propiedades, vehículos, maquinarias o comisiones. Comuníquese al WhatsApp de Gerencia 099 216 0967 para una atención personalizada.';
+                const formattedReply = formatSofiaMessage(reply);
+
+                messagesContainer.innerHTML += `
+                    <div class="bg-slate-900 border border-sky-500/30 text-slate-200 p-3.5 rounded-2xl shadow-sm leading-relaxed space-y-1">
+                        <strong class="text-amber-400 flex items-center gap-1.5 text-[11px] mb-0.5"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80" alt="Sofía" class="w-4 h-4 rounded-full object-cover border border-amber-400 inline"> Sofía — Agente Virtual Alianza</strong>
+                        <div>${formattedReply}</div>
+                    </div>
+                `;
+            } catch (err) {
+                document.getElementById(loadingId)?.remove();
+                messagesContainer.innerHTML += `
+                    <div class="bg-slate-900 border border-amber-500/40 text-slate-200 p-3.5 rounded-2xl shadow-sm leading-relaxed space-y-1">
+                        <strong class="text-amber-400 flex items-center gap-1.5 text-[11px] mb-0.5"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80" alt="Sofía" class="w-4 h-4 rounded-full object-cover border border-amber-400 inline"> Sofía — Agente Virtual Alianza</strong>
+                        <div>¡Hola! En este momento me encuentro disponible para atenderte. Puedes contactar directamente con nuestra Gerencia Comercial vía WhatsApp al <strong>099 216 0967</strong> o <strong>095 919 0794</strong> para recibir información inmediata.</div>
+                    </div>
+                `;
+            }
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
     </script>
 </body>
