@@ -169,7 +169,7 @@
                 <button onclick="openApplyAgentModal()" id="agentApplyNavBtn" class="bg-emerald-600 hover:bg-emerald-500 text-white font-black px-2.5 py-1 rounded-lg text-xs shadow-md transition flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95" title="Postulación Agentes">
                     <i class="fa-solid fa-paper-plane text-xs"></i> <span>Postular Agente</span>
                 </button>
-                <button onclick="openAssistantModal()" class="bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white font-black px-2.5 py-1 rounded-lg text-xs shadow-md transition flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95" title="Asistente IA (Sofía)">
+                <button onclick="openAssistantModal()" id="topAssistantNavBtn" class="bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white font-black px-2.5 py-1 rounded-lg text-xs shadow-md transition flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95" title="Asistente IA (Sofía)">
                     <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80" alt="Sofía" class="w-5 h-5 rounded-full object-cover border border-amber-400 shadow-sm"> <span>Asistente IA (Sofía)</span>
                 </button>
                 <button onclick="openModal('shareModal')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-2.5 py-1 rounded-lg text-xs font-semibold transition flex items-center gap-1 shadow-sm cursor-pointer" title="Compartir Plataforma">
@@ -216,7 +216,10 @@
             <div class="flex items-center gap-2 font-bold text-xs md:text-sm">
                 <i class="fa-solid fa-user-tie text-amber-300"></i> MODO AGENTE COMERCIAL - ACCESO A FICHAS TÉCNICAS, DATOS INTERNOS & COMISIONES
             </div>
-            <div class="flex items-center gap-2">
+            <div class="flex flex-wrap items-center gap-2">
+                <button onclick="openAddProductModal()" class="bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-black px-3.5 py-1.5 rounded-xl text-xs shadow-lg transition flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95 border border-amber-300" title="Subir Ficha Técnica de Captación Nueva">
+                    <i class="fa-solid fa-file-circle-plus text-slate-950 text-sm"></i> + Subir Ficha Técnica
+                </button>
                 <span class="text-[11px] bg-sky-950/70 border border-sky-400/40 text-sky-200 px-3 py-1 rounded-full font-bold flex items-center gap-1.5">
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Sesión Agente Autorizada
                 </span>
@@ -421,10 +424,16 @@
                 </div>
             </div>
 
-            <div class="max-w-xl mx-auto relative mb-4">
-                <input type="text" id="searchInput" value="" autocomplete="off" onkeyup="filterItems()" placeholder="Buscar por código (ej: RE-001, VH-001), sector o palabra clave..." class="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-slate-950/80 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 border border-sky-500/30 transition shadow-inner">
-                <i class="fa-solid fa-magnifying-glass absolute left-4 top-4 text-sky-400"></i>
-            </div>
+            <!-- BUSCADOR PRINCIPAL (INICIA TOTALMENTE VACÍO POR DEFECTO) -->
+            <form role="search" action="javascript:void(0);" autocomplete="off" onsubmit="event.preventDefault(); return false;" class="max-w-xl mx-auto relative mb-4">
+                <!-- Trampa invisible contra autocompletado de credenciales del navegador -->
+                <input type="text" name="fake_user_trap" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
+                <input type="password" name="fake_pass_trap" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
+                
+                <input type="search" id="searchInput" name="catalogo_busqueda_activos" value="" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-form-type="other" data-lpignore="true" readonly onfocus="this.removeAttribute('readonly')" onpointerdown="this.removeAttribute('readonly')" ontouchstart="this.removeAttribute('readonly')" oninput="handleSearchInput(event)" onkeyup="filterItems()" placeholder="Buscar por código, vehículo, propiedad o sector" class="w-full pl-11 pr-10 py-3.5 rounded-2xl bg-slate-950/80 text-white placeholder-slate-400 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 border border-sky-500/30 transition shadow-inner animate-pulse-glow">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-4 text-sky-400 pointer-events-none"></i>
+                <button type="button" id="btnClearSearch" onclick="clearSearchInput()" class="hidden absolute right-3.5 top-3.5 text-slate-400 hover:text-white bg-slate-800/80 hover:bg-slate-700 w-6 h-6 rounded-full flex items-center justify-center text-xs transition cursor-pointer" title="Borrar búsqueda">✕</button>
+            </form>
 
             <!-- BOTONES CATEGORÍAS -->
             <div class="flex flex-wrap justify-center gap-2 text-xs font-bold" id="categoryTabGroup">
@@ -536,7 +545,9 @@
                 </h3>
                 <button onclick="closeModal('loginModal')" class="text-slate-400 hover:text-slate-200 cursor-pointer" aria-label="Cerrar"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
-            <div class="space-y-3.5">
+            <form onsubmit="event.preventDefault(); executeLogin();" class="space-y-3.5" autocomplete="on">
+                <!-- Username explícito para que el gestor de contraseñas de Chrome/Edge vincule las credenciales aquí y NUNCA en el buscador del marketplace -->
+                <input type="text" name="username" autocomplete="username" class="hidden" value="alianzaestrategica2026@gmail.com" tabindex="-1" aria-hidden="true">
                 <div>
                     <label class="block text-xs font-bold text-slate-300 mb-1">Nivel de Acceso</label>
                     <select id="loginRoleSelect" onchange="togglePassInput()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white font-semibold focus:outline-none focus:ring-2 focus:ring-sky-500">
@@ -546,12 +557,12 @@
                 </div>
                 <div id="passContainer">
                     <label class="block text-xs font-bold text-slate-300 mb-1" id="passLabel">Contraseña: INGRESO DE AGENTE</label>
-                    <input type="password" id="adminPassInput" placeholder="••••••••" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                    <input type="password" id="adminPassInput" autocomplete="current-password" placeholder="••••••••" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
                 </div>
-                <button onclick="executeLogin()" class="w-full bg-sky-600 hover:bg-sky-500 text-white font-extrabold py-2.5 rounded-xl text-xs transition shadow-lg cursor-pointer">
+                <button type="submit" class="w-full bg-sky-600 hover:bg-sky-500 text-white font-extrabold py-2.5 rounded-xl text-xs transition shadow-lg cursor-pointer">
                     Ingresar al Panel
                 </button>
-            </div>
+            </form>
         </div>
     </div>
 
@@ -1607,7 +1618,7 @@
 
             <div class="border-t border-slate-800 pt-3 flex justify-between items-center">
                 <button onclick="closeModal('agentProfileModal')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs cursor-pointer transition">Cerrar</button>
-                <button onclick="closeModal('agentProfileModal'); openApplyAgentModal();" class="bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-black px-6 py-2.5 rounded-xl text-xs transition shadow-lg flex items-center gap-2 cursor-pointer">
+                <button id="modalPostularBtn" onclick="closeModal('agentProfileModal'); openApplyAgentModal();" class="bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-black px-6 py-2.5 rounded-xl text-xs transition shadow-lg flex items-center gap-2 cursor-pointer">
                     <i class="fa-solid fa-paper-plane"></i> Postular Ahora como Agente
                 </button>
             </div>
@@ -1918,9 +1929,48 @@
             });
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
+        function clearSearchInput() {
             const searchInput = document.getElementById('searchInput');
-            if (searchInput) searchInput.value = '';
+            if (searchInput) {
+                searchInput.value = '';
+            }
+            const btnClear = document.getElementById('btnClearSearch');
+            if (btnClear) btnClear.classList.add('hidden');
+            filterItems();
+        }
+
+        function handleSearchInput(e) {
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput && (searchInput.value.includes('@') || searchInput.value.toLowerCase().includes('alianzaestrategica'))) {
+                searchInput.value = '';
+            }
+            const btnClear = document.getElementById('btnClearSearch');
+            if (btnClear) {
+                if (searchInput && searchInput.value.trim().length > 0) {
+                    btnClear.classList.remove('hidden');
+                } else {
+                    btnClear.classList.add('hidden');
+                }
+            }
+            filterItems();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Asegurar que el cuadro de búsqueda esté totalmente VACÍO por defecto
+            clearSearchInput();
+            [50, 150, 300, 600, 1200].forEach(delay => setTimeout(clearSearchInput, delay));
+
+            const sInput = document.getElementById('searchInput');
+            if (sInput) {
+                ['change', 'input', 'animationstart', 'focus'].forEach(evt => {
+                    sInput.addEventListener(evt, () => {
+                        if (sInput.value.includes('@') || sInput.value.toLowerCase().includes('alianzaestrategica')) {
+                            sInput.value = '';
+                            filterItems();
+                        }
+                    });
+                });
+            }
 
             initCloudSync();
             renderAppUI();
@@ -1933,6 +1983,13 @@
 
             const yearEl = document.getElementById('copyrightYear');
             if (yearEl) yearEl.innerText = new Date().getFullYear();
+        });
+
+        window.addEventListener('load', () => {
+            clearSearchInput();
+        });
+        window.addEventListener('pageshow', () => {
+            clearSearchInput();
         });
 
         function initCloudSync() {
@@ -2122,6 +2179,10 @@
             const btnContactAgentes = document.getElementById('btnContactAgentes');
             const lawyerCardSection = document.getElementById('lawyerCardSection');
             const tabFbSponsors = document.getElementById('tabFbSponsors');
+            const btnConsignar = document.getElementById('btnConsignar');
+            const agentApplyNavBtn = document.getElementById('agentApplyNavBtn');
+            const topAssistantNavBtn = document.getElementById('topAssistantNavBtn');
+            const modalPostularBtn = document.getElementById('modalPostularBtn');
 
             document.querySelectorAll('.admin-only').forEach(el => el.classList.add('hidden'));
 
@@ -2138,10 +2199,14 @@
                 if (financeNavBtn) financeNavBtn.classList.remove('hidden');
                 if (agentGroupNavBtn) agentGroupNavBtn.classList.add('hidden');
                 
-                // En modo Administrador quitar WhatsApp, Mensaje SOFIA, ASISTENTE VIRTUAL de la interfaz hero
+                // En modo Administrador: Quitar botón amarillo (Vender Activo), WhatsApp, Mensaje SOFÍA y Asistente Virtual
+                if (btnConsignar) btnConsignar.classList.add('hidden');
                 if (btnContactAgentes) btnContactAgentes.classList.add('hidden');
                 if (heroMsgBtn) heroMsgBtn.classList.add('hidden');
                 if (virtualAssistantWidget) virtualAssistantWidget.classList.add('hidden');
+                if (agentApplyNavBtn) agentApplyNavBtn.classList.add('hidden');
+                if (topAssistantNavBtn) topAssistantNavBtn.classList.add('hidden');
+                if (modalPostularBtn) modalPostularBtn.classList.add('hidden');
 
                 if (lawyerCardSection) lawyerCardSection.classList.remove('hidden');
                 if (tabFbSponsors) tabFbSponsors.classList.remove('hidden');
@@ -2165,16 +2230,23 @@
                     loginNavBtn.innerHTML = '<i class="fa-solid fa-user-tie text-amber-300"></i> Agente Activo';
                 }
 
-                // 3. ELIMINAR (NUEVA CAPTACION)
-                if (quickAddNavBtn) quickAddNavBtn.classList.add('hidden');
+                // 3. HACER VISIBLE (SUBIR FICHA TÉCNICA DE CAPTACIÓN NUEVA) Y OCULTAR BOTÓN AMARILLO (VENDER ACTIVO)
+                if (quickAddNavBtn) {
+                    quickAddNavBtn.classList.remove('hidden');
+                    quickAddNavBtn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> + Ficha Técnica';
+                }
+                if (btnConsignar) btnConsignar.classList.add('hidden');
 
                 // 4 & 6. ELIMINAR (QUITAR PATROCINADORES) Y (ESPACIO PUBLICITARIOPATROCINADORES)
                 if (lawyerCardSection) lawyerCardSection.classList.add('hidden');
                 if (tabFbSponsors) tabFbSponsors.classList.add('hidden');
 
-                // 5. ELIMINAR (AGENTE VIRTUAL)
+                // 5. ELIMINAR (ASISTENTE IA SOFÍA) Y (POSTULAR AGENTE)
                 if (virtualAssistantWidget) virtualAssistantWidget.classList.add('hidden');
                 if (heroMsgBtn) heroMsgBtn.classList.add('hidden');
+                if (topAssistantNavBtn) topAssistantNavBtn.classList.add('hidden');
+                if (agentApplyNavBtn) agentApplyNavBtn.classList.add('hidden');
+                if (modalPostularBtn) modalPostularBtn.classList.add('hidden');
                 if (btnContactAgentes) btnContactAgentes.classList.add('hidden');
 
                 if (financeNavBtn) financeNavBtn.classList.add('hidden');
@@ -2192,9 +2264,14 @@
                 if (agentGroupNavBtn) agentGroupNavBtn.classList.add('hidden');
                 if (virtualAssistantWidget) virtualAssistantWidget.classList.remove('hidden');
                 if (heroMsgBtn) heroMsgBtn.classList.remove('hidden');
+                if (topAssistantNavBtn) topAssistantNavBtn.classList.remove('hidden');
+                if (agentApplyNavBtn) agentApplyNavBtn.classList.remove('hidden');
+                if (modalPostularBtn) modalPostularBtn.classList.remove('hidden');
                 if (btnContactAgentes) btnContactAgentes.classList.add('hidden');
                 if (lawyerCardSection) lawyerCardSection.classList.remove('hidden');
                 if (tabFbSponsors) tabFbSponsors.classList.remove('hidden');
+                // En Modo Público: El botón amarillo (Vender Activo) es visible
+                if (btnConsignar) btnConsignar.classList.remove('hidden');
             }
             renderSpecialSectionUI();
         }
@@ -2681,7 +2758,7 @@
             document.getElementById('previewThumbsContainer').innerHTML = '';
             stagedImages = [];
             document.getElementById('prodIsFeatured').checked = true;
-            document.getElementById('productModalTitle').innerText = 'Registrar Nueva Captación';
+            document.getElementById('productModalTitle').innerText = (currentRole === 'AGENT') ? 'Subir Ficha Técnica de Captación Nueva' : 'Registrar Nueva Captación';
             toggleCategoryFields();
             openModal('productModal');
         }
@@ -2866,16 +2943,35 @@
         }
 
         function filterItems() {
-            const query = (document.getElementById('searchInput')?.value || '').toLowerCase().trim();
+            const searchEl = document.getElementById('searchInput');
+            if (searchEl && (searchEl.value.includes('@') || searchEl.value.toLowerCase().includes('alianzaestrategica'))) {
+                searchEl.value = '';
+                const btnClear = document.getElementById('btnClearSearch');
+                if (btnClear) btnClear.classList.add('hidden');
+            }
+
+            const query = (searchEl?.value || '').toLowerCase().trim();
+            const btnClear = document.getElementById('btnClearSearch');
+            if (btnClear) {
+                if (query.length > 0) btnClear.classList.remove('hidden');
+                else btnClear.classList.add('hidden');
+            }
+
             const filtered = inventory.filter(item => {
                 const isVendido = item.status === 'VENDIDO' || item.status === 'SOLD';
                 if (activeCategory === 'SOLD') return isVendido;
                 if (isVendido && activeCategory !== 'ALL') return false;
 
                 const matchesCat = (activeCategory === 'ALL') || (item.category === activeCategory);
+                if (!query) return matchesCat;
+
                 const matchesQuery = (item.title || '').toLowerCase().includes(query) ||
                                      (item.code || '').toLowerCase().includes(query) ||
-                                     (item.location || '').toLowerCase().includes(query);
+                                     (item.location || '').toLowerCase().includes(query) ||
+                                     (item.sector || '').toLowerCase().includes(query) ||
+                                     (item.ciudad || '').toLowerCase().includes(query) ||
+                                     (item.categoryType || '').toLowerCase().includes(query) ||
+                                     (item.agentName || '').toLowerCase().includes(query);
                 return matchesCat && matchesQuery;
             });
             renderGrid(filtered);
