@@ -169,10 +169,8 @@
                 <button onclick="openApplyAgentModal()" id="agentApplyNavBtn" class="bg-emerald-600 hover:bg-emerald-500 text-white font-black px-2.5 py-1 rounded-lg text-xs shadow-md transition flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95" title="Postulación Agentes">
                     <i class="fa-solid fa-paper-plane text-xs"></i> <span>Postular Agente</span>
                 </button>
-                <button onclick="openAssistantModal()" id="topAssistantNavBtn" class="bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white font-black px-2.5 py-1 rounded-lg text-xs shadow-md transition flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95" title="Asistente IA (Sofía)">
-                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80" alt="Sofía" class="w-5 h-5 rounded-full object-cover border border-amber-400 shadow-sm"> <span>Asistente IA (Sofía)</span>
-                </button>
-                <button onclick="openModal('shareModal')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-2.5 py-1 rounded-lg text-xs font-semibold transition flex items-center gap-1 shadow-sm cursor-pointer" title="Compartir Plataforma">
+
+                <button onclick="openModal('shareModal')" id="topShareBtn" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-2.5 py-1 rounded-lg text-xs font-semibold transition flex items-center gap-1 shadow-sm cursor-pointer" title="Compartir Plataforma">
                     <i class="fa-solid fa-share-nodes text-sky-400"></i> <span class="hidden sm:inline">Compartir</span>
                 </button>
                 <button onclick="openModal('loginModal')" id="loginNavBtn" class="bg-sky-600 hover:bg-sky-500 text-white px-2.5 py-1 rounded-lg text-xs font-bold transition shadow-sm flex items-center gap-1 cursor-pointer">
@@ -195,8 +193,11 @@
                 <i class="fa-solid fa-user-shield text-slate-950 text-base"></i> ADMINISTRADOR PRINCIPAL (A.A.I.L.) - Control Total
             </div>
             <div class="flex flex-wrap items-center gap-2">
-                <button onclick="openFinanceModal()" class="bg-emerald-950 text-white border border-emerald-400/40 px-3.5 py-1.5 rounded-xl text-xs font-bold hover:bg-emerald-900 transition flex items-center gap-1.5 shadow cursor-pointer">
-                    <i class="fa-solid fa-table-cells text-emerald-400"></i> Tabla Control Excel 2026
+                <button onclick="openFinanceModal()" class="bg-emerald-950 text-white border border-emerald-400/40 px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-emerald-900 transition flex items-center gap-1.5 shadow cursor-pointer">
+                    <i class="fa-solid fa-table-cells text-emerald-400"></i> Tabla Control Excel
+                </button>
+                <button onclick="openVisitsAdminModal()" class="bg-indigo-950 text-indigo-200 border border-indigo-400/50 px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-indigo-900 transition flex items-center gap-1.5 shadow cursor-pointer">
+                    <i class="fa-solid fa-clipboard-user text-indigo-400"></i> Bitácora Visitas (<span id="adminVisitsCount">0</span>)
                 </button>
                 <button onclick="openMasterPanel()" class="bg-slate-950 text-white px-3.5 py-1.5 rounded-xl text-xs font-bold hover:bg-slate-900 transition flex items-center gap-1.5 shadow cursor-pointer">
                     <i class="fa-solid fa-sliders text-amber-400"></i> Panel Maestro Web & Fotos
@@ -211,17 +212,25 @@
         </div>
     </div>
 
-    <div id="agentBanner" class="bg-gradient-to-r from-sky-800 via-sky-700 to-sky-800 text-white px-4 py-2.5 hidden shadow-md border-b border-sky-600 z-30 transition-all">
-        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
-            <div class="flex items-center gap-2 font-bold text-xs md:text-sm">
-                <i class="fa-solid fa-user-tie text-amber-300"></i> MODO AGENTE COMERCIAL - ACCESO A FICHAS TÉCNICAS, DATOS INTERNOS & COMISIONES
+    <div id="agentBanner" class="bg-gradient-to-r from-slate-900 via-sky-950 to-slate-900 text-white px-4 py-3 hidden shadow-xl border-b border-sky-500/40 z-30 transition-all">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-3">
+            <div class="flex items-center gap-2.5 font-black text-xs md:text-sm text-sky-200">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+                <i class="fa-solid fa-user-tie text-amber-300 text-base"></i>
+                <span>PANEL DE AGENTE COMERCIAL AUTORIZADO</span>
             </div>
             <div class="flex flex-wrap items-center gap-2">
-                <button onclick="openAddProductModal()" class="bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-black px-3.5 py-1.5 rounded-xl text-xs shadow-lg transition flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95 border border-amber-300" title="Subir Ficha Técnica de Captación Nueva">
-                    <i class="fa-solid fa-file-circle-plus text-slate-950 text-sm"></i> + Subir Ficha Técnica
+                <button type="button" onclick="openAddProductModal()" class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black px-3.5 py-1.5 rounded-xl text-xs shadow-lg transition flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95">
+                    <i class="fa-solid fa-file-circle-plus text-slate-950"></i> + Agregar Ficha Técnica
                 </button>
-                <span class="text-[11px] bg-sky-950/70 border border-sky-400/40 text-sky-200 px-3 py-1 rounded-full font-bold flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Sesión Agente Autorizada
+                <button type="button" onclick="openVisitReportModal()" class="bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-black px-3.5 py-1.5 rounded-xl text-xs shadow-lg transition flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95">
+                    <i class="fa-solid fa-clipboard-user"></i> 📋 Registro de Visitas y Postulantes
+                </button>
+                <button type="button" onclick="openAddProductModal()" class="bg-gradient-to-r from-sky-600 to-sky-500 hover:from-sky-500 hover:to-sky-400 text-white font-black px-3.5 py-1.5 rounded-xl text-xs shadow-lg transition flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95">
+                    <i class="fa-solid fa-plus-circle text-white"></i> 🏡 Registrar Nueva Captación
+                </button>
+                <span class="text-[11px] bg-sky-950/90 border border-sky-400/40 text-sky-200 px-3 py-1.5 rounded-full font-bold flex items-center gap-1.5 shadow-inner">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Sesión Activa
                 </span>
             </div>
         </div>
@@ -329,29 +338,40 @@
                     </div>
                 </div>
 
-                <!-- 4. BOTONES DE ACCIÓN PRINCIPALES ESTILO FACEBOOK PAGE -->
+                <!-- 4. BOTONES DE ACCIÓN PRINCIPALES ESTILO FACEBOOK PAGE (MODO PÚBLICO) -->
                 <div id="heroActionButtons" class="flex flex-wrap items-center justify-center gap-2.5 mt-5 w-full max-w-2xl mx-auto">
-                    <a id="btnContactAgentes" href="https://wa.me/593959190794?text=Hola%20Alianza%20Estrat%C3%A9gica%20S.A.S.,%20deseo%20contactar%20con%20un%20agente%20comercial." target="_blank" rel="noopener noreferrer" class="hidden flex-1 min-w-[140px] bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow-lg transition flex items-center justify-center gap-2 cursor-pointer hover:scale-105 active:scale-95">
-                        <i class="fa-brands fa-whatsapp text-base"></i> WhatsApp
+                    <a id="btnContactAgentes" href="https://wa.me/593959190794?text=Hola%20Alianza%20Estrat%C3%A9gica%20S.A.S.,%20deseo%20contactar%20con%20un%20agente%20comercial." target="_blank" rel="noopener noreferrer" class="flex-1 min-w-[140px] bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow-lg transition flex items-center justify-center gap-2 cursor-pointer hover:scale-105 active:scale-95">
+                        <i class="fa-brands fa-whatsapp text-base"></i> WhatsApp Oficial
                     </a>
-                    <button type="button" id="heroMsgBtn" onclick="toggleChatWindow()" class="flex-1 min-w-[130px] bg-slate-800 hover:bg-slate-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow transition flex items-center justify-center gap-2 border border-slate-700 cursor-pointer hover:scale-105 active:scale-95">
-                        <i class="fa-solid fa-comment-dots text-sky-400"></i> Mensaje (Sofía)
-                    </button>
+                    <span id="heroMsgBtn" class="hidden"></span>
                     <button type="button" id="btnConsignar" onclick="openModal('consignarModal')" class="flex-1 min-w-[140px] bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow transition flex items-center justify-center gap-2 cursor-pointer hover:scale-105 active:scale-95">
                         <i class="fa-solid fa-plus-circle"></i> Vender Activo
                     </button>
                     <button type="button" id="btnInfoMenu" onclick="openModal('infoMenuModal')" class="bg-slate-800 hover:bg-slate-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow transition flex items-center justify-center gap-2 border border-slate-700 cursor-pointer hover:scale-105 active:scale-95">
                         <i class="fa-solid fa-circle-info text-amber-400"></i> Menú
                     </button>
-                    <button type="button" onclick="openModal('shareModal')" class="bg-slate-800 hover:bg-slate-700 text-white w-10 h-10 rounded-xl flex items-center justify-center border border-slate-700 shadow cursor-pointer transition hover:scale-105 active:scale-95" title="Más opciones / Compartir">
+                    <button type="button" id="btnHeroShareDots" onclick="openModal('shareModal')" class="bg-slate-800 hover:bg-slate-700 text-white w-10 h-10 rounded-xl flex items-center justify-center border border-slate-700 shadow cursor-pointer transition hover:scale-105 active:scale-95" title="Más opciones / Compartir">
                         <i class="fa-solid fa-ellipsis text-base"></i>
+                    </button>
+                </div>
+
+                <!-- BOTONES EXCLUSIVOS EN EL HERO PARA MODO AGENTE (ELIMINADOS LOS INNECESARIOS) -->
+                <div id="agentHeroActions" class="hidden flex flex-wrap items-center justify-center gap-3 mt-5 w-full max-w-2xl mx-auto">
+                    <button type="button" onclick="openAddProductModal()" class="flex-1 min-w-[170px] bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black px-5 py-3 rounded-2xl text-xs sm:text-sm shadow-xl transition flex items-center justify-center gap-2 cursor-pointer hover:scale-105 active:scale-95">
+                        <i class="fa-solid fa-file-circle-plus text-slate-950 text-base"></i> + Agregar Ficha Técnica
+                    </button>
+                    <button type="button" onclick="openVisitReportModal()" class="flex-1 min-w-[190px] bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-black px-5 py-3 rounded-2xl text-xs sm:text-sm shadow-xl transition flex items-center justify-center gap-2 cursor-pointer hover:scale-105 active:scale-95">
+                        <i class="fa-solid fa-clipboard-user text-base"></i> 📋 Registro de Visitas y Postulantes
+                    </button>
+                    <button type="button" onclick="openAddProductModal()" class="flex-1 min-w-[190px] bg-gradient-to-r from-sky-600 to-sky-500 hover:from-sky-500 hover:to-sky-400 text-white font-black px-5 py-3 rounded-2xl text-xs sm:text-sm shadow-xl transition flex items-center justify-center gap-2 cursor-pointer hover:scale-105 active:scale-95">
+                        <i class="fa-solid fa-plus-circle text-white text-base"></i> 🏡 Registrar Nueva Captación
                     </button>
                 </div>
 
                 <!-- 5. BARRA DE PESTAÑAS DE NAVEGACIÓN ESTILO FACEBOOK -->
                 <div class="w-full mt-6 border-t border-slate-800/80 px-2 flex items-center justify-center sm:justify-start overflow-x-auto modal-scroll gap-1 sm:gap-2 pt-2 pb-1">
                     <button type="button" onclick="scrollToCatalog()" class="px-3.5 py-2 text-xs font-bold text-sky-400 border-b-2 border-sky-400 flex items-center gap-1.5 flex-shrink-0 cursor-pointer">
-                        <i class="fa-solid fa-table-cells"></i> Publicaciones (<span id="fbTabCount">46</span>)
+                        <i class="fa-solid fa-table-cells"></i> Publicaciones (<span id="fbTabCount">46</span><span id="fbPubCount" class="hidden">46</span>)
                     </button>
                     <button type="button" onclick="scrollToCarousel()" class="px-3.5 py-2 text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-1.5 flex-shrink-0 cursor-pointer">
                         <i class="fa-solid fa-bolt text-amber-400"></i> Oportunidades VIP
@@ -408,7 +428,7 @@
     </section>
 
     <!-- MARKETPLACE Y FILTROS -->
-    <main class="max-w-7xl mx-auto px-4 py-4 flex-1 w-full">
+    <main id="catalogSection" class="max-w-7xl mx-auto px-4 py-4 flex-1 w-full">
         <!-- BUSCADOR CON SEÑALÉTICA INTERACTIVA GUIADA -->
         <div class="glass-panel rounded-3xl p-6 mb-8 text-white shadow-2xl relative overflow-hidden">
             <div class="max-w-2xl mx-auto text-center mb-4">
@@ -424,16 +444,10 @@
                 </div>
             </div>
 
-            <!-- BUSCADOR PRINCIPAL (INICIA TOTALMENTE VACÍO POR DEFECTO) -->
-            <form role="search" action="javascript:void(0);" autocomplete="off" onsubmit="event.preventDefault(); return false;" class="max-w-xl mx-auto relative mb-4">
-                <!-- Trampa invisible contra autocompletado de credenciales del navegador -->
-                <input type="text" name="fake_user_trap" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
-                <input type="password" name="fake_pass_trap" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
-                
-                <input type="search" id="searchInput" name="catalogo_busqueda_activos" value="" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-form-type="other" data-lpignore="true" readonly onfocus="this.removeAttribute('readonly')" onpointerdown="this.removeAttribute('readonly')" ontouchstart="this.removeAttribute('readonly')" oninput="handleSearchInput(event)" onkeyup="filterItems()" placeholder="Buscar por código, vehículo, propiedad o sector" class="w-full pl-11 pr-10 py-3.5 rounded-2xl bg-slate-950/80 text-white placeholder-slate-400 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 border border-sky-500/30 transition shadow-inner animate-pulse-glow">
-                <i class="fa-solid fa-magnifying-glass absolute left-4 top-4 text-sky-400 pointer-events-none"></i>
-                <button type="button" id="btnClearSearch" onclick="clearSearchInput()" class="hidden absolute right-3.5 top-3.5 text-slate-400 hover:text-white bg-slate-800/80 hover:bg-slate-700 w-6 h-6 rounded-full flex items-center justify-center text-xs transition cursor-pointer" title="Borrar búsqueda">✕</button>
-            </form>
+            <div class="max-w-xl mx-auto relative mb-4">
+                <input type="text" id="searchInput" value="" autocomplete="off" onkeyup="filterItems()" placeholder="Buscar por código (ej: RE-001, VH-001), sector o palabra clave..." class="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-slate-950/80 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 border border-sky-500/30 transition shadow-inner">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-4 text-sky-400"></i>
+            </div>
 
             <!-- BOTONES CATEGORÍAS -->
             <div class="flex flex-wrap justify-center gap-2 text-xs font-bold" id="categoryTabGroup">
@@ -452,7 +466,7 @@
     </main>
 
     <!-- SECCIÓN AUSPICIANTES Y ALIADOS (MARQUESINA CONTINUA DE DERECHA A IZQUIERDA) -->
-    <section class="max-w-7xl mx-auto w-full px-4 mb-6">
+    <section id="alliesMarquee" class="max-w-7xl mx-auto w-full px-4 mb-6">
         <div class="glass-panel rounded-3xl p-4 sm:p-5 border border-slate-800 shadow-xl overflow-hidden">
             <div class="flex items-center justify-between mb-3 border-b border-slate-800/80 pb-2.5">
                 <div class="flex items-center gap-2">
@@ -545,9 +559,7 @@
                 </h3>
                 <button onclick="closeModal('loginModal')" class="text-slate-400 hover:text-slate-200 cursor-pointer" aria-label="Cerrar"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
-            <form onsubmit="event.preventDefault(); executeLogin();" class="space-y-3.5" autocomplete="on">
-                <!-- Username explícito para que el gestor de contraseñas de Chrome/Edge vincule las credenciales aquí y NUNCA en el buscador del marketplace -->
-                <input type="text" name="username" autocomplete="username" class="hidden" value="alianzaestrategica2026@gmail.com" tabindex="-1" aria-hidden="true">
+            <div class="space-y-3.5">
                 <div>
                     <label class="block text-xs font-bold text-slate-300 mb-1">Nivel de Acceso</label>
                     <select id="loginRoleSelect" onchange="togglePassInput()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white font-semibold focus:outline-none focus:ring-2 focus:ring-sky-500">
@@ -557,12 +569,12 @@
                 </div>
                 <div id="passContainer">
                     <label class="block text-xs font-bold text-slate-300 mb-1" id="passLabel">Contraseña: INGRESO DE AGENTE</label>
-                    <input type="password" id="adminPassInput" autocomplete="current-password" placeholder="••••••••" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                    <input type="password" id="adminPassInput" placeholder="••••••••" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
                 </div>
-                <button type="submit" class="w-full bg-sky-600 hover:bg-sky-500 text-white font-extrabold py-2.5 rounded-xl text-xs transition shadow-lg cursor-pointer">
+                <button onclick="executeLogin()" class="w-full bg-sky-600 hover:bg-sky-500 text-white font-extrabold py-2.5 rounded-xl text-xs transition shadow-lg cursor-pointer">
                     Ingresar al Panel
                 </button>
-            </form>
+            </div>
         </div>
     </div>
 
@@ -1095,6 +1107,18 @@
 
                 <!-- SECCIÓN PRIVADA DE DATOS INTERNOS -->
                 <div id="detPrivateSection" class="hidden bg-amber-500/10 p-3.5 rounded-2xl border border-amber-500/30 space-y-2 text-xs">
+                    <!-- SECCIÓN HISTORIAL DE VISITAS DE ESTE ACTIVO -->
+                    <div id="detAssetVisitsBox" class="hidden pt-2 border-t border-amber-500/20">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs font-bold text-amber-300 flex items-center gap-1.5">
+                                <i class="fa-solid fa-clipboard-user text-emerald-400"></i> Visitas de este Activo (<span id="detAssetVisitsCount">0</span>)
+                            </span>
+                            <button type="button" onclick="closeModal('detailModal'); openVisitReportModal(currentlyOpenedItem?.id);" class="bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-bold text-[10px] px-2.5 py-1 rounded-lg transition shadow cursor-pointer">
+                                + Registrar Visita Aquí
+                            </button>
+                        </div>
+                        <div id="detAssetVisitsList" class="space-y-1.5"></div>
+                    </div>
                     <h5 class="font-extrabold text-amber-400 flex items-center gap-1.5"><i class="fa-solid fa-user-lock"></i> Datos Internos de Captación</h5>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         <p class="text-slate-300"><strong>Propietario:</strong> <span id="detPrivateOwner">-</span></p>
@@ -1102,15 +1126,27 @@
                         <p class="text-slate-300"><strong>Cédula:</strong> <span id="detPrivateDocPhone">-</span></p>
                         <p class="text-slate-300"><strong>👤 Agente Captador:</strong> <span id="detPrivateAgent">-</span></p>
                         <p class="text-slate-300"><strong>📱 Tel. Agente:</strong> <span id="detPrivateAgentPhone" class="text-sky-300 font-bold">-</span></p>
-                        <p class="text-slate-300"><strong>💰 Comisión Pactada:</strong> <span id="detPrivateComision" class="text-emerald-400 font-bold">-</span></p>
+                        <p class="text-slate-300"><strong>💰 Ganancia / % Agente (Esquema 50/50):</strong> <span id="detPrivateComision" class="text-emerald-400 font-bold">-</span></p>
+                    </div>
+                    <div id="agentDirectCommissionBox" class="hidden mt-3 p-3 bg-emerald-950/80 border border-emerald-500/50 rounded-xl text-xs space-y-1 shadow">
+                        <p class="text-emerald-200 font-bold flex items-center gap-1.5">
+                            <i class="fa-solid fa-sack-dollar text-amber-300 text-sm"></i>
+                            El valor de tu comisión por la venta de este activo es de: <span id="agentDirectCommissionValue" class="text-amber-300 text-sm font-black">$0.00 USD</span>
+                        </p>
+                        <p class="text-[10px] text-slate-300 font-medium">*(Corresponde al 50% de comisión total al cerrar la venta, o 25% por captación)*</p>
                     </div>
                 </div>
             </div>
 
             <div class="border-t border-slate-800 pt-3 flex flex-wrap justify-between items-center gap-2">
-                <button onclick="copiarFichaOficialWhatsApp()" class="bg-sky-700 hover:bg-sky-600 text-white font-bold px-3.5 py-2 rounded-xl text-xs transition shadow flex items-center gap-1.5 cursor-pointer">
-                    <i class="fa-solid fa-copy"></i> Copiar Ficha WhatsApp
-                </button>
+                <div class="flex gap-2">
+                    <button onclick="copiarFichaOficialWhatsApp()" class="bg-sky-700 hover:bg-sky-600 text-white font-bold px-3.5 py-2 rounded-xl text-xs transition shadow flex items-center gap-1.5 cursor-pointer">
+                        <i class="fa-solid fa-copy"></i> Copiar Ficha WhatsApp
+                    </button>
+                    <button onclick="downloadAssetLegalBackup(currentlyOpenedItem?.id)" class="admin-only hidden bg-indigo-700 hover:bg-indigo-600 text-white font-bold px-3.5 py-2 rounded-xl text-xs transition shadow flex items-center gap-1.5 cursor-pointer">
+                        <i class="fa-solid fa-file-pdf text-amber-300"></i> Descargar Respaldo Legal (PDF)
+                    </button>
+                </div>
                 <div class="flex gap-2">
                     <button onclick="closeModal('detailModal')" class="bg-slate-800 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs hover:bg-slate-700 transition cursor-pointer">Cerrar</button>
                     <a id="detWaConsultBtn" href="#" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-5 py-2 rounded-xl text-xs transition shadow-md flex items-center gap-2">
@@ -1618,7 +1654,7 @@
 
             <div class="border-t border-slate-800 pt-3 flex justify-between items-center">
                 <button onclick="closeModal('agentProfileModal')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs cursor-pointer transition">Cerrar</button>
-                <button id="modalPostularBtn" onclick="closeModal('agentProfileModal'); openApplyAgentModal();" class="bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-black px-6 py-2.5 rounded-xl text-xs transition shadow-lg flex items-center gap-2 cursor-pointer">
+                <button onclick="closeModal('agentProfileModal'); openApplyAgentModal();" class="bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-black px-6 py-2.5 rounded-xl text-xs transition shadow-lg flex items-center gap-2 cursor-pointer">
                     <i class="fa-solid fa-paper-plane"></i> Postular Ahora como Agente
                 </button>
             </div>
@@ -1701,6 +1737,242 @@
     </div>
 
     <!-- MODAL VISTA PREVIA IMAGEN COMPLETA -->
+    
+    <!-- MODAL REGISTRO DE VISITAS Y POSTULANTES (AGENTE Y ADMIN) -->
+    <div id="visitReportModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 sm:p-5">
+        <div class="glass-panel w-full max-w-2xl rounded-3xl p-5 sm:p-6 max-h-[92vh] flex flex-col shadow-2xl border border-emerald-500/30">
+            <div class="flex justify-between items-center pb-3 border-b border-slate-800">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-9 h-9 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg border border-emerald-500/30">
+                        <i class="fa-solid fa-clipboard-user"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-sm sm:text-base font-black text-white">Registro de Visita y Postulantes</h3>
+                        <p class="text-[11px] text-slate-400">Control de gestión comercial y respaldo de visitas guiadas</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeModal('visitReportModal')" class="text-slate-400 hover:text-white transition w-8 h-8 rounded-full flex items-center justify-center bg-slate-900 border border-slate-800 cursor-pointer">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="visitReportForm" onsubmit="handleSaveVisit(event)" class="flex-1 overflow-y-auto space-y-4 pt-4 pr-1 modal-scroll text-xs">
+                <!-- 1. DATOS DEL AGENTE GESTOR -->
+                <div class="bg-slate-900/80 p-3.5 rounded-2xl border border-slate-800 space-y-2.5">
+                    <span class="block text-[11px] font-extrabold text-amber-300 uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="fa-solid fa-user-tie"></i> 1. Datos del Agente Gestor
+                    </span>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        <div>
+                            <label class="block text-slate-300 mb-1 font-bold">Nombre del Agente Responsable *</label>
+                            <input type="text" id="visitAgentName" required placeholder="Ej: Ing. Carlos Mendoza" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-amber-400">
+                        </div>
+                        <div>
+                            <label class="block text-slate-300 mb-1 font-bold">Teléfono / WhatsApp Agente *</label>
+                            <input type="tel" id="visitAgentPhone" required placeholder="Ej: 099 216 0967" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-amber-400">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. DATOS DEL CLIENTE / VISITANTE / POSTULANTE -->
+                <div class="bg-slate-900/80 p-3.5 rounded-2xl border border-slate-800 space-y-2.5">
+                    <span class="block text-[11px] font-extrabold text-sky-400 uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="fa-solid fa-users"></i> 2. Datos del Visitante o Postulante
+                    </span>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        <div>
+                            <label class="block text-slate-300 mb-1 font-bold">Nombre Completo del Visitante *</label>
+                            <input type="text" id="visitVisitorName" required placeholder="Ej: Msc. Roberto Viteri Zambrano" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                        </div>
+                        <div>
+                            <label class="block text-slate-300 mb-1 font-bold">Teléfono / WhatsApp del Visitante *</label>
+                            <input type="tel" id="visitVisitorPhone" required placeholder="Ej: 098 765 4321" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                        </div>
+                        <div>
+                            <label class="block text-slate-300 mb-1 font-bold">Cédula / RUC (Opcional para blindaje)</label>
+                            <input type="text" id="visitVisitorId" placeholder="Ej: 2200184920" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                        </div>
+                        <div>
+                            <label class="block text-slate-300 mb-1 font-bold">Tipo de Prospecto *</label>
+                            <select id="visitProspectType" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                                <option value="Comprador Potencial">Comprador Potencial</option>
+                                <option value="Inversionista">Inversionista</option>
+                                <option value="Arrendatario">Arrendatario</option>
+                                <option value="Postulante a Agente Comercial">Postulante a Agente Comercial</option>
+                                <option value="Cliente Interesado en Consignar">Cliente Interesado en Consignar</option>
+                                <option value="Consulta Técnica">Consulta Técnica / Otro</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. BIEN O ARTÍCULO LIGADO AL INTERÉS -->
+                <div class="bg-slate-900/80 p-3.5 rounded-2xl border border-slate-800 space-y-2.5">
+                    <span class="block text-[11px] font-extrabold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="fa-solid fa-building-wheat"></i> 3. Bien o Artículo Ligado al Interés del Cliente *
+                    </span>
+                    <div>
+                        <label class="block text-slate-300 mb-1 font-bold">Seleccionar Activo del Catálogo Oficial</label>
+                        <select id="visitLinkedAsset" onchange="handleLinkedAssetPreview(this.value)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                            <!-- Opciones generadas dinámicamente -->
+                        </select>
+                    </div>
+                    <div id="visitAssetPreviewBox" class="hidden p-3 rounded-xl bg-slate-950/80 border border-emerald-500/30 flex items-center gap-3">
+                        <img id="visitAssetThumb" src="" alt="" class="w-14 h-12 rounded-lg object-cover border border-slate-700 flex-shrink-0">
+                        <div class="min-w-0 flex-1">
+                            <div class="flex items-center gap-1.5">
+                                <span id="visitAssetCodeBadge" class="bg-sky-950 text-sky-400 border border-sky-500/30 text-[10px] px-1.5 py-0.2 rounded font-bold"></span>
+                                <span id="visitAssetPriceBadge" class="text-amber-400 font-extrabold text-xs"></span>
+                            </div>
+                            <h5 id="visitAssetTitleDisplay" class="text-xs font-bold text-white truncate"></h5>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. FECHA, HORA Y RESULTADO DE LA VISITA -->
+                <div class="bg-slate-900/80 p-3.5 rounded-2xl border border-slate-800 space-y-2.5">
+                    <span class="block text-[11px] font-extrabold text-indigo-400 uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="fa-solid fa-calendar-check"></i> 4. Fecha, Hora y Calificación de la Visita
+                    </span>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                        <div>
+                            <label class="block text-slate-300 mb-1 font-bold">Fecha de Visita</label>
+                            <input type="date" id="visitDate" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                        <div>
+                            <label class="block text-slate-300 mb-1 font-bold">Hora de Visita</label>
+                            <input type="time" id="visitTime" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                        <div>
+                            <label class="block text-slate-300 mb-1 font-bold">Resultado de la Visita</label>
+                            <select id="visitResult" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                <option value="Visita Favorable — Alto Interés">Visita Favorable — Alto Interés</option>
+                                <option value="Presentó Oferta / Negociación Abierta">Presentó Oferta / Negociación Abierta</option>
+                                <option value="Solicita Crédito BIESS / Bancario">Solicita Crédito BIESS / Bancario</option>
+                                <option value="Pendiente Segunda Visita Familiar">Pendiente Segunda Visita Familiar</option>
+                                <option value="Descartado — No cumple requerimiento">Descartado — No cumple requerimiento</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-slate-300 mb-1 font-bold">Observaciones / Acuerdos de la Visita</label>
+                        <textarea id="visitObservations" rows="2" placeholder="Detalle de la inspección, estado del inmueble, acuerdos de pago o inquietudes del prospecto..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+                    </div>
+                </div>
+
+                <!-- 5. FOTO DE RESPALDO DE LA VISITA (MÓVIL O PC) -->
+                <div class="bg-slate-900/80 p-3.5 rounded-2xl border border-slate-800 space-y-2.5">
+                    <span class="block text-[11px] font-extrabold text-rose-400 uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="fa-solid fa-camera"></i> 5. Fotografía de Respaldo de la Visita (Galería Móvil o Archivo PC)
+                    </span>
+                    <input type="file" id="visitPhotoInput" accept="image/*" class="hidden" onchange="handleVisitPhotoSelected(event)">
+                    <div id="visitPhotoPreview">
+                        <div onclick="document.getElementById('visitPhotoInput').click()" class="border-2 border-dashed border-slate-700 hover:border-emerald-500/60 rounded-2xl p-4 text-center cursor-pointer transition bg-slate-950/60">
+                            <i class="fa-solid fa-camera-retro text-2xl text-emerald-400 mb-1"></i>
+                            <span class="block font-bold text-white">Subir Foto de Respaldo</span>
+                            <span class="block text-[10px] text-slate-400">Toca para abrir la galería de tu teléfono, tomar foto con la cámara o seleccionar archivo desde la PC</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-2 flex justify-end gap-2.5">
+                    <button type="button" onclick="closeModal('visitReportModal')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 font-bold px-4 py-2.5 rounded-xl transition cursor-pointer">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-black px-6 py-2.5 rounded-xl shadow-lg transition flex items-center gap-2 cursor-pointer hover:scale-105 active:scale-95">
+                        <i class="fa-solid fa-floppy-disk"></i> Guardar y Registrar Visita
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL BITÁCORA CENTRAL DE VISITAS Y PROSPECTOS (SOLO ADMINISTRADOR PRINCIPAL) -->
+    <div id="visitsAdminModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-2 sm:p-5">
+        <div class="glass-panel w-full max-w-5xl rounded-3xl p-5 sm:p-6 max-h-[94vh] flex flex-col shadow-2xl border border-indigo-500/40">
+            <!-- HEADER -->
+            <div class="flex flex-wrap justify-between items-center gap-3 pb-3 border-b border-slate-800">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-2xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-xl border border-indigo-500/30">
+                        <i class="fa-solid fa-clipboard-list"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-sm sm:text-base font-black text-white flex items-center gap-2">
+                            <span>Bitácora Central de Visitas, Prospectos y Postulantes</span>
+                            <span class="text-[10px] bg-amber-500/20 border border-amber-400/40 text-amber-300 px-2 py-0.5 rounded-full font-bold">Control Maestro (A.A.I.L.)</span>
+                        </h3>
+                        <p class="text-[11px] text-slate-400">Información confidencial de captaciones y prospectos gestionada exclusivamente por Gerencia</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button type="button" onclick="exportVisitsToExcel()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold px-3 py-1.5 rounded-xl text-xs transition flex items-center gap-1.5 shadow cursor-pointer">
+                        <i class="fa-solid fa-file-excel"></i> Exportar Excel
+                    </button>
+                    <button type="button" onclick="closeModal('visitsAdminModal')" class="text-slate-400 hover:text-white transition w-8 h-8 rounded-full flex items-center justify-center bg-slate-900 border border-slate-800 cursor-pointer">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- FILTROS & ESTADÍSTICAS -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 my-3">
+                <div class="bg-slate-900/90 border border-slate-800 p-3 rounded-2xl">
+                    <span class="text-[10px] text-slate-400 block font-bold uppercase">Total Registros</span>
+                    <span id="statTotalVisits" class="text-base sm:text-lg font-black text-white">0</span>
+                </div>
+                <div class="bg-slate-900/90 border border-slate-800 p-3 rounded-2xl">
+                    <span class="text-[10px] text-amber-400 block font-bold uppercase">En Negociación</span>
+                    <span id="statNegVisits" class="text-base sm:text-lg font-black text-amber-400">0</span>
+                </div>
+                <div class="bg-slate-900/90 border border-slate-800 p-3 rounded-2xl">
+                    <span class="text-[10px] text-emerald-400 block font-bold uppercase">Cierres Exitosos</span>
+                    <span id="statClosedVisits" class="text-base sm:text-lg font-black text-emerald-400">0</span>
+                </div>
+                <div class="bg-slate-900/90 border border-slate-800 p-3 rounded-2xl">
+                    <span class="text-[10px] text-sky-400 block font-bold uppercase">Agentes Gestores</span>
+                    <span id="statAgentsCount" class="text-base sm:text-lg font-black text-sky-400">0</span>
+                </div>
+            </div>
+
+            <!-- BARRA DE BÚSQUEDA Y FILTRADO -->
+            <div class="flex flex-wrap items-center gap-2 mb-3">
+                <div class="flex-1 min-w-[200px] relative">
+                    <input type="text" id="adminVisitsSearch" onkeyup="renderVisitsAdminTable()" placeholder="Buscar por cliente, cédula, agente o activo..." class="w-full pl-9 pr-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+                </div>
+                <select id="adminVisitsStatusFilter" onchange="renderVisitsAdminTable()" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <option value="ALL">Todos los Estados</option>
+                    <option value="REGISTRADO">Registrado</option>
+                    <option value="EN_SEGUIMIENTO">En Seguimiento</option>
+                    <option value="NEGOCIACIÓN_ABIERTA">Negociación Abierta</option>
+                    <option value="CIERRE_EXITOSO">Cierre Exitoso / Venta</option>
+                    <option value="DESCARTE">Descartado</option>
+                </select>
+                <button type="button" onclick="openVisitReportModal()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-3 py-2 rounded-xl text-xs transition flex items-center gap-1.5 shadow cursor-pointer">
+                    <i class="fa-solid fa-plus"></i> + Registrar Visita
+                </button>
+            </div>
+
+            <!-- CONTENIDO DE LA TABLA / TARJETAS -->
+            <div id="adminVisitsListContainer" class="flex-1 overflow-y-auto space-y-3 pr-1 modal-scroll">
+                <!-- Se inyecta dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PREVIEW DE FOTO DE RESPALDO -->
+    <div id="visitPhotoPreviewModal" class="fixed inset-0 bg-slate-950/95 backdrop-blur-md z-50 hidden flex items-center justify-center p-4" onclick="closeModal('visitPhotoPreviewModal')">
+        <div class="relative max-w-3xl max-h-[90vh] flex flex-col items-center" onclick="event.stopPropagation()">
+            <img id="visitPhotoFullImg" src="" alt="Respaldo de Visita" class="max-w-full max-h-[82vh] rounded-2xl object-contain border border-slate-700 shadow-2xl">
+            <div class="mt-3 flex items-center justify-between w-full text-xs text-slate-300 px-2">
+                <span id="visitPhotoCaption" class="font-bold"></span>
+                <button type="button" onclick="closeModal('visitPhotoPreviewModal')" class="bg-slate-900 hover:bg-slate-800 text-white px-4 py-1.5 rounded-xl border border-slate-700 cursor-pointer">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+
     <div id="imagePreviewModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 md:p-6" onclick="closeModal('imagePreviewModal')">
         <div class="relative max-w-2xl w-full p-2 flex flex-col items-center" onclick="event.stopPropagation()">
             <button onclick="closeModal('imagePreviewModal')" class="absolute -top-3 -right-3 bg-slate-900 text-white hover:text-rose-400 w-9 h-9 rounded-full flex items-center justify-center shadow-2xl border border-slate-700 text-base z-10 transition cursor-pointer">
@@ -1873,6 +2145,53 @@
         let appSpecialSection = { ...DEFAULT_SPECIAL_SECTION, ...(JSON.parse(localStorage.getItem('alianza_special') || '{}')) };
         let sponsorsList = JSON.parse(localStorage.getItem('alianza_sponsors') || '[]');
         let alliesList = JSON.parse(localStorage.getItem('alianza_allies') || JSON.stringify(DEFAULT_ALLIES));
+        const DEFAULT_VISITS = [
+            {
+                id: "visit_1730000001",
+                createdAt: "2026-11-02T10:30:00Z",
+                agentName: "Ing. Carlos Mendoza",
+                agentPhone: "099 216 0967",
+                visitorName: "Msc. Roberto Viteri Zambrano",
+                visitorPhone: "098 765 4321",
+                visitorId: "2200184920",
+                prospectType: "Comprador Potencial",
+                linkedAssetId: "re_1",
+                linkedAssetCode: "RE-001",
+                linkedAssetTitle: "Casa Residencial 2 Plantas en Sector Concesión Petrolera",
+                linkedAssetPrice: "$125,000 USD",
+                visitDate: "2026-11-02",
+                visitTime: "10:30",
+                visitResult: "Visita Favorable — Alto Interés",
+                observations: "Cliente inspeccionó linderos e instalaciones eléctricas. Interesado en presentar promesa de compraventa con crédito hipotecario BIESS.",
+                backupPhoto: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80",
+                adminStatus: "EN_SEGUIMIENTO",
+                adminNotes: "Coordinar verificación de certificado de gravámenes en el Registro de la Propiedad."
+            },
+            {
+                id: "visit_1730000002",
+                createdAt: "2026-11-02T15:45:00Z",
+                agentName: "Lic. Andrea Morales",
+                agentPhone: "097 922 2328",
+                visitorName: "Ing. Marco Aurelio Guamán",
+                visitorPhone: "096 112 3344",
+                visitorId: "1718293041",
+                prospectType: "Inversionista",
+                linkedAssetId: "vh_1",
+                linkedAssetCode: "VH-001",
+                linkedAssetTitle: "Camioneta Toyota Hilux 4x4 Doble Cabina Diésel",
+                linkedAssetPrice: "$34,500 USD",
+                visitDate: "2026-11-02",
+                visitTime: "15:45",
+                visitResult: "Presentó Oferta / Negociación Abierta",
+                observations: "Revisión mecánica con técnico de confianza. Oferta en firme de $33,000 USD de contado. Espera respuesta del propietario.",
+                backupPhoto: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80",
+                adminStatus: "NEGOCIACIÓN_ABIERTA",
+                adminNotes: "Consultar con el propietario si acepta contraoferta de $33,500 con traspaso notarial."
+            }
+        ];
+
+        let visitsList = JSON.parse(localStorage.getItem('alianza_visits') || JSON.stringify(DEFAULT_VISITS));
+        let stagedVisitPhotoB64 = '';
 
         let activeCategory = 'ALL';
         let carouselIndex = 0;
@@ -1929,48 +2248,9 @@
             });
         }
 
-        function clearSearchInput() {
-            const searchInput = document.getElementById('searchInput');
-            if (searchInput) {
-                searchInput.value = '';
-            }
-            const btnClear = document.getElementById('btnClearSearch');
-            if (btnClear) btnClear.classList.add('hidden');
-            filterItems();
-        }
-
-        function handleSearchInput(e) {
-            const searchInput = document.getElementById('searchInput');
-            if (searchInput && (searchInput.value.includes('@') || searchInput.value.toLowerCase().includes('alianzaestrategica'))) {
-                searchInput.value = '';
-            }
-            const btnClear = document.getElementById('btnClearSearch');
-            if (btnClear) {
-                if (searchInput && searchInput.value.trim().length > 0) {
-                    btnClear.classList.remove('hidden');
-                } else {
-                    btnClear.classList.add('hidden');
-                }
-            }
-            filterItems();
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. Asegurar que el cuadro de búsqueda esté totalmente VACÍO por defecto
-            clearSearchInput();
-            [50, 150, 300, 600, 1200].forEach(delay => setTimeout(clearSearchInput, delay));
-
-            const sInput = document.getElementById('searchInput');
-            if (sInput) {
-                ['change', 'input', 'animationstart', 'focus'].forEach(evt => {
-                    sInput.addEventListener(evt, () => {
-                        if (sInput.value.includes('@') || sInput.value.toLowerCase().includes('alianzaestrategica')) {
-                            sInput.value = '';
-                            filterItems();
-                        }
-                    });
-                });
-            }
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) searchInput.value = '';
 
             initCloudSync();
             renderAppUI();
@@ -1983,13 +2263,6 @@
 
             const yearEl = document.getElementById('copyrightYear');
             if (yearEl) yearEl.innerText = new Date().getFullYear();
-        });
-
-        window.addEventListener('load', () => {
-            clearSearchInput();
-        });
-        window.addEventListener('pageshow', () => {
-            clearSearchInput();
         });
 
         function initCloudSync() {
@@ -2174,17 +2447,22 @@
             const quickAddNavBtn = document.getElementById('quickAddNavBtn');
             const financeNavBtn = document.getElementById('financeNavBtn');
             const agentGroupNavBtn = document.getElementById('agentGroupNavBtn');
+            const agentApplyNavBtn = document.getElementById('agentApplyNavBtn');
+            const agentProfileNavBtn = document.getElementById('agentProfileNavBtn');
+            const topShareBtn = document.getElementById('topShareBtn');
             const virtualAssistantWidget = document.getElementById('virtualAssistantWidget');
             const heroMsgBtn = document.getElementById('heroMsgBtn');
             const btnContactAgentes = document.getElementById('btnContactAgentes');
+            const btnConsignar = document.getElementById('btnConsignar');
+            const btnInfoMenu = document.getElementById('btnInfoMenu');
+            const btnHeroShareDots = document.getElementById('btnHeroShareDots');
+            const heroActionButtons = document.getElementById('heroActionButtons');
+            const agentHeroActions = document.getElementById('agentHeroActions');
             const lawyerCardSection = document.getElementById('lawyerCardSection');
             const tabFbSponsors = document.getElementById('tabFbSponsors');
-            const btnConsignar = document.getElementById('btnConsignar');
-            const agentApplyNavBtn = document.getElementById('agentApplyNavBtn');
-            const topAssistantNavBtn = document.getElementById('topAssistantNavBtn');
-            const modalPostularBtn = document.getElementById('modalPostularBtn');
 
             document.querySelectorAll('.admin-only').forEach(el => el.classList.add('hidden'));
+            updateVisitsBadges();
 
             if (currentRole === 'ADMIN') {
                 if (roleBadgeText) roleBadgeText.innerText = "Modo Administrador";
@@ -2198,29 +2476,30 @@
                 if (quickAddNavBtn) quickAddNavBtn.classList.remove('hidden');
                 if (financeNavBtn) financeNavBtn.classList.remove('hidden');
                 if (agentGroupNavBtn) agentGroupNavBtn.classList.add('hidden');
+                if (agentApplyNavBtn) agentApplyNavBtn.classList.add('hidden');
+                if (agentProfileNavBtn) agentProfileNavBtn.classList.add('hidden');
+                if (topShareBtn) topShareBtn.classList.remove('hidden');
                 
-                // En modo Administrador: Quitar botón amarillo (Vender Activo), WhatsApp, Mensaje SOFÍA y Asistente Virtual
-                if (btnConsignar) btnConsignar.classList.add('hidden');
+                // Botones Hero en Admin
+                if (heroActionButtons) heroActionButtons.classList.remove('hidden');
+                if (agentHeroActions) agentHeroActions.classList.add('hidden');
                 if (btnContactAgentes) btnContactAgentes.classList.add('hidden');
                 if (heroMsgBtn) heroMsgBtn.classList.add('hidden');
+                if (btnConsignar) btnConsignar.classList.add('hidden');
+                if (btnInfoMenu) btnInfoMenu.classList.remove('hidden');
+                if (btnHeroShareDots) btnHeroShareDots.classList.remove('hidden');
                 if (virtualAssistantWidget) virtualAssistantWidget.classList.add('hidden');
-                if (agentApplyNavBtn) agentApplyNavBtn.classList.add('hidden');
-                if (topAssistantNavBtn) topAssistantNavBtn.classList.add('hidden');
-                if (modalPostularBtn) modalPostularBtn.classList.add('hidden');
 
                 if (lawyerCardSection) lawyerCardSection.classList.remove('hidden');
                 if (tabFbSponsors) tabFbSponsors.classList.remove('hidden');
                 document.querySelectorAll('.admin-only').forEach(el => el.classList.remove('hidden'));
+
             } else if (currentRole === 'AGENT') {
                 if (roleBadgeText) roleBadgeText.innerText = "Modo Agente Comercial";
                 if (adminBanner) adminBanner.classList.add('hidden');
                 if (agentBanner) agentBanner.classList.remove('hidden');
                 
-                // En modo AGENTE COMERCIAL:
-                // 1. ELIMINAR (GRUPO WA AGENTE)
-                if (agentGroupNavBtn) agentGroupNavBtn.classList.add('hidden');
-
-                // 2. MOSTRAR "SALIR" AL LADO DE "AGENTE ACTIVO"
+                // Sesión y navegación en MODO AGENTE
                 if (logoutNavBtn) {
                     logoutNavBtn.classList.remove('hidden');
                     logoutNavBtn.innerHTML = '<i class="fa-solid fa-power-off"></i> Cerrar Sesión';
@@ -2230,27 +2509,33 @@
                     loginNavBtn.innerHTML = '<i class="fa-solid fa-user-tie text-amber-300"></i> Agente Activo';
                 }
 
-                // 3. HACER VISIBLE (SUBIR FICHA TÉCNICA DE CAPTACIÓN NUEVA) Y OCULTAR BOTÓN AMARILLO (VENDER ACTIVO)
-                if (quickAddNavBtn) {
-                    quickAddNavBtn.classList.remove('hidden');
-                    quickAddNavBtn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> + Ficha Técnica';
-                }
-                if (btnConsignar) btnConsignar.classList.add('hidden');
+                // 1. ELIMINAR BOTONES NO ÚTILES PARA EL AGENTE
+                if (agentApplyNavBtn) agentApplyNavBtn.classList.add('hidden');     // Postular agente
+                if (agentProfileNavBtn) agentProfileNavBtn.classList.add('hidden'); // Perfil agentes
+                if (topShareBtn) topShareBtn.classList.add('hidden');               // Compartir superior
+                if (agentGroupNavBtn) agentGroupNavBtn.classList.add('hidden');     // Grupo WA Agente
+                if (quickAddNavBtn) quickAddNavBtn.classList.add('hidden');         // Botón genérico nav
+                if (financeNavBtn) financeNavBtn.classList.add('hidden');           // Matriz financiera
 
-                // 4 & 6. ELIMINAR (QUITAR PATROCINADORES) Y (ESPACIO PUBLICITARIOPATROCINADORES)
+                // 2. EN EL HERO: OCULTAR VENDER ACTIVO, MENÚ, TRES PUNTITOS Y CONTACTO
+                if (heroActionButtons) heroActionButtons.classList.add('hidden');
+                if (btnConsignar) btnConsignar.classList.add('hidden');             // Vender activo
+                if (btnInfoMenu) btnInfoMenu.classList.add('hidden');               // Menú
+                if (btnHeroShareDots) btnHeroShareDots.classList.add('hidden');     // Tres puntitos
+                if (btnContactAgentes) btnContactAgentes.classList.add('hidden');   // Contacto
+                if (heroMsgBtn) heroMsgBtn.classList.add('hidden');                 // Mensaje Sofía
+
+                // 3. EN SU LUGAR, ACTIVAR LOS DOS BOTONES CLAVE DEL AGENTE:
+                // "+ Agregar Ficha Técnica" y "📋 Registro de Visitas y Postulantes"
+                if (agentHeroActions) agentHeroActions.classList.remove('hidden');
+
+                // 4. ELIMINAR PATROCINADORES Y AGENTE VIRTUAL
                 if (lawyerCardSection) lawyerCardSection.classList.add('hidden');
                 if (tabFbSponsors) tabFbSponsors.classList.add('hidden');
-
-                // 5. ELIMINAR (ASISTENTE IA SOFÍA) Y (POSTULAR AGENTE)
                 if (virtualAssistantWidget) virtualAssistantWidget.classList.add('hidden');
-                if (heroMsgBtn) heroMsgBtn.classList.add('hidden');
-                if (topAssistantNavBtn) topAssistantNavBtn.classList.add('hidden');
-                if (agentApplyNavBtn) agentApplyNavBtn.classList.add('hidden');
-                if (modalPostularBtn) modalPostularBtn.classList.add('hidden');
-                if (btnContactAgentes) btnContactAgentes.classList.add('hidden');
 
-                if (financeNavBtn) financeNavBtn.classList.add('hidden');
             } else {
+                // MODO PÚBLICO
                 if (roleBadgeText) roleBadgeText.innerText = "Modo Público";
                 if (adminBanner) adminBanner.classList.add('hidden');
                 if (agentBanner) agentBanner.classList.add('hidden');
@@ -2262,16 +2547,23 @@
                 if (quickAddNavBtn) quickAddNavBtn.classList.add('hidden');
                 if (financeNavBtn) financeNavBtn.classList.add('hidden');
                 if (agentGroupNavBtn) agentGroupNavBtn.classList.add('hidden');
-                if (virtualAssistantWidget) virtualAssistantWidget.classList.remove('hidden');
-                if (heroMsgBtn) heroMsgBtn.classList.remove('hidden');
-                if (topAssistantNavBtn) topAssistantNavBtn.classList.remove('hidden');
                 if (agentApplyNavBtn) agentApplyNavBtn.classList.remove('hidden');
-                if (modalPostularBtn) modalPostularBtn.classList.remove('hidden');
-                if (btnContactAgentes) btnContactAgentes.classList.add('hidden');
+                if (agentProfileNavBtn) agentProfileNavBtn.classList.remove('hidden');
+                if (topShareBtn) topShareBtn.classList.remove('hidden');
+
+                // Hero en Modo Público
+                if (heroActionButtons) heroActionButtons.classList.remove('hidden');
+                if (agentHeroActions) agentHeroActions.classList.add('hidden');
+                if (btnContactAgentes) btnContactAgentes.classList.remove('hidden');
+                if (btnConsignar) btnConsignar.classList.remove('hidden');
+                if (btnInfoMenu) btnInfoMenu.classList.remove('hidden');
+                if (btnHeroShareDots) btnHeroShareDots.classList.remove('hidden');
+                if (heroMsgBtn) heroMsgBtn.classList.add('hidden');
+
+                // Sofía y Patrocinadores en Público
+                if (virtualAssistantWidget) virtualAssistantWidget.classList.remove('hidden');
                 if (lawyerCardSection) lawyerCardSection.classList.remove('hidden');
                 if (tabFbSponsors) tabFbSponsors.classList.remove('hidden');
-                // En Modo Público: El botón amarillo (Vender Activo) es visible
-                if (btnConsignar) btnConsignar.classList.remove('hidden');
             }
             renderSpecialSectionUI();
         }
@@ -2758,7 +3050,7 @@
             document.getElementById('previewThumbsContainer').innerHTML = '';
             stagedImages = [];
             document.getElementById('prodIsFeatured').checked = true;
-            document.getElementById('productModalTitle').innerText = (currentRole === 'AGENT') ? 'Subir Ficha Técnica de Captación Nueva' : 'Registrar Nueva Captación';
+            document.getElementById('productModalTitle').innerText = 'Registrar Nueva Captación';
             toggleCategoryFields();
             openModal('productModal');
         }
@@ -2943,35 +3235,16 @@
         }
 
         function filterItems() {
-            const searchEl = document.getElementById('searchInput');
-            if (searchEl && (searchEl.value.includes('@') || searchEl.value.toLowerCase().includes('alianzaestrategica'))) {
-                searchEl.value = '';
-                const btnClear = document.getElementById('btnClearSearch');
-                if (btnClear) btnClear.classList.add('hidden');
-            }
-
-            const query = (searchEl?.value || '').toLowerCase().trim();
-            const btnClear = document.getElementById('btnClearSearch');
-            if (btnClear) {
-                if (query.length > 0) btnClear.classList.remove('hidden');
-                else btnClear.classList.add('hidden');
-            }
-
+            const query = (document.getElementById('searchInput')?.value || '').toLowerCase().trim();
             const filtered = inventory.filter(item => {
                 const isVendido = item.status === 'VENDIDO' || item.status === 'SOLD';
                 if (activeCategory === 'SOLD') return isVendido;
                 if (isVendido && activeCategory !== 'ALL') return false;
 
                 const matchesCat = (activeCategory === 'ALL') || (item.category === activeCategory);
-                if (!query) return matchesCat;
-
                 const matchesQuery = (item.title || '').toLowerCase().includes(query) ||
                                      (item.code || '').toLowerCase().includes(query) ||
-                                     (item.location || '').toLowerCase().includes(query) ||
-                                     (item.sector || '').toLowerCase().includes(query) ||
-                                     (item.ciudad || '').toLowerCase().includes(query) ||
-                                     (item.categoryType || '').toLowerCase().includes(query) ||
-                                     (item.agentName || '').toLowerCase().includes(query);
+                                     (item.location || '').toLowerCase().includes(query);
                 return matchesCat && matchesQuery;
             });
             renderGrid(filtered);
@@ -3057,17 +3330,70 @@
                 <img src="${imgUrl}" onclick="document.getElementById('detMainImg').src='${imgUrl}'" class="w-16 h-12 object-cover rounded-xl border border-slate-700 cursor-pointer hover:opacity-80 transition flex-shrink-0">
             `).join('');
 
+            const agentCommBox = document.getElementById('agentDirectCommissionBox');
+            const agentCommVal = document.getElementById('agentDirectCommissionValue');
             const privateSec = document.getElementById('detPrivateSection');
-            if (currentRole === 'ADMIN' || currentRole === 'AGENT') {
+
+            if (currentRole === 'ADMIN') {
                 privateSec.classList.remove('hidden');
+                if (agentCommBox) agentCommBox.classList.add('hidden');
+                const detAssetVisitsBox = document.getElementById('detAssetVisitsBox');
+                if (detAssetVisitsBox) {
+                    detAssetVisitsBox.classList.remove('hidden');
+                    const assetVisits = visitsList.filter(v => v.linkedAssetId === item.id || v.linkedAssetCode === item.code);
+                    const countEl = document.getElementById('detAssetVisitsCount');
+                    if (countEl) countEl.innerText = assetVisits.length;
+                    const listEl = document.getElementById('detAssetVisitsList');
+                    if (listEl) {
+                        if (assetVisits.length === 0) {
+                            listEl.innerHTML = '<p class="text-[11px] text-slate-500 italic">No hay visitas registradas para este activo aún.</p>';
+                        } else {
+                            listEl.innerHTML = assetVisits.map(av => `
+                                <div class="bg-slate-900/80 p-2 rounded-xl border border-slate-800 text-[11px] flex items-center justify-between gap-2">
+                                    <div>
+                                        <span class="text-white font-bold">${escapeHtml(av.visitorName)}</span>
+                                        <span class="text-slate-400">(${av.visitDate}) - Agente: ${escapeHtml(av.agentName)}</span>
+                                    </div>
+                                    <span class="text-[10px] bg-slate-800 text-amber-300 px-2 py-0.5 rounded font-bold">${av.adminStatus || 'REGISTRADO'}</span>
+                                </div>
+                            `).join('');
+                        }
+                    }
+                }
                 document.getElementById('detPrivateOwner').innerText = item.ownerName || '-';
                 document.getElementById('detPrivateOwnerPhone').innerText = item.ownerPhone || '-';
                 document.getElementById('detPrivateDocPhone').innerText = item.ownerDoc || '-';
                 document.getElementById('detPrivateAgent').innerText = item.agentName || '-';
                 document.getElementById('detPrivateAgentPhone').innerText = item.agentPhone || '-';
-                document.getElementById('detPrivateComision').innerText = item.comisionStr || '-';
+                const totalCommAdmin = item.commissionPactada || 0;
+                document.getElementById('detPrivateComision').innerText = `Captador (25%): $${(totalCommAdmin * 0.25).toFixed(2)} | Vendedor (25%): $${(totalCommAdmin * 0.25).toFixed(2)} | Mismo Agente Vende (50%): $${(totalCommAdmin * 0.50).toFixed(2)}`;
+            } else if (currentRole === 'AGENT') {
+                privateSec.classList.remove('hidden');
+                if (agentCommBox) agentCommBox.classList.remove('hidden');
+                const totalCommAgent = item.commissionPactada || 0;
+                if (agentCommVal) {
+                    agentCommVal.innerText = `$${(totalCommAgent * 0.50).toFixed(2)} USD (Al cerrar la venta) o $${(totalCommAgent * 0.25).toFixed(2)} USD (Por captación)`;
+                }
+                const detAssetVisitsBox = document.getElementById('detAssetVisitsBox');
+                if (detAssetVisitsBox) {
+                    detAssetVisitsBox.classList.remove('hidden');
+                    const assetVisits = visitsList.filter(v => v.linkedAssetId === item.id || v.linkedAssetCode === item.code);
+                    const countEl = document.getElementById('detAssetVisitsCount');
+                    if (countEl) countEl.innerText = assetVisits.length;
+                    const listEl = document.getElementById('detAssetVisitsList');
+                    if (listEl) {
+                        listEl.innerHTML = '<p class="text-[11px] text-sky-300 italic"><i class="fa-solid fa-lock mr-1"></i> Información personal de contactos, propietarios y nombres de visitantes restringida en Modo Agente. Solo se visualiza el contador total de visitas.</p>';
+                    }
+                }
+                document.getElementById('detPrivateOwner').innerText = '[CONFIDENCIAL - RESTRINGIDO A ADMINISTRACIÓN]';
+                document.getElementById('detPrivateOwnerPhone').innerText = '[CONFIDENCIAL]';
+                document.getElementById('detPrivateDocPhone').innerText = '[CONFIDENCIAL]';
+                document.getElementById('detPrivateAgent').innerText = item.agentName || '-';
+                document.getElementById('detPrivateAgentPhone').innerText = item.agentPhone || '-';
+                document.getElementById('detPrivateComision').innerText = `Captador (25%): $${(totalCommAgent * 0.25).toFixed(2)} | Vendedor (25%): $${(totalCommAgent * 0.25).toFixed(2)} | Si mismo agente vende (50% = 100% parte agente): $${(totalCommAgent * 0.50).toFixed(2)}`;
             } else {
                 privateSec.classList.add('hidden');
+                if (agentCommBox) agentCommBox.classList.add('hidden');
             }
 
             const waMsg = encodeURIComponent(`Hola ALIANZA ESTRATÉGICA S.A.S., deseo información y agendar cita para el activo Código: ${item.code} (${item.title})`);
@@ -3120,31 +3446,454 @@ ALIANZA ESTRATÉGICA S.A.S.`;
             if (items[carouselIndex]) openDetailModal(items[carouselIndex].id);
         }
 
-        function toggleChatWindow() {
-            document.getElementById('chatBoxWindow').classList.toggle('hidden');
+                function toggleChatWindow() {
+            openAssistantModal();
         }
         function handleChatKeyPress(e) {
-            if (e.key === 'Enter') sendChatMessage();
+            if (e.key === 'Enter') sendGeminiMessage();
         }
         function sendChatMessage() {
-            const input = document.getElementById('chatUserInput');
-            const txt = input.value.trim();
-            if (!txt) return;
-            const messages = document.getElementById('chatMessages');
-            messages.innerHTML += `<div class="bg-sky-600 text-white p-3 rounded-2xl text-right ml-8 shadow">${escapeHtml(txt)}</div>`;
-            input.value = '';
-            messages.scrollTop = messages.scrollHeight;
+            sendGeminiMessage();
+        }
+        
+        // ==========================================
+        // GESTIÓN DE VISITAS Y PROSPECTOS COMERCIALES
+        // ==========================================
+        function updateVisitsBadges() {
+            const count = visitsList.length;
+            const badgeAdmin = document.getElementById('adminVisitsCount');
+            if (badgeAdmin) badgeAdmin.innerText = count;
+            const statTotal = document.getElementById('statTotalVisits');
+            if (statTotal) statTotal.innerText = count;
+            const statNeg = document.getElementById('statNegVisits');
+            if (statNeg) statNeg.innerText = visitsList.filter(v => v.adminStatus === 'NEGOCIACIÓN_ABIERTA' || (v.visitResult && v.visitResult.includes('Oferta'))).length;
+            const statClosed = document.getElementById('statClosedVisits');
+            if (statClosed) statClosed.innerText = visitsList.filter(v => v.adminStatus === 'CIERRE_EXITOSO').length;
+            const statAgents = document.getElementById('statAgentsCount');
+            if (statAgents) {
+                const uniqueAgents = new Set(visitsList.map(v => (v.agentName || '').trim().toLowerCase()).filter(Boolean));
+                statAgents.innerText = uniqueAgents.size;
+            }
+        }
 
-            setTimeout(() => {
-                const waUrl = `https://wa.me/${OFFICIAL_WA_CLEAN}?text=${encodeURIComponent('Consulta Sofía: ' + txt)}`;
-                messages.innerHTML += `
-                    <div class="bg-slate-900 border border-slate-800 text-slate-300 p-3 rounded-2xl shadow leading-relaxed">
-                        ¡Gracias por comunicarte! Para atención personalizada y coordinar visitas, pulsa el botón directo:
-                        <div class="mt-2"><a href="${waUrl}" target="_blank" class="inline-block bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-3 py-1.5 rounded-xl text-xs shadow"><i class="fa-brands fa-whatsapp mr-1"></i> WhatsApp Oficial (095 919 0794)</a></div>
+        function populateLinkedAssetDropdown(preselectedId) {
+            const select = document.getElementById('visitLinkedAsset');
+            if (!select) return;
+            const selId = preselectedId || '';
+            let options = '<option value="">-- Seleccionar Bien o Activo de Interés --</option>';
+            options += '<option value="general">📌 Interés General / Múltiples Bienes</option>';
+            inventory.forEach(item => {
+                const price = item.realSalePrice ? ('$' + Number(item.realSalePrice).toLocaleString('en-US') + ' USD') : (item.priceStr || '');
+                const sel = (item.id === selId) ? 'selected' : '';
+                options += '<option value="' + item.id + '" ' + sel + '>[' + (item.code || 'ACT') + '] ' + escapeHtml(item.title || 'Activo') + ' (' + price + ')</option>';
+            });
+            select.innerHTML = options;
+            handleLinkedAssetPreview(selId || select.value);
+        }
+
+        function handleLinkedAssetPreview(assetId) {
+            const box = document.getElementById('visitAssetPreviewBox');
+            if (!box) return;
+            if (!assetId || assetId === 'general') {
+                box.classList.add('hidden');
+                return;
+            }
+            const item = inventory.find(i => i.id === assetId);
+            if (!item) {
+                box.classList.add('hidden');
+                return;
+            }
+            box.classList.remove('hidden');
+            const thumb = document.getElementById('visitAssetThumb');
+            if (thumb) thumb.src = (item.images && item.images.length > 0) ? item.images[0] : '';
+            const codeBadge = document.getElementById('visitAssetCodeBadge');
+            if (codeBadge) codeBadge.innerText = item.code || '';
+            const priceBadge = document.getElementById('visitAssetPriceBadge');
+            if (priceBadge) priceBadge.innerText = item.realSalePrice ? ('$' + Number(item.realSalePrice).toLocaleString('en-US') + ' USD') : (item.priceStr || '');
+            const titleDisplay = document.getElementById('visitAssetTitleDisplay');
+            if (titleDisplay) titleDisplay.innerText = item.title || '';
+        }
+
+        function openVisitReportModal(preselectedAssetId) {
+            if (currentRole === 'GUEST') {
+                openModal('loginModal');
+                return;
+            }
+            const form = document.getElementById('visitReportForm');
+            if (form) form.reset();
+
+            const now = new Date();
+            const dateStr = now.toISOString().split('T')[0];
+            const timeStr = now.toTimeString().split(' ')[0].substring(0, 5);
+            const dateInput = document.getElementById('visitDate');
+            if (dateInput) dateInput.value = dateStr;
+            const timeInput = document.getElementById('visitTime');
+            if (timeInput) timeInput.value = timeStr;
+
+            const agentNameInput = document.getElementById('visitAgentName');
+            if (agentNameInput && !agentNameInput.value) {
+                agentNameInput.value = (currentRole === 'ADMIN') ? 'A.A.I.L. (Administrador Líder)' : (localStorage.getItem('alianza_last_agent_name') || 'Agente Comercial Autorizado');
+            }
+            const agentPhoneInput = document.getElementById('visitAgentPhone');
+            if (agentPhoneInput && !agentPhoneInput.value) {
+                agentPhoneInput.value = localStorage.getItem('alianza_last_agent_phone') || OFFICIAL_WA_NUMBER;
+            }
+
+            populateLinkedAssetDropdown(preselectedAssetId || '');
+            removeVisitPhoto();
+            openModal('visitReportModal');
+        }
+
+        async function handleVisitPhotoSelected(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            try {
+                showToast('Procesando fotografía de respaldo...', 'info');
+                const b64 = await compressSmartImage(file, 900, 0.78);
+                if (b64) {
+                    stagedVisitPhotoB64 = b64;
+                    const preview = document.getElementById('visitPhotoPreview');
+                    preview.innerHTML = '<div class="relative w-full h-40 rounded-2xl overflow-hidden border border-emerald-500/50 shadow-inner group bg-slate-950"><img src="' + b64 + '" class="w-full h-full object-cover"><button type="button" onclick="removeVisitPhoto()" class="absolute top-2 right-2 bg-rose-600/90 hover:bg-rose-600 text-white text-xs w-7 h-7 rounded-full flex items-center justify-center transition shadow cursor-pointer" title="Quitar foto">✕</button><span class="absolute bottom-2 left-2 bg-slate-950/80 backdrop-blur-md text-[10px] text-emerald-400 font-bold px-2 py-0.5 rounded-md border border-emerald-500/30"><i class="fa-solid fa-circle-check text-emerald-400 mr-1"></i> Respaldo fotográfico cargado</span></div>';
+                    showToast('Fotografía de respaldo adjuntada correctamente', 'success');
+                }
+            } catch (err) {
+                console.error(err);
+                showToast('Error al procesar la imagen', 'error');
+            }
+        }
+
+        function triggerVisitPhotoUpload() {
+            const input = document.getElementById('visitPhotoInput');
+            if (input) input.click();
+        }
+
+        function removeVisitPhoto() {
+            stagedVisitPhotoB64 = '';
+            const input = document.getElementById('visitPhotoInput');
+            if (input) input.value = '';
+            const preview = document.getElementById('visitPhotoPreview');
+            if (preview) {
+                preview.innerHTML = `<div onclick="triggerVisitPhotoUpload()" class="border-2 border-dashed border-slate-700 hover:border-emerald-500/60 rounded-2xl p-4 text-center cursor-pointer transition bg-slate-950/60"><i class="fa-solid fa-camera-retro text-2xl text-emerald-400 mb-1"></i><span class="block font-bold text-white text-xs">Subir Foto de Respaldo</span><span class="block text-[10px] text-slate-400">Toca para abrir la galería de tu teléfono, tomar foto con la cámara o seleccionar archivo desde la PC</span></div>`;
+            }
+        }
+
+        function handleSaveVisit(event) {
+            event.preventDefault();
+            if (currentRole !== 'ADMIN' && currentRole !== 'AGENT') {
+                showToast('Acceso restringido: Inicie sesión para registrar visitas', 'error');
+                return;
+            }
+
+            const agentName = getVal('visitAgentName');
+            const agentPhone = getVal('visitAgentPhone');
+            const visitorName = getVal('visitVisitorName');
+            const visitorPhone = getVal('visitVisitorPhone');
+            const visitorId = getVal('visitVisitorId') || '-';
+            const prospectType = getVal('visitProspectType') || 'Comprador Potencial';
+            const linkedAssetId = getVal('visitLinkedAsset') || 'general';
+            const visitDate = getVal('visitDate') || new Date().toISOString().split('T')[0];
+            const visitTime = getVal('visitTime') || new Date().toTimeString().split(' ')[0].substring(0, 5);
+            const visitResult = getVal('visitResult') || 'Visita Favorable — Alto Interés';
+            const observations = getVal('visitObservations') || 'Visita coordinada con el cliente.';
+
+            if (!agentName) {
+                showToast('Debe ingresar el nombre del agente gestor', 'error');
+                return;
+            }
+            if (!visitorName) {
+                showToast('Debe ingresar el nombre del visitante o prospecto', 'error');
+                return;
+            }
+            if (!visitorPhone) {
+                showToast('Debe ingresar el número de teléfono del visitante', 'error');
+                return;
+            }
+
+            localStorage.setItem('alianza_last_agent_name', agentName);
+            localStorage.setItem('alianza_last_agent_phone', agentPhone);
+
+            let linkedItem = null;
+            if (linkedAssetId && linkedAssetId !== 'general') {
+                linkedItem = inventory.find(i => i.id === linkedAssetId);
+            }
+
+            const newVisit = {
+                id: 'visit_' + Date.now(),
+                createdAt: new Date().toISOString(),
+                agentName,
+                agentPhone,
+                visitorName,
+                visitorPhone,
+                visitorId,
+                prospectType,
+                linkedAssetId,
+                linkedAssetCode: linkedItem ? (linkedItem.code || 'ACT') : 'GENERAL',
+                linkedAssetTitle: linkedItem ? linkedItem.title : 'Interés General / Consulta Múltiple',
+                linkedAssetPrice: linkedItem ? (linkedItem.realSalePrice || linkedItem.priceStr) : '-',
+                visitDate,
+                visitTime,
+                visitResult,
+                observations,
+                backupPhoto: stagedVisitPhotoB64 || '',
+                adminStatus: 'REGISTRADO',
+                adminNotes: ''
+            };
+
+            visitsList.unshift(newVisit);
+            localStorage.setItem('alianza_visits', JSON.stringify(visitsList));
+            saveVisitsToCloud();
+            updateVisitsBadges();
+
+            showToast('¡Visita registrada exitosamente en la bitácora!', 'success');
+            closeModal('visitReportModal');
+
+            const itemText = linkedItem ? ('*Bien Interesado:* [' + linkedItem.code + '] ' + linkedItem.title + ' ($' + (linkedItem.realSalePrice || linkedItem.priceStr) + ')') : '*Interés:* General / Múltiples activos';
+            const waBody = [
+                '📋 *REPORTE DE VISITA COMERCIAL / PROSPECTO*',
+                '*Alianza Estratégica S.A.S.*',
+                '',
+                '👤 *Agente Gestor:* ' + agentName + ' (' + (agentPhone || '-') + ')',
+                '🤝 *Visitante/Prospecto:* ' + visitorName,
+                '📱 *Contacto Prospecto:* ' + visitorPhone,
+                '🪪 *Cédula/RUC:* ' + visitorId,
+                '🎯 *Tipo:* ' + prospectType,
+                '🏢 ' + itemText,
+                '📅 *Fecha y Hora:* ' + visitDate + ' - ' + visitTime,
+                '📊 *Resultado:* ' + visitResult,
+                '📝 *Observaciones:* ' + observations,
+                (stagedVisitPhotoB64 ? '📷 *Respaldo fotográfico:* Registrado en plataforma' : '')
+            ].filter(Boolean).join('\n');
+
+            const sendWa = confirm('¿Desea enviar una copia de respaldo del reporte de visita al WhatsApp de Gerencia (095 919 0794)?');
+            if (sendWa) {
+                window.open('https://wa.me/' + OFFICIAL_WA_CLEAN + '?text=' + encodeURIComponent(waBody), '_blank');
+            }
+        }
+
+        function saveVisitsToCloud() {
+            if (db) {
+                db.collection('settings').doc('visits').set({
+                    visits: visitsList,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                }).catch(err => console.warn('Error syncing visits to Firestore:', err));
+            }
+        }
+
+        function openVisitsAdminModal() {
+            if (currentRole !== 'ADMIN') {
+                showToast('Acceso exclusivo para el Administrador Principal (A.A.I.L.)', 'error');
+                return;
+            }
+            updateVisitsBadges();
+            renderVisitsAdminTable();
+            openModal('visitsAdminModal');
+        }
+
+        function renderVisitsAdminTable() {
+            const container = document.getElementById('adminVisitsListContainer');
+            if (!container) return;
+
+            const q = (document.getElementById('adminVisitsSearch')?.value || '').toLowerCase().trim();
+            const statusFilter = document.getElementById('adminVisitsStatusFilter')?.value || 'ALL';
+
+            const filtered = visitsList.filter(v => {
+                const matchesStatus = (statusFilter === 'ALL') || (v.adminStatus === statusFilter);
+                if (!matchesStatus) return false;
+                if (!q) return true;
+                return (v.visitorName || '').toLowerCase().includes(q) ||
+                       (v.visitorPhone || '').toLowerCase().includes(q) ||
+                       (v.visitorId || '').toLowerCase().includes(q) ||
+                       (v.agentName || '').toLowerCase().includes(q) ||
+                       (v.linkedAssetCode || '').toLowerCase().includes(q) ||
+                       (v.linkedAssetTitle || '').toLowerCase().includes(q);
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="glass-panel p-8 rounded-3xl border border-slate-800 text-center">
+                        <i class="fa-solid fa-clipboard-question text-3xl text-indigo-400 mb-2"></i>
+                        <h4 class="text-sm font-bold text-white mb-1">Sin visitas registradas</h4>
+                        <p class="text-xs text-slate-400 mb-3">No se encontraron reportes con los filtros seleccionados.</p>
+                        <button type="button" onclick="openVisitReportModal()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2 rounded-xl transition shadow cursor-pointer">
+                            + Registrar Nueva Visita
+                        </button>
                     </div>
                 `;
-                messages.scrollTop = messages.scrollHeight;
-            }, 500);
+                return;
+            }
+
+            container.innerHTML = filtered.map(v => {
+                const cleanVisitorPhone = (v.visitorPhone || '').replace(/\D/g, '');
+                const cleanAgentPhone = (v.agentPhone || '').replace(/\D/g, '');
+                const waVisitorUrl = 'https://wa.me/' + cleanVisitorPhone + '?text=' + encodeURIComponent('Hola estimado/a ' + v.visitorName + ', le saluda la Gerencia de Alianza Estratégica S.A.S. en seguimiento a su visita al activo ' + (v.linkedAssetCode || ''));
+                const waAgentUrl = 'https://wa.me/' + cleanAgentPhone + '?text=' + encodeURIComponent('Hola ' + v.agentName + ', consulta de Gerencia sobre la visita de ' + v.visitorName);
+
+                let statusBadgeColor = 'bg-slate-800 text-slate-300 border-slate-700';
+                if (v.adminStatus === 'EN_SEGUIMIENTO') statusBadgeColor = 'bg-sky-950 text-sky-400 border-sky-500/40';
+                else if (v.adminStatus === 'NEGOCIACIÓN_ABIERTA') statusBadgeColor = 'bg-amber-950 text-amber-300 border-amber-500/40';
+                else if (v.adminStatus === 'CIERRE_EXITOSO') statusBadgeColor = 'bg-emerald-950 text-emerald-300 border-emerald-500/40';
+                else if (v.adminStatus === 'DESCARTE') statusBadgeColor = 'bg-rose-950 text-rose-400 border-rose-500/40';
+
+                return `
+                    <div class="bg-slate-900/90 rounded-2xl p-4 border border-slate-800 shadow-xl transition hover:border-indigo-500/40 space-y-3">
+                        <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-slate-800 text-xs">
+                            <div class="flex items-center gap-2">
+                                <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full border ${statusBadgeColor}">
+                                    ${v.adminStatus || 'REGISTRADO'}
+                                </span>
+                                <span class="text-slate-400 text-[11px]"><i class="fa-solid fa-clock text-indigo-400 mr-1"></i> ${v.visitDate || ''} ${v.visitTime || ''}</span>
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                <select onchange="updateVisitAdminStatus('${v.id}', this.value)" class="bg-slate-950 border border-slate-700 text-white rounded-lg px-2 py-1 text-[11px] focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                                    <option value="REGISTRADO" ${v.adminStatus === 'REGISTRADO' ? 'selected' : ''}>Registrado</option>
+                                    <option value="EN_SEGUIMIENTO" ${v.adminStatus === 'EN_SEGUIMIENTO' ? 'selected' : ''}>En Seguimiento</option>
+                                    <option value="NEGOCIACIÓN_ABIERTA" ${v.adminStatus === 'NEGOCIACIÓN_ABIERTA' ? 'selected' : ''}>Negociación Abierta</option>
+                                    <option value="CIERRE_EXITOSO" ${v.adminStatus === 'CIERRE_EXITOSO' ? 'selected' : ''}>Cierre Exitoso / Venta</option>
+                                    <option value="DESCARTE" ${v.adminStatus === 'DESCARTE' ? 'selected' : ''}>Descarte</option>
+                                </select>
+                                <button type="button" onclick="deleteVisitRecord('${v.id}')" class="text-rose-400 hover:text-rose-300 bg-rose-950/60 hover:bg-rose-900 border border-rose-500/30 px-2 py-1 rounded-lg text-xs transition cursor-pointer" title="Eliminar registro">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                            <!-- Col 1: Prospecto / Visitante -->
+                            <div class="space-y-1 bg-slate-950/70 p-3 rounded-xl border border-slate-800/80">
+                                <span class="text-[10px] font-extrabold text-sky-400 uppercase tracking-wider block">Prospecto / Visitante</span>
+                                <p class="font-extrabold text-white text-sm">${escapeHtml(v.visitorName)}</p>
+                                <p class="text-slate-300 flex items-center justify-between">
+                                    <span><i class="fa-solid fa-phone text-sky-400 mr-1"></i> ${v.visitorPhone || '-'}</span>
+                                    <a href="${waVisitorUrl}" target="_blank" class="bg-emerald-600/90 hover:bg-emerald-600 text-white px-2 py-0.5 rounded-md text-[10px] font-bold"><i class="fa-brands fa-whatsapp"></i> Chat</a>
+                                </p>
+                                <p class="text-[11px] text-slate-400"><i class="fa-solid fa-id-card text-slate-500 mr-1"></i> Cédula: ${v.visitorId || '-'}</p>
+                                <span class="inline-block bg-sky-950 text-sky-300 border border-sky-400/30 text-[10px] px-2 py-0.5 rounded-md font-semibold mt-1">
+                                    ${v.prospectType || 'Comprador'}
+                                </span>
+                            </div>
+
+                            <!-- Col 2: Agente Gestor -->
+                            <div class="space-y-1 bg-slate-950/70 p-3 rounded-xl border border-slate-800/80">
+                                <span class="text-[10px] font-extrabold text-amber-400 uppercase tracking-wider block">Agente Gestor</span>
+                                <p class="font-extrabold text-white text-sm flex items-center gap-1.5">
+                                    <i class="fa-solid fa-user-tie text-amber-300"></i> ${escapeHtml(v.agentName)}
+                                </p>
+                                <p class="text-slate-300 flex items-center justify-between">
+                                    <span><i class="fa-solid fa-phone text-amber-400 mr-1"></i> ${v.agentPhone || '-'}</span>
+                                    <a href="${waAgentUrl}" target="_blank" class="bg-amber-600/90 hover:bg-amber-600 text-white px-2 py-0.5 rounded-md text-[10px] font-bold"><i class="fa-brands fa-whatsapp"></i> Contactar</a>
+                                </p>
+                                <p class="text-[11px] text-indigo-300 mt-1 font-semibold">
+                                    <i class="fa-solid fa-square-check text-indigo-400 mr-1"></i> ${v.visitResult || 'Visita Realizada'}
+                                </p>
+                            </div>
+
+                            <!-- Col 3: Activo Ligado & Respaldo Fotográfico -->
+                            <div class="space-y-1.5 bg-slate-950/70 p-3 rounded-xl border border-slate-800/80">
+                                <span class="text-[10px] font-extrabold text-emerald-400 uppercase tracking-wider block">Activo Ligado de Interés</span>
+                                <div class="flex items-center gap-2">
+                                    <span class="bg-emerald-950 border border-emerald-500/40 text-emerald-300 text-[10px] font-black px-1.5 py-0.5 rounded">
+                                        ${v.linkedAssetCode || 'GENERAL'}
+                                    </span>
+                                    <span class="text-amber-300 font-extrabold text-xs">${v.linkedAssetPrice || ''}</span>
+                                </div>
+                                <p class="text-white text-xs font-bold truncate" title="${escapeHtml(v.linkedAssetTitle || '')}">
+                                    ${escapeHtml(v.linkedAssetTitle || 'Interés General')}
+                                </p>
+
+                                ${v.backupPhoto ? `
+                                    <div class="pt-1 flex items-center gap-2">
+                                        <img src="${v.backupPhoto}" onclick="openVisitPhotoPreviewModalById('${v.id}')" class="w-12 h-10 object-cover rounded-lg border border-slate-700 cursor-pointer hover:opacity-80 transition shadow" title="Toca para ampliar foto">
+                                        <span class="text-[10px] text-emerald-400 font-semibold cursor-pointer" onclick="openVisitPhotoPreviewModalById('${v.id}')">
+                                            <i class="fa-solid fa-magnifying-glass-plus mr-1"></i> Ver Foto de Respaldo
+                                        </span>
+                                    </div>
+                                ` : `
+                                    <p class="text-[10px] text-slate-500 italic pt-1"><i class="fa-solid fa-camera-slash mr-1"></i> Sin foto de respaldo</p>
+                                `}
+                            </div>
+                        </div>
+
+                        <!-- Observaciones y Notas de Gerencia -->
+                        <div class="bg-slate-950/50 p-2.5 rounded-xl border border-slate-800 text-xs space-y-1.5">
+                            <p class="text-slate-300"><strong class="text-slate-400">Observaciones Agente:</strong> ${escapeHtml(v.observations || 'Sin notas')}</p>
+                            <div class="flex items-center gap-2 pt-1 border-t border-slate-800/60">
+                                <label class="text-[11px] font-bold text-amber-300 flex-shrink-0">Nota Gerencial (A.A.I.L.):</label>
+                                <input type="text" value="${escapeHtml(v.adminNotes || '')}" onchange="updateVisitAdminNotes('${v.id}', this.value)" placeholder="Anotación interna confidencial..." class="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-2 py-1 text-xs text-white focus:outline-none focus:ring-1 focus:ring-amber-400">
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateVisitAdminStatus(visitId, newStatus) {
+            if (currentRole !== 'ADMIN') return;
+            const visit = visitsList.find(v => v.id === visitId);
+            if (!visit) return;
+            visit.adminStatus = newStatus;
+            localStorage.setItem('alianza_visits', JSON.stringify(visitsList));
+            saveVisitsToCloud();
+            updateVisitsBadges();
+            showToast('Estado de visita actualizado a: ' + newStatus, 'success');
+        }
+
+        function updateVisitAdminNotes(visitId, notes) {
+            if (currentRole !== 'ADMIN') return;
+            const visit = visitsList.find(v => v.id === visitId);
+            if (!visit) return;
+            visit.adminNotes = notes;
+            localStorage.setItem('alianza_visits', JSON.stringify(visitsList));
+            saveVisitsToCloud();
+            showToast('Nota gerencial guardada', 'info');
+        }
+
+        function deleteVisitRecord(visitId) {
+            if (currentRole !== 'ADMIN') {
+                showToast('Acceso denegado: solo el Administrador Principal puede eliminar visitas', 'error');
+                return;
+            }
+            const ok = confirm('¿Está seguro de eliminar este registro de visita de la bitácora central?');
+            if (!ok) return;
+            visitsList = visitsList.filter(v => v.id !== visitId);
+            localStorage.setItem('alianza_visits', JSON.stringify(visitsList));
+            saveVisitsToCloud();
+            updateVisitsBadges();
+            renderVisitsAdminTable();
+            showToast('Registro de visita eliminado', 'success');
+        }
+
+        function openVisitPhotoPreviewModalById(visitId) {
+            const v = visitsList.find(x => x.id === visitId);
+            if (!v || !v.backupPhoto) return;
+            openVisitPhotoPreviewModal(v.backupPhoto, (v.visitorName || '') + ' - ' + (v.linkedAssetCode || ''));
+        }
+
+        function openVisitPhotoPreviewModal(imgSrc, caption) {
+            const img = document.getElementById('visitPhotoFullImg');
+            if (img) img.src = imgSrc;
+            const cap = document.getElementById('visitPhotoCaption');
+            if (cap) cap.innerText = caption || 'Respaldo de Visita Comercial';
+            openModal('visitPhotoPreviewModal');
+        }
+
+        function exportVisitsToExcel() {
+            if (currentRole !== 'ADMIN') return;
+            if (visitsList.length === 0) {
+                showToast('No hay visitas registradas para exportar', 'info');
+                return;
+            }
+            let table = '<table border="1"><tr><th>ID Visita</th><th>Fecha</th><th>Hora</th><th>Agente Gestor</th><th>Teléfono Agente</th><th>Visitante / Prospecto</th><th>Teléfono Prospecto</th><th>Cédula/RUC</th><th>Tipo Prospecto</th><th>Código Activo</th><th>Activo de Interés</th><th>Precio Activo</th><th>Resultado</th><th>Observaciones</th><th>Estado Administrativo</th><th>Notas de Gerencia</th></tr>';
+            visitsList.forEach(v => {
+                table += '<tr><td>' + v.id + '</td><td>' + (v.visitDate || '') + '</td><td>' + (v.visitTime || '') + '</td><td>' + (v.agentName || '') + '</td><td>' + (v.agentPhone || '') + '</td><td>' + (v.visitorName || '') + '</td><td>' + (v.visitorPhone || '') + '</td><td>' + (v.visitorId || '') + '</td><td>' + (v.prospectType || '') + '</td><td>' + (v.linkedAssetCode || '') + '</td><td>' + (v.linkedAssetTitle || '') + '</td><td>' + (v.linkedAssetPrice || '') + '</td><td>' + (v.visitResult || '') + '</td><td>' + (v.observations || '') + '</td><td>' + (v.adminStatus || '') + '</td><td>' + (v.adminNotes || '') + '</td></tr>';
+            });
+            table += '</table>';
+
+            const blob = new Blob([table], { type: 'application/vnd.ms-excel;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'Alianza_Bitacora_Visitas_' + new Date().toISOString().split('T')[0] + '.xls';
+            link.click();
+            showToast('Bitácora de visitas exportada a Excel', 'success');
         }
 
         function sendConsignarWhatsApp() {
@@ -3764,6 +4513,38 @@ Cuando el cliente solicite acordar citas de inspección, negociar ofertas o cons
             if (e.key === 'Enter') sendGeminiMessage();
         }
 
+        
+        function generateSofiaOfflineAnswer(query) {
+            const q = (query || "").toLowerCase();
+            const totalProps = inventory.filter(i => i.category === "RE").length;
+            const totalVeh = inventory.filter(i => i.category === "VH").length;
+            const totalMaq = inventory.filter(i => i.category === "MQ").length;
+            const totalArr = inventory.filter(i => i.category === "AR").length;
+
+            if (q.includes("propiedad") || q.includes("casa") || q.includes("terreno") || q.includes("lote") || q.includes("finca") || q.includes("re")) {
+                return "Contamos actualmente con " + totalProps + " opciones inmobiliarias (casas, terrenos y fincas) verificadas legalmente en El Coca, Dayuma, Sacha y Orellana. Puedes filtrarlas pulsando el botón \"Bienes Raíces\" en el catálogo superior o solicitar un dossier detallado a Gerencia.";
+            }
+            if (q.includes("vehiculo") || q.includes("vehículo") || q.includes("carro") || q.includes("camioneta") || q.includes("auto") || q.includes("vh")) {
+                return "Tenemos " + totalVeh + " vehículos registrados en el catálogo con revisión mecánica e historial notarial. Puedes revisarlos seleccionando la categoría \"Vehículos\".";
+            }
+            if (q.includes("maquinaria") || q.includes("retroexcavadora") || q.includes("volqueta") || q.includes("tractor") || q.includes("mq")) {
+                return "Disponemos de " + totalMaq + " unidades de maquinaria pesada e industrial con documentación al día y listas para faena petrolera o de construcción.";
+            }
+            if (q.includes("arriendo") || q.includes("renta") || q.includes("alquiler") || q.includes("arrendar") || q.includes("ar")) {
+                return "Tenemos " + totalArr + " opciones de arriendo (locales comerciales, bodegas y residenciales) con contratos redactados y respaldados legalmente.";
+            }
+            if (q.includes("comision") || q.includes("comisión") || q.includes("honorarios") || q.includes("cobran")) {
+                return "Nuestras comisiones corporativas son del 3% al 5% en corretaje inmobiliario tradicional y del 2% al 4% en vehículos y maquinaria pesada, siempre con total transparencia y respaldo de contrato legal notariado.";
+            }
+            if (q.includes("agente") || q.includes("postular") || q.includes("trabajar") || q.includes("empleo")) {
+                return "¡Excelente! Puedes postular como Agente Comercial autorizado de Alianza Estratégica. Solo pulsa el botón \"Postular como Agente\" en la sección inferior de la plataforma.";
+            }
+            if (q.includes("contacto") || q.includes("telefono") || q.includes("teléfono") || q.includes("oficina") || q.includes("whatsapp")) {
+                return "Nuestra oficina principal está en El Coca, Orellana. Puedes comunicarte directamente al WhatsApp Oficial 095 919 0794 para coordinar visitas técnicas o avalúos con Gerencia.";
+            }
+            return "¡Hola! Soy Sofía, asistente virtual de Alianza Estratégica S.A.S. Te ayudo a encontrar inmuebles, vehículos o maquinaria pesada en El Coca y Orellana, o coordinar visitas comerciales. ¿En qué tipo de activo te gustaría recibir información?";
+        }
+
         async function sendGeminiMessage() {
             const input = document.getElementById('geminiUserInput');
             const txt = input.value.trim();
@@ -3816,6 +4597,130 @@ Cuando el cliente solicite acordar citas de inspección, negociar ofertas o cons
             }
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
+
+        function downloadAssetLegalBackup(itemId) {
+            if (currentRole !== 'ADMIN') {
+                showToast('Acceso exclusivo para el Administrador Principal (A.A.I.L.)', 'error');
+                return;
+            }
+            const item = inventory.find(i => i.id === itemId);
+            if (!item) return;
+
+            const assetVisits = visitsList.filter(v => v.linkedAssetId === item.id || v.linkedAssetCode === item.code);
+            const isVendido = item.status === 'VENDIDO' || item.status === 'SOLD';
+
+            let reportArea = document.getElementById('printableReportArea');
+            if (!reportArea) {
+                reportArea = document.createElement('div');
+                reportArea.id = 'printableReportArea';
+                reportArea.className = 'hidden print:block bg-white text-slate-900 p-8 text-xs font-sans';
+                document.body.appendChild(reportArea);
+            }
+
+            const visitsHtml = assetVisits.length === 0 ? '<p>No registra visitas comerciales.</p>' : assetVisits.map(v => `
+                <div style="border-bottom: 1px solid #cbd5e1; padding: 6px 0; margin-bottom: 4px;">
+                    <strong>Visitante:</strong> ${escapeHtml(v.visitorName)} (Cédula: ${v.visitorId || '-'}, Tel: ${v.visitorPhone})<br>
+                    <strong>Agente Gestor:</strong> ${escapeHtml(v.agentName)} | <strong>Fecha:</strong> ${v.visitDate} ${v.visitTime}<br>
+                    <strong>Tipo Prospecto:</strong> ${v.prospectType} | <strong>Resultado:</strong> ${v.visitResult}<br>
+                    <strong>Observaciones:</strong> ${escapeHtml(v.observations)} | <strong>Estado:</strong> ${v.adminStatus}
+                </div>
+            `).join('');
+
+            reportArea.innerHTML = `
+                <div style="max-width: 800px; margin: 0 auto; line-height: 1.5; color: #0f172a;">
+                    <div style="text-align: center; border-bottom: 2px solid #0284c7; padding-bottom: 12px; margin-bottom: 16px;">
+                        <h2 style="font-size: 18px; font-weight: 800; color: #0f172a; margin: 0;">ALIANZA ESTRATÉGICA S.A.S.</h2>
+                        <p style="font-size: 11px; font-weight: bold; color: #0284c7; margin: 2px 0;">PLATAFORMA CORPORATIVA DE CORRETAJE & RESPALDO LEGAL NOTARIAL</p>
+                        <p style="font-size: 10px; color: #475569; margin: 0;">El Coca (Puerto Francisco de Orellana), Orellana - Ecuador | RUC: 2200260967001</p>
+                    </div>
+
+                    <h3 style="font-size: 14px; font-weight: 800; background: #f1f5f9; padding: 6px 10px; border-left: 4px solid #0284c7; margin: 10px 0;">
+                        EXPEDIENTE DE RESPALDO LEGAL - ACTIVO [${item.code}]
+                    </h3>
+
+                    <div style="margin-bottom: 12px;">
+                        <h4 style="font-size: 12px; font-weight: 700; color: #0284c7; border-bottom: 1px solid #e2e8f0; padding-bottom: 2px; margin-bottom: 4px;">1. FICHA TÉCNICA DEL ACTIVO</h4>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; width: 30%; font-weight: bold;">Título / Descripción:</td><td style="padding: 4px; border: 1px solid #cbd5e1;">${escapeHtml(item.title)}</td></tr>
+                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; font-weight: bold;">Categoría:</td><td style="padding: 4px; border: 1px solid #cbd5e1;">${item.categoryType || item.category}</td></tr>
+                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; font-weight: bold;">Ubicación:</td><td style="padding: 4px; border: 1px solid #cbd5e1;">${escapeHtml(item.location || 'El Coca')}</td></tr>
+                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; font-weight: bold;">Precio Comercial / Avalúo:</td><td style="padding: 4px; border: 1px solid #cbd5e1; font-weight: bold; color: #0284c7;">${item.priceStr || ('$' + (item.realSalePrice || 0) + ' USD')}</td></tr>
+                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; font-weight: bold;">Estado del Activo:</td><td style="padding: 4px; border: 1px solid #cbd5e1; font-weight: bold; color: ${isVendido ? '#e11d48' : '#059669'};">${item.status || 'DISPONIBLE'}</td></tr>
+                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; font-weight: bold;">Descripción Completa:</td><td style="padding: 4px; border: 1px solid #cbd5e1;">${escapeHtml(item.desc || 'Sin descripción')}</td></tr>
+                        </table>
+                    </div>
+
+                    <div style="margin-bottom: 12px;">
+                        <h4 style="font-size: 12px; font-weight: 700; color: #0284c7; border-bottom: 1px solid #e2e8f0; padding-bottom: 2px; margin-bottom: 4px;">2. PROPIETARIO Y AGENTE CAPTADOR / RECEPTOR</h4>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; width: 30%; font-weight: bold;">Propietario Registrado:</td><td style="padding: 4px; border: 1px solid #cbd5e1;">${escapeHtml(item.ownerName || '-')} (Cédula/RUC: ${item.ownerDoc || '-'}) - Tel: ${item.ownerPhone || '-'}</td></tr>
+                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; font-weight: bold;">Agente Receptor / Captador:</td><td style="padding: 4px; border: 1px solid #cbd5e1;">${escapeHtml(item.agentName || 'Alianza')} (Tel: ${item.agentPhone || '-'})</td></tr>
+                        </table>
+                    </div>
+
+                    <div style="margin-bottom: 12px;">
+                        <h4 style="font-size: 12px; font-weight: 700; color: #0284c7; border-bottom: 1px solid #e2e8f0; padding-bottom: 2px; margin-bottom: 4px;">3. AGENTE VENDEDOR (CIERRE)</h4>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; width: 30%; font-weight: bold;">Agente Vendedor:</td><td style="padding: 4px; border: 1px solid #cbd5e1;">${escapeHtml(item.sellerAgentName || (isVendido ? item.agentName : 'Pendiente de Cierre'))}</td></tr>
+                        </table>
+                    </div>
+
+                    <div style="margin-bottom: 12px;">
+                        <h4 style="font-size: 12px; font-weight: 700; color: #0284c7; border-bottom: 1px solid #e2e8f0; padding-bottom: 2px; margin-bottom: 4px;">4. PROSPECTOS DE VISITAS REGISTRADOS (${assetVisits.length})</h4>
+                        <div style="font-size: 10px; background: #f8fafc; padding: 6px; border: 1px solid #cbd5e1;">
+                            ${visitsHtml}
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 12px;">
+                        <h4 style="font-size: 12px; font-weight: 700; color: #0284c7; border-bottom: 1px solid #e2e8f0; padding-bottom: 2px; margin-bottom: 4px;">5. ACUERDOS LEGALES DE PAGO Y REMUNERACIÓN</h4>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; width: 30%; font-weight: bold;">Comisión Pactada:</td><td style="padding: 4px; border: 1px solid #cbd5e1;">${item.comisionStr || '$' + (item.commissionPactada || 0)}</td></tr>
+                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; font-weight: bold;">Esquema de Reparto:</td><td style="padding: 4px; border: 1px solid #cbd5e1;">50% Empresa (Alianza S.A.S.) / 50% Fuerza de Ventas (Captador / Vendedor)</td></tr>
+                        </table>
+                    </div>
+
+                    ${isVendido ? `
+                    <div style="margin-bottom: 12px;">
+                        <h4 style="font-size: 12px; font-weight: 700; color: #e11d48; border-bottom: 1px solid #e2e8f0; padding-bottom: 2px; margin-bottom: 4px;">6. DATOS DE ARTÍCULO LIQUIDADO / VENDIDO</h4>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; width: 30%; font-weight: bold;">Precio Final de Venta:</td><td style="padding: 4px; border: 1px solid #cbd5e1;">$${(item.realSalePrice || 0).toFixed(2)} USD</td></tr>
+                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; font-weight: bold;">Comisión Total Cobrada:</td><td style="padding: 4px; border: 1px solid #cbd5e1;">$${(item.commissionPactada || 0).toFixed(2)} USD</td></tr>
+                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; font-weight: bold;">Pago Agente Captador:</td><td style="padding: 4px; border: 1px solid #cbd5e1;">$${(item.payCaptador || 0).toFixed(2)} USD</td></tr>
+                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; font-weight: bold;">Pago Agente Vendedor:</td><td style="padding: 4px; border: 1px solid #cbd5e1;">$${(item.payVendedor || 0).toFixed(2)} USD</td></tr>
+                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; font-weight: bold;">Ganancia Neta Empresa:</td><td style="padding: 4px; border: 1px solid #cbd5e1;">$${(item.netEmpresa || 0).toFixed(2)} USD</td></tr>
+                        </table>
+                    </div>
+                    ` : ''}
+
+                    <div style="margin-top: 30px; display: flex; justify-content: space-between; font-size: 10px; text-align: center;">
+                        <div style="width: 45%; border-top: 1px solid #0f172a; padding-top: 4px;">
+                            <strong>Adrián Arturo Íñiguez Lucio</strong><br>Gerente General & Representante Legal<br>ALIANZA ESTRATÉGICA S.A.S.
+                        </div>
+                        <div style="width: 45%; border-top: 1px solid #0f172a; padding-top: 4px;">
+                            <strong>Abg. Carlos Alfredo Íñiguez Rodríguez</strong><br>Patrocinio Jurídico & Saneamiento Notarial<br>El Coca, Orellana
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            showToast('Generando reporte de respaldo legal para impresión / PDF...');
+            setTimeout(() => {
+                window.print();
+            }, 500);
+        }
     </script>
+
+    <!-- WIDGET FLOTANTE ASISTENTE VIRTUAL SOFÍA (ÚNICA OPCIÓN DEDICADA) -->
+    <div id="virtualAssistantWidget" class="fixed bottom-5 right-5 z-40 flex items-center gap-2">
+        <button type="button" onclick="openAssistantModal()" class="bg-gradient-to-r from-sky-500 via-sky-600 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white font-extrabold px-4 py-2.5 rounded-full text-xs shadow-2xl transition flex items-center gap-2.5 hover:scale-105 active:scale-95 border border-sky-300/40 cursor-pointer backdrop-blur-md" title="Consultar con Sofía - Asistente Virtual 24/7">
+            <div class="relative w-7 h-7 rounded-full overflow-hidden border border-amber-300 flex-shrink-0">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80" alt="Sofía" class="w-full h-full object-cover">
+            </div>
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span>Asistente Sofía</span>
+        </button>
+    </div>
+
 </body>
 </html>
