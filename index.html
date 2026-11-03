@@ -4433,33 +4433,30 @@ ALIANZA ESTRATÉGICA S.A.S.`;
                 .replace(/'/g, "&#039;");
         }
 
-        const SYSTEM_INSTRUCTION_SOFIA = `Eres Sofía, la Asistente Virtual Oficial e Inteligente de ALIANZA ESTRATÉGICA S.A.S., plataforma corporativa de corretaje e intermediación en El Coca (Puerto Francisco de Orellana), Provincia de Orellana, Ecuador.
+        const SYSTEM_INSTRUCTION_SOFIA = `Eres Sofía, la Asistente Virtual Oficial e Inteligente de ALIANZA ESTRATÉGICA S.A.S. (Plataforma corporativa de corretaje e intermediación en El Coca, Orellana, Ecuador).
 
-DATOS INSTITUCIONALES:
+CAPACIDADES DE ASISTENCIA SENIOR:
+- Brindas respuestas analíticas, claras y profesionales con dominio pleno del saneamiento de escrituras, trámites vehiculares, comisiones y catálogo de la plataforma.
+
+REGLA DE PRIVACIDAD ABSOLUTA:
+- NUNCA proporcionaras información privada, personal, número de cédula personal, dirección domiciliaria ni teléfonos personales privados del Gerente General ni de Adrián Arturo Íñiguez Lucio. Solo proporcionas los canales de contacto corporativos oficiales.
+
+DATOS INSTITUCIONALES PÚBLICOS:
 - Gerente General & Representante Legal: Adrián Arturo Íñiguez Lucio.
 - Patrocinio Jurídico Especializado: Abg. Carlos Alfredo Íñiguez Rodríguez.
 - Ubicación: El Coca (Puerto Francisco de Orellana), Orellana, Ecuador.
-- RUC Corporativo: 2200260967001.
-- Teléfono Oficial / WhatsApp de Contacto: 099 216 0967 (y 095 919 0794).
+- WhatsApp de Contacto Oficial: 099 216 0967 / 095 919 0794.
+- Correo Oficial: alianzaestrategica2026@gmail.com.
 
-CATEGORÍAS COMERCIALES DE ACTIVOS Y DERIVADOS:
-1. RE (Bienes Raíces Venta): Casas, lotes urbanos, fincas, terrenos comerciales, quintas.
-2. AR (Arriendos): Departamentos, locales comerciales, oficinas, galpones industriales.
-3. VH (Vehículos): Camionetas 4x4, autos familiares, camiones de carga, motocicletas.
-4. MQ (Maquinaria Pesada): Maquinaria para sector petrolero, agrícola y de construcción (retroexcavadoras, tractores, generadores).
-5. LQ (Segunda Mano / Remate): Activos inactivos, herramientas de trabajo y artículos de oportunidad.
+CATEGORÍAS DE ACTIVOS:
+1. RE (Bienes Raíces Venta): Casas, lotes urbanos, fincas, terrenos comerciales.
+2. AR (Arriendos): Departamentos, locales comerciales, oficinas, galpones.
+3. VH (Vehículos): Camionetas 4x4, autos familiares, camiones.
+4. MQ (Maquinaria Pesada): Equipos petroleros, tractores, retroexcavadoras.
+5. LQ (Segunda Mano / Remate): Activos inactivos y ofertas especiales.
 
-PROCEDIMIENTOS DE CAPTACIÓN Y ENGANCHES:
-- Consignación / Captación de Bienes: 100% Gratuita. No se cobra nada por publicar ni por tomar las fotos.
-- Asesoría Legal e Inspección: Se verifica que el activo cuente con documentación en regla (escrituras sin gravámenes en RE/AR, matrículas al día y antecedentes limpios en VH/MQ).
-- Cierre y Enganches: Se firman promesas de compraventa notariadas y contratos de corretaje formal con seguro jurídico.
-
-ESQUEMA DE COMISIONES & REQUISITOS DE AGENTES:
-- Regla de Reparto: 50% Empresa (ALIANZA S.A.S.) y 50% Fuerza de Ventas (25% Agente Captador / 25% Agente Vendedor, o 50% completo si el mismo agente capta y vende).
-- Requisitos de Reclutamiento para Agentes: Título de Bachiller (indispensable), Hoja de Vida, Certificado de Antecedentes Penales actualizado, Croquis de residencia en El Coca, 3 referencias familiares verificables, copia de cédula/votación y selfie sosteniendo documentos.
-
-DERIVACIÓN A CONTACTO AGENTE:
-Cuando el cliente solicite acordar citas de inspección, negociar ofertas o consignar un bien, oriéntalo amablemente a contactar por WhatsApp directo a la Gerencia o con un Agente Comercial al número 099 216 0967.`;
+ESQUEMA DE COMISIONES (50/50):
+- 50% Empresa (ALIANZA S.A.S.) / 50% Fuerza de Ventas (25% Captador / 25% Vendedor, o 50% si es el mismo agente).`;
 
         function openAssistantModal() {
             openModal('assistantModal');
@@ -4514,35 +4511,27 @@ Cuando el cliente solicite acordar citas de inspección, negociar ofertas o cons
         }
 
         
+        let chatHistory = [];
+
         function generateSofiaOfflineAnswer(query) {
             const q = (query || "").toLowerCase();
             const totalProps = inventory.filter(i => i.category === "RE").length;
             const totalVeh = inventory.filter(i => i.category === "VH").length;
-            const totalMaq = inventory.filter(i => i.category === "MQ").length;
-            const totalArr = inventory.filter(i => i.category === "AR").length;
 
-            if (q.includes("propiedad") || q.includes("casa") || q.includes("terreno") || q.includes("lote") || q.includes("finca") || q.includes("re")) {
-                return "Contamos actualmente con " + totalProps + " opciones inmobiliarias (casas, terrenos y fincas) verificadas legalmente en El Coca, Dayuma, Sacha y Orellana. Puedes filtrarlas pulsando el botón \"Bienes Raíces\" en el catálogo superior o solicitar un dossier detallado a Gerencia.";
+            if (q.includes("cedula") || q.includes("cédula") || q.includes("direccion personal") || q.includes("teléfono personal") || q.includes("telefono personal") || q.includes("datos del gerente") || q.includes("privado")) {
+                return "🔒 **Políticas de Privacidad y Seguridad Corporativa:** Por protección de datos y seguridad institucional, no se proporciona información personal ni privada de la Gerencia ni de sus directivos. Para cualquier gestión corporativa o comercial, disponemos del WhatsApp Oficial de Gerencia: **099 216 0967**.";
             }
-            if (q.includes("vehiculo") || q.includes("vehículo") || q.includes("carro") || q.includes("camioneta") || q.includes("auto") || q.includes("vh")) {
-                return "Tenemos " + totalVeh + " vehículos registrados en el catálogo con revisión mecánica e historial notarial. Puedes revisarlos seleccionando la categoría \"Vehículos\".";
+
+            if (q.includes("casa") || q.includes("propiedad") || q.includes("terreno") || q.includes("lote") || q.includes("finca") || q.includes("arriendo")) {
+                return `🏡 **Sobre Inmuebles y Bienes Raíces en El Coca:** Vender o adquirir un inmueble requiere un riguroso **saneamiento de escrituras**, verificación de linderos, certificado de gravámenes en el Registro de la Propiedad de Orellana y promesas de compraventa notariadas. Contamos con ${totalProps} opciones inmobiliarias verificadas. Para agendar una inspección con nuestro patrocinio jurídico, escríbenos al WhatsApp **099 216 0967**.`;
             }
-            if (q.includes("maquinaria") || q.includes("retroexcavadora") || q.includes("volqueta") || q.includes("tractor") || q.includes("mq")) {
-                return "Disponemos de " + totalMaq + " unidades de maquinaria pesada e industrial con documentación al día y listas para faena petrolera o de construcción.";
+            if (q.includes("carro") || q.includes("vehículo") || q.includes("vehiculo") || q.includes("camioneta") || q.includes("auto") || q.includes("maquinaria")) {
+                return `🚗 **Sobre Vehículos y Maquinaria Pesada:** Para la comercialización segura de vehículos validamos la **revisión de matrículas ANT, verificación SRI sin multas**, historial técnico y contrato notariado de traspaso. Disponemos de ${totalVeh} activos vehiculares. Escríbenos al WhatsApp **099 216 0967** para coordinar una prueba técnica.`;
             }
-            if (q.includes("arriendo") || q.includes("renta") || q.includes("alquiler") || q.includes("arrendar") || q.includes("ar")) {
-                return "Tenemos " + totalArr + " opciones de arriendo (locales comerciales, bodegas y residenciales) con contratos redactados y respaldados legalmente.";
+            if (q.includes("comision") || q.includes("comisión") || q.includes("honorarios")) {
+                return "💰 **Esquema de Comisiones:** Transparencia 50/50: 50% para la empresa ALIANZA S.A.S. y 50% para la fuerza de ventas (25% captador / 25% vendedor, o 50% si el mismo agente capta y vende).";
             }
-            if (q.includes("comision") || q.includes("comisión") || q.includes("honorarios") || q.includes("cobran")) {
-                return "Nuestras comisiones corporativas son del 3% al 5% en corretaje inmobiliario tradicional y del 2% al 4% en vehículos y maquinaria pesada, siempre con total transparencia y respaldo de contrato legal notariado.";
-            }
-            if (q.includes("agente") || q.includes("postular") || q.includes("trabajar") || q.includes("empleo")) {
-                return "¡Excelente! Puedes postular como Agente Comercial autorizado de Alianza Estratégica. Solo pulsa el botón \"Postular como Agente\" en la sección inferior de la plataforma.";
-            }
-            if (q.includes("contacto") || q.includes("telefono") || q.includes("teléfono") || q.includes("oficina") || q.includes("whatsapp")) {
-                return "Nuestra oficina principal está en El Coca, Orellana. Puedes comunicarte directamente al WhatsApp Oficial 095 919 0794 para coordinar visitas técnicas o avalúos con Gerencia.";
-            }
-            return "¡Hola! Soy Sofía, asistente virtual de Alianza Estratégica S.A.S. Te ayudo a encontrar inmuebles, vehículos o maquinaria pesada en El Coca y Orellana, o coordinar visitas comerciales. ¿En qué tipo de activo te gustaría recibir información?";
+            return "¡Hola! Soy Sofía, asistente virtual de Alianza Estratégica S.A.S. Te asesoro con nivel profesional sobre la compraventa de **propiedades e inmuebles** (con saneamiento notarial) o **vehículos y maquinaria** (con revisión ANT/SRI). Para atención directa, escríbenos al WhatsApp **099 216 0967**.";
         }
 
         async function sendGeminiMessage() {
@@ -4567,17 +4556,24 @@ Cuando el cliente solicite acordar citas de inspección, negociar ofertas o cons
             `;
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
+            chatHistory.push({ role: 'user', parts: [{ text: txt }] });
+
             try {
+                const userApiKey = localStorage.getItem('alianza_gemini_key') || '';
                 const response = await fetch('/api/chat', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ prompt: txt })
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'x-gemini-key': userApiKey
+                    },
+                    body: JSON.stringify({ prompt: txt, history: chatHistory.slice(0, -1), apiKey: userApiKey })
                 });
 
                 const data = await response.json();
                 document.getElementById(loadingId)?.remove();
 
-                const reply = data.text || 'Estimado usuario, con gusto puedo orientarle sobre nuestras propiedades, vehículos, maquinarias o comisiones. Comuníquese al WhatsApp de Gerencia 099 216 0967 para una atención personalizada.';
+                const reply = data.text || generateSofiaOfflineAnswer(txt);
+                chatHistory.push({ role: 'model', parts: [{ text: reply }] });
                 const formattedReply = formatSofiaMessage(reply);
 
                 messagesContainer.innerHTML += `
@@ -4588,10 +4584,12 @@ Cuando el cliente solicite acordar citas de inspección, negociar ofertas o cons
                 `;
             } catch (err) {
                 document.getElementById(loadingId)?.remove();
+                const fallbackReply = generateSofiaOfflineAnswer(txt);
+                chatHistory.push({ role: 'model', parts: [{ text: fallbackReply }] });
                 messagesContainer.innerHTML += `
                     <div class="bg-slate-900 border border-amber-500/40 text-slate-200 p-3.5 rounded-2xl shadow-sm leading-relaxed space-y-1">
                         <strong class="text-amber-400 flex items-center gap-1.5 text-[11px] mb-0.5"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80" alt="Sofía" class="w-4 h-4 rounded-full object-cover border border-amber-400 inline"> Sofía — Agente Virtual Alianza</strong>
-                        <div>¡Hola! En este momento me encuentro disponible para atenderte. Puedes contactar directamente con nuestra Gerencia Comercial vía WhatsApp al <strong>099 216 0967</strong> o <strong>095 919 0794</strong> para recibir información inmediata.</div>
+                        <div>${formatSofiaMessage(fallbackReply)}</div>
                     </div>
                 `;
             }
