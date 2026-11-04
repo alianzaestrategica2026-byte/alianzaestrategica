@@ -24,8 +24,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Alianza S.A.S.">
-    <link id="appleTouchIconLink" rel="apple-touch-icon" href="https://alianzaestrategica2026-byte.github.io/alianzaestrategica/108900.jpg">
-    <link id="faviconLink" rel="icon" type="image/jpeg" href="https://alianzaestrategica2026-byte.github.io/alianzaestrategica/108900.jpg">
+    <link id="appleTouchIconLink" rel="apple-touch-icon" href="/108900.jpg">
+    <link id="faviconLink" rel="icon" type="image/jpeg" href="/108900.jpg">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -130,10 +130,43 @@
             animation-play-state: paused;
         }
         @media print {
-            body * { visibility: hidden; }
-            #printableReportArea, #printableReportArea * { visibility: visible; }
-            #printableReportArea { position: absolute; left: 0; top: 0; width: 100%; }
-            .no-print { display: none !important; }
+            @page {
+                size: A4 portrait;
+                margin: 8mm;
+            }
+            body {
+                background-color: #080c14 !important;
+                color: #f8fafc !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            header, footer, nav, #toastContainer, #virtualAssistantWidget, .no-print, button, .admin-only, .auth-only {
+                display: none !important;
+            }
+            body > *:not(#legalReportModal) {
+                display: none !important;
+            }
+            #legalReportModal {
+                display: block !important;
+                visibility: visible !important;
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100% !important;
+                background-color: #080c14 !important;
+                color: #f8fafc !important;
+                z-index: 999999 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                box-sizing: border-box !important;
+            }
+            #legalReportModal *, #legalReportPrintArea * {
+                visibility: visible !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
         }
     </style>
 </head>
@@ -190,7 +223,7 @@
     <div id="adminBanner" class="bg-gradient-to-r from-amber-500 via-amber-600 to-amber-500 text-slate-950 px-4 py-2.5 hidden shadow-md border-b border-amber-600 z-30 transition-all">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
             <div class="flex items-center gap-2 font-extrabold text-xs md:text-sm">
-                <i class="fa-solid fa-user-shield text-slate-950 text-base"></i> ADMINISTRADOR PRINCIPAL (CORP-A.A.I.L.) - Control Total
+                <i class="fa-solid fa-user-shield text-slate-950 text-base"></i> ADMINISTRADOR PRINCIPAL (A.A.I.L.) - Control Total
             </div>
             <div class="flex flex-wrap items-center gap-2">
                 <button onclick="openFinanceModal()" class="bg-emerald-950 text-white border border-emerald-400/40 px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-emerald-900 transition flex items-center gap-1.5 shadow cursor-pointer">
@@ -279,7 +312,7 @@
             <!-- 2. AVATAR CIRCULAR TIPO FACEBOOK SOBREPUESTO -->
             <div class="relative -mt-20 sm:-mt-24 md:-mt-28 flex flex-col items-center z-10 px-4">
                 <div class="relative w-36 h-36 sm:w-44 sm:h-44 md:w-48 md:h-48 rounded-full border-4 sm:border-[6px] border-slate-900 bg-slate-950 shadow-[0_20px_45px_rgba(0,0,0,0.9)] overflow-hidden ring-4 ring-sky-500/40 group flex-shrink-0">
-                    <img id="profileLogoImg" src="https://alianzaestrategica2026-byte.github.io/alianzaestrategica/108900.jpg" alt="Perfil Corporativo" class="w-full h-full object-cover transition duration-300 group-hover:scale-105" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Alianza+Estrategica&background=0284c7&color=fff';">
+                    <img id="profileLogoImg" src="/108900.jpg" alt="Perfil Corporativo" class="w-full h-full object-cover transition duration-300 group-hover:scale-105" onerror="this.onerror=null; this.src='https://alianzaestrategica2026-byte.github.io/alianzaestrategica/108900.jpg';">
                     
                     <!-- Botón flotante de Cámara en el Avatar tipo Facebook (Solo Admin) -->
                     <label for="profileFileInput" class="profile-change-btn admin-only hidden absolute bottom-1 right-2 sm:bottom-2 sm:right-3 bg-slate-800 hover:bg-slate-700 text-white w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-slate-900 flex items-center justify-center shadow-2xl transition cursor-pointer hover:scale-110 active:scale-95" title="Actualizar foto de perfil">
@@ -315,7 +348,7 @@
                         
                         <div id="bioExpandedExtra" class="hidden mt-3 p-3.5 bg-slate-900/90 rounded-2xl border border-slate-800 text-left text-xs text-slate-300 space-y-2 shadow-inner">
                             <p><i class="fa-solid fa-scale-balanced text-amber-400 mr-1.5"></i> <strong>Patrocinio Jurídico Externo:</strong> Abg. Carlos Alfredo Íñiguez Rodríguez (Estudio Jurídico Especializado en Saneamiento Notarial y Contratos de Compraventa).</p>
-                            <p><i class="fa-solid fa-user-tie text-sky-400 mr-1.5"></i> <strong>Representación Legal & Gerencia:</strong> (CORP-A.A.I.L.) — Transparencia, legalidad y seguridad transaccional garantizada.</p>
+                            <p><i class="fa-solid fa-user-tie text-sky-400 mr-1.5"></i> <strong>Representación Legal & Gerencia:</strong> (A.A.I.L.) — Transparencia, legalidad y seguridad transaccional garantizada.</p>
                             <p><i class="fa-solid fa-shield-halved text-emerald-400 mr-1.5"></i> <strong>Cero Riesgo de Fraudes:</strong> Toda consignación, reserva y traspaso se realiza con supervisión legal comprobada.</p>
                         </div>
                     </div>
@@ -1905,6 +1938,9 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-2">
+                    <button type="button" onclick="downloadVisitsBitacoraPDF()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold px-3 py-1.5 rounded-xl text-xs transition flex items-center gap-1.5 shadow cursor-pointer" title="Descargar Bitácora en formato PDF">
+                        <i class="fa-solid fa-file-pdf text-amber-300"></i> Descargar Bitácora PDF
+                    </button>
                     <button type="button" onclick="exportVisitsToExcel()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold px-3 py-1.5 rounded-xl text-xs transition flex items-center gap-1.5 shadow cursor-pointer">
                         <i class="fa-solid fa-file-excel"></i> Exportar Excel
                     </button>
@@ -2031,7 +2067,7 @@
             bioText: "En <strong>ALIANZA ESTRATÉGICA</strong> te ayudamos a negociar y monetizar tus activos: Inmuebles, Vehículos y Maquinaria Pesada con blindaje legal notarial.",
             coverImg: "/assets/aistudio/portada_alianza_hd.png",
             coverFit: "cover",
-            profileLogo: "https://alianzaestrategica2026-byte.github.io/alianzaestrategica/108900.jpg"
+            profileLogo: "/108900.jpg"
         };
 
         const DEFAULT_FOOTER = {
@@ -2142,8 +2178,24 @@
         let appConfig = { ...DEFAULT_STATE, ...(JSON.parse(localStorage.getItem('alianza_config') || '{}')) };
         let appFooter = { ...DEFAULT_FOOTER, ...(JSON.parse(localStorage.getItem('alianza_footer') || '{}')) };
         let appDossier = { ...DEFAULT_DOSSIER, ...(JSON.parse(localStorage.getItem('alianza_dossier') || '{}')) };
-        let appSpecialSection = { ...DEFAULT_SPECIAL_SECTION, ...(JSON.parse(localStorage.getItem('alianza_special') || '{}')) };
-        let sponsorsList = JSON.parse(localStorage.getItem('alianza_sponsors') || '[]');
+        const DEFAULT_SPONSORS = [
+            {
+                id: "sponsor_default_1",
+                badge: "Patrocinio Jurídico & Notarial",
+                name: "Estudio Jurídico & Notaría Alianza",
+                title: "Asesoría Legal, Trámites Notariales y Minutas de Compraventa",
+                desc: "Especialistas en escrituración de inmuebles, transferencia de dominio vehicular, contratos de promesa de compraventa y levantamiento de hipotecas en El Coca, Orellana.",
+                phone: "095 919 0794",
+                email: "alianzaestrategica2026@gmail.com",
+                image: "/108900.jpg"
+            }
+        ];
+
+        let sponsorsList = JSON.parse(localStorage.getItem('alianza_sponsors') || 'null');
+        if (!sponsorsList || !Array.isArray(sponsorsList) || sponsorsList.length === 0) {
+            sponsorsList = [...DEFAULT_SPONSORS];
+            localStorage.setItem('alianza_sponsors', JSON.stringify(sponsorsList));
+        }
         let alliesList = JSON.parse(localStorage.getItem('alianza_allies') || JSON.stringify(DEFAULT_ALLIES));
         const DEFAULT_VISITS = [
             {
@@ -2291,7 +2343,7 @@
                             localStorage.setItem('alianza_special', JSON.stringify(appSpecialSection));
                             renderSpecialSectionUI();
                         }
-                        if (data.sponsors && Array.isArray(data.sponsors)) {
+                        if (data.sponsors && Array.isArray(data.sponsors) && data.sponsors.length > 0) {
                             sponsorsList = data.sponsors;
                             localStorage.setItem('alianza_sponsors', JSON.stringify(sponsorsList));
                             renderSponsorsCards();
@@ -2300,6 +2352,18 @@
                             alliesList = data.allies;
                             localStorage.setItem('alianza_allies', JSON.stringify(alliesList));
                             renderMarquee();
+                        }
+                    }
+                }, () => {});
+
+                db.collection('alianza_sponsors').onSnapshot(snap => {
+                    if (snap && !snap.empty) {
+                        const list = [];
+                        snap.forEach(d => list.push({ id: d.id, ...d.data() }));
+                        if (list.length > 0) {
+                            sponsorsList = list;
+                            localStorage.setItem('alianza_sponsors', JSON.stringify(sponsorsList));
+                            renderSponsorsCards();
                         }
                     }
                 }, () => {});
@@ -2566,6 +2630,7 @@
                 if (tabFbSponsors) tabFbSponsors.classList.remove('hidden');
             }
             renderSpecialSectionUI();
+            renderSponsorsCards();
         }
 
         function togglePassInput() {
@@ -2764,7 +2829,13 @@
                         </div>
                     `;
                 } else {
-                    container.innerHTML = '';
+                    container.innerHTML = `
+                        <div class="glass-panel p-6 rounded-3xl border border-slate-800 text-center">
+                            <i class="fa-solid fa-handshake-simple text-3xl text-sky-400 mb-2"></i>
+                            <h4 class="text-sm font-bold text-white mb-1">Espacio Publicitario Disponible</h4>
+                            <p class="text-xs text-slate-400">Comuníquese con la Administración Principal para anunciar su firma notarial o servicio profesional.</p>
+                        </div>
+                    `;
                 }
                 return;
             }
@@ -2777,21 +2848,21 @@
                         </span>
                         ${isAdmin ? `
                             <div class="flex gap-2">
-                                <button onclick="openEditSponsorModal('${s.id}')" class="bg-sky-600 hover:bg-sky-500 text-white font-bold text-[11px] px-2.5 py-1 rounded-lg cursor-pointer">Editar</button>
-                                <button onclick="deleteSponsor('${s.id}')" class="bg-rose-600 hover:bg-rose-500 text-white font-bold text-[11px] px-2.5 py-1 rounded-lg cursor-pointer">Eliminar</button>
+                                <button onclick="openEditSponsorModal('${s.id}')" class="bg-sky-600 hover:bg-sky-500 text-white font-bold text-[11px] px-2.5 py-1 rounded-lg cursor-pointer transition shadow">Editar</button>
+                                <button onclick="deleteSponsor('${s.id}')" class="bg-rose-600 hover:bg-rose-500 text-white font-bold text-[11px] px-2.5 py-1 rounded-lg cursor-pointer transition shadow">Eliminar</button>
                             </div>
                         ` : ''}
                     </div>
                     <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-                        <div class="w-full sm:w-64 aspect-video rounded-2xl overflow-hidden bg-slate-950 border border-sky-400/40 flex-shrink-0 cursor-pointer" onclick="openImagePreviewModal('${escapeHtml(s.image || '')}', '${escapeHtml(s.name)}')">
-                            <img src="${escapeHtml(s.image || '')}" alt="${escapeHtml(s.name)}" class="w-full h-full object-cover">
+                        <div class="w-full sm:w-64 aspect-video rounded-2xl overflow-hidden bg-slate-950 border border-sky-400/40 flex-shrink-0 cursor-pointer" onclick="openImagePreviewModal('${escapeHtml(s.image || '/108900.jpg')}', '${escapeHtml(s.name)}')">
+                            <img src="${escapeHtml(s.image || '/108900.jpg')}" alt="${escapeHtml(s.name)}" class="w-full h-full object-cover">
                         </div>
                         <div class="space-y-1.5 flex-1">
                             <h4 class="text-base font-extrabold text-white">${escapeHtml(s.name)}</h4>
                             <p class="text-xs font-bold text-amber-400">${escapeHtml(s.title)}</p>
                             <p class="text-xs text-slate-300 leading-relaxed">${escapeHtml(s.desc)}</p>
                             <div class="flex flex-wrap gap-2 pt-1">
-                                ${s.phone ? `<a href="https://wa.me/593${s.phone.replace(/[^0-9]/g, '').replace(/^0/, '')}" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-3 py-1 rounded-xl transition flex items-center gap-1.5"><i class="fa-brands fa-whatsapp"></i> ${escapeHtml(s.phone)}</a>` : ''}
+                                ${s.phone ? `<a href="https://wa.me/593${s.phone.replace(/[^0-9]/g, '').replace(/^0/, '')}" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-3 py-1 rounded-xl transition flex items-center gap-1.5 shadow"><i class="fa-brands fa-whatsapp"></i> ${escapeHtml(s.phone)}</a>` : ''}
                                 ${s.email ? `<a href="mailto:${escapeHtml(s.email)}" class="bg-slate-900 border border-slate-700 text-sky-300 text-xs px-3 py-1 rounded-xl font-bold flex items-center gap-1.5"><i class="fa-solid fa-envelope"></i> ${escapeHtml(s.email)}</a>` : ''}
                             </div>
                         </div>
@@ -2803,7 +2874,7 @@
         function openAddSponsorModal() {
             if (currentRole !== 'ADMIN') return;
             if (sponsorsList.length >= 20) {
-                showToast('Límite de 20 patrocinadores alcanzado', 'error');
+                showToast('Límite máximo de 20 patrocinadores alcanzado', 'error');
                 return;
             }
             stagedSponsorImageB64 = '';
@@ -2814,7 +2885,8 @@
             document.getElementById('inputSponsorDesc').value = '';
             document.getElementById('inputSponsorPhone').value = '';
             document.getElementById('inputSponsorEmail').value = '';
-            document.getElementById('previewSponsorImg').src = 'https://ui-avatars.com/api/?name=Patrocinador&background=0284c7&color=fff';
+            document.getElementById('previewSponsorImg').src = '/108900.jpg';
+            document.getElementById('sponsorFileStatus').innerText = 'Selecciona una imagen de tu equipo (opcional)';
             document.getElementById('sponsorModalTitle').innerText = 'Nuevo Espacio Publicitario Patrocinador';
             openModal('sponsorModal');
         }
@@ -2831,7 +2903,8 @@
             document.getElementById('inputSponsorDesc').value = s.desc || '';
             document.getElementById('inputSponsorPhone').value = s.phone || '';
             document.getElementById('inputSponsorEmail').value = s.email || '';
-            document.getElementById('previewSponsorImg').src = s.image || '';
+            document.getElementById('previewSponsorImg').src = s.image || '/108900.jpg';
+            document.getElementById('sponsorFileStatus').innerText = 'Imagen actual cargada. Puedes subir una nueva si deseas reemplazarla.';
             document.getElementById('sponsorModalTitle').innerText = 'Editar Patrocinador: ' + s.name;
             openModal('sponsorModal');
         }
@@ -2839,11 +2912,14 @@
         async function handleSponsorFileSelected(event) {
             const file = event.target.files[0];
             if (!file) return;
-            const b64 = await compressSmartImage(file, 1000, 0.85);
+            document.getElementById('sponsorFileStatus').innerText = '⏳ Optimizando imagen...';
+            const b64 = await compressSmartImage(file, 600, 0.75);
             if (b64) {
                 stagedSponsorImageB64 = b64;
                 document.getElementById('previewSponsorImg').src = b64;
-                document.getElementById('sponsorFileStatus').innerText = '✅ Foto cargada correctamente';
+                document.getElementById('sponsorFileStatus').innerText = '✅ Foto optimizada y cargada con éxito';
+            } else {
+                document.getElementById('sponsorFileStatus').innerText = '❌ Error al procesar la imagen';
             }
             event.target.value = '';
         }
@@ -2858,27 +2934,53 @@
             const desc = document.getElementById('inputSponsorDesc').value.trim();
             const phone = document.getElementById('inputSponsorPhone').value.trim();
             const email = document.getElementById('inputSponsorEmail').value.trim();
-            const img = stagedSponsorImageB64 || document.getElementById('previewSponsorImg').src;
+            const img = stagedSponsorImageB64 || document.getElementById('previewSponsorImg').src || '/108900.jpg';
+
+            if (!name) {
+                showToast('Ingrese el nombre del patrocinador', 'error');
+                return;
+            }
+
+            const sponsorObj = {
+                id: editId || ('sponsor_' + Date.now()),
+                badge: badge || 'Patrocinio Oficial',
+                name: name,
+                title: title || 'Asesoría Profesional',
+                desc: desc || 'Servicios calificados y respaldados.',
+                phone: phone,
+                email: email,
+                image: img,
+                updatedAt: new Date().toISOString()
+            };
 
             if (editId) {
                 const idx = sponsorsList.findIndex(s => s.id === editId);
                 if (idx !== -1) {
-                    sponsorsList[idx] = { ...sponsorsList[idx], badge, name, title, desc, phone, email, image: img };
+                    sponsorsList[idx] = sponsorObj;
+                } else {
+                    sponsorsList.push(sponsorObj);
                 }
             } else {
-                sponsorsList.push({ id: 'sponsor_' + Date.now(), badge, name, title, desc, phone, email, image: img });
+                sponsorsList.push(sponsorObj);
             }
 
             localStorage.setItem('alianza_sponsors', JSON.stringify(sponsorsList));
+
             if (db) {
+                db.collection('alianza_sponsors').doc(sponsorObj.id).set(sponsorObj, { merge: true }).catch(err => {
+                    console.error("Firestore alianza_sponsors set error:", err);
+                });
                 db.collection('alianza_settings').doc('appData').set({
                     sponsors: sponsorsList,
                     updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                }, { merge: true }).catch(() => {});
+                }, { merge: true }).catch(err => {
+                    console.warn("Firestore appData sponsors update error:", err);
+                });
             }
+
             renderSponsorsCards();
             closeModal('sponsorModal');
-            showToast('¡Patrocinador guardado!');
+            showToast('¡Patrocinador guardado y sincronizado!');
         }
 
         function deleteSponsor(id) {
@@ -2886,23 +2988,33 @@
             const target = sponsorsList.find(s => s.id === id);
             if (!target) return;
             sponsorIdToDelete = id;
-            document.getElementById('deleteSponsorTargetName').innerText = `¿Eliminar el espacio de "${target.name}"?`;
+            document.getElementById('deleteSponsorTargetName').innerText = `¿Eliminar el espacio publicitario de "${target.name}"?`;
             openModal('deleteSponsorConfirmModal');
         }
 
         function openClearAllSponsorsConfirm() {
             if (currentRole !== 'ADMIN') return;
             sponsorIdToDelete = '__ALL__';
-            document.getElementById('deleteSponsorTargetName').innerText = '¿Desea limpiar todos los patrocinadores?';
+            document.getElementById('deleteSponsorTargetName').innerText = '¿Desea eliminar todos los patrocinadores?';
             openModal('deleteSponsorConfirmModal');
         }
 
         function confirmExecuteDeleteSponsor() {
             if (!sponsorIdToDelete) return;
             if (sponsorIdToDelete === '__ALL__') {
+                const idsToDelete = sponsorsList.map(s => s.id);
                 sponsorsList = [];
+                if (db) {
+                    idsToDelete.forEach(id => {
+                        db.collection('alianza_sponsors').doc(id).delete().catch(() => {});
+                    });
+                }
             } else {
-                sponsorsList = sponsorsList.filter(s => s.id !== sponsorIdToDelete);
+                const idDel = sponsorIdToDelete;
+                sponsorsList = sponsorsList.filter(s => s.id !== idDel);
+                if (db) {
+                    db.collection('alianza_sponsors').doc(idDel).delete().catch(() => {});
+                }
             }
             sponsorIdToDelete = null;
             localStorage.setItem('alianza_sponsors', JSON.stringify(sponsorsList));
@@ -3877,23 +3989,296 @@ ALIANZA ESTRATÉGICA S.A.S.`;
         }
 
         function exportVisitsToExcel() {
-            if (currentRole !== 'ADMIN') return;
-            if (visitsList.length === 0) {
+            if (currentRole !== 'ADMIN') {
+                showToast('Acceso exclusivo para el Administrador Principal (A.A.I.L.)', 'error');
+                return;
+            }
+            if (!visitsList || visitsList.length === 0) {
                 showToast('No hay visitas registradas para exportar', 'info');
                 return;
             }
-            let table = '<table border="1"><tr><th>ID Visita</th><th>Fecha</th><th>Hora</th><th>Agente Gestor</th><th>Teléfono Agente</th><th>Visitante / Prospecto</th><th>Teléfono Prospecto</th><th>Cédula/RUC</th><th>Tipo Prospecto</th><th>Código Activo</th><th>Activo de Interés</th><th>Precio Activo</th><th>Resultado</th><th>Observaciones</th><th>Estado Administrativo</th><th>Notas de Gerencia</th></tr>';
-            visitsList.forEach(v => {
-                table += '<tr><td>' + v.id + '</td><td>' + (v.visitDate || '') + '</td><td>' + (v.visitTime || '') + '</td><td>' + (v.agentName || '') + '</td><td>' + (v.agentPhone || '') + '</td><td>' + (v.visitorName || '') + '</td><td>' + (v.visitorPhone || '') + '</td><td>' + (v.visitorId || '') + '</td><td>' + (v.prospectType || '') + '</td><td>' + (v.linkedAssetCode || '') + '</td><td>' + (v.linkedAssetTitle || '') + '</td><td>' + (v.linkedAssetPrice || '') + '</td><td>' + (v.visitResult || '') + '</td><td>' + (v.observations || '') + '</td><td>' + (v.adminStatus || '') + '</td><td>' + (v.adminNotes || '') + '</td></tr>';
-            });
-            table += '</table>';
 
-            const blob = new Blob([table], { type: 'application/vnd.ms-excel;charset=utf-8;' });
+            const totalCount = visitsList.length;
+            const openNeg = visitsList.filter(v => v.adminStatus === 'NEGOCIACIÓN_ABIERTA' || (v.visitResult && v.visitResult.includes('Oferta'))).length;
+            const closedCount = visitsList.filter(v => v.adminStatus === 'CIERRE_EXITOSO').length;
+            const uniqueAgents = new Set(visitsList.map(v => (v.agentName || '').trim()).filter(Boolean)).size;
+
+            let html = `
+            <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+            <head>
+                <meta charset="utf-8">
+                <!--[if gte mso 9]>
+                <xml>
+                <x:ExcelWorkbook>
+                <x:ExcelWorksheets>
+                <x:ExcelWorksheet>
+                <x:Name>Bitacora de Visitas</x:Name>
+                <x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions>
+                </x:ExcelWorksheet>
+                </x:ExcelWorksheets>
+                </x:ExcelWorkbook>
+                </xml>
+                <![endif]-->
+                <style>
+                    body { font-family: Arial, sans-serif; background-color: #080c14; color: #ffffff; }
+                    table { border-collapse: collapse; width: 100%; }
+                    th { background-color: #0f172a; color: #38bdf8; border: 1px solid #334155; padding: 8px; font-size: 11px; text-transform: uppercase; }
+                    td { border: 1px solid #1e293b; padding: 6px; font-size: 10px; color: #f8fafc; }
+                    .header-title { font-size: 18px; font-weight: bold; color: #ffffff; }
+                    .header-sub { font-size: 11px; font-weight: bold; color: #38bdf8; }
+                    .card-box { background-color: #0f172a; border: 1px solid #334155; font-weight: bold; font-size: 12px; text-align: center; padding: 8px; }
+                </style>
+            </head>
+            <body style="background-color: #080c14; color: #ffffff;">
+                <table style="margin-bottom: 15px;">
+                    <tr>
+                        <td colspan="2" style="border: none; text-align: center; vertical-align: middle;">
+                            <img src="https://alianzaestrategica2026-byte.github.io/alianzaestrategica/108900.jpg" width="60" height="60" style="border-radius: 50%; border: 2px solid #f59e0b;">
+                        </td>
+                        <td colspan="14" style="border: none;">
+                            <div class="header-title">ALIANZA ESTRATÉGICA S.A.S. — RUC: 2200260967001</div>
+                            <div class="header-sub">BITÁCORA CENTRAL DE VISITAS, PROSPECTOS Y POSTULANTES COMERCIALES</div>
+                            <div style="font-size: 10px; color: #94a3b8;">El Coca (Puerto Francisco de Orellana), Orellana - Ecuador | Tel: 099 216 0967 / 095 919 0794</div>
+                            <div style="font-size: 10px; color: #f59e0b; font-weight: bold;">Emisión: ${new Date().toLocaleDateString('es-EC')} ${new Date().toLocaleTimeString('es-EC')}</div>
+                        </td>
+                    </tr>
+                </table>
+
+                <table style="margin-bottom: 20px; border-collapse: collapse;">
+                    <tr style="background-color: #0f172a;">
+                        <th colspan="4" style="background-color: #1e293b; color: #94a3b8;">Total Visitas Registradas</th>
+                        <th colspan="4" style="background-color: #d97706; color: #ffffff;">En Negociación</th>
+                        <th colspan="4" style="background-color: #059669; color: #ffffff;">Cierres Exitosos</th>
+                        <th colspan="4" style="background-color: #0284c7; color: #ffffff;">Agentes Activos</th>
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="card-box" style="color: #ffffff;">${totalCount}</td>
+                        <td colspan="4" class="card-box" style="color: #f59e0b;">${openNeg}</td>
+                        <td colspan="4" class="card-box" style="color: #10b981;">${closedCount}</td>
+                        <td colspan="4" class="card-box" style="color: #38bdf8;">${uniqueAgents}</td>
+                    </tr>
+                </table>
+
+                <table>
+                    <thead>
+                        <tr style="background-color: #0f172a;">
+                            <th>ID Visita</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Agente Gestor</th>
+                            <th>Teléfono Agente</th>
+                            <th>Visitante / Prospecto</th>
+                            <th>Teléfono Prospecto</th>
+                            <th>Cédula/RUC</th>
+                            <th>Tipo Prospecto</th>
+                            <th>Código Activo</th>
+                            <th>Activo de Interés</th>
+                            <th>Precio Activo</th>
+                            <th>Resultado Visita</th>
+                            <th>Observaciones Agente</th>
+                            <th>Estado Administrativo</th>
+                            <th>Notas de Gerencia</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+
+            visitsList.forEach((v, idx) => {
+                html += `
+                    <tr style="background-color: ${idx % 2 === 0 ? '#0b1329' : '#0f172a'};">
+                        <td style="font-family: monospace; font-weight: bold; color: #94a3b8;">${v.id || '-'}</td>
+                        <td style="font-family: monospace; font-weight: bold; color: #38bdf8;">${v.visitDate || '-'}</td>
+                        <td>${v.visitTime || '-'}</td>
+                        <td style="font-weight: bold; color: #f59e0b;">${escapeHtml(v.agentName || '-')}</td>
+                        <td>${escapeHtml(v.agentPhone || '-')}</td>
+                        <td style="font-weight: bold; color: #ffffff;">${escapeHtml(v.visitorName || '-')}</td>
+                        <td>${escapeHtml(v.visitorPhone || '-')}</td>
+                        <td>${escapeHtml(v.visitorId || '-')}</td>
+                        <td style="color: #38bdf8;">${escapeHtml(v.prospectType || '-')}</td>
+                        <td style="font-family: monospace; font-weight: bold; color: #38bdf8;">${escapeHtml(v.linkedAssetCode || '-')}</td>
+                        <td style="font-weight: bold; color: #ffffff;">${escapeHtml(v.linkedAssetTitle || '-')}</td>
+                        <td style="color: #f59e0b; font-weight: bold;">${escapeHtml(v.linkedAssetPrice || '-')}</td>
+                        <td>${escapeHtml(v.visitResult || '-')}</td>
+                        <td>${escapeHtml(v.observations || '-')}</td>
+                        <td style="text-align: center; font-weight: bold; color: ${v.adminStatus === 'CIERRE_EXITOSO' ? '#10b981' : '#38bdf8'};">${escapeHtml(v.adminStatus || 'REGISTRADO')}</td>
+                        <td style="color: #f59e0b;">${escapeHtml(v.adminNotes || '-')}</td>
+                    </tr>`;
+            });
+
+            html += `
+                    </tbody>
+                </table>
+            </body>
+            </html>`;
+
+            const blob = new Blob([html], { type: 'application/vnd.ms-excel;charset=utf-8;' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
             link.download = 'Alianza_Bitacora_Visitas_' + new Date().toISOString().split('T')[0] + '.xls';
             link.click();
-            showToast('Bitácora de visitas exportada a Excel', 'success');
+            showToast('Bitácora de visitas exportada a Excel con Dashboard y Logotipo', 'success');
+        }
+
+        function downloadVisitsBitacoraPDF() {
+            if (currentRole !== 'ADMIN') {
+                showToast('Acceso exclusivo para el Administrador Principal (A.A.I.L.)', 'error');
+                return;
+            }
+            if (!visitsList || visitsList.length === 0) {
+                showToast('No hay visitas registradas en la bitácora para generar reporte PDF', 'info');
+                return;
+            }
+
+            const q = (document.getElementById('adminVisitsSearch')?.value || '').toLowerCase().trim();
+            const statusFilter = document.getElementById('adminVisitsStatusFilter')?.value || 'ALL';
+
+            const filteredVisits = visitsList.filter(v => {
+                const matchesStatus = (statusFilter === 'ALL') || (v.adminStatus === statusFilter);
+                if (!matchesStatus) return false;
+                if (!q) return true;
+                return (v.visitorName || '').toLowerCase().includes(q) ||
+                       (v.visitorPhone || '').toLowerCase().includes(q) ||
+                       (v.visitorId || '').toLowerCase().includes(q) ||
+                       (v.agentName || '').toLowerCase().includes(q) ||
+                       (v.linkedAssetCode || '').toLowerCase().includes(q) ||
+                       (v.linkedAssetTitle || '').toLowerCase().includes(q);
+            });
+
+            const listToPrint = filteredVisits.length > 0 ? filteredVisits : visitsList;
+
+            let printArea = document.getElementById('legalReportPrintArea');
+            if (!printArea) {
+                printArea = document.createElement('div');
+                printArea.id = 'legalReportPrintArea';
+                document.body.appendChild(printArea);
+            }
+
+            const totalCount = listToPrint.length;
+            const openNeg = listToPrint.filter(v => v.adminStatus === 'NEGOCIACIÓN_ABIERTA' || (v.visitResult && v.visitResult.includes('Oferta'))).length;
+            const closedCount = listToPrint.filter(v => v.adminStatus === 'CIERRE_EXITOSO').length;
+            const uniqueAgents = new Set(listToPrint.map(v => (v.agentName || '').trim()).filter(Boolean)).size;
+
+            const tableRowsHtml = listToPrint.map((v, idx) => `
+                <tr style="border-bottom: 1px solid #1e293b; background: ${idx % 2 === 0 ? '#0b1329' : '#0f172a'}; font-size: 10px;">
+                    <td style="padding: 6px 8px; border: 1px solid #1e293b; font-family: monospace; color: #38bdf8; font-weight: bold; white-space: nowrap;">
+                        ${v.visitDate || '-'}<br><span style="color: #94a3b8; font-size: 9px;">${v.visitTime || ''}</span>
+                    </td>
+                    <td style="padding: 6px 8px; border: 1px solid #1e293b;">
+                        <strong style="color: #ffffff;">${escapeHtml(v.visitorName)}</strong><br>
+                        <span style="color: #cbd5e1;">Tel: ${escapeHtml(v.visitorPhone || '-')}</span><br>
+                        <span style="color: #94a3b8; font-size: 8.5px;">Doc: ${escapeHtml(v.visitorId || '-')} | <span style="color: #f59e0b;">${escapeHtml(v.prospectType || 'Comprador')}</span></span>
+                    </td>
+                    <td style="padding: 6px 8px; border: 1px solid #1e293b;">
+                        <strong style="color: #f59e0b;">${escapeHtml(v.agentName || '-')}</strong><br>
+                        <span style="color: #94a3b8; font-size: 8.5px;">Tel: ${escapeHtml(v.agentPhone || '-')}</span>
+                    </td>
+                    <td style="padding: 6px 8px; border: 1px solid #1e293b;">
+                        <span style="background: #0284c7; color: #fff; font-size: 8.5px; font-weight: 800; padding: 1px 4px; border-radius: 3px; font-family: monospace;">${escapeHtml(v.linkedAssetCode || 'GENERAL')}</span>
+                        <br><strong style="color: #ffffff; font-size: 9.5px;">${escapeHtml(v.linkedAssetTitle || 'Interés General')}</strong>
+                        <br><span style="color: #38bdf8; font-size: 9px; font-weight: bold;">Val: ${escapeHtml(v.linkedAssetPrice || '-')}</span>
+                    </td>
+                    <td style="padding: 6px 8px; border: 1px solid #1e293b; color: #cbd5e1;">
+                        <strong style="color: #38bdf8;">Res:</strong> ${escapeHtml(v.visitResult || 'Registrada')}<br>
+                        <span style="color: #94a3b8; font-size: 9px;">${escapeHtml(v.observations || '-')}</span>
+                        ${v.adminNotes ? `<br><span style="color: #f59e0b; font-size: 8.5px;"><strong>Nota Gerencia:</strong> ${escapeHtml(v.adminNotes)}</span>` : ''}
+                    </td>
+                    <td style="padding: 6px 8px; border: 1px solid #1e293b; text-align: center; white-space: nowrap;">
+                        <span style="background: ${v.adminStatus === 'CIERRE_EXITOSO' ? 'rgba(16, 185, 129, 0.2)' : (v.adminStatus === 'NEGOCIACIÓN_ABIERTA' ? 'rgba(245, 158, 11, 0.2)' : 'rgba(2, 132, 199, 0.2)')}; color: ${v.adminStatus === 'CIERRE_EXITOSO' ? '#10b981' : (v.adminStatus === 'NEGOCIACIÓN_ABIERTA' ? '#f59e0b' : '#38bdf8')}; border: 1px solid ${v.adminStatus === 'CIERRE_EXITOSO' ? '#10b981' : (v.adminStatus === 'NEGOCIACIÓN_ABIERTA' ? '#f59e0b' : '#38bdf8')}; font-size: 8.5px; font-weight: 800; padding: 2px 6px; border-radius: 4px;">
+                            ${escapeHtml(v.adminStatus || 'REGISTRADO')}
+                        </span>
+                    </td>
+                </tr>
+            `).join('');
+
+            printArea.innerHTML = `
+                <div style="max-width: 900px; margin: 0 auto; background: #0f172a; border: 1px solid #1e293b; border-radius: 16px; padding: 24px; color: #f8fafc; font-family: 'Plus Jakarta Sans', sans-serif;">
+                    <!-- CABECERA CORPORATIVA CON LOGO Y MARCA -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #0284c7; padding-bottom: 16px; margin-bottom: 20px;">
+                        <div style="display: flex; align-items: center; gap: 14px;">
+                            <img src="https://alianzaestrategica2026-byte.github.io/alianzaestrategica/108900.jpg" style="width: 65px; height: 65px; border-radius: 50%; border: 2px solid #f59e0b; object-fit: cover;" alt="Logo Alianza">
+                            <div>
+                                <h1 style="font-size: 20px; font-weight: 800; color: #ffffff; margin: 0; letter-spacing: -0.5px;">ALIANZA ESTRATÉGICA S.A.S.</h1>
+                                <p style="font-size: 11px; font-weight: 800; color: #38bdf8; margin: 2px 0 0 0; text-transform: uppercase;">BITÁCORA CENTRAL DE VISITAS, PROSPECTOS & POSTULANTES</p>
+                                <p style="font-size: 10px; color: #94a3b8; margin: 2px 0 0 0;">RUC: 2200260967001 | El Coca (Puerto Francisco de Orellana), Orellana - Ecuador</p>
+                                <p style="font-size: 10px; color: #94a3b8; margin: 0;">WhatsApp Gerencia: 099 216 0967 / 095 919 0794 | Email: alianzaestrategica2026@gmail.com</p>
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.5); color: #f59e0b; font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 8px; text-transform: uppercase;">
+                                REPORTE GERENCIAL OFICIAL
+                            </span>
+                            <div style="font-size: 10px; color: #cbd5e1; margin-top: 6px; font-family: monospace;">Emisión: ${new Date().toLocaleDateString('es-EC')} ${new Date().toLocaleTimeString('es-EC', {hour: '2-digit', minute:'2-digit'})}</div>
+                        </div>
+                    </div>
+
+                    <!-- MÉTRICAS DE RESUMEN DE LA BITÁCORA -->
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 18px;">
+                        <div style="background: #020617; border: 1px solid #334155; border-radius: 10px; padding: 10px; text-align: center;">
+                            <span style="font-size: 9px; font-weight: 800; color: #94a3b8; text-transform: uppercase; display: block;">Total Visitas Registradas</span>
+                            <span style="font-size: 18px; font-weight: 900; color: #ffffff;">${totalCount}</span>
+                        </div>
+                        <div style="background: #020617; border: 1px solid #334155; border-radius: 10px; padding: 10px; text-align: center;">
+                            <span style="font-size: 9px; font-weight: 800; color: #f59e0b; text-transform: uppercase; display: block;">En Negociación</span>
+                            <span style="font-size: 18px; font-weight: 900; color: #f59e0b;">${openNeg}</span>
+                        </div>
+                        <div style="background: #020617; border: 1px solid #334155; border-radius: 10px; padding: 10px; text-align: center;">
+                            <span style="font-size: 9px; font-weight: 800; color: #10b981; text-transform: uppercase; display: block;">Cierres Exitosos</span>
+                            <span style="font-size: 18px; font-weight: 900; color: #10b981;">${closedCount}</span>
+                        </div>
+                        <div style="background: #020617; border: 1px solid #334155; border-radius: 10px; padding: 10px; text-align: center;">
+                            <span style="font-size: 9px; font-weight: 800; color: #38bdf8; text-transform: uppercase; display: block;">Agentes Activos</span>
+                            <span style="font-size: 18px; font-weight: 900; color: #38bdf8;">${uniqueAgents}</span>
+                        </div>
+                    </div>
+
+                    <!-- TABLA DETALLADA DE REGISTROS -->
+                    <div style="margin-bottom: 20px;">
+                        <h3 style="font-size: 12px; font-weight: 800; color: #38bdf8; text-transform: uppercase; border-bottom: 1px solid #334155; padding-bottom: 6px; margin: 0 0 10px 0;">
+                            Detalle Completo de Visitas & Registro Notarial de Prospectos
+                        </h3>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 9.5px; color: #cbd5e1;">
+                            <thead>
+                                <tr style="background: #1e293b; color: #38bdf8; text-transform: uppercase; font-size: 8.5px; font-weight: 800;">
+                                    <th style="padding: 6px 8px; border: 1px solid #334155; text-align: left; width: 12%;">Fecha/Hora</th>
+                                    <th style="padding: 6px 8px; border: 1px solid #334155; text-align: left; width: 24%;">Prospecto / Visitante</th>
+                                    <th style="padding: 6px 8px; border: 1px solid #334155; text-align: left; width: 18%;">Agente Gestor</th>
+                                    <th style="padding: 6px 8px; border: 1px solid #334155; text-align: left; width: 22%;">Activo Ligado</th>
+                                    <th style="padding: 6px 8px; border: 1px solid #334155; text-align: left; width: 16%;">Resultado & Notas</th>
+                                    <th style="padding: 6px 8px; border: 1px solid #334155; text-align: center; width: 8%;">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${tableRowsHtml}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- FIRMAS CORPORATIVAS -->
+                    <div style="margin-top: 28px; border-top: 2px solid #0284c7; padding-top: 16px;">
+                        <div style="display: flex; justify-content: space-between; text-align: center; gap: 20px;">
+                            <div style="flex: 1; border-top: 1px solid #94a3b8; padding-top: 6px;">
+                                <p style="font-size: 11px; font-weight: 800; color: #ffffff; margin: 0;">Adrián Arturo Íñiguez Lucio</p>
+                                <p style="font-size: 9.5px; color: #94a3b8; margin: 1px 0 0 0;">Gerente General & Representante Legal</p>
+                                <p style="font-size: 9px; color: #f59e0b; margin: 0; font-weight: 700;">ALIANZA ESTRATÉGICA S.A.S.</p>
+                            </div>
+                            <div style="flex: 1; border-top: 1px solid #94a3b8; padding-top: 6px;">
+                                <p style="font-size: 11px; font-weight: 800; color: #ffffff; margin: 0;">Abg. Carlos Alfredo Íñiguez Rodríguez</p>
+                                <p style="font-size: 9.5px; color: #94a3b8; margin: 1px 0 0 0;">Patrocinio Jurídico & Saneamiento Notarial</p>
+                                <p style="font-size: 9px; color: #38bdf8; margin: 0; font-weight: 700;">El Coca, Orellana - Ecuador</p>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 16px; text-align: center; font-size: 8.5px; color: #64748b; border-top: 1px solid #1e293b; padding-top: 8px;">
+                            Documento oficial de control interno emitido para la Bitácora Central de ALIANZA ESTRATÉGICA S.A.S. | RUC: 2200260967001
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            openModal('legalReportModal');
+            showToast('Generando vista previa de la Bitácora de Visitas en PDF...');
+            setTimeout(() => {
+                window.print();
+            }, 500);
         }
 
         function sendConsignarWhatsApp() {
@@ -4253,18 +4638,159 @@ ALIANZA ESTRATÉGICA S.A.S.`;
         }
 
         function exportToCSV() {
-            if (inventory.length === 0) return;
-            let csv = "Código,Fecha,Categoría,Título,Propietario,Precio Venta,Comisión,Agente Captador,Agente Vendedor,Estado\n";
-            inventory.forEach(i => {
-                csv += `"${i.code}","${i.dateCreated}","${i.category}","${(i.title || '').replace(/"/g, '""')}","${(i.ownerName || '').replace(/"/g, '""')}","${i.realSalePrice || 0}","${i.commissionPactada || 0}","${i.agentName || ''}","${i.sellerAgentName || ''}","${i.status}"\n`;
+            if (currentRole !== 'ADMIN') {
+                showToast('Acceso exclusivo para el Administrador Principal (A.A.I.L.)', 'error');
+                return;
+            }
+            if (!inventory || inventory.length === 0) {
+                showToast('No hay activos registrados en la matriz para exportar', 'info');
+                return;
+            }
+
+            let totalCap = 0, totalProy = 0, totalCob = 0, totalAg = 0, totalEmp = 0;
+            inventory.forEach(item => {
+                const isVendido = item.status === 'VENDIDO' || item.status === 'SOLD';
+                const priceVal = item.realSalePrice || 0;
+                const comVal = item.commissionPactada || 0;
+                totalCap += priceVal;
+                totalProy += comVal;
+                if (isVendido) {
+                    totalCob += comVal;
+                    const liqCap = item.payCaptador || (comVal * 0.25);
+                    const liqVen = item.payVendedor || (comVal * 0.25);
+                    const liqEmp = item.netEmpresa || (comVal * 0.50);
+                    totalAg += (liqCap + liqVen);
+                    totalEmp += liqEmp;
+                }
             });
-            const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `Matriz_Alianza_${new Date().toISOString().slice(0, 10)}.csv`;
-            a.click();
-            showToast('¡Archivo CSV exportado!');
+
+            let html = `
+            <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+            <head>
+                <meta charset="utf-8">
+                <!--[if gte mso 9]>
+                <xml>
+                <x:ExcelWorkbook>
+                <x:ExcelWorksheets>
+                <x:ExcelWorksheet>
+                <x:Name>Matriz Financiera v2.0</x:Name>
+                <x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions>
+                </x:ExcelWorksheet>
+                </x:ExcelWorksheets>
+                </x:ExcelWorkbook>
+                </xml>
+                <![endif]-->
+                <style>
+                    body { font-family: Arial, sans-serif; background-color: #080c14; color: #ffffff; }
+                    table { border-collapse: collapse; width: 100%; }
+                    th { background-color: #0f172a; color: #38bdf8; border: 1px solid #334155; padding: 8px; font-size: 11px; text-transform: uppercase; }
+                    td { border: 1px solid #1e293b; padding: 6px; font-size: 10px; color: #f8fafc; }
+                    .header-title { font-size: 18px; font-weight: bold; color: #ffffff; }
+                    .header-sub { font-size: 11px; font-weight: bold; color: #38bdf8; }
+                    .card-box { background-color: #0f172a; border: 1px solid #334155; font-weight: bold; font-size: 12px; text-align: center; padding: 8px; }
+                </style>
+            </head>
+            <body style="background-color: #080c14; color: #ffffff;">
+                <table style="margin-bottom: 15px;">
+                    <tr>
+                        <td colspan="2" style="border: none; text-align: center; vertical-align: middle;">
+                            <img src="https://alianzaestrategica2026-byte.github.io/alianzaestrategica/108900.jpg" width="60" height="60" style="border-radius: 50%; border: 2px solid #f59e0b;">
+                        </td>
+                        <td colspan="15" style="border: none;">
+                            <div class="header-title">ALIANZA ESTRATÉGICA S.A.S. — RUC: 2200260967001</div>
+                            <div class="header-sub">MATRIZ FINANCIERA & CONTABLE v2.0 - CONTROL TOTAL DE ACTIVOS Y COMISIONES (50/50)</div>
+                            <div style="font-size: 10px; color: #94a3b8;">El Coca (Puerto Francisco de Orellana), Orellana - Ecuador | Tel: 099 216 0967 / 095 919 0794</div>
+                            <div style="font-size: 10px; color: #f59e0b; font-weight: bold;">Fecha de Emisión: ${new Date().toLocaleDateString('es-EC')} ${new Date().toLocaleTimeString('es-EC')}</div>
+                        </td>
+                    </tr>
+                </table>
+
+                <table style="margin-bottom: 20px; border-collapse: collapse;">
+                    <tr style="background-color: #0f172a;">
+                        <th colspan="3" style="background-color: #1e293b; color: #94a3b8;">1. Capital Inventario</th>
+                        <th colspan="3" style="background-color: #0284c7; color: #ffffff;">2. Proyección Comisiones</th>
+                        <th colspan="3" style="background-color: #059669; color: #ffffff;">3. Comisiones Cobradas</th>
+                        <th colspan="4" style="background-color: #e11d48; color: #ffffff;">4. Pago Fuerza Ventas (50%)</th>
+                        <th colspan="4" style="background-color: #7c3aed; color: #ffffff;">5. Ganancia Empresa (50%)</th>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="card-box" style="color: #ffffff;">$${totalCap.toFixed(2)} USD</td>
+                        <td colspan="3" class="card-box" style="color: #38bdf8;">$${totalProy.toFixed(2)} USD</td>
+                        <td colspan="3" class="card-box" style="color: #10b981;">$${totalCob.toFixed(2)} USD</td>
+                        <td colspan="4" class="card-box" style="color: #f43f5e;">$${totalAg.toFixed(2)} USD</td>
+                        <td colspan="4" class="card-box" style="color: #c084fc;">$${totalEmp.toFixed(2)} USD</td>
+                    </tr>
+                </table>
+
+                <table>
+                    <thead>
+                        <tr style="background-color: #0f172a;">
+                            <th>Código</th>
+                            <th>Fecha</th>
+                            <th>Categoría</th>
+                            <th>Título del Activo</th>
+                            <th>Propietario Titular</th>
+                            <th>Tel. Propietario</th>
+                            <th>Cédula Propietario</th>
+                            <th>Precio Venta ($)</th>
+                            <th>Comisión Pactada ($)</th>
+                            <th>Agente Captador</th>
+                            <th>Tel. Captador</th>
+                            <th>Agente Vendedor</th>
+                            <th>Tel. Vendedor</th>
+                            <th>Liq. Captador (25%)</th>
+                            <th>Liq. Vendedor (25%)</th>
+                            <th>Liq. Empresa (50%)</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+
+            inventory.forEach((i, idx) => {
+                const isVendido = i.status === 'VENDIDO' || i.status === 'SOLD';
+                const priceVal = i.realSalePrice || 0;
+                const comVal = i.commissionPactada || 0;
+                let liqCap = 0, liqVen = 0, liqEmp = 0;
+                if (isVendido) {
+                    liqCap = i.payCaptador || (comVal * 0.25);
+                    liqVen = i.payVendedor || (comVal * 0.25);
+                    liqEmp = i.netEmpresa || (comVal * 0.50);
+                }
+
+                html += `
+                    <tr style="background-color: ${idx % 2 === 0 ? '#0b1329' : '#0f172a'};">
+                        <td style="font-family: monospace; font-weight: bold; color: #38bdf8;">${i.code || '-'}</td>
+                        <td>${i.dateCreated || '-'}</td>
+                        <td>${escapeHtml(i.categoryType || i.category)}</td>
+                        <td style="font-weight: bold; color: #ffffff;">${escapeHtml(i.title || '-')}</td>
+                        <td>${escapeHtml(i.ownerName || '-')}</td>
+                        <td>${escapeHtml(i.ownerPhone || '-')}</td>
+                        <td>${escapeHtml(i.ownerDoc || '-')}</td>
+                        <td style="text-align: right; font-weight: bold;">$${priceVal.toFixed(2)}</td>
+                        <td style="text-align: right; font-weight: bold; color: #f59e0b;">$${comVal.toFixed(2)}</td>
+                        <td>${escapeHtml(i.agentName || '-')}</td>
+                        <td>${escapeHtml(i.agentPhone || '-')}</td>
+                        <td>${escapeHtml(i.sellerAgentName || '-')}</td>
+                        <td>${escapeHtml(i.sellerAgentPhone || '-')}</td>
+                        <td style="text-align: right; color: #38bdf8;">$${liqCap.toFixed(2)}</td>
+                        <td style="text-align: right; color: #f59e0b;">$${liqVen.toFixed(2)}</td>
+                        <td style="text-align: right; color: #c084fc; font-weight: bold;">$${liqEmp.toFixed(2)}</td>
+                        <td style="text-align: center; font-weight: bold; color: ${isVendido ? '#f43f5e' : '#10b981'};">${isVendido ? 'VENDIDO' : 'DISPONIBLE'}</td>
+                    </tr>`;
+            });
+
+            html += `
+                    </tbody>
+                </table>
+            </body>
+            </html>`;
+
+            const blob = new Blob([html], { type: 'application/vnd.ms-excel;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'Matriz_Financiera_v2_Alianza_SAS_' + new Date().toISOString().slice(0, 10) + '.xls';
+            link.click();
+            showToast('¡Matriz Financiera v2.0 exportada a Excel con Dashboard y Logotipo!', 'success');
         }
 
         function printFinancialReport() {
@@ -4596,6 +5122,10 @@ ESQUEMA DE COMISIONES (50/50):
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
+        function triggerPrintLegalReport() {
+            window.print();
+        }
+
         function downloadAssetLegalBackup(itemId) {
             if (currentRole !== 'ADMIN') {
                 showToast('Acceso exclusivo para el Administrador Principal (A.A.I.L.)', 'error');
@@ -4606,108 +5136,206 @@ ESQUEMA DE COMISIONES (50/50):
 
             const assetVisits = visitsList.filter(v => v.linkedAssetId === item.id || v.linkedAssetCode === item.code);
             const isVendido = item.status === 'VENDIDO' || item.status === 'SOLD';
+            const mainImg = (item.images && item.images.length > 0) ? item.images[0] : (item.img || '');
 
-            let reportArea = document.getElementById('printableReportArea');
-            if (!reportArea) {
-                reportArea = document.createElement('div');
-                reportArea.id = 'printableReportArea';
-                reportArea.className = 'hidden print:block bg-white text-slate-900 p-8 text-xs font-sans';
-                document.body.appendChild(reportArea);
+            let printArea = document.getElementById('legalReportPrintArea');
+            if (!printArea) {
+                printArea = document.createElement('div');
+                printArea.id = 'legalReportPrintArea';
+                document.body.appendChild(printArea);
             }
 
-            const visitsHtml = assetVisits.length === 0 ? '<p>No registra visitas comerciales.</p>' : assetVisits.map(v => `
-                <div style="border-bottom: 1px solid #cbd5e1; padding: 6px 0; margin-bottom: 4px;">
-                    <strong>Visitante:</strong> ${escapeHtml(v.visitorName)} (Cédula: ${v.visitorId || '-'}, Tel: ${v.visitorPhone})<br>
-                    <strong>Agente Gestor:</strong> ${escapeHtml(v.agentName)} | <strong>Fecha:</strong> ${v.visitDate} ${v.visitTime}<br>
+            const visitsHtml = assetVisits.length === 0 
+                ? '<p style="color: #94a3b8; font-style: italic; margin: 4px 0;">No registra visitas comerciales hasta la fecha.</p>' 
+                : assetVisits.map(v => `
+                <div style="border-bottom: 1px solid #334155; padding: 6px 0; margin-bottom: 4px; color: #cbd5e1;">
+                    <strong style="color: #ffffff;">Visitante:</strong> ${escapeHtml(v.visitorName)} (Cédula: ${escapeHtml(v.visitorId || '-')}, Tel: ${escapeHtml(v.visitorPhone)})<br>
+                    <strong style="color: #38bdf8;">Agente Gestor:</strong> ${escapeHtml(v.agentName)} | <strong>Fecha:</strong> ${v.visitDate} ${v.visitTime}<br>
                     <strong>Tipo Prospecto:</strong> ${v.prospectType} | <strong>Resultado:</strong> ${v.visitResult}<br>
                     <strong>Observaciones:</strong> ${escapeHtml(v.observations)} | <strong>Estado:</strong> ${v.adminStatus}
                 </div>
             `).join('');
 
-            reportArea.innerHTML = `
-                <div style="max-width: 800px; margin: 0 auto; line-height: 1.5; color: #0f172a;">
-                    <div style="text-align: center; border-bottom: 2px solid #0284c7; padding-bottom: 12px; margin-bottom: 16px;">
-                        <h2 style="font-size: 18px; font-weight: 800; color: #0f172a; margin: 0;">ALIANZA ESTRATÉGICA S.A.S.</h2>
-                        <p style="font-size: 11px; font-weight: bold; color: #0284c7; margin: 2px 0;">PLATAFORMA CORPORATIVA DE CORRETAJE & RESPALDO LEGAL NOTARIAL</p>
-                        <p style="font-size: 10px; color: #475569; margin: 0;">El Coca (Puerto Francisco de Orellana), Orellana - Ecuador | RUC: 2200260967001</p>
+            printArea.innerHTML = `
+                <div style="max-width: 850px; margin: 0 auto; background: #0f172a; border: 1px solid #1e293b; border-radius: 16px; padding: 24px; color: #f8fafc; font-family: 'Plus Jakarta Sans', sans-serif;">
+                    <!-- CABECERA CORPORATIVA CON LOGO Y SELLOS -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #0284c7; padding-bottom: 16px; margin-bottom: 20px;">
+                        <div style="display: flex; align-items: center; gap: 14px;">
+                            <img src="https://alianzaestrategica2026-byte.github.io/alianzaestrategica/108900.jpg" style="width: 65px; height: 65px; border-radius: 50%; border: 2px solid #f59e0b; object-fit: cover;" alt="Logo Alianza">
+                            <div>
+                                <h1 style="font-size: 20px; font-weight: 800; color: #ffffff; margin: 0; letter-spacing: -0.5px;">ALIANZA ESTRATÉGICA S.A.S.</h1>
+                                <p style="font-size: 11px; font-weight: 800; color: #38bdf8; margin: 2px 0 0 0; text-transform: uppercase;">PLATAFORMA CORPORATIVA DE CORRETAJE & RESPALDO LEGAL NOTARIAL</p>
+                                <p style="font-size: 10px; color: #94a3b8; margin: 2px 0 0 0;">RUC: 2200260967001 | El Coca (Puerto Francisco de Orellana), Orellana - Ecuador</p>
+                                <p style="font-size: 10px; color: #94a3b8; margin: 0;">Tel: 099 216 0967 / 095 919 0794 | Email: alianzaestrategica2026@gmail.com</p>
+                            </div>
+                        </div>
+                        <div style="text-align: right; display: flex; flex-direction: column; justify-content: center; align-items: flex-end;">
+                            <span style="background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.5); color: #f59e0b; font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 8px; text-transform: uppercase;">
+                                EXPEDIENTE OFICIAL DE ACTIVO
+                            </span>
+                            <span style="font-size: 10px; color: #cbd5e1; margin-top: 6px; font-family: monospace;">Emisión: ${new Date().toLocaleDateString('es-EC')}</span>
+                        </div>
                     </div>
 
-                    <h3 style="font-size: 14px; font-weight: 800; background: #f1f5f9; padding: 6px 10px; border-left: 4px solid #0284c7; margin: 10px 0;">
-                        EXPEDIENTE DE RESPALDO LEGAL - ACTIVO [${item.code}]
-                    </h3>
+                    <!-- BANNER CÓDIGO & ESTADO DEL ACTIVO -->
+                    <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border: 1px solid #334155; border-radius: 12px; padding: 12px 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span style="background: #0284c7; color: #ffffff; font-size: 11px; font-weight: 900; padding: 3px 8px; border-radius: 6px; font-family: monospace;">${item.code}</span>
+                            <h2 style="font-size: 16px; font-weight: 800; color: #ffffff; margin: 6px 0 2px 0;">${escapeHtml(item.title)}</h2>
+                            <p style="font-size: 11px; color: #cbd5e1; margin: 0;">Ubicación: <strong>${escapeHtml(item.location || 'El Coca, Orellana')}</strong></p>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 18px; font-weight: 900; color: #38bdf8;">${item.priceStr || ('$' + (item.realSalePrice || 0) + ' USD')}</div>
+                            <span style="font-size: 10px; font-weight: 800; color: ${isVendido ? '#f43f5e' : '#10b981'}; text-transform: uppercase; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 2px 8px; border-radius: 6px; display: inline-block; margin-top: 4px;">
+                                ${item.status || 'DISPONIBLE'}
+                            </span>
+                        </div>
+                    </div>
 
-                    <div style="margin-bottom: 12px;">
-                        <h4 style="font-size: 12px; font-weight: 700; color: #0284c7; border-bottom: 1px solid #e2e8f0; padding-bottom: 2px; margin-bottom: 4px;">1. FICHA TÉCNICA DEL ACTIVO</h4>
-                        <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
-                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; width: 30%; font-weight: bold;">Título / Descripción:</td><td style="padding: 4px; border: 1px solid #cbd5e1;">${escapeHtml(item.title)}</td></tr>
-                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; font-weight: bold;">Categoría:</td><td style="padding: 4px; border: 1px solid #cbd5e1;">${item.categoryType || item.category}</td></tr>
-                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; font-weight: bold;">Ubicación:</td><td style="padding: 4px; border: 1px solid #cbd5e1;">${escapeHtml(item.location || 'El Coca')}</td></tr>
-                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; font-weight: bold;">Precio Comercial / Avalúo:</td><td style="padding: 4px; border: 1px solid #cbd5e1; font-weight: bold; color: #0284c7;">${item.priceStr || ('$' + (item.realSalePrice || 0) + ' USD')}</td></tr>
-                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; font-weight: bold;">Estado del Activo:</td><td style="padding: 4px; border: 1px solid #cbd5e1; font-weight: bold; color: ${isVendido ? '#e11d48' : '#059669'};">${item.status || 'DISPONIBLE'}</td></tr>
-                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; font-weight: bold;">Descripción Completa:</td><td style="padding: 4px; border: 1px solid #cbd5e1;">${escapeHtml(item.desc || 'Sin descripción')}</td></tr>
+                    <!-- FOTO PRINCIPAL Y FICHA TÉCNICA -->
+                    <div style="display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: wrap;">
+                        ${mainImg ? `<div style="flex: 1; min-width: 220px; max-width: 300px; border-radius: 12px; overflow: hidden; border: 1px solid #334155; height: 180px; background: #020617;">
+                            <img src="${mainImg}" style="width: 100%; height: 100%; object-fit: cover;" alt="Foto del activo">
+                        </div>` : ''}
+                        
+                        <div style="flex: 2; min-width: 260px;">
+                            <h3 style="font-size: 12px; font-weight: 800; color: #38bdf8; text-transform: uppercase; border-bottom: 1px solid #334155; padding-bottom: 4px; margin: 0 0 8px 0;">
+                                1. Especificaciones Técnicas y Detalle
+                            </h3>
+                            <table style="width: 100%; border-collapse: collapse; font-size: 10.5px; color: #cbd5e1;">
+                                <tr><td style="padding: 4px 6px; border: 1px solid #334155; font-weight: bold; background: #1e293b; width: 35%;">Categoría:</td><td style="padding: 4px 6px; border: 1px solid #334155;">${item.categoryType || item.category}</td></tr>
+                                <tr><td style="padding: 4px 6px; border: 1px solid #334155; font-weight: bold; background: #1e293b;">Fecha Registro:</td><td style="padding: 4px 6px; border: 1px solid #334155;">${item.dateCreated || '-'}</td></tr>
+                                <tr><td style="padding: 4px 6px; border: 1px solid #334155; font-weight: bold; background: #1e293b;">Estado Notarial:</td><td style="padding: 4px 6px; border: 1px solid #334155; color: #10b981; font-weight: bold;">Documentación Verificada</td></tr>
+                                <tr><td style="padding: 4px 6px; border: 1px solid #334155; font-weight: bold; background: #1e293b;">Descripción:</td><td style="padding: 4px 6px; border: 1px solid #334155;">${escapeHtml(item.desc || 'Sin descripción detallada')}</td></tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- SECCIÓN 2: PROPIETARIO Y AGENTE RECEPTOR -->
+                    <div style="margin-bottom: 16px;">
+                        <h3 style="font-size: 12px; font-weight: 800; color: #38bdf8; text-transform: uppercase; border-bottom: 1px solid #334155; padding-bottom: 4px; margin: 0 0 8px 0;">
+                            2. Propietario Registrado & Agente Receptor / Captador
+                        </h3>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 10.5px; color: #cbd5e1;">
+                            <tr>
+                                <td style="padding: 5px 8px; border: 1px solid #334155; font-weight: bold; background: #1e293b; width: 30%;">Propietario Titular:</td>
+                                <td style="padding: 5px 8px; border: 1px solid #334155;">${escapeHtml(item.ownerName || 'Reservado en archivo')} (Doc: ${escapeHtml(item.ownerDoc || '-')}) - Tel: ${escapeHtml(item.ownerPhone || '-')}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 8px; border: 1px solid #334155; font-weight: bold; background: #1e293b;">Agente Captador / Receptor:</td>
+                                <td style="padding: 5px 8px; border: 1px solid #334155;">${escapeHtml(item.agentName || 'Alianza Estratégica S.A.S.')} (Tel: ${escapeHtml(item.agentPhone || '099 216 0967')})</td>
+                            </tr>
                         </table>
                     </div>
 
-                    <div style="margin-bottom: 12px;">
-                        <h4 style="font-size: 12px; font-weight: 700; color: #0284c7; border-bottom: 1px solid #e2e8f0; padding-bottom: 2px; margin-bottom: 4px;">2. PROPIETARIO Y AGENTE CAPTADOR / RECEPTOR</h4>
-                        <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
-                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; width: 30%; font-weight: bold;">Propietario Registrado:</td><td style="padding: 4px; border: 1px solid #cbd5e1;">${escapeHtml(item.ownerName || '-')} (Cédula/RUC: ${item.ownerDoc || '-'}) - Tel: ${item.ownerPhone || '-'}</td></tr>
-                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; font-weight: bold;">Agente Receptor / Captador:</td><td style="padding: 4px; border: 1px solid #cbd5e1;">${escapeHtml(item.agentName || 'Alianza')} (Tel: ${item.agentPhone || '-'})</td></tr>
+                    <!-- SECCIÓN 3: AGENTE VENDEDOR -->
+                    <div style="margin-bottom: 16px;">
+                        <h3 style="font-size: 12px; font-weight: 800; color: #38bdf8; text-transform: uppercase; border-bottom: 1px solid #334155; padding-bottom: 4px; margin: 0 0 8px 0;">
+                            3. Agente Vendedor (Cierre Comercial)
+                        </h3>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 10.5px; color: #cbd5e1;">
+                            <tr>
+                                <td style="padding: 5px 8px; border: 1px solid #334155; font-weight: bold; background: #1e293b; width: 30%;">Agente Vendedor:</td>
+                                <td style="padding: 5px 8px; border: 1px solid #334155;">${escapeHtml(item.sellerAgentName || (isVendido ? item.agentName : 'Pendiente de cierre comercial'))} (Tel: ${escapeHtml(item.sellerAgentPhone || '-')})</td>
+                            </tr>
                         </table>
                     </div>
 
-                    <div style="margin-bottom: 12px;">
-                        <h4 style="font-size: 12px; font-weight: 700; color: #0284c7; border-bottom: 1px solid #e2e8f0; padding-bottom: 2px; margin-bottom: 4px;">3. AGENTE VENDEDOR (CIERRE)</h4>
-                        <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
-                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; width: 30%; font-weight: bold;">Agente Vendedor:</td><td style="padding: 4px; border: 1px solid #cbd5e1;">${escapeHtml(item.sellerAgentName || (isVendido ? item.agentName : 'Pendiente de Cierre'))}</td></tr>
-                        </table>
-                    </div>
-
-                    <div style="margin-bottom: 12px;">
-                        <h4 style="font-size: 12px; font-weight: 700; color: #0284c7; border-bottom: 1px solid #e2e8f0; padding-bottom: 2px; margin-bottom: 4px;">4. PROSPECTOS DE VISITAS REGISTRADOS (${assetVisits.length})</h4>
-                        <div style="font-size: 10px; background: #f8fafc; padding: 6px; border: 1px solid #cbd5e1;">
+                    <!-- SECCIÓN 4: PROSPECTOS DE VISITAS REGISTRADOS -->
+                    <div style="margin-bottom: 16px;">
+                        <h3 style="font-size: 12px; font-weight: 800; color: #38bdf8; text-transform: uppercase; border-bottom: 1px solid #334155; padding-bottom: 4px; margin: 0 0 8px 0;">
+                            4. Historial de Prospectos & Visitas Registradas (${assetVisits.length})
+                        </h3>
+                        <div style="background: #020617; border: 1px solid #334155; border-radius: 8px; padding: 8px; font-size: 10px; color: #cbd5e1;">
                             ${visitsHtml}
                         </div>
                     </div>
 
-                    <div style="margin-bottom: 12px;">
-                        <h4 style="font-size: 12px; font-weight: 700; color: #0284c7; border-bottom: 1px solid #e2e8f0; padding-bottom: 2px; margin-bottom: 4px;">5. ACUERDOS LEGALES DE PAGO Y REMUNERACIÓN</h4>
-                        <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
-                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; width: 30%; font-weight: bold;">Comisión Pactada:</td><td style="padding: 4px; border: 1px solid #cbd5e1;">${item.comisionStr || '$' + (item.commissionPactada || 0)}</td></tr>
-                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; font-weight: bold;">Esquema de Reparto:</td><td style="padding: 4px; border: 1px solid #cbd5e1;">50% Empresa (Alianza S.A.S.) / 50% Fuerza de Ventas (Captador / Vendedor)</td></tr>
+                    <!-- SECCIÓN 5: ACUERDOS LEGALES DE PAGO Y REMUNERACIÓN -->
+                    <div style="margin-bottom: 16px;">
+                        <h3 style="font-size: 12px; font-weight: 800; color: #38bdf8; text-transform: uppercase; border-bottom: 1px solid #334155; padding-bottom: 4px; margin: 0 0 8px 0;">
+                            5. Acuerdos Legales de Pago & Remuneración
+                        </h3>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 10.5px; color: #cbd5e1;">
+                            <tr>
+                                <td style="padding: 5px 8px; border: 1px solid #334155; font-weight: bold; background: #1e293b; width: 30%;">Comisión Pactada:</td>
+                                <td style="padding: 5px 8px; border: 1px solid #334155; color: #f59e0b; font-weight: bold;">${item.comisionStr || ('$' + (item.commissionPactada || 0) + ' USD')}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px 8px; border: 1px solid #334155; font-weight: bold; background: #1e293b;">Regla de Reparto:</td>
+                                <td style="padding: 5px 8px; border: 1px solid #334155;">50% para ALIANZA ESTRATÉGICA S.A.S. / 50% para Fuerza de Ventas (25% Agente Captador / 25% Agente Vendedor, o 50% completo si el mismo agente realiza captación y venta)</td>
+                            </tr>
                         </table>
                     </div>
 
+                    <!-- SECCIÓN 6: DATOS DE ARTÍCULO LIQUIDADO (SI APLICA) -->
                     ${isVendido ? `
-                    <div style="margin-bottom: 12px;">
-                        <h4 style="font-size: 12px; font-weight: 700; color: #e11d48; border-bottom: 1px solid #e2e8f0; padding-bottom: 2px; margin-bottom: 4px;">6. DATOS DE ARTÍCULO LIQUIDADO / VENDIDO</h4>
-                        <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
-                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; width: 30%; font-weight: bold;">Precio Final de Venta:</td><td style="padding: 4px; border: 1px solid #cbd5e1;">$${(item.realSalePrice || 0).toFixed(2)} USD</td></tr>
-                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; font-weight: bold;">Comisión Total Cobrada:</td><td style="padding: 4px; border: 1px solid #cbd5e1;">$${(item.commissionPactada || 0).toFixed(2)} USD</td></tr>
-                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; font-weight: bold;">Pago Agente Captador:</td><td style="padding: 4px; border: 1px solid #cbd5e1;">$${(item.payCaptador || 0).toFixed(2)} USD</td></tr>
-                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; font-weight: bold;">Pago Agente Vendedor:</td><td style="padding: 4px; border: 1px solid #cbd5e1;">$${(item.payVendedor || 0).toFixed(2)} USD</td></tr>
-                            <tr><td style="padding: 4px; border: 1px solid #cbd5e1; font-weight: bold;">Ganancia Neta Empresa:</td><td style="padding: 4px; border: 1px solid #cbd5e1;">$${(item.netEmpresa || 0).toFixed(2)} USD</td></tr>
+                    <div style="margin-bottom: 16px; background: rgba(225, 29, 72, 0.05); border: 1px solid rgba(225, 29, 72, 0.3); border-radius: 10px; padding: 10px;">
+                        <h3 style="font-size: 12px; font-weight: 800; color: #f43f5e; text-transform: uppercase; border-bottom: 1px solid rgba(225, 29, 72, 0.3); padding-bottom: 4px; margin: 0 0 8px 0;">
+                            6. Datos de Artículo Liquidado / Vendido
+                        </h3>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 10.5px; color: #cbd5e1;">
+                            <tr><td style="padding: 4px 6px; border: 1px solid #334155; font-weight: bold; width: 30%;">Precio Final de Venta:</td><td style="padding: 4px 6px; border: 1px solid #334155; font-weight: bold; color: #ffffff;">$${(item.realSalePrice || 0).toFixed(2)} USD</td></tr>
+                            <tr><td style="padding: 4px 6px; border: 1px solid #334155; font-weight: bold;">Comisión Total Cobrada:</td><td style="padding: 4px 6px; border: 1px solid #334155; font-weight: bold; color: #10b981;">$${(item.commissionPactada || 0).toFixed(2)} USD</td></tr>
+                            <tr><td style="padding: 4px 6px; border: 1px solid #334155; font-weight: bold;">Pago Agente Captador:</td><td style="padding: 4px 6px; border: 1px solid #334155; font-weight: bold; color: #38bdf8;">$${(item.payCaptador || 0).toFixed(2)} USD</td></tr>
+                            <tr><td style="padding: 4px 6px; border: 1px solid #334155; font-weight: bold;">Pago Agente Vendedor:</td><td style="padding: 4px 6px; border: 1px solid #334155; font-weight: bold; color: #f59e0b;">$${(item.payVendedor || 0).toFixed(2)} USD</td></tr>
+                            <tr><td style="padding: 4px 6px; border: 1px solid #334155; font-weight: bold;">Ganancia Neta Empresa:</td><td style="padding: 4px 6px; border: 1px solid #334155; font-weight: bold; color: #c084fc;">$${(item.netEmpresa || 0).toFixed(2)} USD</td></tr>
                         </table>
                     </div>
                     ` : ''}
 
-                    <div style="margin-top: 30px; display: flex; justify-content: space-between; font-size: 10px; text-align: center;">
-                        <div style="width: 45%; border-top: 1px solid #0f172a; padding-top: 4px;">
-                            <strong>Adrián Arturo Íñiguez Lucio</strong><br>Gerente General & Representante Legal<br>ALIANZA ESTRATÉGICA S.A.S.
+                    <!-- SECCIÓN 7: RESPALDO LEGAL, FIRMAS & SELLO NOTARIAL -->
+                    <div style="margin-top: 28px; border-top: 2px solid #0284c7; padding-top: 16px;">
+                        <div style="display: flex; justify-content: space-between; text-align: center; gap: 20px;">
+                            <div style="flex: 1; border-top: 1px solid #94a3b8; padding-top: 6px;">
+                                <p style="font-size: 11px; font-weight: 800; color: #ffffff; margin: 0;">Adrián Arturo Íñiguez Lucio</p>
+                                <p style="font-size: 9.5px; color: #94a3b8; margin: 1px 0 0 0;">Gerente General & Representante Legal</p>
+                                <p style="font-size: 9px; color: #f59e0b; margin: 0; font-weight: 700;">ALIANZA ESTRATÉGICA S.A.S.</p>
+                            </div>
+                            <div style="flex: 1; border-top: 1px solid #94a3b8; padding-top: 6px;">
+                                <p style="font-size: 11px; font-weight: 800; color: #ffffff; margin: 0;">Abg. Carlos Alfredo Íñiguez Rodríguez</p>
+                                <p style="font-size: 9.5px; color: #94a3b8; margin: 1px 0 0 0;">Patrocinio Jurídico & Saneamiento Notarial</p>
+                                <p style="font-size: 9px; color: #38bdf8; margin: 0; font-weight: 700;">El Coca, Orellana - Ecuador</p>
+                            </div>
                         </div>
-                        <div style="width: 45%; border-top: 1px solid #0f172a; padding-top: 4px;">
-                            <strong>Abg. Carlos Alfredo Íñiguez Rodríguez</strong><br>Patrocinio Jurídico & Saneamiento Notarial<br>El Coca, Orellana
+                        
+                        <div style="margin-top: 16px; text-align: center; font-size: 8.5px; color: #64748b; border-top: 1px solid #1e293b; padding-top: 8px;">
+                            Documento digital de respaldo legal generado exclusivamente para el Administrador Principal (A.A.I.L.) | ALIANZA ESTRATÉGICA S.A.S. RUC: 2200260967001
                         </div>
                     </div>
                 </div>
             `;
 
-            showToast('Generando reporte de respaldo legal para impresión / PDF...');
+            openModal('legalReportModal');
+            showToast('Generando vista previa de Expediente de Respaldo Legal...');
             setTimeout(() => {
                 window.print();
             }, 500);
         }
     </script>
+
+    <!-- MODAL VISTA PREVIA & IMPRESIÓN RESPALDO LEGAL (PDF) -->
+    <div id="legalReportModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-2 md:p-6 overflow-y-auto modal-scroll">
+        <div class="glass-panel rounded-3xl w-full max-w-4xl max-h-[96vh] flex flex-col shadow-2xl border border-slate-800 overflow-hidden my-auto">
+            <div class="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-950/90 no-print">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-file-pdf text-rose-500 text-lg"></i>
+                    <h3 class="text-sm font-extrabold text-white">Respaldo Legal Expediente - ALIANZA ESTRATÉGICA S.A.S.</h3>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="triggerPrintLegalReport()" class="bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-extrabold px-4 py-2 rounded-xl text-xs transition shadow flex items-center gap-2 cursor-pointer hover:scale-105">
+                        <i class="fa-solid fa-print"></i> <span>Imprimir / Descargar PDF</span>
+                    </button>
+                    <button onclick="closeModal('legalReportModal')" class="text-slate-400 hover:text-white p-2 rounded-xl text-lg cursor-pointer">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="legalReportPrintArea" class="flex-1 overflow-y-auto modal-scroll p-4 md:p-6 bg-slate-950">
+                <!-- Contenido dinámico generado por JavaScript -->
+            </div>
+        </div>
+    </div>
 
     <!-- WIDGET FLOTANTE ASISTENTE VIRTUAL SOFÍA (ÚNICA OPCIÓN DEDICADA) -->
     <div id="virtualAssistantWidget" class="fixed bottom-5 right-5 z-40 flex items-center gap-2">
