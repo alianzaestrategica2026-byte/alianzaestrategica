@@ -199,16 +199,10 @@
                 <button onclick="openModal('agentProfileModal')" id="agentProfileNavBtn" class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black px-2.5 py-1 rounded-lg text-xs shadow-md transition flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95" title="Perfil de Integración para Agentes">
                     <i class="fa-solid fa-id-card-clip text-slate-950 text-xs"></i> <span>Perfil Agentes</span>
                 </button>
-                <button onclick="openApplyAgentModal()" id="agentApplyNavBtn" class="bg-emerald-600 hover:bg-emerald-500 text-white font-black px-2.5 py-1 rounded-lg text-xs shadow-md transition flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95" title="Postulación Agentes">
-                    <i class="fa-solid fa-paper-plane text-xs"></i> <span>Postular Agente</span>
-                </button>
 
                 <button onclick="openModal('shareModal')" id="topShareBtn" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-2.5 py-1 rounded-lg text-xs font-semibold transition flex items-center gap-1 shadow-sm cursor-pointer" title="Compartir Plataforma">
                     <i class="fa-solid fa-share-nodes text-sky-400"></i> <span class="hidden sm:inline">Compartir</span>
                 </button>
-                <a href="/alianza_github_files.zip" download="alianza_github_files.zip" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-2.5 py-1 rounded-lg text-xs shadow-md transition flex items-center gap-1.5 cursor-pointer animate-pulse" title="Descargar paquete de archivos listo para GitHub">
-                    <i class="fa-solid fa-download text-xs"></i> <span>Descargar ZIP GitHub</span>
-                </a>
                 <button onclick="openModal('loginModal')" id="loginNavBtn" class="bg-sky-600 hover:bg-sky-500 text-white px-2.5 py-1 rounded-lg text-xs font-bold transition shadow-sm flex items-center gap-1 cursor-pointer">
                     <i class="fa-solid fa-right-to-bracket"></i> Acceso Sistema
                 </button>
@@ -501,27 +495,39 @@
         <div id="catalogGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
     </main>
 
-    <!-- SECCIÓN AUSPICIANTES Y ALIADOS (MARQUESINA CONTINUA DE DERECHA A IZQUIERDA) -->
+    <!-- SECCIÓN AUSPICIANTES Y ALIADOS ESTRATÉGICOS (DESPLAZABLE CON EL DEDO A LA DERECHA Y A LA IZQUIERDA) -->
     <section id="alliesMarquee" class="max-w-7xl mx-auto w-full px-4 mb-6">
         <div class="glass-panel rounded-3xl p-4 sm:p-5 border border-slate-800 shadow-xl overflow-hidden">
-            <div class="flex items-center justify-between mb-3 border-b border-slate-800/80 pb-2.5">
-                <div class="flex items-center gap-2">
+            <div class="flex items-center justify-between mb-3 border-b border-slate-800/80 pb-2.5 flex-wrap gap-2">
+                <div class="flex items-center gap-2 sm:gap-3">
                     <span class="w-2.5 h-2.5 rounded-full bg-sky-400 animate-pulse"></span>
                     <h3 class="text-xs sm:text-sm font-extrabold text-white uppercase tracking-wider flex items-center gap-2">
-                        <i class="fa-solid fa-handshake text-sky-400"></i> ALIADOS ESTRATEGICOS
+                        <i class="fa-solid fa-handshake text-sky-400"></i> ALIADOS ESTRATÉGICOS
                     </h3>
+                    <span class="text-[10px] text-sky-300 bg-sky-950/70 border border-sky-500/30 px-2.5 py-0.5 rounded-full flex items-center gap-1.5 font-semibold shadow-inner">
+                        <i class="fa-solid fa-arrows-left-right text-amber-300"></i> Desliza con el dedo
+                    </span>
                 </div>
                 <div class="flex items-center gap-2">
+                    <!-- Botones de flecha para desplazamiento rápido manual -->
+                    <div class="flex items-center gap-1.5">
+                        <button type="button" onclick="scrollAllies('left')" class="w-8 h-8 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-sky-500/60 text-slate-300 hover:text-white flex items-center justify-center transition shadow cursor-pointer active:scale-95" title="Desplazar a la izquierda" aria-label="Desplazar a la izquierda">
+                            <i class="fa-solid fa-chevron-left text-xs"></i>
+                        </button>
+                        <button type="button" onclick="scrollAllies('right')" class="w-8 h-8 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-sky-500/60 text-slate-300 hover:text-white flex items-center justify-center transition shadow cursor-pointer active:scale-95" title="Desplazar a la derecha" aria-label="Desplazar a la derecha">
+                            <i class="fa-solid fa-chevron-right text-xs"></i>
+                        </button>
+                    </div>
                     <button onclick="openAddAllyModal()" id="btnAddAllyBtn" class="admin-only hidden bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs px-3 py-1.5 rounded-xl transition shadow flex items-center gap-1.5 cursor-pointer">
                         <i class="fa-solid fa-plus-circle"></i> + Añadir Aliado
                     </button>
                 </div>
             </div>
 
-            <!-- Carrusel Marquesina Continua -->
-            <div class="relative w-full overflow-hidden py-2" id="marqueeWrapper">
-                <div id="marqueeTrack" class="marquee-track flex items-center gap-8">
-                    <!-- Dinámico -->
+            <!-- Contenedor Desplazable con el Dedo hacia la Derecha e Izquierda -->
+            <div class="relative w-full py-1">
+                <div id="alliesScrollContainer" class="flex items-center gap-3 sm:gap-4 overflow-x-auto py-2 px-1 scroll-smooth select-none cursor-grab active:cursor-grabbing modal-scroll" style="-webkit-overflow-scrolling: touch; touch-action: pan-x;">
+                    <!-- Se inyecta dinámicamente -->
                 </div>
             </div>
         </div>
@@ -574,6 +580,7 @@
                 <p><a id="footerWaLink" href="https://wa.me/593959190794" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-400 transition font-bold"><i class="fa-brands fa-whatsapp text-emerald-400 mr-2"></i> <strong>WhatsApp:</strong> <span id="footerPhone">095 919 0794</span></a></p>
                 <p><i class="fa-solid fa-store text-amber-400 mr-2"></i> <strong>Ventas:</strong> <span class="text-amber-300 font-medium">ventas@alianzaestrategica2026.com</span></p>
                 <p><i class="fa-solid fa-scale-balanced text-sky-400 mr-2"></i> <strong>Patrocinio Jurídico:</strong> <span id="footerLawyerText">Abg. Carlos Alfredo Íñiguez R.</span> — <span class="text-indigo-300 font-medium">patroc.legal@alianzaestrategica2026.com</span></p>
+                <p><i class="fa-solid fa-file-contract text-cyan-400 mr-2"></i> <strong>Administración Legal:</strong> <span class="text-cyan-300 font-medium">admi.legal@alianzaestrategica2026.com</span></p>
                 <p><i class="fa-solid fa-envelope text-sky-400 mr-2"></i> <strong>Información General:</strong> <span id="footerEmail">info@alianzaestrategica2026.com</span></p>
                 <p><i class="fa-solid fa-users text-emerald-400 mr-2"></i> <strong>Reclutamiento:</strong> <span class="text-emerald-300 font-medium">reclutamiento@alianzaestrategica2026.com</span></p>
             </div>
@@ -1688,11 +1695,26 @@
                         Toda captación o prospecto comercial registrado en la plataforma cuenta con acompañamiento directo del Patrocinio Jurídico de ALIANZA ESTRATÉGICA S.A.S. Los incentivos comerciales y bonificaciones especiales se procesan de conformidad con el volumen mensual de cierres notariales.
                     </p>
                 </div>
+
+                <!-- LLAMADO A LA ACCIÓN FINAL TRAS LEER EL PERFIL COMPLETO -->
+                <div class="bg-gradient-to-r from-emerald-950/80 via-slate-900 to-emerald-950/80 rounded-2xl p-4 border border-emerald-500/50 text-center space-y-2 mt-4 shadow-lg">
+                    <h4 class="font-extrabold text-emerald-400 text-sm flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-user-plus text-emerald-400"></i> ¿Interesado en incorporarte como Agente Comercial?
+                    </h4>
+                    <p class="text-slate-300 text-xs max-w-xl mx-auto leading-relaxed">
+                        Una vez revisadas nuestras directrices corporativas, comisiones 50/50 y blindaje legal notarial, puedes presentar tu postulación oficial.
+                    </p>
+                    <div class="pt-1">
+                        <button onclick="closeModal('agentProfileModal'); openApplyAgentModal();" class="bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white font-black px-6 py-2.5 rounded-xl text-xs transition shadow-xl inline-flex items-center gap-2 cursor-pointer hover:scale-105 active:scale-95">
+                            <i class="fa-solid fa-paper-plane text-amber-300"></i> Postular Ahora como Agente Comercial
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <div class="border-t border-slate-800 pt-3 flex justify-between items-center">
-                <button onclick="closeModal('agentProfileModal')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs cursor-pointer transition">Cerrar</button>
-                <button onclick="closeModal('agentProfileModal'); openApplyAgentModal();" class="bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-black px-6 py-2.5 rounded-xl text-xs transition shadow-lg flex items-center gap-2 cursor-pointer">
+                <button onclick="closeModal('agentProfileModal')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs cursor-pointer transition">Cerrar Perfil</button>
+                <button onclick="closeModal('agentProfileModal'); openApplyAgentModal();" class="bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white font-black px-6 py-2.5 rounded-xl text-xs transition shadow-lg flex items-center gap-2 cursor-pointer hover:scale-105">
                     <i class="fa-solid fa-paper-plane"></i> Postular Ahora como Agente
                 </button>
             </div>
@@ -2108,7 +2130,9 @@
             { id: "ally_1", name: "Estudio Jurídico Íñiguez", logo: "https://ui-avatars.com/api/?name=Estudio+Iniguez&background=0284c7&color=fff" },
             { id: "ally_2", name: "Notaría Primera El Coca", logo: "https://ui-avatars.com/api/?name=Notaria+1&background=d97706&color=fff" },
             { id: "ally_3", name: "Registro de la Propiedad Orellana", logo: "https://ui-avatars.com/api/?name=Registro+Propiedad&background=059669&color=fff" },
-            { id: "ally_4", name: "Consorcio Automotriz Oriente", logo: "https://ui-avatars.com/api/?name=Consorcio+Oriente&background=7c3aed&color=fff" }
+            { id: "ally_4", name: "Consorcio Automotriz Oriente", logo: "https://ui-avatars.com/api/?name=Consorcio+Oriente&background=7c3aed&color=fff" },
+            { id: "ally_5", name: "Cámara de Comercio de Orellana", logo: "https://ui-avatars.com/api/?name=Camara+Comercio&background=0284c7&color=fff" },
+            { id: "ally_6", name: "Asociación de Corredores Inmobiliarios", logo: "https://ui-avatars.com/api/?name=Asoc+Inmobiliaria&background=d97706&color=fff" }
         ];
 
         let inventory = JSON.parse(localStorage.getItem('alianza_inventory')) || [
@@ -2517,7 +2541,6 @@
             const quickAddNavBtn = document.getElementById('quickAddNavBtn');
             const financeNavBtn = document.getElementById('financeNavBtn');
             const agentGroupNavBtn = document.getElementById('agentGroupNavBtn');
-            const agentApplyNavBtn = document.getElementById('agentApplyNavBtn');
             const agentProfileNavBtn = document.getElementById('agentProfileNavBtn');
             const topShareBtn = document.getElementById('topShareBtn');
             const virtualAssistantWidget = document.getElementById('virtualAssistantWidget');
@@ -2546,7 +2569,6 @@
                 if (quickAddNavBtn) quickAddNavBtn.classList.remove('hidden');
                 if (financeNavBtn) financeNavBtn.classList.remove('hidden');
                 if (agentGroupNavBtn) agentGroupNavBtn.classList.add('hidden');
-                if (agentApplyNavBtn) agentApplyNavBtn.classList.add('hidden');
                 if (agentProfileNavBtn) agentProfileNavBtn.classList.add('hidden');
                 if (topShareBtn) topShareBtn.classList.remove('hidden');
                 
@@ -2580,7 +2602,6 @@
                 }
 
                 // 1. ELIMINAR BOTONES NO ÚTILES PARA EL AGENTE
-                if (agentApplyNavBtn) agentApplyNavBtn.classList.add('hidden');     // Postular agente
                 if (agentProfileNavBtn) agentProfileNavBtn.classList.add('hidden'); // Perfil agentes
                 if (topShareBtn) topShareBtn.classList.add('hidden');               // Compartir superior
                 if (agentGroupNavBtn) agentGroupNavBtn.classList.add('hidden');     // Grupo WA Agente
@@ -2617,8 +2638,7 @@
                 if (quickAddNavBtn) quickAddNavBtn.classList.add('hidden');
                 if (financeNavBtn) financeNavBtn.classList.add('hidden');
                 if (agentGroupNavBtn) agentGroupNavBtn.classList.add('hidden');
-                if (agentApplyNavBtn) agentApplyNavBtn.classList.remove('hidden');
-                if (agentProfileNavBtn) agentProfileNavBtn.classList.remove('hidden');
+                if (agentProfileNavBtn) agentProfileNavBtn.classList.remove('hidden'); // Perfil Agentes (Únicamente en Modo Público)
                 if (topShareBtn) topShareBtn.classList.remove('hidden');
 
                 // Hero en Modo Público
@@ -2731,24 +2751,74 @@
             showToast('¡Configuración corporativa guardada!');
         }
 
+        function scrollAllies(direction) {
+            const container = document.getElementById('alliesScrollContainer');
+            if (!container) return;
+            const scrollDistance = Math.max(260, Math.round(container.clientWidth * 0.75));
+            container.scrollBy({
+                left: direction === 'left' ? -scrollDistance : scrollDistance,
+                behavior: 'smooth'
+            });
+        }
+
+        let isAlliesDragInitialized = false;
+        function initAlliesTouchDrag() {
+            const slider = document.getElementById('alliesScrollContainer');
+            if (!slider || isAlliesDragInitialized) return;
+            isAlliesDragInitialized = true;
+
+            let isDown = false;
+            let startX = 0;
+            let scrollLeft = 0;
+
+            slider.addEventListener('mousedown', (e) => {
+                isDown = true;
+                slider.classList.add('cursor-grabbing');
+                startX = e.pageX - slider.offsetLeft;
+                scrollLeft = slider.scrollLeft;
+            });
+
+            slider.addEventListener('mouseleave', () => {
+                isDown = false;
+                slider.classList.remove('cursor-grabbing');
+            });
+
+            slider.addEventListener('mouseup', () => {
+                isDown = false;
+                slider.classList.remove('cursor-grabbing');
+            });
+
+            slider.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - slider.offsetLeft;
+                const walk = (x - startX) * 1.5;
+                slider.scrollLeft = scrollLeft - walk;
+            });
+        }
+
         function renderMarquee() {
-            const track = document.getElementById('marqueeTrack');
+            const track = document.getElementById('alliesScrollContainer');
             if (!track) return;
-            if (alliesList.length === 0) {
-                track.innerHTML = '<span class="text-xs text-slate-500">Sin aliados registrados</span>';
+            if (!alliesList || alliesList.length === 0) {
+                track.innerHTML = '<span class="text-xs text-slate-500 py-3 px-4">Sin aliados registrados</span>';
                 return;
             }
-            // Repetir para efecto infinito
-            const duplicated = [...alliesList, ...alliesList];
-            track.innerHTML = duplicated.map((ally, idx) => `
-                <div class="flex items-center gap-2.5 bg-slate-900/90 border border-slate-800 px-4 py-2 rounded-2xl flex-shrink-0 shadow">
-                    <img src="${ally.logo}" alt="${escapeHtml(ally.name)}" class="w-8 h-8 rounded-xl object-cover border border-sky-400/40">
-                    <span class="text-xs font-bold text-slate-200">${escapeHtml(ally.name)}</span>
-                    ${(currentRole === 'ADMIN' && idx < alliesList.length) ? `
-                        <button onclick="removeAlly('${ally.id}')" class="text-rose-400 hover:text-rose-300 ml-1 text-xs cursor-pointer" title="Eliminar"><i class="fa-solid fa-times"></i></button>
+            track.innerHTML = alliesList.map((ally) => `
+                <div class="flex items-center gap-3 bg-slate-900/90 hover:bg-slate-850 border border-slate-800 hover:border-sky-500/50 px-4 py-2.5 rounded-2xl flex-shrink-0 shadow-md transition-all hover:scale-102 select-none">
+                    <img src="${ally.logo}" alt="${escapeHtml(ally.name)}" class="w-10 h-10 rounded-xl object-cover border border-sky-400/40 flex-shrink-0 pointer-events-none" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(ally.name)}&background=0284c7&color=fff'">
+                    <div class="flex flex-col">
+                        <span class="text-xs sm:text-sm font-bold text-slate-100 whitespace-nowrap">${escapeHtml(ally.name)}</span>
+                        <span class="text-[10px] text-sky-400/80 font-medium whitespace-nowrap flex items-center gap-1">
+                            <i class="fa-solid fa-circle-check text-emerald-400 text-[9px]"></i> Aliado Institucional
+                        </span>
+                    </div>
+                    ${(currentRole === 'ADMIN') ? `
+                        <button onclick="removeAlly('${ally.id}')" class="text-rose-400 hover:text-rose-300 ml-2 text-xs p-1.5 rounded-lg hover:bg-rose-950/60 transition cursor-pointer" title="Eliminar"><i class="fa-solid fa-trash-can"></i></button>
                     ` : ''}
                 </div>
             `).join('');
+            initAlliesTouchDrag();
         }
 
         function openAddAllyModal() {
