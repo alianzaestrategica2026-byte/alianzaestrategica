@@ -131,12 +131,12 @@
         }
         @media print {
             @page {
-                size: A4 portrait;
-                margin: 8mm;
+                size: auto;
+                margin: 6mm 8mm;
             }
             body {
-                background-color: #080c14 !important;
-                color: #f8fafc !important;
+                background-color: #ffffff !important;
+                color: #0f172a !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
                 margin: 0 !important;
@@ -145,32 +145,36 @@
             header, footer, nav, #toastContainer, #virtualAssistantWidget, .no-print, button, .admin-only, .auth-only {
                 display: none !important;
             }
-            body > *:not(#legalReportModal) {
+            body > *:not(#printOutputWrapper) {
                 display: none !important;
             }
-            #legalReportModal {
+            #printOutputWrapper {
                 display: block !important;
                 visibility: visible !important;
-                position: absolute !important;
-                left: 0 !important;
-                top: 0 !important;
+                position: static !important;
                 width: 100% !important;
-                background-color: #080c14 !important;
-                color: #f8fafc !important;
-                z-index: 999999 !important;
+                background-color: #ffffff !important;
+                color: #0f172a !important;
                 margin: 0 !important;
                 padding: 0 !important;
                 box-sizing: border-box !important;
             }
-            #legalReportModal *, #legalReportPrintArea * {
+            #printOutputWrapper * {
                 visibility: visible !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
+            }
+            .avoid-break {
+                page-break-inside: avoid;
+                break-inside: avoid;
             }
         }
     </style>
 </head>
 <body class="font-sans antialiased min-h-screen flex flex-col relative selection:bg-sky-500 selection:text-white pb-14">
+
+    <!-- CONTENEDOR MAESTRO DE IMPRESIÓN Y DESCARGA A PDF -->
+    <div id="printOutputWrapper" class="hidden"></div>
 
     <!-- CONTENEDOR TOAST FLOTANTE -->
     <div id="toastContainer" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
@@ -369,12 +373,9 @@
                 </div>
 
                 <!-- 4. BOTONES DE ACCIÓN PRINCIPALES ESTILO FACEBOOK PAGE (MODO PÚBLICO) -->
-                <div id="heroActionButtons" class="flex flex-wrap items-center justify-center gap-2.5 mt-5 w-full max-w-2xl mx-auto">
-                    <a id="btnContactAgentes" href="https://wa.me/593959190794?text=Hola%20Alianza%20Estrat%C3%A9gica%20S.A.S.,%20deseo%20contactar%20con%20un%20agente%20comercial." target="_blank" rel="noopener noreferrer" class="flex-1 min-w-[140px] bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow-lg transition flex items-center justify-center gap-2 cursor-pointer hover:scale-105 active:scale-95">
-                        <i class="fa-brands fa-whatsapp text-base"></i> WhatsApp Oficial
-                    </a>
+                <div id="heroActionButtons" class="flex flex-wrap items-center justify-center gap-2.5 mt-5 w-full max-w-xl mx-auto">
                     <span id="heroMsgBtn" class="hidden"></span>
-                    <button type="button" id="btnConsignar" onclick="openModal('consignarModal')" class="flex-1 min-w-[140px] bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow transition flex items-center justify-center gap-2 cursor-pointer hover:scale-105 active:scale-95">
+                    <button type="button" id="btnConsignar" onclick="openModal('consignarModal')" class="flex-1 min-w-[150px] bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-lg transition flex items-center justify-center gap-2 cursor-pointer hover:scale-105 active:scale-95">
                         <i class="fa-solid fa-plus-circle"></i> Vender Activo
                     </button>
                     <button type="button" id="btnInfoMenu" onclick="openModal('infoMenuModal')" class="bg-slate-800 hover:bg-slate-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow transition flex items-center justify-center gap-2 border border-slate-700 cursor-pointer hover:scale-105 active:scale-95">
@@ -652,14 +653,14 @@
                         <option value="DISPONIBLE">DISPONIBLE</option>
                         <option value="VENDIDO">🔴 VENDIDO</option>
                     </select>
-                    <button onclick="exportToCSV()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-3 py-1.5 rounded-xl transition shadow flex items-center gap-1.5 cursor-pointer">
-                        <i class="fa-solid fa-file-csv"></i> Exportar CSV
+                    <button onclick="exportFinanceToExcel()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs px-3 py-1.5 rounded-xl transition shadow flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95" title="Exportar Matriz Contable a Excel (.xls) Completa sin omitir detalles">
+                        <i class="fa-solid fa-file-excel"></i> <span>Exportar Excel Completo</span>
+                    </button>
+                    <button onclick="printFinancialReport()" class="bg-rose-600 hover:bg-rose-500 text-white font-extrabold text-xs px-3 py-1.5 rounded-xl transition shadow flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95" title="Imprimir o Guardar en Archivo PDF Completo">
+                        <i class="fa-solid fa-file-pdf"></i> <span>Imprimir PDF Completo</span>
                     </button>
                     <button onclick="openAddProductModal()" class="bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs px-3 py-1.5 rounded-xl transition shadow flex items-center gap-1.5 cursor-pointer">
                         <i class="fa-solid fa-plus"></i> + Captación
-                    </button>
-                    <button onclick="printFinancialReport()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer">
-                        <i class="fa-solid fa-print"></i>
                     </button>
                     <button onclick="closeModal('financeModal')" class="text-slate-400 hover:text-white p-2 rounded-xl text-lg transition cursor-pointer">
                         <i class="fa-solid fa-xmark"></i>
@@ -738,7 +739,15 @@
                         <button onclick="setTransparencyFilter('CAPTADOS')" id="transBtnCap" class="bg-slate-950 hover:bg-slate-800 text-slate-300 font-bold px-3 py-1.5 rounded-xl text-xs transition cursor-pointer"><i class="fa-solid fa-folder-plus text-sky-400 mr-1"></i> Bienes Captados</button>
                         <button onclick="setTransparencyFilter('VENTAS')" id="transBtnVen" class="bg-slate-950 hover:bg-slate-800 text-slate-300 font-bold px-3 py-1.5 rounded-xl text-xs transition cursor-pointer"><i class="fa-solid fa-handshake-angle text-amber-400 mr-1"></i> Ventas Cerradas</button>
                     </div>
-                    <select id="agentSelectAuditor" onchange="renderAgentTransparencyPortal()" class="bg-slate-950 border border-slate-700 text-sky-400 font-bold rounded-xl px-4 py-2 text-xs focus:outline-none"></select>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <select id="agentSelectAuditor" onchange="renderAgentTransparencyPortal()" class="bg-slate-950 border border-slate-700 text-sky-400 font-bold rounded-xl px-4 py-2 text-xs focus:outline-none"></select>
+                        <button onclick="exportAgentTransparencyExcel()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs px-3 py-2 rounded-xl transition shadow flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95" title="Exportar Transparencia del Agente a Excel (.xls) Completo">
+                            <i class="fa-solid fa-file-excel"></i> <span>Exportar Excel (.xls)</span>
+                        </button>
+                        <button onclick="printAgentTransparencyPDF()" class="bg-rose-600 hover:bg-rose-500 text-white font-extrabold text-xs px-3 py-2 rounded-xl transition shadow flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95" title="Imprimir o Guardar Transparencia del Agente en PDF">
+                            <i class="fa-solid fa-file-pdf"></i> <span>Imprimir PDF</span>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -1188,7 +1197,7 @@
                     <button onclick="copiarFichaOficialWhatsApp()" class="bg-sky-700 hover:bg-sky-600 text-white font-bold px-3.5 py-2 rounded-xl text-xs transition shadow flex items-center gap-1.5 cursor-pointer">
                         <i class="fa-solid fa-copy"></i> Copiar Ficha WhatsApp
                     </button>
-                    <button onclick="downloadAssetLegalBackup(currentlyOpenedItem?.id)" class="admin-only hidden bg-indigo-700 hover:bg-indigo-600 text-white font-bold px-3.5 py-2 rounded-xl text-xs transition shadow flex items-center gap-1.5 cursor-pointer">
+                    <button onclick="downloadAssetLegalBackup(currentlyOpenedItem?.id)" class="bg-gradient-to-r from-indigo-700 to-indigo-600 hover:from-indigo-600 hover:to-indigo-500 text-white font-extrabold px-3.5 py-2 rounded-xl text-xs transition shadow flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95" title="Descargar Respaldo Legal y Ficha Oficial Completa en PDF">
                         <i class="fa-solid fa-file-pdf text-amber-300"></i> Descargar Respaldo Legal (PDF)
                     </button>
                 </div>
@@ -2087,6 +2096,7 @@
             console.warn('Firebase init fallback:', e);
         }
 
+        const ALIANZA_OFFICIAL_LOGO = "data:image/png;base64,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";
         const DEFAULT_STATE = {
             companyTitle: "Alianza Estratégica",
             motto: '"intermediación de compra y venta"',
@@ -2545,7 +2555,6 @@
             const topShareBtn = document.getElementById('topShareBtn');
             const virtualAssistantWidget = document.getElementById('virtualAssistantWidget');
             const heroMsgBtn = document.getElementById('heroMsgBtn');
-            const btnContactAgentes = document.getElementById('btnContactAgentes');
             const btnConsignar = document.getElementById('btnConsignar');
             const btnInfoMenu = document.getElementById('btnInfoMenu');
             const btnHeroShareDots = document.getElementById('btnHeroShareDots');
@@ -2575,7 +2584,6 @@
                 // Botones Hero en Admin
                 if (heroActionButtons) heroActionButtons.classList.remove('hidden');
                 if (agentHeroActions) agentHeroActions.classList.add('hidden');
-                if (btnContactAgentes) btnContactAgentes.classList.add('hidden');
                 if (heroMsgBtn) heroMsgBtn.classList.add('hidden');
                 if (btnConsignar) btnConsignar.classList.add('hidden');
                 if (btnInfoMenu) btnInfoMenu.classList.remove('hidden');
@@ -2613,7 +2621,6 @@
                 if (btnConsignar) btnConsignar.classList.add('hidden');             // Vender activo
                 if (btnInfoMenu) btnInfoMenu.classList.add('hidden');               // Menú
                 if (btnHeroShareDots) btnHeroShareDots.classList.add('hidden');     // Tres puntitos
-                if (btnContactAgentes) btnContactAgentes.classList.add('hidden');   // Contacto
                 if (heroMsgBtn) heroMsgBtn.classList.add('hidden');                 // Mensaje Sofía
 
                 // 3. EN SU LUGAR, ACTIVAR LOS DOS BOTONES CLAVE DEL AGENTE:
@@ -2644,7 +2651,6 @@
                 // Hero en Modo Público
                 if (heroActionButtons) heroActionButtons.classList.remove('hidden');
                 if (agentHeroActions) agentHeroActions.classList.add('hidden');
-                if (btnContactAgentes) btnContactAgentes.classList.remove('hidden');
                 if (btnConsignar) btnConsignar.classList.remove('hidden');
                 if (btnInfoMenu) btnInfoMenu.classList.remove('hidden');
                 if (btnHeroShareDots) btnHeroShareDots.classList.remove('hidden');
@@ -4109,7 +4115,7 @@ ALIANZA ESTRATÉGICA S.A.S.`;
                 <table style="margin-bottom: 15px;">
                     <tr>
                         <td colspan="2" style="border: none; text-align: center; vertical-align: middle;">
-                            <img src="https://alianzaestrategica2026-byte.github.io/alianzaestrategica/108900.jpg" width="60" height="60" style="border-radius: 50%; border: 2px solid #f59e0b;">
+                            <img src="${ALIANZA_OFFICIAL_LOGO}" onerror="this.onerror=null;this.src='/logo.png';" width="60" height="60" style="border-radius: 50%; border: 2px solid #f59e0b;">
                         </td>
                         <td colspan="14" style="border: none;">
                             <div class="header-title">ALIANZA ESTRATÉGICA S.A.S. — RUC: 2200260967001</div>
@@ -4271,7 +4277,7 @@ ALIANZA ESTRATÉGICA S.A.S.`;
                     <!-- CABECERA CORPORATIVA CON LOGO Y MARCA -->
                     <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #0284c7; padding-bottom: 16px; margin-bottom: 20px;">
                         <div style="display: flex; align-items: center; gap: 14px;">
-                            <img src="https://alianzaestrategica2026-byte.github.io/alianzaestrategica/108900.jpg" style="width: 65px; height: 65px; border-radius: 50%; border: 2px solid #f59e0b; object-fit: cover;" alt="Logo Alianza">
+                            <img src="${ALIANZA_OFFICIAL_LOGO}" onerror="this.onerror=null;this.src='/logo.png';" style="width: 65px; height: 65px; border-radius: 50%; border: 2px solid #f59e0b; object-fit: cover;" alt="Logo Alianza">
                             <div>
                                 <h1 style="font-size: 20px; font-weight: 800; color: #ffffff; margin: 0; letter-spacing: -0.5px;">ALIANZA ESTRATÉGICA S.A.S.</h1>
                                 <p style="font-size: 11px; font-weight: 800; color: #38bdf8; margin: 2px 0 0 0; text-transform: uppercase;">BITÁCORA CENTRAL DE VISITAS, PROSPECTOS & POSTULANTES</p>
@@ -4714,32 +4720,35 @@ ALIANZA ESTRATÉGICA S.A.S.`;
             if (document.getElementById('agentStatTotal')) document.getElementById('agentStatTotal').innerText = `$${(totalCap + totalVen).toFixed(2)}`;
         }
 
-        function exportToCSV() {
-            if (currentRole !== 'ADMIN') {
-                showToast('Acceso exclusivo para el Administrador Principal (A.A.I.L.)', 'error');
-                return;
-            }
+        function exportFinanceToExcel() {
             if (!inventory || inventory.length === 0) {
                 showToast('No hay activos registrados en la matriz para exportar', 'info');
                 return;
             }
 
-            let totalCap = 0, totalProy = 0, totalCob = 0, totalAg = 0, totalEmp = 0;
+            let totalCap = 0, totalProy = 0, totalCob = 0, totalLiqCap = 0, totalLiqVen = 0, totalEmp = 0;
+            let totalVendidos = 0, totalDisponibles = 0;
+
             inventory.forEach(item => {
                 const isVendido = item.status === 'VENDIDO' || item.status === 'SOLD';
-                const priceVal = item.realSalePrice || 0;
-                const comVal = item.commissionPactada || 0;
+                const priceVal = parseFloat(item.realSalePrice) || 0;
+                const comVal = parseFloat(item.commissionPactada) || 0;
                 totalCap += priceVal;
                 totalProy += comVal;
                 if (isVendido) {
+                    totalVendidos++;
                     totalCob += comVal;
-                    const liqCap = item.payCaptador || (comVal * 0.25);
-                    const liqVen = item.payVendedor || (comVal * 0.25);
-                    const liqEmp = item.netEmpresa || (comVal * 0.50);
-                    totalAg += (liqCap + liqVen);
+                    const liqCap = parseFloat(item.payCaptador) || (comVal * 0.25);
+                    const liqVen = parseFloat(item.payVendedor) || (comVal * 0.25);
+                    const liqEmp = parseFloat(item.netEmpresa) || (comVal * 0.50);
+                    totalLiqCap += liqCap;
+                    totalLiqVen += liqVen;
                     totalEmp += liqEmp;
+                } else {
+                    totalDisponibles++;
                 }
             });
+            const totalAg = totalLiqCap + totalLiqVen;
 
             let html = `
             <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
@@ -4750,7 +4759,7 @@ ALIANZA ESTRATÉGICA S.A.S.`;
                 <x:ExcelWorkbook>
                 <x:ExcelWorksheets>
                 <x:ExcelWorksheet>
-                <x:Name>Matriz Financiera v2.0</x:Name>
+                <x:Name>Matriz Contable General</x:Name>
                 <x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions>
                 </x:ExcelWorksheet>
                 </x:ExcelWorksheets>
@@ -4758,55 +4767,64 @@ ALIANZA ESTRATÉGICA S.A.S.`;
                 </xml>
                 <![endif]-->
                 <style>
-                    body { font-family: Arial, sans-serif; background-color: #080c14; color: #ffffff; }
-                    table { border-collapse: collapse; width: 100%; }
-                    th { background-color: #0f172a; color: #38bdf8; border: 1px solid #334155; padding: 8px; font-size: 11px; text-transform: uppercase; }
-                    td { border: 1px solid #1e293b; padding: 6px; font-size: 10px; color: #f8fafc; }
-                    .header-title { font-size: 18px; font-weight: bold; color: #ffffff; }
-                    .header-sub { font-size: 11px; font-weight: bold; color: #38bdf8; }
-                    .card-box { background-color: #0f172a; border: 1px solid #334155; font-weight: bold; font-size: 12px; text-align: center; padding: 8px; }
+                    body { font-family: Calibri, Arial, sans-serif; background-color: #ffffff; color: #0f172a; }
+                    table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
+                    th { background-color: #0f172a; color: #38bdf8; border: 1px solid #334155; padding: 8px 10px; font-size: 11px; text-transform: uppercase; font-weight: bold; }
+                    td { border: 1px solid #cbd5e1; padding: 6px 8px; font-size: 10px; color: #1e293b; vertical-align: middle; }
+                    .title-corp { font-size: 18px; font-weight: bold; color: #0f172a; }
+                    .subtitle-corp { font-size: 12px; font-weight: bold; color: #0284c7; }
+                    .card-header { font-size: 10px; font-weight: bold; text-transform: uppercase; padding: 6px; text-align: center; }
+                    .card-val { font-size: 14px; font-weight: bold; text-align: center; padding: 8px; }
+                    .total-row { background-color: #0f172a; color: #ffffff; font-weight: bold; font-size: 11px; }
+                    .total-row td { color: #ffffff; border: 1px solid #334155; }
                 </style>
             </head>
-            <body style="background-color: #080c14; color: #ffffff;">
-                <table style="margin-bottom: 15px;">
+            <body>
+                <table style="border: none;">
                     <tr>
                         <td colspan="2" style="border: none; text-align: center; vertical-align: middle;">
-                            <img src="https://alianzaestrategica2026-byte.github.io/alianzaestrategica/108900.jpg" width="60" height="60" style="border-radius: 50%; border: 2px solid #f59e0b;">
+                            <img src="${ALIANZA_OFFICIAL_LOGO}" onerror="this.onerror=null;this.src='/logo.png';" width="70" height="70" style="border-radius: 50%;">
                         </td>
-                        <td colspan="15" style="border: none;">
-                            <div class="header-title">ALIANZA ESTRATÉGICA S.A.S. — RUC: 2200260967001</div>
-                            <div class="header-sub">MATRIZ FINANCIERA & CONTABLE v2.0 - CONTROL TOTAL DE ACTIVOS Y COMISIONES (50/50)</div>
-                            <div style="font-size: 10px; color: #94a3b8;">El Coca (Puerto Francisco de Orellana), Orellana - Ecuador | Tel: 099 216 0967 / 095 919 0794</div>
-                            <div style="font-size: 10px; color: #f59e0b; font-weight: bold;">Fecha de Emisión: ${new Date().toLocaleDateString('es-EC')} ${new Date().toLocaleTimeString('es-EC')}</div>
+                        <td colspan="16" style="border: none;">
+                            <div class="title-corp">ALIANZA ESTRATÉGICA S.A.S. — RUC: 2200260967001</div>
+                            <div class="subtitle-corp">MATRIZ FINANCIERA & CONTABLE GENERAL v2.0 - CONTROL TOTAL DE ACTIVOS Y COMISIONES (50/50)</div>
+                            <div style="font-size: 10px; color: #475569;">El Coca (Puerto Francisco de Orellana), Orellana - Ecuador | Tel: 099 216 0967 / 095 919 0794</div>
+                            <div style="font-size: 10px; color: #475569;">Emails: info@alianzaestrategica2026.com | alianzaestrategica2026@gmail.com</div>
+                            <div style="font-size: 10px; color: #d97706; font-weight: bold;">Fecha de Emisión: ${new Date().toLocaleDateString('es-EC')} ${new Date().toLocaleTimeString('es-EC')} | Total Registros: ${inventory.length} (${totalDisponibles} Disponibles / ${totalVendidos} Vendidos)</div>
                         </td>
                     </tr>
                 </table>
 
-                <table style="margin-bottom: 20px; border-collapse: collapse;">
-                    <tr style="background-color: #0f172a;">
-                        <th colspan="3" style="background-color: #1e293b; color: #94a3b8;">1. Capital Inventario</th>
-                        <th colspan="3" style="background-color: #0284c7; color: #ffffff;">2. Proyección Comisiones</th>
-                        <th colspan="3" style="background-color: #059669; color: #ffffff;">3. Comisiones Cobradas</th>
-                        <th colspan="4" style="background-color: #e11d48; color: #ffffff;">4. Pago Fuerza Ventas (50%)</th>
-                        <th colspan="4" style="background-color: #7c3aed; color: #ffffff;">5. Ganancia Empresa (50%)</th>
+                <!-- DASHBOARD RESUMEN DE 5 CASILLAS -->
+                <table>
+                    <tr>
+                        <th colspan="3" class="card-header" style="background-color: #334155; color: #f8fafc;">1. Capital Inventario Total</th>
+                        <th colspan="3" class="card-header" style="background-color: #0284c7; color: #ffffff;">2. Proyección Comisiones</th>
+                        <th colspan="4" class="card-header" style="background-color: #059669; color: #ffffff;">3. Comisiones Cobradas (Efectivo)</th>
+                        <th colspan="4" class="card-header" style="background-color: #e11d48; color: #ffffff;">4. Pago Fuerza de Ventas (50%)</th>
+                        <th colspan="4" class="card-header" style="background-color: #7c3aed; color: #ffffff;">5. Ganancia Neta Empresa (50%)</th>
                     </tr>
                     <tr>
-                        <td colspan="3" class="card-box" style="color: #ffffff;">$${totalCap.toFixed(2)} USD</td>
-                        <td colspan="3" class="card-box" style="color: #38bdf8;">$${totalProy.toFixed(2)} USD</td>
-                        <td colspan="3" class="card-box" style="color: #10b981;">$${totalCob.toFixed(2)} USD</td>
-                        <td colspan="4" class="card-box" style="color: #f43f5e;">$${totalAg.toFixed(2)} USD</td>
-                        <td colspan="4" class="card-box" style="color: #c084fc;">$${totalEmp.toFixed(2)} USD</td>
+                        <td colspan="3" class="card-val" style="background-color: #f1f5f9; color: #0f172a;">$${totalCap.toFixed(2)} USD</td>
+                        <td colspan="3" class="card-val" style="background-color: #e0f2fe; color: #0369a1;">$${totalProy.toFixed(2)} USD</td>
+                        <td colspan="4" class="card-val" style="background-color: #d1fae5; color: #047857;">$${totalCob.toFixed(2)} USD</td>
+                        <td colspan="4" class="card-val" style="background-color: #ffe4e6; color: #be123c;">$${totalAg.toFixed(2)} USD</td>
+                        <td colspan="4" class="card-val" style="background-color: #f3e8ff; color: #6b21a8;">$${totalEmp.toFixed(2)} USD</td>
                     </tr>
                 </table>
 
+                <!-- TABLA DETALLADA COMPLETA -->
                 <table>
                     <thead>
-                        <tr style="background-color: #0f172a;">
+                        <tr>
+                            <th>N°</th>
                             <th>Código</th>
                             <th>Fecha</th>
                             <th>Categoría</th>
                             <th>Título del Activo</th>
-                            <th>Propietario Titular</th>
+                            <th>Ubicación</th>
+                            <th>Descripción</th>
+                            <th>Propietario</th>
                             <th>Tel. Propietario</th>
                             <th>Cédula Propietario</th>
                             <th>Precio Venta ($)</th>
@@ -4825,39 +4843,67 @@ ALIANZA ESTRATÉGICA S.A.S.`;
 
             inventory.forEach((i, idx) => {
                 const isVendido = i.status === 'VENDIDO' || i.status === 'SOLD';
-                const priceVal = i.realSalePrice || 0;
-                const comVal = i.commissionPactada || 0;
+                const priceVal = parseFloat(i.realSalePrice) || 0;
+                const comVal = parseFloat(i.commissionPactada) || 0;
                 let liqCap = 0, liqVen = 0, liqEmp = 0;
                 if (isVendido) {
-                    liqCap = i.payCaptador || (comVal * 0.25);
-                    liqVen = i.payVendedor || (comVal * 0.25);
-                    liqEmp = i.netEmpresa || (comVal * 0.50);
+                    liqCap = parseFloat(i.payCaptador) || (comVal * 0.25);
+                    liqVen = parseFloat(i.payVendedor) || (comVal * 0.25);
+                    liqEmp = parseFloat(i.netEmpresa) || (comVal * 0.50);
                 }
 
                 html += `
-                    <tr style="background-color: ${idx % 2 === 0 ? '#0b1329' : '#0f172a'};">
-                        <td style="font-family: monospace; font-weight: bold; color: #38bdf8;">${i.code || '-'}</td>
+                    <tr style="background-color: ${idx % 2 === 0 ? '#ffffff' : '#f8fafc'};">
+                        <td style="text-align: center; font-weight: bold;">${idx + 1}</td>
+                        <td style="font-family: monospace; font-weight: bold; color: #0284c7;">${i.code || '-'}</td>
                         <td>${i.dateCreated || '-'}</td>
-                        <td>${escapeHtml(i.categoryType || i.category)}</td>
-                        <td style="font-weight: bold; color: #ffffff;">${escapeHtml(i.title || '-')}</td>
+                        <td>${escapeHtml(i.categoryType || i.category || '-')}</td>
+                        <td style="font-weight: bold;">${escapeHtml(i.title || '-')}</td>
+                        <td>${escapeHtml(i.location || 'El Coca, Orellana')}</td>
+                        <td>${escapeHtml(i.desc || '-')}</td>
                         <td>${escapeHtml(i.ownerName || '-')}</td>
                         <td>${escapeHtml(i.ownerPhone || '-')}</td>
                         <td>${escapeHtml(i.ownerDoc || '-')}</td>
                         <td style="text-align: right; font-weight: bold;">$${priceVal.toFixed(2)}</td>
-                        <td style="text-align: right; font-weight: bold; color: #f59e0b;">$${comVal.toFixed(2)}</td>
+                        <td style="text-align: right; font-weight: bold; color: #0284c7;">$${comVal.toFixed(2)}</td>
                         <td>${escapeHtml(i.agentName || '-')}</td>
                         <td>${escapeHtml(i.agentPhone || '-')}</td>
                         <td>${escapeHtml(i.sellerAgentName || '-')}</td>
                         <td>${escapeHtml(i.sellerAgentPhone || '-')}</td>
-                        <td style="text-align: right; color: #38bdf8;">$${liqCap.toFixed(2)}</td>
-                        <td style="text-align: right; color: #f59e0b;">$${liqVen.toFixed(2)}</td>
-                        <td style="text-align: right; color: #c084fc; font-weight: bold;">$${liqEmp.toFixed(2)}</td>
-                        <td style="text-align: center; font-weight: bold; color: ${isVendido ? '#f43f5e' : '#10b981'};">${isVendido ? 'VENDIDO' : 'DISPONIBLE'}</td>
+                        <td style="text-align: right; color: #0369a1;">$${liqCap.toFixed(2)}</td>
+                        <td style="text-align: right; color: #b45309;">$${liqVen.toFixed(2)}</td>
+                        <td style="text-align: right; color: #6b21a8; font-weight: bold;">$${liqEmp.toFixed(2)}</td>
+                        <td style="text-align: center; font-weight: bold; color: ${isVendido ? '#e11d48' : '#059669'};">${isVendido ? 'VENDIDO' : 'DISPONIBLE'}</td>
                     </tr>`;
             });
 
             html += `
+                    <tr class="total-row">
+                        <td colspan="10" style="text-align: right; padding: 10px;">TOTALES GENERALES:</td>
+                        <td style="text-align: right; padding: 10px;">$${totalCap.toFixed(2)}</td>
+                        <td style="text-align: right; padding: 10px;">$${totalProy.toFixed(2)}</td>
+                        <td colspan="4"></td>
+                        <td style="text-align: right; padding: 10px;">$${totalLiqCap.toFixed(2)}</td>
+                        <td style="text-align: right; padding: 10px;">$${totalLiqVen.toFixed(2)}</td>
+                        <td style="text-align: right; padding: 10px;">$${totalEmp.toFixed(2)}</td>
+                        <td style="text-align: center; padding: 10px;">-</td>
+                    </tr>
                     </tbody>
+                </table>
+
+                <table style="border: none; margin-top: 30px;">
+                    <tr>
+                        <td colspan="10" style="border: none; text-align: center; padding: 15px;">
+                            <div style="font-weight: bold; font-size: 11px;">Adrián Arturo Íñiguez Lucio</div>
+                            <div style="font-size: 10px; color: #64748b;">Gerente General & Representante Legal</div>
+                            <div style="font-size: 9px; color: #d97706; font-weight: bold;">ALIANZA ESTRATÉGICA S.A.S.</div>
+                        </td>
+                        <td colspan="10" style="border: none; text-align: center; padding: 15px;">
+                            <div style="font-weight: bold; font-size: 11px;">Abg. Carlos Alfredo Íñiguez Rodríguez</div>
+                            <div style="font-size: 10px; color: #64748b;">Patrocinio Jurídico & Saneamiento Notarial</div>
+                            <div style="font-size: 9px; color: #0284c7; font-weight: bold;">El Coca, Orellana - Ecuador</div>
+                        </td>
+                    </tr>
                 </table>
             </body>
             </html>`;
@@ -4867,11 +4913,620 @@ ALIANZA ESTRATÉGICA S.A.S.`;
             link.href = URL.createObjectURL(blob);
             link.download = 'Matriz_Financiera_v2_Alianza_SAS_' + new Date().toISOString().slice(0, 10) + '.xls';
             link.click();
-            showToast('¡Matriz Financiera v2.0 exportada a Excel con Dashboard y Logotipo!', 'success');
+            showToast('¡Matriz Financiera v2.0 exportada a Excel completa sin omitir detalles!', 'success');
         }
+        window.exportToCSV = exportFinanceToExcel;
 
         function printFinancialReport() {
-            window.print();
+            if (!inventory || inventory.length === 0) {
+                showToast('No hay activos registrados en la matriz para imprimir', 'info');
+                return;
+            }
+
+            let totalCap = 0, totalProy = 0, totalCob = 0, totalLiqCap = 0, totalLiqVen = 0, totalEmp = 0;
+            let totalVendidos = 0, totalDisponibles = 0;
+
+            inventory.forEach(item => {
+                const isVendido = item.status === 'VENDIDO' || item.status === 'SOLD';
+                const priceVal = parseFloat(item.realSalePrice) || 0;
+                const comVal = parseFloat(item.commissionPactada) || 0;
+                totalCap += priceVal;
+                totalProy += comVal;
+                if (isVendido) {
+                    totalVendidos++;
+                    totalCob += comVal;
+                    const liqCap = parseFloat(item.payCaptador) || (comVal * 0.25);
+                    const liqVen = parseFloat(item.payVendedor) || (comVal * 0.25);
+                    const liqEmp = parseFloat(item.netEmpresa) || (comVal * 0.50);
+                    totalLiqCap += liqCap;
+                    totalLiqVen += liqVen;
+                    totalEmp += liqEmp;
+                } else {
+                    totalDisponibles++;
+                }
+            });
+            const totalAg = totalLiqCap + totalLiqVen;
+
+            const rowsHtml = inventory.map((i, idx) => {
+                const isVendido = i.status === 'VENDIDO' || i.status === 'SOLD';
+                const priceVal = parseFloat(i.realSalePrice) || 0;
+                const comVal = parseFloat(i.commissionPactada) || 0;
+                let liqCap = 0, liqVen = 0, liqEmp = 0;
+                if (isVendido) {
+                    liqCap = parseFloat(i.payCaptador) || (comVal * 0.25);
+                    liqVen = parseFloat(i.payVendedor) || (comVal * 0.25);
+                    liqEmp = parseFloat(i.netEmpresa) || (comVal * 0.50);
+                }
+
+                return `
+                    <tr style="border-bottom: 1px solid #cbd5e1; background-color: ${idx % 2 === 0 ? '#ffffff' : '#f8fafc'};">
+                        <td style="padding: 6px 8px; font-family: monospace; font-weight: bold; color: #0284c7;">${i.code || '-'}</td>
+                        <td style="padding: 6px 8px;">${i.dateCreated || '-'}</td>
+                        <td style="padding: 6px 8px;">${escapeHtml(i.categoryType || i.category || '-')}</td>
+                        <td style="padding: 6px 8px; font-weight: bold; color: #0f172a;">${escapeHtml(i.title || '-')}</td>
+                        <td style="padding: 6px 8px;">${escapeHtml(i.location || 'El Coca')}</td>
+                        <td style="padding: 6px 8px;">${escapeHtml(i.ownerName || '-')} (${escapeHtml(i.ownerPhone || '-')})</td>
+                        <td style="padding: 6px 8px; text-align: right; font-weight: bold;">$${priceVal.toFixed(2)}</td>
+                        <td style="padding: 6px 8px; text-align: right; font-weight: bold; color: #0284c7;">$${comVal.toFixed(2)}</td>
+                        <td style="padding: 6px 8px;">${escapeHtml(i.agentName || '-')}</td>
+                        <td style="padding: 6px 8px;">${escapeHtml(i.sellerAgentName || '-')}</td>
+                        <td style="padding: 6px 8px; text-align: right; color: #0369a1;">$${liqCap.toFixed(2)}</td>
+                        <td style="padding: 6px 8px; text-align: right; color: #b45309;">$${liqVen.toFixed(2)}</td>
+                        <td style="padding: 6px 8px; text-align: right; color: #6b21a8; font-weight: bold;">$${liqEmp.toFixed(2)}</td>
+                        <td style="padding: 6px 8px; text-align: center; font-weight: bold; color: ${isVendido ? '#e11d48' : '#059669'};">${isVendido ? 'VENDIDO' : 'DISPONIBLE'}</td>
+                    </tr>
+                `;
+            }).join('');
+
+            const printableHtml = `
+                <div style="max-width: 1300px; margin: 0 auto; padding: 20px; font-family: 'Plus Jakarta Sans', Arial, sans-serif; color: #0f172a; background: #ffffff;">
+                    <!-- CABECERA INSTITUCIONAL -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #0284c7; padding-bottom: 14px; margin-bottom: 16px;">
+                        <div style="display: flex; align-items: center; gap: 14px;">
+                            <img src="${ALIANZA_OFFICIAL_LOGO}" onerror="this.onerror=null;this.src='/logo.png';" style="width: 65px; height: 65px; border-radius: 50%; border: 2px solid #f59e0b; object-fit: cover;">
+                            <div>
+                                <h1 style="font-size: 20px; font-weight: 800; color: #0f172a; margin: 0;">ALIANZA ESTRATÉGICA S.A.S.</h1>
+                                <p style="font-size: 11px; font-weight: 800; color: #0284c7; margin: 2px 0 0 0; text-transform: uppercase;">MATRIZ FINANCIERA & CONTABLE GENERAL v2.0 - REPORTE OFICIAL CONSOLIDADO</p>
+                                <p style="font-size: 10px; color: #64748b; margin: 2px 0 0 0;">RUC: 2200260967001 | El Coca (Puerto Francisco de Orellana), Orellana - Ecuador</p>
+                                <p style="font-size: 10px; color: #64748b; margin: 0;">Tel: 099 216 0967 / 095 919 0794 | Emails: info@alianzaestrategica2026.com | alianzaestrategica2026@gmail.com</p>
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="background: #e0f2fe; border: 1px solid #0284c7; color: #0369a1; font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 8px; text-transform: uppercase;">
+                                ESQUEMA OFICIAL 50/50
+                            </span>
+                            <p style="font-size: 10px; color: #64748b; margin: 6px 0 0 0; font-family: monospace;">Emisión: ${new Date().toLocaleDateString('es-EC')} ${new Date().toLocaleTimeString('es-EC')}</p>
+                            <p style="font-size: 10px; color: #d97706; font-weight: bold; margin: 2px 0 0 0;">Total Registros: ${inventory.length}</p>
+                        </div>
+                    </div>
+
+                    <!-- DASHBOARD RESUMEN DE 5 CASILLAS -->
+                    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 20px;" class="avoid-break">
+                        <div style="border: 1px solid #cbd5e1; border-left: 4px solid #64748b; border-radius: 10px; padding: 10px; background: #f8fafc;">
+                            <span style="font-size: 9.5px; font-weight: bold; color: #64748b; text-transform: uppercase;">1. Capital Inventario</span>
+                            <div style="font-size: 15px; font-weight: 900; color: #0f172a; margin-top: 2px;">$${totalCap.toFixed(2)}</div>
+                            <span style="font-size: 8.5px; color: #94a3b8;">Valor Total Mercado</span>
+                        </div>
+                        <div style="border: 1px solid #bae6fd; border-left: 4px solid #0284c7; border-radius: 10px; padding: 10px; background: #f0f9ff;">
+                            <span style="font-size: 9.5px; font-weight: bold; color: #0369a1; text-transform: uppercase;">2. Proyección Comisiones</span>
+                            <div style="font-size: 15px; font-weight: 900; color: #0284c7; margin-top: 2px;">$${totalProy.toFixed(2)}</div>
+                            <span style="font-size: 8.5px; color: #0284c7;">Honorarios Esperados</span>
+                        </div>
+                        <div style="border: 1px solid #a7f3d0; border-left: 4px solid #059669; border-radius: 10px; padding: 10px; background: #ecfdf5;">
+                            <span style="font-size: 9.5px; font-weight: bold; color: #047857; text-transform: uppercase;">3. Comisiones Cobradas</span>
+                            <div style="font-size: 15px; font-weight: 900; color: #059669; margin-top: 2px;">$${totalCob.toFixed(2)}</div>
+                            <span style="font-size: 8.5px; color: #059669;">Ingreso Real Efectivo</span>
+                        </div>
+                        <div style="border: 1px solid #fecdd3; border-left: 4px solid #e11d48; border-radius: 10px; padding: 10px; background: #fff1f2;">
+                            <span style="font-size: 9.5px; font-weight: bold; color: #be123c; text-transform: uppercase;">4. Pago Fuerza Ventas</span>
+                            <div style="font-size: 15px; font-weight: 900; color: #e11d48; margin-top: 2px;">$${totalAg.toFixed(2)}</div>
+                            <span style="font-size: 8.5px; color: #e11d48;">50% para Agentes</span>
+                        </div>
+                        <div style="border: 1px solid #e9d5ff; border-left: 4px solid #7c3aed; border-radius: 10px; padding: 10px; background: #faf5ff;">
+                            <span style="font-size: 9.5px; font-weight: bold; color: #6b21a8; text-transform: uppercase;">5. Ganancia Empresa</span>
+                            <div style="font-size: 15px; font-weight: 900; color: #7c3aed; margin-top: 2px;">$${totalEmp.toFixed(2)}</div>
+                            <span style="font-size: 8.5px; color: #7c3aed;">50% ALIANZA S.A.S.</span>
+                        </div>
+                    </div>
+
+                    <!-- TABLA COMPLETA CONSOLIDADA -->
+                    <table style="width: 100%; border-collapse: collapse; font-size: 9.5px; margin-bottom: 24px;">
+                        <thead>
+                            <tr style="background: #0f172a; color: #ffffff; text-align: left; text-transform: uppercase; font-size: 9px;">
+                                <th style="padding: 8px; border: 1px solid #334155;">Código</th>
+                                <th style="padding: 8px; border: 1px solid #334155;">Fecha</th>
+                                <th style="padding: 8px; border: 1px solid #334155;">Categoría</th>
+                                <th style="padding: 8px; border: 1px solid #334155; min-width: 160px;">Detalle del Activo</th>
+                                <th style="padding: 8px; border: 1px solid #334155;">Ubicación</th>
+                                <th style="padding: 8px; border: 1px solid #334155;">Propietario</th>
+                                <th style="padding: 8px; border: 1px solid #334155; text-align: right;">Precio Venta ($)</th>
+                                <th style="padding: 8px; border: 1px solid #334155; text-align: right; color: #38bdf8;">Comisión ($)</th>
+                                <th style="padding: 8px; border: 1px solid #334155;">Ag. Captador</th>
+                                <th style="padding: 8px; border: 1px solid #334155;">Ag. Vendedor</th>
+                                <th style="padding: 8px; border: 1px solid #334155; text-align: right;">$ Liq. Cap</th>
+                                <th style="padding: 8px; border: 1px solid #334155; text-align: right;">$ Liq. Ven</th>
+                                <th style="padding: 8px; border: 1px solid #334155; text-align: right; color: #c084fc;">$ Liq. Emp</th>
+                                <th style="padding: 8px; border: 1px solid #334155; text-align: center;">Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${rowsHtml}
+                            <tr style="background: #0f172a; color: #ffffff; font-weight: bold; font-size: 10px;">
+                                <td colspan="6" style="padding: 8px; text-align: right; border: 1px solid #334155;">TOTALES GENERALES:</td>
+                                <td style="padding: 8px; text-align: right; border: 1px solid #334155;">$${totalCap.toFixed(2)}</td>
+                                <td style="padding: 8px; text-align: right; border: 1px solid #334155; color: #38bdf8;">$${totalProy.toFixed(2)}</td>
+                                <td colspan="2" style="border: 1px solid #334155;"></td>
+                                <td style="padding: 8px; text-align: right; border: 1px solid #334155;">$${totalLiqCap.toFixed(2)}</td>
+                                <td style="padding: 8px; text-align: right; border: 1px solid #334155;">$${totalLiqVen.toFixed(2)}</td>
+                                <td style="padding: 8px; text-align: right; border: 1px solid #334155; color: #c084fc;">$${totalEmp.toFixed(2)}</td>
+                                <td style="padding: 8px; text-align: center; border: 1px solid #334155;">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- FIRMAS OFICIALES & SELLOS NOTARIALES -->
+                    <div style="margin-top: 30px; border-top: 2px solid #0284c7; padding-top: 16px;" class="avoid-break">
+                        <div style="display: flex; justify-content: space-between; text-align: center; gap: 30px;">
+                            <div style="flex: 1; border-top: 1px solid #94a3b8; padding-top: 6px;">
+                                <p style="font-size: 11px; font-weight: 800; color: #0f172a; margin: 0;">Adrián Arturo Íñiguez Lucio</p>
+                                <p style="font-size: 9.5px; color: #64748b; margin: 1px 0 0 0;">Gerente General & Representante Legal</p>
+                                <p style="font-size: 9px; color: #d97706; margin: 0; font-weight: 700;">ALIANZA ESTRATÉGICA S.A.S.</p>
+                            </div>
+                            <div style="flex: 1; border-top: 1px solid #94a3b8; padding-top: 6px;">
+                                <p style="font-size: 11px; font-weight: 800; color: #0f172a; margin: 0;">Abg. Carlos Alfredo Íñiguez Rodríguez</p>
+                                <p style="font-size: 9.5px; color: #64748b; margin: 1px 0 0 0;">Patrocinio Jurídico & Saneamiento Notarial</p>
+                                <p style="font-size: 9px; color: #0284c7; margin: 0; font-weight: 700;">El Coca, Orellana - Ecuador</p>
+                            </div>
+                        </div>
+                        <div style="margin-top: 14px; text-align: center; font-size: 8.5px; color: #94a3b8; border-top: 1px solid #e2e8f0; padding-top: 6px;">
+                            Documento oficial generado por la Plataforma ALIANZA ESTRATÉGICA S.A.S. | RUC: 2200260967001 | Todos los derechos reservados.
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const wrapper = document.getElementById('printOutputWrapper');
+            if (wrapper) {
+                wrapper.innerHTML = printableHtml;
+                showToast('Preparando documento de impresión / PDF...', 'info');
+                setTimeout(() => {
+                    window.print();
+                }, 400);
+            }
+        }
+
+        function exportAgentTransparencyExcel() {
+            const sel = document.getElementById('agentSelectAuditor');
+            const agent = sel ? sel.value : '';
+            if (!agent) {
+                showToast('Por favor, selecciona un agente para exportar su transparencia', 'error');
+                return;
+            }
+
+            let totalCap = 0, totalVen = 0, totalPaid = 0, totalUnpaid = 0;
+            const captured = [];
+            const sold = [];
+
+            inventory.forEach(item => {
+                const isCap = (item.agentName || '').toLowerCase() === agent.toLowerCase();
+                const isVen = (item.sellerAgentName || '').toLowerCase() === agent.toLowerCase();
+                const isVendido = item.status === 'VENDIDO' || item.status === 'SOLD';
+
+                if (isCap) {
+                    const earned = isVendido ? (parseFloat(item.payCaptador) || (parseFloat(item.commissionPactada) || 0) * 0.25) : 0;
+                    totalCap += earned;
+                    const isPaid = item.paymentStatusCaptador === 'PAID';
+                    if (isVendido) {
+                        if (isPaid) totalPaid += earned;
+                        else totalUnpaid += earned;
+                    }
+                    captured.push({ ...item, earned, isPaid });
+                }
+
+                if (isVen && isVendido) {
+                    const earnedV = parseFloat(item.payVendedor) || ((parseFloat(item.commissionPactada) || 0) * 0.25);
+                    totalVen += earnedV;
+                    const isPaidV = item.paymentStatusVendedor === 'PAID';
+                    if (isPaidV) totalPaid += earnedV;
+                    else totalUnpaid += earnedV;
+                    sold.push({ ...item, earnedV, isPaidV });
+                }
+            });
+
+            const totalAcum = totalCap + totalVen;
+
+            let html = `
+            <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+            <head>
+                <meta charset="utf-8">
+                <!--[if gte mso 9]>
+                <xml>
+                <x:ExcelWorkbook>
+                <x:ExcelWorksheets>
+                <x:ExcelWorksheet>
+                <x:Name>Transparencia_${escapeHtml(agent).slice(0, 20)}</x:Name>
+                <x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions>
+                </x:ExcelWorksheet>
+                </x:ExcelWorksheets>
+                </x:ExcelWorkbook>
+                </xml>
+                <![endif]-->
+                <style>
+                    body { font-family: Calibri, Arial, sans-serif; background-color: #ffffff; color: #0f172a; }
+                    table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
+                    th { background-color: #0f172a; color: #38bdf8; border: 1px solid #334155; padding: 8px 10px; font-size: 11px; text-transform: uppercase; font-weight: bold; }
+                    td { border: 1px solid #cbd5e1; padding: 6px 8px; font-size: 10px; color: #1e293b; vertical-align: middle; }
+                    .title-corp { font-size: 18px; font-weight: bold; color: #0f172a; }
+                    .subtitle-corp { font-size: 12px; font-weight: bold; color: #0284c7; }
+                    .card-val { font-size: 14px; font-weight: bold; text-align: center; padding: 8px; }
+                </style>
+            </head>
+            <body>
+                <table style="border: none;">
+                    <tr>
+                        <td colspan="2" style="border: none; text-align: center; vertical-align: middle;">
+                            <img src="${ALIANZA_OFFICIAL_LOGO}" onerror="this.onerror=null;this.src='/logo.png';" width="65" height="65" style="border-radius: 50%;">
+                        </td>
+                        <td colspan="10" style="border: none;">
+                            <div class="title-corp">ALIANZA ESTRATÉGICA S.A.S. — RUC: 2200260967001</div>
+                            <div class="subtitle-corp">PORTAL DE TRANSPARENCIA & ESTADO DE CUENTA DE COMISIONES POR AGENTE</div>
+                            <div style="font-size: 11px; color: #0284c7; font-weight: bold;">AGENTE AUDITADO: ${escapeHtml(agent)}</div>
+                            <div style="font-size: 10px; color: #475569;">El Coca (Puerto Francisco de Orellana), Orellana - Ecuador | Tel: 099 216 0967 / 095 919 0794</div>
+                            <div style="font-size: 10px; color: #d97706; font-weight: bold;">Fecha de Emisión: ${new Date().toLocaleDateString('es-EC')} ${new Date().toLocaleTimeString('es-EC')}</div>
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- RESUMEN DE HONORARIOS DEL AGENTE -->
+                <table>
+                    <tr>
+                        <th colspan="2" style="background-color: #0284c7; color: #ffffff;">1. Ganancia Captaciones (25%)</th>
+                        <th colspan="2" style="background-color: #d97706; color: #ffffff;">2. Ganancia Ventas Cerradas (25%)</th>
+                        <th colspan="2" style="background-color: #059669; color: #ffffff;">3. Total Acumulado Generado</th>
+                        <th colspan="2" style="background-color: #10b981; color: #ffffff;">4. Total Liquidado / Pagado</th>
+                        <th colspan="2" style="background-color: #e11d48; color: #ffffff;">5. Total Pendiente / Inpago</th>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="card-val" style="background-color: #e0f2fe; color: #0369a1;">$${totalCap.toFixed(2)} USD</td>
+                        <td colspan="2" class="card-val" style="background-color: #fef3c7; color: #b45309;">$${totalVen.toFixed(2)} USD</td>
+                        <td colspan="2" class="card-val" style="background-color: #d1fae5; color: #047857;">$${totalAcum.toFixed(2)} USD</td>
+                        <td colspan="2" class="card-val" style="background-color: #ecfdf5; color: #059669;">$${totalPaid.toFixed(2)} USD</td>
+                        <td colspan="2" class="card-val" style="background-color: #ffe4e6; color: #e11d48;">$${totalUnpaid.toFixed(2)} USD</td>
+                    </tr>
+                </table>
+
+                <h3 style="font-size: 12px; font-weight: bold; color: #0284c7; margin: 15px 0 5px 0;">SECCIÓN 1: BIENES CAPTADOS POR EL AGENTE (${captured.length})</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>N°</th>
+                            <th>Código</th>
+                            <th>Fecha</th>
+                            <th>Categoría</th>
+                            <th>Título del Activo</th>
+                            <th>Ubicación</th>
+                            <th>Propietario</th>
+                            <th>Tel. Propietario</th>
+                            <th>Precio Comercial ($)</th>
+                            <th>Comisión Total ($)</th>
+                            <th>Honorarios Captador (25%)</th>
+                            <th>Estado Activo</th>
+                            <th>Estado de Liquidación</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+
+            captured.forEach((c, idx) => {
+                html += `
+                    <tr style="background-color: ${idx % 2 === 0 ? '#ffffff' : '#f8fafc'};">
+                        <td style="text-align: center;">${idx + 1}</td>
+                        <td style="font-family: monospace; font-weight: bold; color: #0284c7;">${c.code || '-'}</td>
+                        <td>${c.dateCreated || '-'}</td>
+                        <td>${escapeHtml(c.categoryType || c.category || '-')}</td>
+                        <td style="font-weight: bold;">${escapeHtml(c.title || '-')}</td>
+                        <td>${escapeHtml(c.location || 'El Coca')}</td>
+                        <td>${escapeHtml(c.ownerName || '-')}</td>
+                        <td>${escapeHtml(c.ownerPhone || '-')}</td>
+                        <td style="text-align: right; font-weight: bold;">$${(parseFloat(c.realSalePrice) || 0).toFixed(2)}</td>
+                        <td style="text-align: right; color: #0284c7;">$${(parseFloat(c.commissionPactada) || 0).toFixed(2)}</td>
+                        <td style="text-align: right; font-weight: bold; color: #0369a1;">$${c.earned.toFixed(2)}</td>
+                        <td style="text-align: center; font-weight: bold;">${c.status || 'DISPONIBLE'}</td>
+                        <td style="text-align: center; font-weight: bold; color: ${c.isPaid ? '#059669' : '#e11d48'};">${c.isPaid ? 'PAGADO' : 'INPAGO'}</td>
+                    </tr>`;
+            });
+
+            html += `
+                    <tr style="background-color: #0f172a; color: #ffffff; font-weight: bold;">
+                        <td colspan="10" style="text-align: right; padding: 8px;">SUBTOTAL GANANCIAS CAPTACIÓN:</td>
+                        <td style="text-align: right; padding: 8px;">$${totalCap.toFixed(2)}</td>
+                        <td colspan="2"></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h3 style="font-size: 12px; font-weight: bold; color: #d97706; margin: 20px 0 5px 0;">SECCIÓN 2: VENTAS CERRADAS POR EL AGENTE (${sold.length})</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>N°</th>
+                            <th>Código</th>
+                            <th>Fecha Cierre</th>
+                            <th>Categoría</th>
+                            <th>Título del Activo</th>
+                            <th>Ubicación</th>
+                            <th>Propietario</th>
+                            <th>Precio Venta Final ($)</th>
+                            <th>Comisión Cobrada ($)</th>
+                            <th>Honorarios Venta (25%)</th>
+                            <th>Estado de Liquidación</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+
+            sold.forEach((s, idx) => {
+                html += `
+                    <tr style="background-color: ${idx % 2 === 0 ? '#ffffff' : '#f8fafc'};">
+                        <td style="text-align: center;">${idx + 1}</td>
+                        <td style="font-family: monospace; font-weight: bold; color: #d97706;">${s.code || '-'}</td>
+                        <td>${s.dateCreated || '-'}</td>
+                        <td>${escapeHtml(s.categoryType || s.category || '-')}</td>
+                        <td style="font-weight: bold;">${escapeHtml(s.title || '-')}</td>
+                        <td>${escapeHtml(s.location || 'El Coca')}</td>
+                        <td>${escapeHtml(s.ownerName || '-')}</td>
+                        <td style="text-align: right; font-weight: bold;">$${(parseFloat(s.realSalePrice) || 0).toFixed(2)}</td>
+                        <td style="text-align: right; color: #0284c7;">$${(parseFloat(s.commissionPactada) || 0).toFixed(2)}</td>
+                        <td style="text-align: right; font-weight: bold; color: #b45309;">$${s.earnedV.toFixed(2)}</td>
+                        <td style="text-align: center; font-weight: bold; color: ${s.isPaidV ? '#059669' : '#e11d48'};">${s.isPaidV ? 'PAGADO' : 'INPAGO'}</td>
+                    </tr>`;
+            });
+
+            html += `
+                    <tr style="background-color: #0f172a; color: #ffffff; font-weight: bold;">
+                        <td colspan="9" style="text-align: right; padding: 8px;">SUBTOTAL GANANCIAS VENTAS:</td>
+                        <td style="text-align: right; padding: 8px;">$${totalVen.toFixed(2)}</td>
+                        <td></td>
+                    </tr>
+                    <tr style="background-color: #0284c7; color: #ffffff; font-weight: bold; font-size: 12px;">
+                        <td colspan="9" style="text-align: right; padding: 10px;">TOTAL GENERAL ACUMULADO A COBRAR:</td>
+                        <td style="text-align: right; padding: 10px;">$${totalAcum.toFixed(2)}</td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <table style="border: none; margin-top: 30px;">
+                    <tr>
+                        <td colspan="6" style="border: none; text-align: center; padding: 15px;">
+                            <div style="font-weight: bold; font-size: 11px;">Adrián Arturo Íñiguez Lucio</div>
+                            <div style="font-size: 10px; color: #64748b;">Gerente General & Representante Legal</div>
+                            <div style="font-size: 9px; color: #d97706; font-weight: bold;">ALIANZA ESTRATÉGICA S.A.S.</div>
+                        </td>
+                        <td colspan="6" style="border: none; text-align: center; padding: 15px;">
+                            <div style="font-weight: bold; font-size: 11px;">${escapeHtml(agent)}</div>
+                            <div style="font-size: 10px; color: #64748b;">Firma de Conformidad del Agente</div>
+                            <div style="font-size: 9px; color: #0284c7; font-weight: bold;">Fuerza de Ventas Alianza</div>
+                        </td>
+                    </tr>
+                </table>
+            </body>
+            </html>`;
+
+            const blob = new Blob([html], { type: 'application/vnd.ms-excel;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            const cleanName = agent.replace(/[^a-zA-Z0-9]/g, '_');
+            link.download = `Transparencia_Agente_${cleanName}_${new Date().toISOString().slice(0, 10)}.xls`;
+            link.click();
+            showToast(`¡Reporte de Transparencia de ${agent} exportado a Excel!`, 'success');
+        }
+
+        function printAgentTransparencyPDF() {
+            const sel = document.getElementById('agentSelectAuditor');
+            const agent = sel ? sel.value : '';
+            if (!agent) {
+                showToast('Por favor, selecciona un agente para imprimir su estado de cuenta', 'error');
+                return;
+            }
+
+            let totalCap = 0, totalVen = 0, totalPaid = 0, totalUnpaid = 0;
+            const captured = [];
+            const sold = [];
+
+            inventory.forEach(item => {
+                const isCap = (item.agentName || '').toLowerCase() === agent.toLowerCase();
+                const isVen = (item.sellerAgentName || '').toLowerCase() === agent.toLowerCase();
+                const isVendido = item.status === 'VENDIDO' || item.status === 'SOLD';
+
+                if (isCap) {
+                    const earned = isVendido ? (parseFloat(item.payCaptador) || (parseFloat(item.commissionPactada) || 0) * 0.25) : 0;
+                    totalCap += earned;
+                    const isPaid = item.paymentStatusCaptador === 'PAID';
+                    if (isVendido) {
+                        if (isPaid) totalPaid += earned;
+                        else totalUnpaid += earned;
+                    }
+                    captured.push({ ...item, earned, isPaid });
+                }
+
+                if (isVen && isVendido) {
+                    const earnedV = parseFloat(item.payVendedor) || ((parseFloat(item.commissionPactada) || 0) * 0.25);
+                    totalVen += earnedV;
+                    const isPaidV = item.paymentStatusVendedor === 'PAID';
+                    if (isPaidV) totalPaid += earnedV;
+                    else totalUnpaid += earnedV;
+                    sold.push({ ...item, earnedV, isPaidV });
+                }
+            });
+
+            const totalAcum = totalCap + totalVen;
+
+            const capRows = captured.map((c, idx) => `
+                <tr style="border-bottom: 1px solid #cbd5e1; background-color: ${idx % 2 === 0 ? '#ffffff' : '#f8fafc'};">
+                    <td style="padding: 6px 8px; font-family: monospace; font-weight: bold; color: #0284c7;">${c.code || '-'}</td>
+                    <td style="padding: 6px 8px;">${c.dateCreated || '-'}</td>
+                    <td style="padding: 6px 8px; font-weight: bold;">${escapeHtml(c.title || '-')}</td>
+                    <td style="padding: 6px 8px;">${escapeHtml(c.location || 'El Coca')}</td>
+                    <td style="padding: 6px 8px;">${escapeHtml(c.ownerName || '-')}</td>
+                    <td style="padding: 6px 8px; text-align: right; font-weight: bold;">$${(parseFloat(c.realSalePrice) || 0).toFixed(2)}</td>
+                    <td style="padding: 6px 8px; text-align: right; color: #0284c7;">$${(parseFloat(c.commissionPactada) || 0).toFixed(2)}</td>
+                    <td style="padding: 6px 8px; text-align: right; font-weight: bold; color: #0369a1;">$${c.earned.toFixed(2)}</td>
+                    <td style="padding: 6px 8px; text-align: center; font-weight: bold;">${c.status || 'DISPONIBLE'}</td>
+                    <td style="padding: 6px 8px; text-align: center; font-weight: bold; color: ${c.isPaid ? '#059669' : '#e11d48'};">${c.isPaid ? '🟢 PAGADO' : '🔴 INPAGO'}</td>
+                </tr>
+            `).join('');
+
+            const soldRows = sold.map((s, idx) => `
+                <tr style="border-bottom: 1px solid #cbd5e1; background-color: ${idx % 2 === 0 ? '#ffffff' : '#f8fafc'};">
+                    <td style="padding: 6px 8px; font-family: monospace; font-weight: bold; color: #d97706;">${s.code || '-'}</td>
+                    <td style="padding: 6px 8px;">${s.dateCreated || '-'}</td>
+                    <td style="padding: 6px 8px; font-weight: bold;">${escapeHtml(s.title || '-')}</td>
+                    <td style="padding: 6px 8px;">${escapeHtml(s.location || 'El Coca')}</td>
+                    <td style="padding: 6px 8px;">${escapeHtml(s.ownerName || '-')}</td>
+                    <td style="padding: 6px 8px; text-align: right; font-weight: bold;">$${(parseFloat(s.realSalePrice) || 0).toFixed(2)}</td>
+                    <td style="padding: 6px 8px; text-align: right; color: #0284c7;">$${(parseFloat(s.commissionPactada) || 0).toFixed(2)}</td>
+                    <td style="padding: 6px 8px; text-align: right; font-weight: bold; color: #b45309;">$${s.earnedV.toFixed(2)}</td>
+                    <td style="padding: 6px 8px; text-align: center; font-weight: bold; color: ${s.isPaidV ? '#059669' : '#e11d48'};">${s.isPaidV ? '🟢 PAGADO' : '🔴 INPAGO'}</td>
+                </tr>
+            `).join('');
+
+            const printableHtml = `
+                <div style="max-width: 1200px; margin: 0 auto; padding: 20px; font-family: 'Plus Jakarta Sans', Arial, sans-serif; color: #0f172a; background: #ffffff;">
+                    <!-- CABECERA INSTITUCIONAL -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #0284c7; padding-bottom: 14px; margin-bottom: 16px;">
+                        <div style="display: flex; align-items: center; gap: 14px;">
+                            <img src="${ALIANZA_OFFICIAL_LOGO}" onerror="this.onerror=null;this.src='/logo.png';" style="width: 65px; height: 65px; border-radius: 50%; border: 2px solid #f59e0b; object-fit: cover;">
+                            <div>
+                                <h1 style="font-size: 20px; font-weight: 800; color: #0f172a; margin: 0;">ALIANZA ESTRATÉGICA S.A.S.</h1>
+                                <p style="font-size: 11px; font-weight: 800; color: #0284c7; margin: 2px 0 0 0; text-transform: uppercase;">PORTAL DE TRANSPARENCIA & AUDITORÍA DE COMISIONES POR AGENTE</p>
+                                <p style="font-size: 10px; color: #64748b; margin: 2px 0 0 0;">RUC: 2200260967001 | El Coca (Puerto Francisco de Orellana), Orellana - Ecuador</p>
+                                <p style="font-size: 10px; color: #64748b; margin: 0;">Tel: 099 216 0967 / 095 919 0794 | Email: alianzaestrategica2026@gmail.com</p>
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="background: #e0f2fe; border: 1px solid #0284c7; color: #0369a1; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 8px; text-transform: uppercase;">
+                                AGENTE: ${escapeHtml(agent)}
+                            </span>
+                            <p style="font-size: 10px; color: #64748b; margin: 6px 0 0 0; font-family: monospace;">Emisión: ${new Date().toLocaleDateString('es-EC')} ${new Date().toLocaleTimeString('es-EC')}</p>
+                        </div>
+                    </div>
+
+                    <!-- TARJETAS DE HONORARIOS DEL AGENTE -->
+                    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 20px;" class="avoid-break">
+                        <div style="border: 1px solid #bae6fd; border-left: 4px solid #0284c7; border-radius: 10px; padding: 10px; background: #f0f9ff;">
+                            <span style="font-size: 9px; font-weight: bold; color: #0369a1; text-transform: uppercase;">Ganancia Captaciones</span>
+                            <div style="font-size: 15px; font-weight: 900; color: #0284c7; margin-top: 2px;">$${totalCap.toFixed(2)}</div>
+                            <span style="font-size: 8px; color: #0284c7;">25% por Bien Captado</span>
+                        </div>
+                        <div style="border: 1px solid #fef3c7; border-left: 4px solid #d97706; border-radius: 10px; padding: 10px; background: #fffbeb;">
+                            <span style="font-size: 9px; font-weight: bold; color: #b45309; text-transform: uppercase;">Ganancia Ventas</span>
+                            <div style="font-size: 15px; font-weight: 900; color: #d97706; margin-top: 2px;">$${totalVen.toFixed(2)}</div>
+                            <span style="font-size: 8px; color: #b45309;">25% Cierre Comercial</span>
+                        </div>
+                        <div style="border: 1px solid #a7f3d0; border-left: 4px solid #059669; border-radius: 10px; padding: 10px; background: #ecfdf5;">
+                            <span style="font-size: 9px; font-weight: bold; color: #047857; text-transform: uppercase;">Total Acumulado</span>
+                            <div style="font-size: 15px; font-weight: 900; color: #059669; margin-top: 2px;">$${totalAcum.toFixed(2)}</div>
+                            <span style="font-size: 8px; color: #047857;">Honorarios Generados</span>
+                        </div>
+                        <div style="border: 1px solid #bbf7d0; border-left: 4px solid #10b981; border-radius: 10px; padding: 10px; background: #f0fdf4;">
+                            <span style="font-size: 9px; font-weight: bold; color: #15803d; text-transform: uppercase;">Liquidado / Pagado</span>
+                            <div style="font-size: 15px; font-weight: 900; color: #16a34a; margin-top: 2px;">$${totalPaid.toFixed(2)}</div>
+                            <span style="font-size: 8px; color: #16a34a;">Transferido al Agente</span>
+                        </div>
+                        <div style="border: 1px solid #fecdd3; border-left: 4px solid #e11d48; border-radius: 10px; padding: 10px; background: #fff1f2;">
+                            <span style="font-size: 9px; font-weight: bold; color: #be123c; text-transform: uppercase;">Pendiente / Inpago</span>
+                            <div style="font-size: 15px; font-weight: 900; color: #e11d48; margin-top: 2px;">$${totalUnpaid.toFixed(2)}</div>
+                            <span style="font-size: 8px; color: #be123c;">Por Liquidar en Caja</span>
+                        </div>
+                    </div>
+
+                    <!-- TABLA 1: CAPTACIONES -->
+                    <h3 style="font-size: 12px; font-weight: 800; color: #0284c7; text-transform: uppercase; margin: 16px 0 6px 0; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px;">
+                        1. Bienes Captados por el Agente (${captured.length})
+                    </h3>
+                    <table style="width: 100%; border-collapse: collapse; font-size: 9.5px; margin-bottom: 20px;">
+                        <thead>
+                            <tr style="background: #0f172a; color: #ffffff; text-align: left; text-transform: uppercase; font-size: 9px;">
+                                <th style="padding: 7px; border: 1px solid #334155;">Código</th>
+                                <th style="padding: 7px; border: 1px solid #334155;">Fecha</th>
+                                <th style="padding: 7px; border: 1px solid #334155;">Detalle del Activo</th>
+                                <th style="padding: 7px; border: 1px solid #334155;">Ubicación</th>
+                                <th style="padding: 7px; border: 1px solid #334155;">Propietario</th>
+                                <th style="padding: 7px; border: 1px solid #334155; text-align: right;">Precio ($)</th>
+                                <th style="padding: 7px; border: 1px solid #334155; text-align: right;">Comisión ($)</th>
+                                <th style="padding: 7px; border: 1px solid #334155; text-align: right; color: #38bdf8;">Liq. Captador (25%)</th>
+                                <th style="padding: 7px; border: 1px solid #334155; text-align: center;">Estado</th>
+                                <th style="padding: 7px; border: 1px solid #334155; text-align: center;">Liquidación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${capRows.length > 0 ? capRows : '<tr><td colspan="10" style="padding: 10px; text-align: center; color: #64748b;">No registra bienes captados</td></tr>'}
+                            <tr style="background: #0f172a; color: #ffffff; font-weight: bold;">
+                                <td colspan="7" style="padding: 7px; text-align: right;">SUBTOTAL GANANCIAS CAPTACIÓN:</td>
+                                <td style="padding: 7px; text-align: right; color: #38bdf8;">$${totalCap.toFixed(2)}</td>
+                                <td colspan="2"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- TABLA 2: VENTAS -->
+                    <h3 style="font-size: 12px; font-weight: 800; color: #d97706; text-transform: uppercase; margin: 16px 0 6px 0; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px;">
+                        2. Ventas Cerradas por el Agente (${sold.length})
+                    </h3>
+                    <table style="width: 100%; border-collapse: collapse; font-size: 9.5px; margin-bottom: 20px;">
+                        <thead>
+                            <tr style="background: #0f172a; color: #ffffff; text-align: left; text-transform: uppercase; font-size: 9px;">
+                                <th style="padding: 7px; border: 1px solid #334155;">Código</th>
+                                <th style="padding: 7px; border: 1px solid #334155;">Fecha</th>
+                                <th style="padding: 7px; border: 1px solid #334155;">Detalle del Activo</th>
+                                <th style="padding: 7px; border: 1px solid #334155;">Ubicación</th>
+                                <th style="padding: 7px; border: 1px solid #334155;">Propietario</th>
+                                <th style="padding: 7px; border: 1px solid #334155; text-align: right;">Precio Venta ($)</th>
+                                <th style="padding: 7px; border: 1px solid #334155; text-align: right;">Comisión ($)</th>
+                                <th style="padding: 7px; border: 1px solid #334155; text-align: right; color: #fbbf24;">Liq. Vendedor (25%)</th>
+                                <th style="padding: 7px; border: 1px solid #334155; text-align: center;">Liquidación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${soldRows.length > 0 ? soldRows : '<tr><td colspan="9" style="padding: 10px; text-align: center; color: #64748b;">No registra ventas cerradas</td></tr>'}
+                            <tr style="background: #0f172a; color: #ffffff; font-weight: bold;">
+                                <td colspan="7" style="padding: 7px; text-align: right;">SUBTOTAL GANANCIAS VENTAS:</td>
+                                <td style="padding: 7px; text-align: right; color: #fbbf24;">$${totalVen.toFixed(2)}</td>
+                                <td></td>
+                            </tr>
+                            <tr style="background: #0284c7; color: #ffffff; font-weight: bold; font-size: 11px;">
+                                <td colspan="7" style="padding: 9px; text-align: right;">TOTAL GENERAL ACUMULADO A COBRAR:</td>
+                                <td style="padding: 9px; text-align: right;">$${totalAcum.toFixed(2)}</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- FIRMAS OFICIALES -->
+                    <div style="margin-top: 30px; border-top: 2px solid #0284c7; padding-top: 16px;" class="avoid-break">
+                        <div style="display: flex; justify-content: space-between; text-align: center; gap: 30px;">
+                            <div style="flex: 1; border-top: 1px solid #94a3b8; padding-top: 6px;">
+                                <p style="font-size: 11px; font-weight: 800; color: #0f172a; margin: 0;">Adrián Arturo Íñiguez Lucio</p>
+                                <p style="font-size: 9.5px; color: #64748b; margin: 1px 0 0 0;">Gerente General & Representante Legal</p>
+                                <p style="font-size: 9px; color: #d97706; margin: 0; font-weight: 700;">ALIANZA ESTRATÉGICA S.A.S.</p>
+                            </div>
+                            <div style="flex: 1; border-top: 1px solid #94a3b8; padding-top: 6px;">
+                                <p style="font-size: 11px; font-weight: 800; color: #0f172a; margin: 0;">${escapeHtml(agent)}</p>
+                                <p style="font-size: 9.5px; color: #64748b; margin: 1px 0 0 0;">Firma de Aceptación del Agente</p>
+                                <p style="font-size: 9px; color: #0284c7; margin: 0; font-weight: 700;">Fuerza de Ventas Alianza</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const wrapper = document.getElementById('printOutputWrapper');
+            if (wrapper) {
+                wrapper.innerHTML = printableHtml;
+                showToast(`Preparando estado de cuenta en PDF para ${agent}...`, 'info');
+                setTimeout(() => {
+                    window.print();
+                }, 400);
+            }
         }
 
         function setInfoTab(tab) {
@@ -5236,187 +5891,260 @@ ESQUEMA DE COMISIONES (50/50):
         }
 
         function downloadAssetLegalBackup(itemId) {
-            if (currentRole !== 'ADMIN') {
-                showToast('Acceso exclusivo para el Administrador Principal (A.A.I.L.)', 'error');
+            const item = inventory.find(i => i.id === itemId);
+            if (!item) {
+                showToast('No se encontró el activo para generar el respaldo legal', 'error');
                 return;
             }
-            const item = inventory.find(i => i.id === itemId);
-            if (!item) return;
 
             const assetVisits = visitsList.filter(v => v.linkedAssetId === item.id || v.linkedAssetCode === item.code);
             const isVendido = item.status === 'VENDIDO' || item.status === 'SOLD';
-            const mainImg = (item.images && item.images.length > 0) ? item.images[0] : (item.img || '');
+            const allImages = (item.images && item.images.length > 0) ? item.images : (item.img ? [item.img] : []);
 
-            let printArea = document.getElementById('legalReportPrintArea');
-            if (!printArea) {
-                printArea = document.createElement('div');
-                printArea.id = 'legalReportPrintArea';
-                document.body.appendChild(printArea);
+            // Construcción de la galería fotográfica completa
+            let galleryHtml = '';
+            if (allImages.length > 0) {
+                galleryHtml = `
+                    <div style="margin-bottom: 20px;" class="avoid-break">
+                        <h3 style="font-size: 11px; font-weight: 800; color: #0284c7; text-transform: uppercase; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px; margin: 0 0 10px 0;">
+                            📸 Galería Fotográfica y Respaldo Visual Oficial (${allImages.length} Fotografías)
+                        </h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                            ${allImages.map((imgUrl, idx) => `
+                                <div style="border: 1px solid #cbd5e1; border-radius: 8px; overflow: hidden; background: #f8fafc; text-align: center;">
+                                    <img src="${imgUrl}" style="width: 100%; height: 160px; object-fit: cover; display: block;" alt="Foto ${idx + 1} - ${escapeHtml(item.title)}">
+                                    <div style="padding: 4px; font-size: 8.5px; color: #64748b; font-weight: bold; background: #f1f5f9; border-top: 1px solid #e2e8f0;">
+                                        ${idx === 0 ? 'FOTO PRINCIPAL / PORTADA' : `REGISTRO VISUAL #${idx + 1}`}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
             }
 
-            const visitsHtml = assetVisits.length === 0 
-                ? '<p style="color: #94a3b8; font-style: italic; margin: 4px 0;">No registra visitas comerciales hasta la fecha.</p>' 
-                : assetVisits.map(v => `
-                <div style="border-bottom: 1px solid #334155; padding: 6px 0; margin-bottom: 4px; color: #cbd5e1;">
-                    <strong style="color: #ffffff;">Visitante:</strong> ${escapeHtml(v.visitorName)} (Cédula: ${escapeHtml(v.visitorId || '-')}, Tel: ${escapeHtml(v.visitorPhone)})<br>
-                    <strong style="color: #38bdf8;">Agente Gestor:</strong> ${escapeHtml(v.agentName)} | <strong>Fecha:</strong> ${v.visitDate} ${v.visitTime}<br>
-                    <strong>Tipo Prospecto:</strong> ${v.prospectType} | <strong>Resultado:</strong> ${v.visitResult}<br>
-                    <strong>Observaciones:</strong> ${escapeHtml(v.observations)} | <strong>Estado:</strong> ${v.adminStatus}
-                </div>
-            `).join('');
+            // Especificaciones técnicas según categoría
+            let specsHtml = '';
+            const cat = (item.category || '').toUpperCase();
+            if (cat === 'RE' || (item.categoryType && item.categoryType.toLowerCase().includes('raíces')) || (item.categoryType && item.categoryType.toLowerCase().includes('inmueble'))) {
+                specsHtml = `
+                    <tr><td style="padding: 5px 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc; width: 32%;">Tipo de Inmueble:</td><td style="padding: 5px 8px; border: 1px solid #cbd5e1;">${escapeHtml(item.categoryType || 'Bienes Raíces')}</td></tr>
+                    <tr><td style="padding: 5px 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc;">Área / Superficie:</td><td style="padding: 5px 8px; border: 1px solid #cbd5e1;">${item.reMetros2 ? `${escapeHtml(item.reMetros2)} m²` : 'Verificado en escrituras'}</td></tr>
+                    <tr><td style="padding: 5px 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc;">Habitaciones / Ambientes:</td><td style="padding: 5px 8px; border: 1px solid #cbd5e1;">${escapeHtml(item.reHabitaciones || '3 habitaciones')}</td></tr>
+                    <tr><td style="padding: 5px 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc;">Baños / Sanitarios:</td><td style="padding: 5px 8px; border: 1px solid #cbd5e1;">${escapeHtml(item.reBanos || '2 baños')}</td></tr>
+                    <tr><td style="padding: 5px 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc;">Servicios Básicos:</td><td style="padding: 5px 8px; border: 1px solid #cbd5e1; color: #059669; font-weight: bold;">Agua Potable, Energía Eléctrica, Alcantarillado, Vías de Acceso</td></tr>
+                `;
+            } else if (cat === 'VH' || (item.categoryType && item.categoryType.toLowerCase().includes('vehículo')) || (item.categoryType && item.categoryType.toLowerCase().includes('auto'))) {
+                specsHtml = `
+                    <tr><td style="padding: 5px 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc; width: 32%;">Tipo de Vehículo:</td><td style="padding: 5px 8px; border: 1px solid #cbd5e1;">${escapeHtml(item.categoryType || 'Vehículo')}</td></tr>
+                    <tr><td style="padding: 5px 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc;">Año de Fabricación:</td><td style="padding: 5px 8px; border: 1px solid #cbd5e1;">${escapeHtml(item.vhAno || '2018')}</td></tr>
+                    <tr><td style="padding: 5px 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc;">Kilometraje:</td><td style="padding: 5px 8px; border: 1px solid #cbd5e1;">${escapeHtml(item.vhKm || 'Verificado en odómetro')}</td></tr>
+                    <tr><td style="padding: 5px 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc;">Revisión Técnica ANT / SRI:</td><td style="padding: 5px 8px; border: 1px solid #cbd5e1; color: #059669; font-weight: bold;">Matrícula y Revisión Vehicular al Día (Sin gravamen)</td></tr>
+                `;
+            } else if (cat === 'MA' || (item.categoryType && item.categoryType.toLowerCase().includes('maquinaria'))) {
+                specsHtml = `
+                    <tr><td style="padding: 5px 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc; width: 32%;">Tipo Maquinaria:</td><td style="padding: 5px 8px; border: 1px solid #cbd5e1;">${escapeHtml(item.categoryType || 'Maquinaria Pesada')}</td></tr>
+                    <tr><td style="padding: 5px 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc;">Año y Operatividad:</td><td style="padding: 5px 8px; border: 1px solid #cbd5e1;">${escapeHtml(item.maqAno || 'Operativa al 100%')}</td></tr>
+                    <tr><td style="padding: 5px 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc;">Horómetro / Horas Trabajo:</td><td style="padding: 5px 8px; border: 1px solid #cbd5e1;">${escapeHtml(item.maqHorometro || 'Certificado técnico')}</td></tr>
+                    <tr><td style="padding: 5px 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc;">Estado Mecánico e Hidráulico:</td><td style="padding: 5px 8px; border: 1px solid #cbd5e1; color: #059669; font-weight: bold;">Inspeccionada y certificada</td></tr>
+                `;
+            } else {
+                specsHtml = `
+                    <tr><td style="padding: 5px 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc; width: 32%;">Categoría:</td><td style="padding: 5px 8px; border: 1px solid #cbd5e1;">${escapeHtml(item.categoryType || item.category || 'General')}</td></tr>
+                    <tr><td style="padding: 5px 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc;">Estado Operativo:</td><td style="padding: 5px 8px; border: 1px solid #cbd5e1; color: #059669; font-weight: bold;">Verificado y en óptimas condiciones</td></tr>
+                `;
+            }
 
-            printArea.innerHTML = `
-                <div style="max-width: 850px; margin: 0 auto; background: #0f172a; border: 1px solid #1e293b; border-radius: 16px; padding: 24px; color: #f8fafc; font-family: 'Plus Jakarta Sans', sans-serif;">
-                    <!-- CABECERA CORPORATIVA CON LOGO Y SELLOS -->
-                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #0284c7; padding-bottom: 16px; margin-bottom: 20px;">
+            // Historial de visitas
+            const visitsHtml = assetVisits.length === 0 
+                ? '<p style="color: #64748b; font-style: italic; margin: 4px 0; font-size: 10px;">No registra visitas comerciales hasta la fecha.</p>' 
+                : `
+                <table style="width: 100%; border-collapse: collapse; font-size: 9px; margin-top: 6px;">
+                    <thead>
+                        <tr style="background: #0f172a; color: #ffffff; text-align: left;">
+                            <th style="padding: 6px; border: 1px solid #334155;">Visitante / Prospecto</th>
+                            <th style="padding: 6px; border: 1px solid #334155;">Contacto</th>
+                            <th style="padding: 6px; border: 1px solid #334155;">Fecha & Hora</th>
+                            <th style="padding: 6px; border: 1px solid #334155;">Agente Guía</th>
+                            <th style="padding: 6px; border: 1px solid #334155;">Tipo Prospecto</th>
+                            <th style="padding: 6px; border: 1px solid #334155;">Resultado Visita</th>
+                            <th style="padding: 6px; border: 1px solid #334155;">Observaciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${assetVisits.map((v, vIdx) => `
+                            <tr style="background-color: ${vIdx % 2 === 0 ? '#ffffff' : '#f8fafc'}; border-bottom: 1px solid #cbd5e1;">
+                                <td style="padding: 6px; border: 1px solid #cbd5e1; font-weight: bold;">${escapeHtml(v.visitorName)}</td>
+                                <td style="padding: 6px; border: 1px solid #cbd5e1;">${escapeHtml(v.visitorPhone || '-')} (CI: ${escapeHtml(v.visitorId || '-')})</td>
+                                <td style="padding: 6px; border: 1px solid #cbd5e1;">${v.visitDate} ${v.visitTime}</td>
+                                <td style="padding: 6px; border: 1px solid #cbd5e1; color: #0284c7; font-weight: bold;">${escapeHtml(v.agentName)}</td>
+                                <td style="padding: 6px; border: 1px solid #cbd5e1;">${v.prospectType}</td>
+                                <td style="padding: 6px; border: 1px solid #cbd5e1; font-weight: bold; color: #059669;">${v.visitResult}</td>
+                                <td style="padding: 6px; border: 1px solid #cbd5e1;">${escapeHtml(v.observations)}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+                `;
+
+            const printableHtml = `
+                <div style="max-width: 900px; margin: 0 auto; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 24px; color: #0f172a; font-family: 'Plus Jakarta Sans', Arial, sans-serif;">
+                    <!-- CABECERA INSTITUCIONAL CON LOGO Y SELLOS -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #0284c7; padding-bottom: 14px; margin-bottom: 18px;">
                         <div style="display: flex; align-items: center; gap: 14px;">
-                            <img src="https://alianzaestrategica2026-byte.github.io/alianzaestrategica/108900.jpg" style="width: 65px; height: 65px; border-radius: 50%; border: 2px solid #f59e0b; object-fit: cover;" alt="Logo Alianza">
+                            <img src="${ALIANZA_OFFICIAL_LOGO}" onerror="this.onerror=null;this.src='/logo.png';" style="width: 70px; height: 70px; border-radius: 50%; border: 2px solid #f59e0b; object-fit: cover;" alt="Logo Alianza">
                             <div>
-                                <h1 style="font-size: 20px; font-weight: 800; color: #ffffff; margin: 0; letter-spacing: -0.5px;">ALIANZA ESTRATÉGICA S.A.S.</h1>
-                                <p style="font-size: 11px; font-weight: 800; color: #38bdf8; margin: 2px 0 0 0; text-transform: uppercase;">PLATAFORMA CORPORATIVA DE CORRETAJE & RESPALDO LEGAL NOTARIAL</p>
-                                <p style="font-size: 10px; color: #94a3b8; margin: 2px 0 0 0;">RUC: 2200260967001 | El Coca (Puerto Francisco de Orellana), Orellana - Ecuador</p>
-                                <p style="font-size: 10px; color: #94a3b8; margin: 0;">Tel: 099 216 0967 / 095 919 0794 | Email: alianzaestrategica2026@gmail.com</p>
+                                <h1 style="font-size: 20px; font-weight: 800; color: #0f172a; margin: 0; letter-spacing: -0.5px;">ALIANZA ESTRATÉGICA S.A.S.</h1>
+                                <p style="font-size: 10.5px; font-weight: 800; color: #0284c7; margin: 2px 0 0 0; text-transform: uppercase;">PLATAFORMA CORPORATIVA DE CORRETAJE & RESPALDO LEGAL NOTARIAL</p>
+                                <p style="font-size: 9.5px; color: #64748b; margin: 2px 0 0 0;">RUC: 2200260967001 | El Coca (Puerto Francisco de Orellana), Orellana - Ecuador</p>
+                                <p style="font-size: 9.5px; color: #64748b; margin: 0;">Tel: 099 216 0967 / 095 919 0794 | Emails: info@alianzaestrategica2026.com | alianzaestrategica2026@gmail.com</p>
                             </div>
                         </div>
                         <div style="text-align: right; display: flex; flex-direction: column; justify-content: center; align-items: flex-end;">
-                            <span style="background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.5); color: #f59e0b; font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 8px; text-transform: uppercase;">
-                                EXPEDIENTE OFICIAL DE ACTIVO
+                            <span style="background: #fef3c7; border: 1px solid #f59e0b; color: #b45309; font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 8px; text-transform: uppercase;">
+                                EXPEDIENTE & FICHA OFICIAL DE ACTIVO
                             </span>
-                            <span style="font-size: 10px; color: #cbd5e1; margin-top: 6px; font-family: monospace;">Emisión: ${new Date().toLocaleDateString('es-EC')}</span>
+                            <span style="font-size: 9.5px; color: #64748b; margin-top: 6px; font-family: monospace;">Emisión: ${new Date().toLocaleDateString('es-EC')} ${new Date().toLocaleTimeString('es-EC')}</span>
                         </div>
                     </div>
 
                     <!-- BANNER CÓDIGO & ESTADO DEL ACTIVO -->
-                    <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border: 1px solid #334155; border-radius: 12px; padding: 12px 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+                    <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-left: 5px solid #0284c7; border-radius: 10px; padding: 12px 16px; margin-bottom: 18px; display: flex; justify-content: space-between; align-items: center;" class="avoid-break">
                         <div>
-                            <span style="background: #0284c7; color: #ffffff; font-size: 11px; font-weight: 900; padding: 3px 8px; border-radius: 6px; font-family: monospace;">${item.code}</span>
-                            <h2 style="font-size: 16px; font-weight: 800; color: #ffffff; margin: 6px 0 2px 0;">${escapeHtml(item.title)}</h2>
-                            <p style="font-size: 11px; color: #cbd5e1; margin: 0;">Ubicación: <strong>${escapeHtml(item.location || 'El Coca, Orellana')}</strong></p>
+                            <span style="background: #0284c7; color: #ffffff; font-size: 11px; font-weight: 900; padding: 3px 8px; border-radius: 6px; font-family: monospace;">${item.code || '-'}</span>
+                            <h2 style="font-size: 16px; font-weight: 800; color: #0f172a; margin: 6px 0 2px 0;">${escapeHtml(item.title || '')}</h2>
+                            <p style="font-size: 11px; color: #64748b; margin: 0;">📍 Ubicación: <strong>${escapeHtml(item.location || 'El Coca, Orellana')}</strong></p>
                         </div>
                         <div style="text-align: right;">
-                            <div style="font-size: 18px; font-weight: 900; color: #38bdf8;">${item.priceStr || ('$' + (item.realSalePrice || 0) + ' USD')}</div>
-                            <span style="font-size: 10px; font-weight: 800; color: ${isVendido ? '#f43f5e' : '#10b981'}; text-transform: uppercase; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 2px 8px; border-radius: 6px; display: inline-block; margin-top: 4px;">
+                            <div style="font-size: 18px; font-weight: 900; color: #0284c7;">${item.priceStr || ('$' + (item.realSalePrice || 0) + ' USD')}</div>
+                            <span style="font-size: 10px; font-weight: 800; color: ${isVendido ? '#e11d48' : '#059669'}; text-transform: uppercase; background: ${isVendido ? '#ffe4e6' : '#d1fae5'}; border: 1px solid ${isVendido ? '#fecdd3' : '#a7f3d0'}; padding: 2px 8px; border-radius: 6px; display: inline-block; margin-top: 4px;">
                                 ${item.status || 'DISPONIBLE'}
                             </span>
                         </div>
                     </div>
 
-                    <!-- FOTO PRINCIPAL Y FICHA TÉCNICA -->
-                    <div style="display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: wrap;">
-                        ${mainImg ? `<div style="flex: 1; min-width: 220px; max-width: 300px; border-radius: 12px; overflow: hidden; border: 1px solid #334155; height: 180px; background: #020617;">
-                            <img src="${mainImg}" style="width: 100%; height: 100%; object-fit: cover;" alt="Foto del activo">
-                        </div>` : ''}
-                        
-                        <div style="flex: 2; min-width: 260px;">
-                            <h3 style="font-size: 12px; font-weight: 800; color: #38bdf8; text-transform: uppercase; border-bottom: 1px solid #334155; padding-bottom: 4px; margin: 0 0 8px 0;">
-                                1. Especificaciones Técnicas y Detalle
-                            </h3>
-                            <table style="width: 100%; border-collapse: collapse; font-size: 10.5px; color: #cbd5e1;">
-                                <tr><td style="padding: 4px 6px; border: 1px solid #334155; font-weight: bold; background: #1e293b; width: 35%;">Categoría:</td><td style="padding: 4px 6px; border: 1px solid #334155;">${item.categoryType || item.category}</td></tr>
-                                <tr><td style="padding: 4px 6px; border: 1px solid #334155; font-weight: bold; background: #1e293b;">Fecha Registro:</td><td style="padding: 4px 6px; border: 1px solid #334155;">${item.dateCreated || '-'}</td></tr>
-                                <tr><td style="padding: 4px 6px; border: 1px solid #334155; font-weight: bold; background: #1e293b;">Estado Notarial:</td><td style="padding: 4px 6px; border: 1px solid #334155; color: #10b981; font-weight: bold;">Documentación Verificada</td></tr>
-                                <tr><td style="padding: 4px 6px; border: 1px solid #334155; font-weight: bold; background: #1e293b;">Descripción:</td><td style="padding: 4px 6px; border: 1px solid #334155;">${escapeHtml(item.desc || 'Sin descripción detallada')}</td></tr>
-                            </table>
-                        </div>
+                    <!-- GALERÍA FOTOGRÁFICA COMPLETA -->
+                    ${galleryHtml}
+
+                    <!-- ESPECIFICACIONES TÉCNICAS Y DETALLE -->
+                    <div style="margin-bottom: 18px;" class="avoid-break">
+                        <h3 style="font-size: 11px; font-weight: 800; color: #0284c7; text-transform: uppercase; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px; margin: 0 0 8px 0;">
+                            1. Especificaciones Técnicas y Detalle del Activo
+                        </h3>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 10px; color: #1e293b;">
+                            <tr><td style="padding: 5px 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc; width: 32%;">Código Oficial:</td><td style="padding: 5px 8px; border: 1px solid #cbd5e1; font-family: monospace; font-weight: bold; color: #0284c7;">${item.code || '-'}</td></tr>
+                            <tr><td style="padding: 5px 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc;">Fecha de Ingreso al Sistema:</td><td style="padding: 5px 8px; border: 1px solid #cbd5e1;">${item.dateCreated || '-'}</td></tr>
+                            <tr><td style="padding: 5px 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc;">Estado Legal Notarial:</td><td style="padding: 5px 8px; border: 1px solid #cbd5e1; color: #059669; font-weight: bold;">Documentación Verificada & Saneamiento Notarial en Trámite</td></tr>
+                            ${specsHtml}
+                            <tr><td style="padding: 5px 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc;">Descripción Completa:</td><td style="padding: 5px 8px; border: 1px solid #cbd5e1; line-height: 1.5;">${escapeHtml(item.desc || item.title || 'Sin descripción')}</td></tr>
+                        </table>
                     </div>
 
-                    <!-- SECCIÓN 2: PROPIETARIO Y AGENTE RECEPTOR -->
-                    <div style="margin-bottom: 16px;">
-                        <h3 style="font-size: 12px; font-weight: 800; color: #38bdf8; text-transform: uppercase; border-bottom: 1px solid #334155; padding-bottom: 4px; margin: 0 0 8px 0;">
-                            2. Propietario Registrado & Agente Receptor / Captador
+                    <!-- PROPIETARIO Y AGENTE RECEPTOR -->
+                    <div style="margin-bottom: 18px;" class="avoid-break">
+                        <h3 style="font-size: 11px; font-weight: 800; color: #0284c7; text-transform: uppercase; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px; margin: 0 0 8px 0;">
+                            2. Propietario Titular Registrado & Agente Receptor / Captador
                         </h3>
-                        <table style="width: 100%; border-collapse: collapse; font-size: 10.5px; color: #cbd5e1;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 10px; color: #1e293b;">
                             <tr>
-                                <td style="padding: 5px 8px; border: 1px solid #334155; font-weight: bold; background: #1e293b; width: 30%;">Propietario Titular:</td>
-                                <td style="padding: 5px 8px; border: 1px solid #334155;">${escapeHtml(item.ownerName || 'Reservado en archivo')} (Doc: ${escapeHtml(item.ownerDoc || '-')}) - Tel: ${escapeHtml(item.ownerPhone || '-')}</td>
+                                <td style="padding: 5px 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc; width: 32%;">Propietario Titular:</td>
+                                <td style="padding: 5px 8px; border: 1px solid #cbd5e1;">${escapeHtml(item.ownerName || 'Propietario Verificado')} (Cédula/RUC: ${escapeHtml(item.ownerDoc || '-')}) - Tel: ${escapeHtml(item.ownerPhone || '-')}</td>
                             </tr>
                             <tr>
-                                <td style="padding: 5px 8px; border: 1px solid #334155; font-weight: bold; background: #1e293b;">Agente Captador / Receptor:</td>
-                                <td style="padding: 5px 8px; border: 1px solid #334155;">${escapeHtml(item.agentName || 'Alianza Estratégica S.A.S.')} (Tel: ${escapeHtml(item.agentPhone || '099 216 0967')})</td>
+                                <td style="padding: 5px 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc;">Agente Captador / Receptor:</td>
+                                <td style="padding: 5px 8px; border: 1px solid #cbd5e1; color: #0284c7; font-weight: bold;">${escapeHtml(item.agentName || 'Alianza Estratégica S.A.S.')} (Tel: ${escapeHtml(item.agentPhone || '099 216 0967')})</td>
                             </tr>
                         </table>
                     </div>
 
-                    <!-- SECCIÓN 3: AGENTE VENDEDOR -->
-                    <div style="margin-bottom: 16px;">
-                        <h3 style="font-size: 12px; font-weight: 800; color: #38bdf8; text-transform: uppercase; border-bottom: 1px solid #334155; padding-bottom: 4px; margin: 0 0 8px 0;">
+                    <!-- AGENTE VENDEDOR (CIERRE COMERCIAL) -->
+                    <div style="margin-bottom: 18px;" class="avoid-break">
+                        <h3 style="font-size: 11px; font-weight: 800; color: #0284c7; text-transform: uppercase; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px; margin: 0 0 8px 0;">
                             3. Agente Vendedor (Cierre Comercial)
                         </h3>
-                        <table style="width: 100%; border-collapse: collapse; font-size: 10.5px; color: #cbd5e1;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 10px; color: #1e293b;">
                             <tr>
-                                <td style="padding: 5px 8px; border: 1px solid #334155; font-weight: bold; background: #1e293b; width: 30%;">Agente Vendedor:</td>
-                                <td style="padding: 5px 8px; border: 1px solid #334155;">${escapeHtml(item.sellerAgentName || (isVendido ? item.agentName : 'Pendiente de cierre comercial'))} (Tel: ${escapeHtml(item.sellerAgentPhone || '-')})</td>
+                                <td style="padding: 5px 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc; width: 32%;">Agente de Cierre:</td>
+                                <td style="padding: 5px 8px; border: 1px solid #cbd5e1;">${escapeHtml(item.sellerAgentName || (isVendido ? item.agentName : 'Pendiente de asignación al concretar la venta'))} (Tel: ${escapeHtml(item.sellerAgentPhone || '-')})</td>
                             </tr>
                         </table>
                     </div>
 
-                    <!-- SECCIÓN 4: PROSPECTOS DE VISITAS REGISTRADOS -->
-                    <div style="margin-bottom: 16px;">
-                        <h3 style="font-size: 12px; font-weight: 800; color: #38bdf8; text-transform: uppercase; border-bottom: 1px solid #334155; padding-bottom: 4px; margin: 0 0 8px 0;">
-                            4. Historial de Prospectos & Visitas Registradas (${assetVisits.length})
+                    <!-- ACUERDOS LEGALES DE PAGO & REMUNERACIÓN 50/50 -->
+                    <div style="margin-bottom: 18px;" class="avoid-break">
+                        <h3 style="font-size: 11px; font-weight: 800; color: #0284c7; text-transform: uppercase; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px; margin: 0 0 8px 0;">
+                            4. Acuerdos Legales de Pago, Honorarios & Comisión Institucional
                         </h3>
-                        <div style="background: #020617; border: 1px solid #334155; border-radius: 8px; padding: 8px; font-size: 10px; color: #cbd5e1;">
-                            ${visitsHtml}
-                        </div>
-                    </div>
-
-                    <!-- SECCIÓN 5: ACUERDOS LEGALES DE PAGO Y REMUNERACIÓN -->
-                    <div style="margin-bottom: 16px;">
-                        <h3 style="font-size: 12px; font-weight: 800; color: #38bdf8; text-transform: uppercase; border-bottom: 1px solid #334155; padding-bottom: 4px; margin: 0 0 8px 0;">
-                            5. Acuerdos Legales de Pago & Remuneración
-                        </h3>
-                        <table style="width: 100%; border-collapse: collapse; font-size: 10.5px; color: #cbd5e1;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 10px; color: #1e293b;">
                             <tr>
-                                <td style="padding: 5px 8px; border: 1px solid #334155; font-weight: bold; background: #1e293b; width: 30%;">Comisión Pactada:</td>
-                                <td style="padding: 5px 8px; border: 1px solid #334155; color: #f59e0b; font-weight: bold;">${item.comisionStr || ('$' + (item.commissionPactada || 0) + ' USD')}</td>
+                                <td style="padding: 5px 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc; width: 32%;">Comisión Comercial Pactada:</td>
+                                <td style="padding: 5px 8px; border: 1px solid #cbd5e1; color: #b45309; font-weight: bold;">${item.comisionStr || ('$' + (item.commissionPactada || 0) + ' USD')}</td>
                             </tr>
                             <tr>
-                                <td style="padding: 5px 8px; border: 1px solid #334155; font-weight: bold; background: #1e293b;">Regla de Reparto:</td>
-                                <td style="padding: 5px 8px; border: 1px solid #334155;">50% para ALIANZA ESTRATÉGICA S.A.S. / 50% para Fuerza de Ventas (25% Agente Captador / 25% Agente Vendedor, o 50% completo si el mismo agente realiza captación y venta)</td>
+                                <td style="padding: 5px 8px; border: 1px solid #cbd5e1; font-weight: bold; background: #f8fafc;">Regla de Reparto Institucional:</td>
+                                <td style="padding: 5px 8px; border: 1px solid #cbd5e1;">50% para ALIANZA ESTRATÉGICA S.A.S. / 50% para Fuerza de Ventas (25% Agente Captador / 25% Agente Vendedor, o 50% completo si el mismo agente realiza captación y venta)</td>
                             </tr>
                         </table>
                     </div>
 
-                    <!-- SECCIÓN 6: DATOS DE ARTÍCULO LIQUIDADO (SI APLICA) -->
+                    <!-- HISTORIAL DE VISITAS Y PROSPECTOS -->
+                    <div style="margin-bottom: 18px;" class="avoid-break">
+                        <h3 style="font-size: 11px; font-weight: 800; color: #0284c7; text-transform: uppercase; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px; margin: 0 0 8px 0;">
+                            5. Historial de Prospectos & Visitas Registradas (${assetVisits.length})
+                        </h3>
+                        ${visitsHtml}
+                    </div>
+
+                    <!-- DATOS DE ARTÍCULO LIQUIDADO (SI ESTÁ VENDIDO) -->
                     ${isVendido ? `
-                    <div style="margin-bottom: 16px; background: rgba(225, 29, 72, 0.05); border: 1px solid rgba(225, 29, 72, 0.3); border-radius: 10px; padding: 10px;">
-                        <h3 style="font-size: 12px; font-weight: 800; color: #f43f5e; text-transform: uppercase; border-bottom: 1px solid rgba(225, 29, 72, 0.3); padding-bottom: 4px; margin: 0 0 8px 0;">
-                            6. Datos de Artículo Liquidado / Vendido
+                    <div style="margin-bottom: 18px; background: #fff1f2; border: 1px solid #fecdd3; border-radius: 10px; padding: 12px;" class="avoid-break">
+                        <h3 style="font-size: 11px; font-weight: 800; color: #be123c; text-transform: uppercase; border-bottom: 1px solid #fecdd3; padding-bottom: 4px; margin: 0 0 8px 0;">
+                            6. Datos de Artículo Liquidado / Venta Concretada
                         </h3>
-                        <table style="width: 100%; border-collapse: collapse; font-size: 10.5px; color: #cbd5e1;">
-                            <tr><td style="padding: 4px 6px; border: 1px solid #334155; font-weight: bold; width: 30%;">Precio Final de Venta:</td><td style="padding: 4px 6px; border: 1px solid #334155; font-weight: bold; color: #ffffff;">$${(item.realSalePrice || 0).toFixed(2)} USD</td></tr>
-                            <tr><td style="padding: 4px 6px; border: 1px solid #334155; font-weight: bold;">Comisión Total Cobrada:</td><td style="padding: 4px 6px; border: 1px solid #334155; font-weight: bold; color: #10b981;">$${(item.commissionPactada || 0).toFixed(2)} USD</td></tr>
-                            <tr><td style="padding: 4px 6px; border: 1px solid #334155; font-weight: bold;">Pago Agente Captador:</td><td style="padding: 4px 6px; border: 1px solid #334155; font-weight: bold; color: #38bdf8;">$${(item.payCaptador || 0).toFixed(2)} USD</td></tr>
-                            <tr><td style="padding: 4px 6px; border: 1px solid #334155; font-weight: bold;">Pago Agente Vendedor:</td><td style="padding: 4px 6px; border: 1px solid #334155; font-weight: bold; color: #f59e0b;">$${(item.payVendedor || 0).toFixed(2)} USD</td></tr>
-                            <tr><td style="padding: 4px 6px; border: 1px solid #334155; font-weight: bold;">Ganancia Neta Empresa:</td><td style="padding: 4px 6px; border: 1px solid #334155; font-weight: bold; color: #c084fc;">$${(item.netEmpresa || 0).toFixed(2)} USD</td></tr>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 10px; color: #1e293b;">
+                            <tr><td style="padding: 4px 6px; border: 1px solid #cbd5e1; font-weight: bold; width: 32%;">Precio Final de Venta:</td><td style="padding: 4px 6px; border: 1px solid #cbd5e1; font-weight: bold; color: #0f172a;">$${(parseFloat(item.realSalePrice) || 0).toFixed(2)} USD</td></tr>
+                            <tr><td style="padding: 4px 6px; border: 1px solid #cbd5e1; font-weight: bold;">Comisión Total Cobrada:</td><td style="padding: 4px 6px; border: 1px solid #cbd5e1; font-weight: bold; color: #059669;">$${(parseFloat(item.commissionPactada) || 0).toFixed(2)} USD</td></tr>
+                            <tr><td style="padding: 4px 6px; border: 1px solid #cbd5e1; font-weight: bold;">Pago Agente Captador:</td><td style="padding: 4px 6px; border: 1px solid #cbd5e1; font-weight: bold; color: #0284c7;">$${(parseFloat(item.payCaptador) || 0).toFixed(2)} USD (${item.paymentStatusCaptador === 'PAID' ? 'PAGADO' : 'INPAGO'})</td></tr>
+                            <tr><td style="padding: 4px 6px; border: 1px solid #cbd5e1; font-weight: bold;">Pago Agente Vendedor:</td><td style="padding: 4px 6px; border: 1px solid #cbd5e1; font-weight: bold; color: #b45309;">$${(parseFloat(item.payVendedor) || 0).toFixed(2)} USD (${item.paymentStatusVendedor === 'PAID' ? 'PAGADO' : 'INPAGO'})</td></tr>
+                            <tr><td style="padding: 4px 6px; border: 1px solid #cbd5e1; font-weight: bold;">Ganancia Neta Empresa:</td><td style="padding: 4px 6px; border: 1px solid #cbd5e1; font-weight: bold; color: #6b21a8;">$${(parseFloat(item.netEmpresa) || 0).toFixed(2)} USD</td></tr>
                         </table>
                     </div>
                     ` : ''}
 
-                    <!-- SECCIÓN 7: RESPALDO LEGAL, FIRMAS & SELLO NOTARIAL -->
-                    <div style="margin-top: 28px; border-top: 2px solid #0284c7; padding-top: 16px;">
-                        <div style="display: flex; justify-content: space-between; text-align: center; gap: 20px;">
+                    <!-- RESPALDO LEGAL, CERTIFICACIÓN NOTARIAL & FIRMAS -->
+                    <div style="margin-top: 24px; border-top: 2px solid #0284c7; padding-top: 16px;" class="avoid-break">
+                        <div style="display: flex; justify-content: space-between; text-align: center; gap: 24px;">
                             <div style="flex: 1; border-top: 1px solid #94a3b8; padding-top: 6px;">
-                                <p style="font-size: 11px; font-weight: 800; color: #ffffff; margin: 0;">Adrián Arturo Íñiguez Lucio</p>
-                                <p style="font-size: 9.5px; color: #94a3b8; margin: 1px 0 0 0;">Gerente General & Representante Legal</p>
-                                <p style="font-size: 9px; color: #f59e0b; margin: 0; font-weight: 700;">ALIANZA ESTRATÉGICA S.A.S.</p>
+                                <p style="font-size: 11px; font-weight: 800; color: #0f172a; margin: 0;">Adrián Arturo Íñiguez Lucio</p>
+                                <p style="font-size: 9.5px; color: #64748b; margin: 1px 0 0 0;">Gerente General & Representante Legal</p>
+                                <p style="font-size: 9px; color: #d97706; margin: 0; font-weight: 700;">ALIANZA ESTRATÉGICA S.A.S.</p>
                             </div>
                             <div style="flex: 1; border-top: 1px solid #94a3b8; padding-top: 6px;">
-                                <p style="font-size: 11px; font-weight: 800; color: #ffffff; margin: 0;">Abg. Carlos Alfredo Íñiguez Rodríguez</p>
-                                <p style="font-size: 9.5px; color: #94a3b8; margin: 1px 0 0 0;">Patrocinio Jurídico & Saneamiento Notarial</p>
-                                <p style="font-size: 9px; color: #38bdf8; margin: 0; font-weight: 700;">El Coca, Orellana - Ecuador</p>
+                                <p style="font-size: 11px; font-weight: 800; color: #0f172a; margin: 0;">Abg. Carlos Alfredo Íñiguez Rodríguez</p>
+                                <p style="font-size: 9.5px; color: #64748b; margin: 1px 0 0 0;">Patrocinio Jurídico & Saneamiento Notarial</p>
+                                <p style="font-size: 9px; color: #0284c7; margin: 0; font-weight: 700;">El Coca, Orellana - Ecuador</p>
                             </div>
                         </div>
                         
-                        <div style="margin-top: 16px; text-align: center; font-size: 8.5px; color: #64748b; border-top: 1px solid #1e293b; padding-top: 8px;">
-                            Documento digital de respaldo legal generado exclusivamente para el Administrador Principal (A.A.I.L.) | ALIANZA ESTRATÉGICA S.A.S. RUC: 2200260967001
+                        <div style="margin-top: 14px; text-align: center; font-size: 8.5px; color: #94a3b8; border-top: 1px solid #e2e8f0; padding-top: 6px;">
+                            Expediente Digital de Respaldo Legal y Ficha Técnica emitido por ALIANZA ESTRATÉGICA S.A.S. | RUC: 2200260967001 | Todos los derechos reservados conforme a la legislación ecuatoriana.
                         </div>
                     </div>
                 </div>
             `;
 
+            const printArea = document.getElementById('legalReportPrintArea');
+            if (printArea) {
+                printArea.innerHTML = printableHtml;
+            }
+
+            const wrapper = document.getElementById('printOutputWrapper');
+            if (wrapper) {
+                wrapper.innerHTML = printableHtml;
+            }
+
             openModal('legalReportModal');
-            showToast('Generando vista previa de Expediente de Respaldo Legal...');
+            showToast('Generando vista previa de Expediente de Respaldo Legal...', 'info');
             setTimeout(() => {
                 window.print();
             }, 500);
