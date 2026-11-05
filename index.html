@@ -227,6 +227,9 @@
                 <i class="fa-solid fa-user-shield text-slate-950 text-base"></i> ADMINISTRADOR PRINCIPAL (A.A.I.L.) - Control Total
             </div>
             <div class="flex flex-wrap items-center gap-2">
+                <button onclick="openUsersManagementModal()" class="bg-purple-950 text-purple-200 border border-purple-400/50 px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-purple-900 transition flex items-center gap-1.5 shadow cursor-pointer">
+                    <i class="fa-solid fa-users-gear text-purple-400"></i> Gestión de Usuarios
+                </button>
                 <button onclick="openFinanceModal()" class="bg-emerald-950 text-white border border-emerald-400/40 px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-emerald-900 transition flex items-center gap-1.5 shadow cursor-pointer">
                     <i class="fa-solid fa-table-cells text-emerald-400"></i> Tabla Control Excel
                 </button>
@@ -607,19 +610,19 @@
             </div>
             <div class="space-y-3.5">
                 <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-1">Nivel de Acceso</label>
-                    <select id="loginRoleSelect" onchange="togglePassInput()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white font-semibold focus:outline-none focus:ring-2 focus:ring-sky-500">
-                        <option value="AGENT">INGRESO DE AGENTE</option>
-                        <option value="ADMIN">INGRESO ADMINISTRADOR</option>
-                    </select>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Correo Electrónico (Identificador Único)</label>
+                    <input type="email" id="loginEmailInput" placeholder="agente@alianzaestrategica2026.com" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
                 </div>
-                <div id="passContainer">
-                    <label class="block text-xs font-bold text-slate-300 mb-1" id="passLabel">Contraseña: INGRESO DE AGENTE</label>
-                    <input type="password" id="adminPassInput" placeholder="••••••••" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Contraseña Segura</label>
+                    <input type="password" id="loginPassInput" placeholder="••••••••" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
                 </div>
                 <button onclick="executeLogin()" class="w-full bg-sky-600 hover:bg-sky-500 text-white font-extrabold py-2.5 rounded-xl text-xs transition shadow-lg cursor-pointer">
-                    Ingresar al Panel
+                    Iniciar Sesión
                 </button>
+                <div class="text-[10px] text-slate-400 text-center pt-2 border-t border-slate-800">
+                    Sistema de credenciales individuales por usuario. (Sin cuentas compartidas).
+                </div>
             </div>
         </div>
     </div>
@@ -2231,6 +2234,39 @@
             }
         ];
 
+        const DEFAULT_USERS = [
+            {
+                name: "Adrián Arturo Íñiguez Lucio (Admin Líder)",
+                email: "adrian.iniguez@alianzaestrategica2026.com",
+                pass: "alianza2026",
+                role: "ADMIN"
+            },
+            {
+                name: "Abg. Carlos Alfredo Íñiguez Rodríguez (Jurídico)",
+                email: "carlos.iniguez@alianzaestrategica2026.com",
+                pass: "juridico2026",
+                role: "ADMIN"
+            },
+            {
+                name: "Ing. Carlos Mendoza (Agente Comercial)",
+                email: "carlos.mendoza@alianzaestrategica2026.com",
+                pass: "agente12345@",
+                role: "AGENT"
+            },
+            {
+                name: "Lic. Andrea Pazmiño (Agente Comercial)",
+                email: "andrea.pazmino@alianzaestrategica2026.com",
+                pass: "agente12345@",
+                role: "AGENT"
+            }
+        ];
+
+        let usersList = JSON.parse(localStorage.getItem('alianza_users') || 'null');
+        if (!usersList || !Array.isArray(usersList) || usersList.length === 0) {
+            usersList = [...DEFAULT_USERS];
+            localStorage.setItem('alianza_users', JSON.stringify(usersList));
+        }
+
         let sponsorsList = JSON.parse(localStorage.getItem('alianza_sponsors') || 'null');
         if (!sponsorsList || !Array.isArray(sponsorsList) || sponsorsList.length === 0) {
             sponsorsList = [...DEFAULT_SPONSORS];
@@ -2674,41 +2710,158 @@
         }
 
         function executeLogin() {
-            const roleSelect = document.getElementById('loginRoleSelect').value;
-            const passInput = document.getElementById('adminPassInput').value.trim();
+            const emailInput = (document.getElementById('loginEmailInput')?.value || '').trim().toLowerCase();
+            const passInput = (document.getElementById('loginPassInput')?.value || '').trim();
 
-            if (roleSelect === 'ADMIN') {
-                if (passInput === 'admin123' || passInput === 'alianza2026' || passInput === 'A180991a') {
-                    currentRole = 'ADMIN';
-                    localStorage.setItem('alianza_role', 'ADMIN');
-                    showToast('¡Bienvenido Administrador Principal! Control total activado.');
-                    closeModal('loginModal');
-                } else {
-                    showToast('Contraseña de Administrador incorrecta', 'error');
-                    return;
-                }
-            } else {
-                if (passInput === 'agente12345@' || passInput === 'agentes12345@' || passInput === 'agente.intermediacion') {
-                    currentRole = 'AGENT';
-                    localStorage.setItem('alianza_role', 'AGENT');
-                    showToast('¡Modo Agente Comercial activado!');
-                    closeModal('loginModal');
-                } else {
-                    showToast('Contraseña de Agente Comercial incorrecta', 'error');
-                    return;
-                }
+            if (!emailInput || !passInput) {
+                showToast('Por favor, ingresa tu correo electrónico y contraseña', 'error');
+                return;
             }
+
+            const foundUser = usersList.find(u => (u.email || '').toLowerCase() === emailInput && u.pass === passInput);
+            if (!foundUser) {
+                showToast('Credenciales incorrectas o usuario no registrado en el sistema', 'error');
+                return;
+            }
+
+            currentRole = foundUser.role; // 'ADMIN' o 'AGENT'
+            localStorage.setItem('alianza_role', currentRole);
+            localStorage.setItem('alianza_current_user_email', foundUser.email);
+            localStorage.setItem('alianza_current_user_name', foundUser.name);
+            localStorage.setItem('alianza_last_agent_name', foundUser.name);
+
+            closeModal('loginModal');
             applyRolePermissions();
             filterItems();
             renderFinanceTable();
+            showToast(`¡Bienvenido, ${foundUser.name}! (${foundUser.role === 'ADMIN' ? 'Administrador' : 'Agente Comercial'})`, 'success');
         }
 
         function logoutRole() {
             currentRole = 'GUEST';
             localStorage.setItem('alianza_role', 'GUEST');
+            localStorage.removeItem('alianza_current_user_email');
+            localStorage.removeItem('alianza_current_user_name');
             applyRolePermissions();
             filterItems();
             showToast('Sesión cerrada. Regresando a Modo Público.');
+        }
+
+        // FUNCIONES DE GESTIÓN DE USUARIOS (ADMINISTRADOR)
+        function openUsersManagementModal() {
+            if (currentRole !== 'ADMIN') {
+                showToast('Acceso exclusivo para el Administrador Principal', 'error');
+                return;
+            }
+            renderUsersTable();
+            openModal('usersManagementModal');
+        }
+
+        function renderUsersTable() {
+            const tbody = document.getElementById('usersTableBody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            if (!usersList || usersList.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="py-4 text-center text-slate-500 italic">No hay usuarios registrados.</td></tr>`;
+                return;
+            }
+
+            usersList.forEach((u, idx) => {
+                const isSelfAdmin = u.email === 'adrian.iniguez@alianzaestrategica2026.com';
+                const roleBadge = u.role === 'ADMIN' 
+                    ? `<span class="bg-purple-950 text-purple-300 border border-purple-500/40 px-2 py-0.5 rounded text-[10px] font-bold">ADMINISTRADOR</span>` 
+                    : `<span class="bg-sky-950 text-sky-300 border border-sky-500/40 px-2 py-0.5 rounded text-[10px] font-bold">AGENTE COMERCIAL</span>`;
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-900 transition border-b border-slate-800">
+                        <td class="py-3 px-3 font-bold text-white">${escapeHtml(u.name)}</td>
+                        <td class="py-3 px-3 text-sky-400 font-mono">${escapeHtml(u.email)}</td>
+                        <td class="py-3 px-3 font-mono text-amber-300">${escapeHtml(u.pass)}</td>
+                        <td class="py-3 px-3">${roleBadge}</td>
+                        <td class="py-3 px-3 text-center flex justify-center gap-1.5">
+                            <button onclick="openEditUserModal('${escapeHtml(u.email)}')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-sky-300 rounded-lg text-[10px] font-bold transition cursor-pointer" title="Editar Usuario"><i class="fa-solid fa-pen"></i></button>
+                            ${!isSelfAdmin ? `<button onclick="deleteUser('${escapeHtml(u.email)}')" class="px-2.5 py-1 bg-rose-950/60 hover:bg-rose-900 text-rose-300 rounded-lg text-[10px] font-bold transition cursor-pointer" title="Eliminar Usuario"><i class="fa-solid fa-trash-can"></i></button>` : '<span class="text-[9px] text-slate-500 italic px-1">Principal</span>'}
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function openCreateUserModal() {
+            if (currentRole !== 'ADMIN') return;
+            document.getElementById('userEditForm').reset();
+            document.getElementById('editUserOriginalEmail').value = '';
+            document.getElementById('userModalTitle').innerHTML = '<i class="fa-solid fa-user-plus text-purple-400"></i> Registrar Nuevo Usuario';
+            document.getElementById('editUserEmail').disabled = false;
+            openModal('userEditModal');
+        }
+
+        function openEditUserModal(email) {
+            if (currentRole !== 'ADMIN') return;
+            const user = usersList.find(u => u.email === email);
+            if (!user) return;
+
+            document.getElementById('editUserOriginalEmail').value = user.email;
+            document.getElementById('editUserName').value = user.name;
+            document.getElementById('editUserEmail').value = user.email;
+            document.getElementById('editUserPass').value = user.pass;
+            document.getElementById('editUserRole').value = user.role;
+            document.getElementById('editUserEmail').disabled = (user.email === 'adrian.iniguez@alianzaestrategica2026.com');
+
+            document.getElementById('userModalTitle').innerHTML = '<i class="fa-solid fa-user-pen text-purple-400"></i> Editar Usuario del Sistema';
+            openModal('userEditModal');
+        }
+
+        function handleSaveUser(e) {
+            e.preventDefault();
+            if (currentRole !== 'ADMIN') return;
+
+            const origEmail = document.getElementById('editUserOriginalEmail').value.trim().toLowerCase();
+            const name = document.getElementById('editUserName').value.trim();
+            const email = document.getElementById('editUserEmail').value.trim().toLowerCase();
+            const pass = document.getElementById('editUserPass').value.trim();
+            const role = document.getElementById('editUserRole').value;
+
+            if (!name || !email || !pass) {
+                showToast('Por favor, completa todos los campos requeridos', 'error');
+                return;
+            }
+
+            if (origEmail) {
+                // Editando usuario existente
+                const idx = usersList.findIndex(u => u.email.toLowerCase() === origEmail);
+                if (idx !== -1) {
+                    usersList[idx] = { name, email, pass, role };
+                }
+            } else {
+                // Creando nuevo usuario
+                const exists = usersList.some(u => u.email.toLowerCase() === email);
+                if (exists) {
+                    showToast('Ya existe un usuario registrado con este correo electrónico', 'error');
+                    return;
+                }
+                usersList.push({ name, email, pass, role });
+            }
+
+            localStorage.setItem('alianza_users', JSON.stringify(usersList));
+            closeModal('userEditModal');
+            renderUsersTable();
+            showToast('¡Usuario guardado con éxito!');
+        }
+
+        function deleteUser(email) {
+            if (currentRole !== 'ADMIN') return;
+            if (email === 'adrian.iniguez@alianzaestrategica2026.com') {
+                showToast('No se puede eliminar la cuenta del Administrador Principal', 'error');
+                return;
+            }
+            if (confirm(`¿Estás seguro de eliminar el acceso para el usuario ${email}?`)) {
+                usersList = usersList.filter(u => u.email.toLowerCase() !== email.toLowerCase());
+                localStorage.setItem('alianza_users', JSON.stringify(usersList));
+                renderUsersTable();
+                showToast('Usuario eliminado del sistema');
+            }
         }
 
         async function handleImageUpload(event, targetProp) {
@@ -6150,6 +6303,85 @@ ESQUEMA DE COMISIONES (50/50):
             }, 500);
         }
     </script>
+
+    <!-- MODAL GESTIÓN DE USUARIOS & ROLES (ADMIN) -->
+    <div id="usersManagementModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 md:p-6">
+        <div class="glass-panel rounded-3xl w-full max-w-5xl max-h-[92vh] flex flex-col shadow-2xl border border-slate-800 overflow-hidden">
+            <div class="p-4 md:p-5 border-b border-slate-800 flex justify-between items-center bg-slate-950/90">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-purple-600/20 border border-purple-500/40 flex items-center justify-center text-purple-400 text-lg">
+                        <i class="fa-solid fa-users-gear"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-extrabold text-white">Módulo de Gestión de Usuarios y Roles (Credenciales Individuales)</h3>
+                        <p class="text-xs text-slate-400">Administración de accesos independientes para Administradores y Agentes Comerciales</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="openCreateUserModal()" class="bg-purple-600 hover:bg-purple-500 text-white font-extrabold px-3.5 py-2 rounded-xl text-xs transition shadow flex items-center gap-1.5 cursor-pointer">
+                        <i class="fa-solid fa-user-plus"></i> + Nuevo Usuario
+                    </button>
+                    <button onclick="closeModal('usersManagementModal')" class="text-slate-400 hover:text-white p-2 rounded-xl text-lg cursor-pointer">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="flex-1 overflow-y-auto modal-scroll p-4 md:p-6 space-y-4 bg-slate-950/40">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead class="bg-slate-900 text-slate-400 uppercase text-[10px] font-bold tracking-wider border-b border-slate-800">
+                            <tr>
+                                <th class="py-3 px-3 border-r border-slate-800">Nombre del Agente</th>
+                                <th class="py-3 px-3 border-r border-slate-800">Correo Electrónico (ID)</th>
+                                <th class="py-3 px-3 border-r border-slate-800">Contraseña Registrada</th>
+                                <th class="py-3 px-3 border-r border-slate-800">Rol Asignado</th>
+                                <th class="py-3 px-3 text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody" class="divide-y divide-slate-800/80 text-slate-300 font-medium"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL CREAR / EDITAR USUARIO -->
+    <div id="userEditModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-panel rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-slate-800">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h3 id="userModalTitle" class="text-base font-extrabold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-user-pen text-purple-400"></i> Registrar Nuevo Usuario
+                </h3>
+                <button onclick="closeModal('userEditModal')" class="text-slate-400 hover:text-white cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form id="userEditForm" onsubmit="handleSaveUser(event)" class="space-y-3.5">
+                <input type="hidden" id="editUserOriginalEmail">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Nombre Completo del Agente</label>
+                    <input type="text" id="editUserName" required placeholder="Ej. Ing. Carlos Mendoza" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-purple-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Correo Electrónico (Identificador Único)</label>
+                    <input type="email" id="editUserEmail" required placeholder="carlos.mendoza@alianzaestrategica2026.com" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-purple-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Contraseña Segura</label>
+                    <input type="text" id="editUserPass" required placeholder="••••••••" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-purple-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Rol Asignado</label>
+                    <select id="editUserRole" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white font-semibold focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        <option value="AGENT">AGENTE COMERCIAL (Captaciones y Visitas)</option>
+                        <option value="ADMIN">ADMINISTRADOR PRINCIPAL (Control Total)</option>
+                    </select>
+                </div>
+                <div class="pt-2 flex justify-end gap-2">
+                    <button type="button" onclick="closeModal('userEditModal')" class="bg-slate-800 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs hover:bg-slate-700 transition cursor-pointer">Cancelar</button>
+                    <button type="submit" class="bg-purple-600 hover:bg-purple-500 text-white font-bold px-5 py-2 rounded-xl text-xs transition shadow-md cursor-pointer">Guardar Usuario</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- MODAL VISTA PREVIA & IMPRESIÓN RESPALDO LEGAL (PDF) -->
     <div id="legalReportModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-2 md:p-6 overflow-y-auto modal-scroll">
