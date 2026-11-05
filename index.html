@@ -478,9 +478,45 @@
                 </div>
             </div>
 
-            <div class="max-w-xl mx-auto relative mb-4">
-                <input type="text" id="searchInput" value="" autocomplete="off" onkeyup="filterItems()" placeholder="Buscar por código (ej: RE-001, VH-001), sector o palabra clave..." class="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-slate-950/80 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 border border-sky-500/30 transition shadow-inner">
-                <i class="fa-solid fa-magnifying-glass absolute left-4 top-4 text-sky-400"></i>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 max-w-4xl mx-auto mb-3">
+                <div class="md:col-span-2 relative">
+                    <input type="text" id="searchInput" value="" autocomplete="off" onkeyup="filterItems()" placeholder="🔍 Buscar por título, código (ej: RE-001), ciudad, sector..." class="w-full pl-11 pr-4 py-3 rounded-2xl bg-slate-950/80 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 border border-sky-500/30 transition shadow-inner">
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-sky-400"></i>
+                </div>
+                <div class="relative">
+                    <span class="absolute left-3.5 top-3 text-rose-400 pointer-events-none text-xs"><i class="fa-solid fa-location-dot"></i></span>
+                    <select id="locationFilterSelect" onchange="filterItems()" class="w-full pl-9 pr-8 py-3 rounded-2xl bg-slate-950/90 text-white text-xs font-bold focus:outline-none focus:ring-2 focus:ring-amber-400 border border-slate-700 transition shadow-inner appearance-none cursor-pointer">
+                        <option value="ALL">🌎 Ubicación: Todo el País / Global</option>
+                        <option value="Lago Agrio">📍 Lago Agrio (Sucumbíos)</option>
+                        <option value="El Coca">📍 El Coca (Orellana)</option>
+                        <option value="Joya de los Sachas">📍 Joya de los Sachas (Orellana)</option>
+                        <option value="Quito">📍 Quito (Pichincha)</option>
+                        <option value="Guayaquil">📍 Guayaquil (Guayas)</option>
+                        <option value="Tena">📍 Tena (Napo)</option>
+                        <option value="Puyo">📍 Puyo (Pastaza)</option>
+                        <option value="Ambato">📍 Ambato (Tungurahua)</option>
+                        <option value="Santo Domingo">📍 Santo Domingo (Tsáchilas)</option>
+                        <option value="Cuenca">📍 Cuenca (Azuay)</option>
+                        <option value="Manta">📍 Manta / Portoviejo (Manabí)</option>
+                        <option value="Machala">📍 Machala (El Oro)</option>
+                        <option value="Loja">📍 Loja (Loja)</option>
+                        <option value="Esmeraldas">📍 Esmeraldas (Esmeraldas)</option>
+                        <option value="Ibarra">📍 Ibarra (Imbabura)</option>
+                        <option value="Internacional">🌐 Internacional (Exterior)</option>
+                    </select>
+                    <i class="fa-solid fa-chevron-down absolute right-3.5 top-3.5 text-slate-400 text-xs pointer-events-none"></i>
+                </div>
+            </div>
+
+            <!-- CHIPS DE FILTRADO GEOGRÁFICO RÁPIDO -->
+            <div class="flex flex-wrap items-center justify-center gap-1.5 mb-4 text-xs font-bold" id="locationChipsGroup">
+                <span class="text-[11px] text-slate-400 font-semibold mr-1"><i class="fa-solid fa-earth-americas text-sky-400"></i> Ubicación:</span>
+                <button type="button" onclick="setLocationFilter('ALL')" class="loc-chip-btn bg-amber-500 text-slate-950 font-black px-3 py-1 rounded-full transition shadow-md cursor-pointer hover:scale-105">🌎 Todo el País</button>
+                <button type="button" onclick="setLocationFilter('Lago Agrio')" class="loc-chip-btn bg-slate-900 border border-slate-700 text-slate-300 hover:text-white px-3 py-1 rounded-full transition cursor-pointer hover:scale-105">📍 Lago Agrio</button>
+                <button type="button" onclick="setLocationFilter('El Coca')" class="loc-chip-btn bg-slate-900 border border-slate-700 text-slate-300 hover:text-white px-3 py-1 rounded-full transition cursor-pointer hover:scale-105">📍 El Coca</button>
+                <button type="button" onclick="setLocationFilter('Quito')" class="loc-chip-btn bg-slate-900 border border-slate-700 text-slate-300 hover:text-white px-3 py-1 rounded-full transition cursor-pointer hover:scale-105">📍 Quito</button>
+                <button type="button" onclick="setLocationFilter('Guayaquil')" class="loc-chip-btn bg-slate-900 border border-slate-700 text-slate-300 hover:text-white px-3 py-1 rounded-full transition cursor-pointer hover:scale-105">📍 Guayaquil</button>
+                <button type="button" onclick="setLocationFilter('Tena')" class="loc-chip-btn bg-slate-900 border border-slate-700 text-slate-300 hover:text-white px-3 py-1 rounded-full transition cursor-pointer hover:scale-105">📍 Tena</button>
             </div>
 
             <!-- BOTONES CATEGORÍAS -->
@@ -611,7 +647,7 @@
             <div class="space-y-3.5">
                 <div>
                     <label class="block text-xs font-bold text-slate-300 mb-1">Correo Electrónico (Identificador Único)</label>
-                    <input type="email" id="loginEmailInput" placeholder="agente@alianzaestrategica2026.com" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                    <input type="email" id="loginEmailInput" placeholder="gerencia@alianzaestrategica.com" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-300 mb-1">Contraseña Segura</label>
@@ -1020,18 +1056,30 @@
                     </div>
                 </div>
 
-                <!-- Ubicación Geográfica -->
+                <!-- Ubicación Geográfica Nacional e Internacional -->
                 <div class="bg-slate-900/60 p-3.5 rounded-2xl border border-slate-800 space-y-2">
-                    <h5 class="text-xs font-extrabold text-sky-400 flex items-center gap-1.5"><i class="fa-solid fa-map-location-dot"></i> Ubicación Geográfica & Precios</h5>
+                    <h5 class="text-xs font-extrabold text-sky-400 flex items-center gap-1.5"><i class="fa-solid fa-map-location-dot"></i> Posición Geográfica & Precios (Nacional & Internacional)</h5>
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                        <input type="text" id="prodCiudad" placeholder="Ciudad (El Coca)" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
-                        <input type="text" id="prodParroquia" placeholder="Parroquia" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
-                        <input type="text" id="prodSector" placeholder="Sector" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
-                        <input type="text" id="prodPrice" placeholder="Precio ($ USD)" class="bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs font-bold text-amber-400" required>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 mb-0.5">Provincia / Región</label>
+                            <input type="text" id="prodProvincia" placeholder="Ej: Sucumbíos, Orellana" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 mb-0.5">Cantón / Ciudad</label>
+                            <input type="text" id="prodCiudad" placeholder="Ej: Lago Agrio, El Coca, Quito" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white" required>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 mb-0.5">Sector / Barrio</label>
+                            <input type="text" id="prodSector" placeholder="Ej: Sector Centro" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 mb-0.5">Precio ($ USD)</label>
+                            <input type="text" id="prodPrice" placeholder="Precio ($ USD)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs font-bold text-amber-400" required>
+                        </div>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         <input type="text" id="prodOfferPrice" placeholder="🔥 Precio Oferta ($ opcional)" class="bg-slate-950 border border-amber-500/40 rounded-xl px-2.5 py-1.5 text-xs font-bold text-amber-400">
-                        <input type="text" id="prodDireccion" placeholder="Dirección Exacta o Referencia" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
+                        <input type="text" id="prodDireccion" placeholder="Dirección Exacta o Referencia Geográfica" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
                     </div>
                 </div>
 
@@ -1200,7 +1248,7 @@
                     <button onclick="copiarFichaOficialWhatsApp()" class="bg-sky-700 hover:bg-sky-600 text-white font-bold px-3.5 py-2 rounded-xl text-xs transition shadow flex items-center gap-1.5 cursor-pointer">
                         <i class="fa-solid fa-copy"></i> Copiar Ficha WhatsApp
                     </button>
-                    <button onclick="downloadAssetLegalBackup(currentlyOpenedItem?.id)" class="bg-gradient-to-r from-indigo-700 to-indigo-600 hover:from-indigo-600 hover:to-indigo-500 text-white font-extrabold px-3.5 py-2 rounded-xl text-xs transition shadow flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95" title="Descargar Respaldo Legal y Ficha Oficial Completa en PDF">
+                    <button onclick="downloadAssetLegalBackup(currentlyOpenedItem?.id)" class="admin-only hidden bg-gradient-to-r from-indigo-700 to-indigo-600 hover:from-indigo-600 hover:to-indigo-500 text-white font-extrabold px-3.5 py-2 rounded-xl text-xs transition shadow flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95" title="Descargar Respaldo Legal y Ficha Oficial Completa en PDF">
                         <i class="fa-solid fa-file-pdf text-amber-300"></i> Descargar Respaldo Legal (PDF)
                     </button>
                 </div>
@@ -2155,22 +2203,25 @@
                 dateCreated: "31/10/2026", 
                 category: "RE", 
                 categoryType: "Bienes Raíces Venta", 
-                title: "🏡 CASA RESIDENCIAL 2 PLANTAS EN EL CENTRO", 
+                title: "🏡 CASA RESIDENCIAL 2 PLANTAS EN LAGO AGRIO", 
                 ownerName: "Juan Lizuriaga", 
-                realSalePrice: 80000.00, 
-                priceStr: "$80,000 USD", 
-                commissionPactada: 2400.00, 
-                comisionStr: "3% ($2,400 USD)", 
-                agentName: "Adrian Iñiguez", 
+                realSalePrice: 85000.00, 
+                priceStr: "$85,000 USD", 
+                commissionPactada: 2550.00, 
+                comisionStr: "3% ($2,550 USD)", 
+                agentName: "Ing. Carlos Mendoza", 
                 sellerAgentName: "", 
                 status: "DISPONIBLE", 
                 images: ["https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1200&q=80"], 
-                location: "Sector Centro, El Coca (Orellana)", 
+                ciudad: "Lago Agrio",
+                provincia: "Sucumbíos",
+                sector: "Sector Centro",
+                location: "Lago Agrio, Sucumbíos", 
                 isFeatured: true,
                 reMetros2: "240",
-                reHabitaciones: "3",
-                reBanos: "2.5",
-                desc: "Hermosa casa rentera y familiar de dos plantas en el centro de El Coca. 3 habitaciones, garaje cerrado y cerramiento perimetral. Títulos al día verificados por el Abg. Carlos Alfredo Íñiguez Rodríguez."
+                reHabitaciones: "4",
+                reBanos: "3",
+                desc: "Hermosa casa rentera y familiar de dos plantas en el centro urbano de Lago Agrio (Nueva Loja), Sucumbíos. 4 habitaciones, garaje privado y cerramiento perimetral. Títulos al día verificados con patrocinio jurídico."
             },
             { 
                 id: "item_2", 
@@ -2184,15 +2235,18 @@
                 priceStr: "$11,000 USD", 
                 commissionPactada: 500.00, 
                 comisionStr: "$500 USD", 
-                agentName: "Adrian Iñiguez", 
+                agentName: "Lic. Andrea Pazmiño", 
                 sellerAgentName: "", 
                 status: "DISPONIBLE", 
                 images: ["https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80"], 
+                ciudad: "El Coca",
+                provincia: "Orellana",
+                sector: "Barrio Central",
                 location: "El Coca, Orellana", 
                 isFeatured: true,
                 vhAno: "2018",
                 vhKm: "98,000 km",
-                desc: "Vehículo en impecables condiciones mecánicas. Matriculación y revisión ANT al día. Papeles listos para notaría con contrato de compraventa."
+                desc: "Vehículo en impecables condiciones mecánicas en El Coca. Matriculación y revisión ANT al día. Papeles listos para notaría con contrato de compraventa."
             },
             { 
                 id: "item_3", 
@@ -2200,19 +2254,45 @@
                 dateCreated: "01/11/2026", 
                 category: "AR", 
                 categoryType: "Bienes Raíces Arriendo", 
-                title: "🏢 DEPARTAMENTO EJECUTIVO AMOBLADO", 
+                title: "🏢 DEPARTAMENTO EJECUTIVO AMOBLADO EN QUITO", 
                 ownerName: "María Cisneros", 
-                realSalePrice: 350.00, 
-                priceStr: "$350 USD / mes", 
-                commissionPactada: 350.00, 
-                comisionStr: "1 Canon ($350 USD)", 
-                agentName: "Adrian Iñiguez", 
+                realSalePrice: 450.00, 
+                priceStr: "$450 USD / mes", 
+                commissionPactada: 450.00, 
+                comisionStr: "1 Canon ($450 USD)", 
+                agentName: "Adrián Arturo Íñiguez", 
                 sellerAgentName: "", 
                 status: "DISPONIBLE", 
                 images: ["https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80"], 
-                location: "Barrio Julio Loya, El Coca", 
+                ciudad: "Quito",
+                provincia: "Pichincha",
+                sector: "La Carolina",
+                location: "Quito, Pichincha", 
                 isFeatured: true,
-                desc: "Departamento amoblado con 2 habitaciones, aire acondicionado, agua caliente y parqueadero independiente."
+                desc: "Departamento amoblado de lujo en sector La Carolina, Quito. 2 habitaciones, parqueadero subterráneo y guardianía 24/7."
+            },
+            { 
+                id: "item_4", 
+                code: "MQ-001", 
+                dateCreated: "02/11/2026", 
+                category: "MQ", 
+                categoryType: "Maquinaria", 
+                title: "🚜 EXCAVADORA CATERPILLAR 320D EN TENA", 
+                ownerName: "Consorcio Vial Oriente", 
+                realSalePrice: 115000.00, 
+                priceStr: "$115,000 USD", 
+                commissionPactada: 3450.00, 
+                comisionStr: "3% ($3,450 USD)", 
+                agentName: "Ing. Carlos Mendoza", 
+                sellerAgentName: "", 
+                status: "DISPONIBLE", 
+                images: ["https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=800&q=80"], 
+                ciudad: "Tena",
+                provincia: "Napo",
+                sector: "Vía Puerto Napo",
+                location: "Tena, Napo", 
+                isFeatured: true,
+                desc: "Excavadora sobre orugas Caterpillar 320D operando en Tena, Napo. Horas de trabajo certificadas y mantenimiento directo de distribuidor."
             }
         ];
 
@@ -2234,11 +2314,14 @@
             }
         ];
 
+        const MAIN_ADMIN_EMAIL = "gerencia@alianzaestrategica.com";
+        const MAIN_ADMIN_PASS = "Alianza2026E@";
+
         const DEFAULT_USERS = [
             {
-                name: "Adrián Arturo Íñiguez Lucio (Admin Líder)",
-                email: "adrian.iniguez@alianzaestrategica2026.com",
-                pass: "alianza2026",
+                name: "Adrián Arturo Íñiguez Lucio (Gerencia General)",
+                email: MAIN_ADMIN_EMAIL,
+                pass: MAIN_ADMIN_PASS,
                 phone: "095 919 0794",
                 role: "ADMIN",
                 lastLogin: new Date().toISOString()
@@ -2272,8 +2355,28 @@
         let usersList = JSON.parse(localStorage.getItem('alianza_users') || 'null');
         if (!usersList || !Array.isArray(usersList) || usersList.length === 0) {
             usersList = [...DEFAULT_USERS];
-            localStorage.setItem('alianza_users', JSON.stringify(usersList));
+        } else {
+            let adminFound = usersList.find(u => 
+                (u.email || '').toLowerCase() === MAIN_ADMIN_EMAIL || 
+                (u.email || '').toLowerCase() === 'adrian.iniguez@alianzaestrategica2026.com'
+            );
+            if (adminFound) {
+                adminFound.email = MAIN_ADMIN_EMAIL;
+                adminFound.pass = MAIN_ADMIN_PASS;
+                adminFound.role = 'ADMIN';
+                adminFound.name = "Adrián Arturo Íñiguez Lucio (Gerencia General)";
+            } else {
+                usersList.unshift({
+                    name: "Adrián Arturo Íñiguez Lucio (Gerencia General)",
+                    email: MAIN_ADMIN_EMAIL,
+                    pass: MAIN_ADMIN_PASS,
+                    phone: "095 919 0794",
+                    role: "ADMIN",
+                    lastLogin: new Date().toISOString()
+                });
+            }
         }
+        localStorage.setItem('alianza_users', JSON.stringify(usersList));
 
         let sponsorsList = JSON.parse(localStorage.getItem('alianza_sponsors') || 'null');
         if (!sponsorsList || !Array.isArray(sponsorsList) || sponsorsList.length === 0) {
@@ -2330,7 +2433,29 @@
         let stagedVisitPhotoB64 = '';
 
         let activeCategory = 'ALL';
+        let activeLocationFilter = 'ALL';
         let carouselIndex = 0;
+
+        function setLocationFilter(locVal) {
+            activeLocationFilter = locVal || 'ALL';
+            const sel = document.getElementById('locationFilterSelect');
+            if (sel) sel.value = activeLocationFilter;
+
+            document.querySelectorAll('.loc-chip-btn').forEach(btn => {
+                btn.classList.remove('bg-amber-500', 'text-slate-950', 'font-black');
+                btn.classList.add('bg-slate-900', 'border', 'border-slate-700', 'text-slate-300');
+            });
+
+            document.querySelectorAll('.loc-chip-btn').forEach(btn => {
+                const text = btn.innerText || '';
+                if ((locVal === 'ALL' && text.includes('Todo el País')) ||
+                    (locVal !== 'ALL' && text.toLowerCase().includes(locVal.toLowerCase()))) {
+                    btn.classList.add('bg-amber-500', 'text-slate-950', 'font-black');
+                    btn.classList.remove('bg-slate-900', 'border', 'border-slate-700', 'text-slate-300');
+                }
+            });
+            filterItems();
+        }
         let carouselTimer = null;
         let stagedImages = [];
         let currentlyOpenedItem = null;
@@ -2709,14 +2834,6 @@
             renderSponsorsCards();
         }
 
-        function togglePassInput() {
-            const select = document.getElementById('loginRoleSelect');
-            const label = document.getElementById('passLabel');
-            if (label && select) {
-                label.innerText = select.value === 'ADMIN' ? "Contraseña: INGRESO ADMINISTRADOR" : "Contraseña: INGRESO DE AGENTE";
-            }
-        }
-
         function executeLogin() {
             const emailInput = (document.getElementById('loginEmailInput')?.value || '').trim().toLowerCase();
             const passInput = (document.getElementById('loginPassInput')?.value || '').trim();
@@ -2726,7 +2843,19 @@
                 return;
             }
 
-            const foundUser = usersList.find(u => (u.email || '').toLowerCase() === emailInput && u.pass === passInput);
+            try {
+                const storedUsers = localStorage.getItem('alianza_users');
+                if (storedUsers) {
+                    usersList = JSON.parse(storedUsers);
+                }
+            } catch (err) {
+                console.error('Error al sincronizar usuarios de localStorage:', err);
+            }
+
+            const foundUser = usersList.find(u => 
+                (u.email || '').trim().toLowerCase() === emailInput && 
+                (u.pass || '').trim() === passInput
+            );
             if (!foundUser) {
                 showToast('Credenciales incorrectas o usuario no registrado en el sistema', 'error');
                 return;
@@ -2807,7 +2936,7 @@
             }
 
             filteredUsers.forEach((u, idx) => {
-                const isSelfAdmin = u.email === 'adrian.iniguez@alianzaestrategica2026.com';
+                const isSelfAdmin = u.email === MAIN_ADMIN_EMAIL || u.email === 'adrian.iniguez@alianzaestrategica2026.com';
                 const roleBadge = u.role === 'ADMIN' 
                     ? `<span class="bg-purple-950 text-purple-300 border border-purple-500/40 px-2 py-0.5 rounded text-[10px] font-bold">ADMINISTRADOR</span>` 
                     : `<span class="bg-sky-950 text-sky-300 border border-sky-500/40 px-2 py-0.5 rounded text-[10px] font-bold">AGENTE COMERCIAL</span>`;
@@ -2862,7 +2991,7 @@
             document.getElementById('editUserEmail').value = user.email;
             document.getElementById('editUserPass').value = user.pass;
             document.getElementById('editUserRole').value = user.role;
-            document.getElementById('editUserEmail').disabled = (user.email === 'adrian.iniguez@alianzaestrategica2026.com');
+            document.getElementById('editUserEmail').disabled = (user.email === MAIN_ADMIN_EMAIL || user.email === 'adrian.iniguez@alianzaestrategica2026.com');
 
             document.getElementById('userModalTitle').innerHTML = '<i class="fa-solid fa-user-pen text-purple-400"></i> Editar Usuario del Sistema';
             openModal('userEditModal');
@@ -2909,7 +3038,7 @@
 
         function deleteUser(email) {
             if (currentRole !== 'ADMIN') return;
-            if (email === 'adrian.iniguez@alianzaestrategica2026.com') {
+            if (email === MAIN_ADMIN_EMAIL || email === 'adrian.iniguez@alianzaestrategica2026.com') {
                 showToast('No se puede eliminar la cuenta del Administrador Principal', 'error');
                 return;
             }
@@ -3469,6 +3598,7 @@
             document.getElementById('prodStatus').value = item.status || 'DISPONIBLE';
             document.getElementById('prodCode').value = item.code || '';
             document.getElementById('prodTitle').value = item.title || '';
+            document.getElementById('prodProvincia').value = item.provincia || '';
             document.getElementById('prodCiudad').value = item.ciudad || '';
             document.getElementById('prodParroquia').value = item.parroquia || '';
             document.getElementById('prodSector').value = item.sector || '';
@@ -3526,8 +3656,10 @@
             const status = getVal('prodStatus') || 'DISPONIBLE';
             const code = getVal('prodCode') || generateNextCode(category);
             const title = getVal('prodTitle');
+            const provincia = getVal('prodProvincia');
             const ciudad = getVal('prodCiudad');
             const sector = getVal('prodSector');
+            const direccion = getVal('prodDireccion');
             const priceStr = getVal('prodPrice');
             const offerPriceStr = getVal('prodOfferPrice');
             const desc = getVal('prodDesc');
@@ -3562,9 +3694,11 @@
                 isFeatured,
                 code,
                 title,
+                provincia,
                 ciudad,
                 sector,
-                location: [ciudad, sector].filter(Boolean).join(', ') || 'El Coca, Orellana',
+                direccion,
+                location: [sector, ciudad, provincia].filter(Boolean).join(', ') || 'El Coca, Orellana',
                 priceStr,
                 offerPriceStr,
                 desc,
@@ -3640,16 +3774,40 @@
 
         function filterItems() {
             const query = (document.getElementById('searchInput')?.value || '').toLowerCase().trim();
+            const locSelectVal = (document.getElementById('locationFilterSelect')?.value || 'ALL').toLowerCase().trim();
+            const effectiveLoc = (activeLocationFilter !== 'ALL' ? activeLocationFilter : locSelectVal).toLowerCase().trim();
+
             const filtered = inventory.filter(item => {
                 const isVendido = item.status === 'VENDIDO' || item.status === 'SOLD';
                 if (activeCategory === 'SOLD') return isVendido;
                 if (isVendido && activeCategory !== 'ALL') return false;
 
                 const matchesCat = (activeCategory === 'ALL') || (item.category === activeCategory);
-                const matchesQuery = (item.title || '').toLowerCase().includes(query) ||
-                                     (item.code || '').toLowerCase().includes(query) ||
-                                     (item.location || '').toLowerCase().includes(query);
-                return matchesCat && matchesQuery;
+
+                let matchesLoc = true;
+                if (effectiveLoc !== 'all') {
+                    const itemLocStr = [
+                        item.location || '',
+                        item.ciudad || '',
+                        item.provincia || '',
+                        item.sector || '',
+                        item.parroquia || '',
+                        item.direccion || ''
+                    ].join(' ').toLowerCase();
+                    matchesLoc = itemLocStr.includes(effectiveLoc);
+                }
+
+                const matchesQuery = !query || (
+                    (item.title || '').toLowerCase().includes(query) ||
+                    (item.code || '').toLowerCase().includes(query) ||
+                    (item.location || '').toLowerCase().includes(query) ||
+                    (item.ciudad || '').toLowerCase().includes(query) ||
+                    (item.provincia || '').toLowerCase().includes(query) ||
+                    (item.sector || '').toLowerCase().includes(query) ||
+                    (item.desc || '').toLowerCase().includes(query)
+                );
+
+                return matchesCat && matchesLoc && matchesQuery;
             });
             renderGrid(filtered);
         }
@@ -3688,7 +3846,7 @@
                             <div class="p-5 space-y-2">
                                 <h3 class="text-base font-extrabold text-white leading-tight">${escapeHtml(item.title || '')}</h3>
                                 <div class="flex items-center justify-between text-xs text-slate-400">
-                                    <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i> ${escapeHtml(item.location || 'El Coca')}</span>
+                                    <span><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i> <span class="font-bold text-slate-200">${escapeHtml(item.location || item.ciudad || 'El Coca')}</span></span>
                                     <span class="text-[11px] font-bold text-sky-400 bg-sky-950/60 px-2 py-0.5 rounded-md border border-sky-400/30">${escapeHtml(item.agentName || 'Alianza')}</span>
                                 </div>
                                 <div class="pt-1.5">
@@ -3850,15 +4008,6 @@ ALIANZA ESTRATÉGICA S.A.S.`;
             if (items[carouselIndex]) openDetailModal(items[carouselIndex].id);
         }
 
-                function toggleChatWindow() {
-            openAssistantModal();
-        }
-        function handleChatKeyPress(e) {
-            if (e.key === 'Enter') sendGeminiMessage();
-        }
-        function sendChatMessage() {
-            sendGeminiMessage();
-        }
         
         // ==========================================
         // GESTIÓN DE VISITAS Y PROSPECTOS COMERCIALES
@@ -6101,6 +6250,10 @@ ESQUEMA DE COMISIONES (50/50):
         }
 
         function downloadAssetLegalBackup(itemId) {
+            if (currentRole !== 'ADMIN') {
+                showToast('Acceso restringido. La descarga del respaldo legal en PDF es exclusiva para la Gerencia Administradora.', 'error');
+                return;
+            }
             const item = inventory.find(i => i.id === itemId);
             if (!item) {
                 showToast('No se encontró el activo para generar el respaldo legal', 'error');
