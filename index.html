@@ -197,6 +197,9 @@
                 <button onclick="openAddProductModal()" id="quickAddNavBtn" class="auth-only hidden bg-amber-500 hover:bg-amber-400 text-slate-950 px-2.5 py-1 rounded-lg text-xs font-extrabold shadow flex items-center gap-1 transition cursor-pointer">
                     <i class="fa-solid fa-plus-circle"></i> + Captación
                 </button>
+                <button onclick="openVisitReportModal()" id="agentVisitsNavBtn" class="hidden bg-emerald-600 hover:bg-emerald-500 text-white px-2.5 py-1 rounded-lg text-xs font-extrabold shadow flex items-center gap-1 transition cursor-pointer" title="Registro de Visitas y Postulantes">
+                    <i class="fa-solid fa-clipboard-user"></i> <span class="hidden sm:inline">Visitas</span>
+                </button>
                 <a id="waCatalogLink" href="https://wa.me/c/593959190794" target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:text-amber-300 font-semibold transition hidden md:inline">
                     <i class="fa-solid fa-store"></i> Catálogo WA
                 </a>
@@ -266,6 +269,9 @@
                 <button type="button" onclick="openAddProductModal()" class="bg-gradient-to-r from-sky-600 to-sky-500 hover:from-sky-500 hover:to-sky-400 text-white font-black px-3.5 py-1.5 rounded-xl text-xs shadow-lg transition flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95">
                     <i class="fa-solid fa-plus-circle text-white"></i> 🏡 Registrar Nueva Captación
                 </button>
+                <a href="https://chat.whatsapp.com/LWnH4P4Q4LuLDnRSLNXRYn?s=cl&p=a&iam=2" target="_blank" rel="noopener noreferrer" class="bg-emerald-700 hover:bg-emerald-600 text-white font-black px-3.5 py-1.5 rounded-xl text-xs shadow-lg transition flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95" title="Unirse al Grupo Oficial de Agentes en WhatsApp">
+                    <i class="fa-brands fa-whatsapp text-emerald-300 text-sm"></i> 💬 Grupo WA Agentes
+                </a>
                 <span class="text-[11px] bg-sky-950/90 border border-sky-400/40 text-sky-200 px-3 py-1.5 rounded-full font-bold flex items-center gap-1.5 shadow-inner">
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Sesión Activa
                 </span>
@@ -371,7 +377,7 @@
                         <div class="w-5 h-5 rounded-full overflow-hidden bg-sky-600 flex items-center justify-center text-[10px] text-white font-bold flex-shrink-0">
                             <i class="fa-solid fa-truck-fast"></i>
                         </div>
-                        <span><strong class="text-white">Expres Segura SA</strong> y aliados comerciales siguen este perfil</span>
+                        <span><strong class="text-white">Expres Segura SA, De Segunda Mano</strong> y aliados comerciales siguen este perfil</span>
                     </div>
                 </div>
 
@@ -390,7 +396,7 @@
                 </div>
 
                 <!-- BOTONES EXCLUSIVOS EN EL HERO PARA MODO AGENTE (ELIMINADOS LOS INNECESARIOS) -->
-                <div id="agentHeroActions" class="hidden flex flex-wrap items-center justify-center gap-3 mt-5 w-full max-w-2xl mx-auto">
+                <div id="agentHeroActions" class="hidden flex flex-wrap items-center justify-center gap-3 mt-5 w-full max-w-3xl mx-auto">
                     <button type="button" onclick="openAddProductModal()" class="flex-1 min-w-[170px] bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black px-5 py-3 rounded-2xl text-xs sm:text-sm shadow-xl transition flex items-center justify-center gap-2 cursor-pointer hover:scale-105 active:scale-95">
                         <i class="fa-solid fa-file-circle-plus text-slate-950 text-base"></i> + Agregar Ficha Técnica
                     </button>
@@ -400,6 +406,9 @@
                     <button type="button" onclick="openAddProductModal()" class="flex-1 min-w-[190px] bg-gradient-to-r from-sky-600 to-sky-500 hover:from-sky-500 hover:to-sky-400 text-white font-black px-5 py-3 rounded-2xl text-xs sm:text-sm shadow-xl transition flex items-center justify-center gap-2 cursor-pointer hover:scale-105 active:scale-95">
                         <i class="fa-solid fa-plus-circle text-white text-base"></i> 🏡 Registrar Nueva Captación
                     </button>
+                    <a href="https://chat.whatsapp.com/LWnH4P4Q4LuLDnRSLNXRYn?s=cl&p=a&iam=2" target="_blank" rel="noopener noreferrer" class="flex-1 min-w-[180px] bg-emerald-700 hover:bg-emerald-600 text-white font-black px-5 py-3 rounded-2xl text-xs sm:text-sm shadow-xl transition flex items-center justify-center gap-2 cursor-pointer hover:scale-105 active:scale-95">
+                        <i class="fa-brands fa-whatsapp text-emerald-300 text-lg"></i> 💬 Grupo WA Agentes
+                    </a>
                 </div>
 
                 <!-- 5. BARRA DE PESTAÑAS DE NAVEGACIÓN ESTILO FACEBOOK -->
@@ -467,7 +476,7 @@
         <div class="glass-panel rounded-3xl p-6 mb-8 text-white shadow-2xl relative overflow-hidden">
             <div class="max-w-2xl mx-auto text-center mb-4">
                 <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-1.5">Marketplace de Bienes & Activos</h2>
-                <p class="text-xs sm:text-sm text-slate-400">Consulte el catálogo verificado de ALIANZA ESTRATÉGICA S.A.S. en El Coca y Orellana</p>
+                <p class="text-xs sm:text-sm text-slate-400">Consulte el catálogo verificado de ALIANZA ESTRATÉGICA</p>
                 
                 <div class="mt-3 inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/20 via-sky-500/20 to-amber-500/20 border border-amber-400/50 px-3.5 py-1.5 rounded-full text-xs font-extrabold text-amber-300 shadow-lg animate-bounce-subtle">
                     <span class="flex h-2 w-2 relative">
@@ -512,12 +521,7 @@
             <div class="flex flex-wrap items-center justify-center gap-1.5 mb-4 text-xs font-bold" id="locationChipsGroup">
                 <span class="text-[11px] text-slate-400 font-semibold mr-1"><i class="fa-solid fa-earth-americas text-sky-400"></i> Ubicación:</span>
                 <button type="button" onclick="setLocationFilter('ALL')" class="loc-chip-btn bg-amber-500 text-slate-950 font-black px-3 py-1 rounded-full transition shadow-md cursor-pointer hover:scale-105">🌎 Todo el País</button>
-                <button type="button" onclick="setLocationFilter('Lago Agrio')" class="loc-chip-btn bg-slate-900 border border-slate-700 text-slate-300 hover:text-white px-3 py-1 rounded-full transition cursor-pointer hover:scale-105">📍 Lago Agrio</button>
-                <button type="button" onclick="setLocationFilter('El Coca')" class="loc-chip-btn bg-slate-900 border border-slate-700 text-slate-300 hover:text-white px-3 py-1 rounded-full transition cursor-pointer hover:scale-105">📍 El Coca</button>
-                <button type="button" onclick="setLocationFilter('Quito')" class="loc-chip-btn bg-slate-900 border border-slate-700 text-slate-300 hover:text-white px-3 py-1 rounded-full transition cursor-pointer hover:scale-105">📍 Quito</button>
-                <button type="button" onclick="setLocationFilter('Guayaquil')" class="loc-chip-btn bg-slate-900 border border-slate-700 text-slate-300 hover:text-white px-3 py-1 rounded-full transition cursor-pointer hover:scale-105">📍 Guayaquil</button>
-                <button type="button" onclick="setLocationFilter('Tena')" class="loc-chip-btn bg-slate-900 border border-slate-700 text-slate-300 hover:text-white px-3 py-1 rounded-full transition cursor-pointer hover:scale-105">📍 Tena</button>
-            </div>
+             </div>
 
             <!-- BOTONES CATEGORÍAS -->
             <div class="flex flex-wrap justify-center gap-2 text-xs font-bold" id="categoryTabGroup">
@@ -646,15 +650,20 @@
             </div>
             <div class="space-y-3.5">
                 <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-1">Correo Electrónico (Identificador Único)</label>
-                    <input type="email" id="loginEmailInput" placeholder="gerencia@alianzaestrategica.com" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Identificador de Acceso (Correo, WhatsApp o Usuario)</label>
+                    <input type="text" id="loginEmailInput" onkeydown="if(event.key === 'Enter') document.getElementById('loginPassInput').focus()" placeholder="Correo, WhatsApp (099...) o Usuario" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-300 mb-1">Contraseña Segura</label>
-                    <input type="password" id="loginPassInput" placeholder="••••••••" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                    <div class="relative">
+                        <input type="password" id="loginPassInput" onkeydown="if(event.key === 'Enter') executeLogin()" placeholder="••••••••" class="w-full bg-slate-900 border border-slate-700 rounded-xl pl-3 pr-9 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                        <button type="button" onclick="toggleLoginPassVisibility()" class="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-200 text-xs cursor-pointer" title="Mostrar/Ocultar Contraseña">
+                            <i id="loginPassEyeIcon" class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
                 </div>
-                <button onclick="executeLogin()" class="w-full bg-sky-600 hover:bg-sky-500 text-white font-extrabold py-2.5 rounded-xl text-xs transition shadow-lg cursor-pointer">
-                    Iniciar Sesión
+                <button onclick="executeLogin()" class="w-full bg-sky-600 hover:bg-sky-500 text-white font-extrabold py-2.5 rounded-xl text-xs transition shadow-lg cursor-pointer flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-right-to-bracket"></i> Iniciar Sesión
                 </button>
                 <div class="text-[10px] text-slate-400 text-center pt-2 border-t border-slate-800">
                     Sistema de credenciales individuales por usuario. (Sin cuentas compartidas).
@@ -2378,6 +2387,61 @@
         }
         localStorage.setItem('alianza_users', JSON.stringify(usersList));
 
+        function saveUsersToCloud() {
+            localStorage.setItem('alianza_users', JSON.stringify(usersList));
+            if (db) {
+                db.collection('alianza_settings').doc('appUsers').set({
+                    users: usersList,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true }).catch(err => console.warn("Cloud users save error:", err));
+
+                usersList.forEach(u => {
+                    if (u.email) {
+                        const cleanDocId = u.email.trim().toLowerCase().replace(/[^a-z0-9]/g, '_');
+                        db.collection('alianza_users').doc(cleanDocId).set(u, { merge: true }).catch(() => {});
+                    }
+                });
+            }
+        }
+
+        function mergeCloudUsersList(cloudUsers) {
+            if (!cloudUsers || !Array.isArray(cloudUsers)) return;
+            let updated = false;
+
+            cloudUsers.forEach(cu => {
+                if (!cu || (!cu.email && !cu.phone && !cu.name)) return;
+                const cuEmail = (cu.email || '').trim().toLowerCase();
+                const cuPhone = (cu.phone || '').replace(/\D/g, '');
+
+                let existingIdx = -1;
+                if (cuEmail) {
+                    existingIdx = usersList.findIndex(u => (u.email || '').trim().toLowerCase() === cuEmail);
+                }
+                if (existingIdx === -1 && cuPhone) {
+                    existingIdx = usersList.findIndex(u => (u.phone || '').replace(/\D/g, '') === cuPhone);
+                }
+
+                if (existingIdx !== -1) {
+                    if (cuEmail === MAIN_ADMIN_EMAIL || cuEmail === 'adrian.iniguez@alianzaestrategica2026.com') {
+                        usersList[existingIdx].email = MAIN_ADMIN_EMAIL;
+                        usersList[existingIdx].pass = MAIN_ADMIN_PASS;
+                        usersList[existingIdx].role = 'ADMIN';
+                        usersList[existingIdx].name = "Adrián Arturo Íñiguez Lucio (Gerencia General)";
+                    } else {
+                        usersList[existingIdx] = { ...usersList[existingIdx], ...cu };
+                    }
+                } else {
+                    usersList.push(cu);
+                }
+                updated = true;
+            });
+
+            if (updated) {
+                localStorage.setItem('alianza_users', JSON.stringify(usersList));
+                renderUsersTable();
+            }
+        }
+
         let sponsorsList = JSON.parse(localStorage.getItem('alianza_sponsors') || 'null');
         if (!sponsorsList || !Array.isArray(sponsorsList) || sponsorsList.length === 0) {
             sponsorsList = [...DEFAULT_SPONSORS];
@@ -2590,6 +2654,29 @@
                         }
                     }
                 }, () => {});
+
+                db.collection('alianza_settings').doc('appUsers').onSnapshot(doc => {
+                    if (doc && doc.exists) {
+                        const data = doc.data();
+                        if (data.users && Array.isArray(data.users) && data.users.length > 0) {
+                            mergeCloudUsersList(data.users);
+                        } else {
+                            saveUsersToCloud();
+                        }
+                    } else if (doc && !doc.exists) {
+                        saveUsersToCloud();
+                    }
+                }, () => {});
+
+                db.collection('alianza_users').onSnapshot(snap => {
+                    if (snap && !snap.empty) {
+                        const cloudUsers = [];
+                        snap.forEach(d => cloudUsers.push(d.data()));
+                        if (cloudUsers.length > 0) {
+                            mergeCloudUsersList(cloudUsers);
+                        }
+                    }
+                }, () => {});
             } catch (e) {}
         }
 
@@ -2718,6 +2805,7 @@
             const loginNavBtn = document.getElementById('loginNavBtn');
             const logoutNavBtn = document.getElementById('logoutNavBtn');
             const quickAddNavBtn = document.getElementById('quickAddNavBtn');
+            const agentVisitsNavBtn = document.getElementById('agentVisitsNavBtn');
             const financeNavBtn = document.getElementById('financeNavBtn');
             const agentGroupNavBtn = document.getElementById('agentGroupNavBtn');
             const agentProfileNavBtn = document.getElementById('agentProfileNavBtn');
@@ -2745,6 +2833,7 @@
                 }
                 if (logoutNavBtn) logoutNavBtn.classList.remove('hidden');
                 if (quickAddNavBtn) quickAddNavBtn.classList.remove('hidden');
+                if (agentVisitsNavBtn) agentVisitsNavBtn.classList.add('hidden');
                 if (financeNavBtn) financeNavBtn.classList.remove('hidden');
                 if (agentGroupNavBtn) agentGroupNavBtn.classList.add('hidden');
                 if (agentProfileNavBtn) agentProfileNavBtn.classList.add('hidden');
@@ -2778,11 +2867,12 @@
                     loginNavBtn.innerHTML = '<i class="fa-solid fa-user-tie text-amber-300"></i> Agente Activo';
                 }
 
-                // 1. ELIMINAR BOTONES NO ÚTILES PARA EL AGENTE
+                // 1. NAVEGACIÓN Y HERRAMIENTAS INMEDIATAS PARA AGENTE
                 if (agentProfileNavBtn) agentProfileNavBtn.classList.add('hidden'); // Perfil agentes
                 if (topShareBtn) topShareBtn.classList.add('hidden');               // Compartir superior
-                if (agentGroupNavBtn) agentGroupNavBtn.classList.add('hidden');     // Grupo WA Agente
-                if (quickAddNavBtn) quickAddNavBtn.classList.add('hidden');         // Botón genérico nav
+                if (agentGroupNavBtn) agentGroupNavBtn.classList.remove('hidden');  // Grupo WA Agente ACTIVADO
+                if (quickAddNavBtn) quickAddNavBtn.classList.remove('hidden');      // + Captación en navbar activo
+                if (agentVisitsNavBtn) agentVisitsNavBtn.classList.remove('hidden');// 📋 Visitas en navbar activo
                 if (financeNavBtn) financeNavBtn.classList.add('hidden');           // Matriz financiera
 
                 // 2. EN EL HERO: OCULTAR VENDER ACTIVO, MENÚ, TRES PUNTITOS Y CONTACTO
@@ -2792,11 +2882,10 @@
                 if (btnHeroShareDots) btnHeroShareDots.classList.add('hidden');     // Tres puntitos
                 if (heroMsgBtn) heroMsgBtn.classList.add('hidden');                 // Mensaje Sofía
 
-                // 3. EN SU LUGAR, ACTIVAR LOS DOS BOTONES CLAVE DEL AGENTE:
-                // "+ Agregar Ficha Técnica" y "📋 Registro de Visitas y Postulantes"
+                // 3. EN SU LUGAR, ACTIVAR LOS BOTONES CLAVE DEL AGENTE EN EL HERO
                 if (agentHeroActions) agentHeroActions.classList.remove('hidden');
 
-                // 4. ELIMINAR PATROCINADORES Y AGENTE VIRTUAL
+                // 4. ELIMINAR PATROCINADORES Y AGENTE VIRTUAL EN MODO AGENTE
                 if (lawyerCardSection) lawyerCardSection.classList.add('hidden');
                 if (tabFbSponsors) tabFbSponsors.classList.add('hidden');
                 if (virtualAssistantWidget) virtualAssistantWidget.classList.add('hidden');
@@ -2812,6 +2901,7 @@
                 }
                 if (logoutNavBtn) logoutNavBtn.classList.add('hidden');
                 if (quickAddNavBtn) quickAddNavBtn.classList.add('hidden');
+                if (agentVisitsNavBtn) agentVisitsNavBtn.classList.add('hidden');
                 if (financeNavBtn) financeNavBtn.classList.add('hidden');
                 if (agentGroupNavBtn) agentGroupNavBtn.classList.add('hidden');
                 if (agentProfileNavBtn) agentProfileNavBtn.classList.remove('hidden'); // Perfil Agentes (Únicamente en Modo Público)
@@ -2834,12 +2924,31 @@
             renderSponsorsCards();
         }
 
-        function executeLogin() {
+        function toggleLoginPassVisibility() {
+            const input = document.getElementById('loginPassInput');
+            const icon = document.getElementById('loginPassEyeIcon');
+            if (!input) return;
+            if (input.type === 'password') {
+                input.type = 'text';
+                if (icon) {
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                }
+            } else {
+                input.type = 'password';
+                if (icon) {
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            }
+        }
+
+        async function executeLogin() {
             const emailInput = (document.getElementById('loginEmailInput')?.value || '').trim().toLowerCase();
             const passInput = (document.getElementById('loginPassInput')?.value || '').trim();
 
             if (!emailInput || !passInput) {
-                showToast('Por favor, ingresa tu correo electrónico y contraseña', 'error');
+                showToast('Por favor, ingresa tu correo electrónico, WhatsApp o usuario, y tu contraseña', 'error');
                 return;
             }
 
@@ -2852,10 +2961,56 @@
                 console.error('Error al sincronizar usuarios de localStorage:', err);
             }
 
-            const foundUser = usersList.find(u => 
-                (u.email || '').trim().toLowerCase() === emailInput && 
-                (u.pass || '').trim() === passInput
-            );
+            const cleanDigitsInput = emailInput.replace(/\D/g, '');
+            const normInputPhone = cleanDigitsInput.replace(/^(593|0)/, '');
+
+            const findUserMatch = (list) => list.find(u => {
+                const uEmail = (u.email || '').trim().toLowerCase();
+                const uName = (u.name || '').trim().toLowerCase();
+                const uPhoneDigits = (u.phone || '').replace(/\D/g, '');
+                const normUserPhone = uPhoneDigits.replace(/^(593|0)/, '');
+                const uPass = (u.pass || '').trim();
+
+                const phoneMatches = (normInputPhone.length >= 7 && normUserPhone.length >= 7 && (
+                    normInputPhone === normUserPhone ||
+                    uPhoneDigits.includes(cleanDigitsInput) ||
+                    cleanDigitsInput.includes(uPhoneDigits)
+                ));
+
+                const matchesIdentifier = (uEmail === emailInput) ||
+                                          (uName === emailInput) ||
+                                          (uEmail.split('@')[0] === emailInput) ||
+                                          phoneMatches;
+                const matchesPass = (uPass === passInput);
+                return matchesIdentifier && matchesPass;
+            });
+
+            let foundUser = findUserMatch(usersList);
+
+            // Si no se encuentra en memoria local, consultar en Firestore en tiempo real como respaldo
+            if (!foundUser && db) {
+                try {
+                    showToast('Verificando credenciales en la nube...', 'info');
+                    const snap = await db.collection('alianza_settings').doc('appUsers').get();
+                    if (snap.exists && snap.data()?.users) {
+                        mergeCloudUsersList(snap.data().users);
+                        foundUser = findUserMatch(usersList);
+                    }
+
+                    if (!foundUser) {
+                        const usersSnap = await db.collection('alianza_users').get();
+                        if (!usersSnap.empty) {
+                            const cloudUsersList = [];
+                            usersSnap.forEach(d => cloudUsersList.push(d.data()));
+                            mergeCloudUsersList(cloudUsersList);
+                            foundUser = findUserMatch(usersList);
+                        }
+                    }
+                } catch (e) {
+                    console.warn("Error consultando usuarios en Firestore:", e);
+                }
+            }
+
             if (!foundUser) {
                 showToast('Credenciales incorrectas o usuario no registrado en el sistema', 'error');
                 return;
@@ -2863,18 +3018,22 @@
 
             foundUser.lastLogin = new Date().toISOString();
             localStorage.setItem('alianza_users', JSON.stringify(usersList));
+            saveUsersToCloud();
 
             currentRole = foundUser.role; // 'ADMIN' o 'AGENT'
             localStorage.setItem('alianza_role', currentRole);
             localStorage.setItem('alianza_current_user_email', foundUser.email);
             localStorage.setItem('alianza_current_user_name', foundUser.name);
             localStorage.setItem('alianza_last_agent_name', foundUser.name);
+            if (foundUser.phone) {
+                localStorage.setItem('alianza_last_agent_phone', foundUser.phone);
+            }
 
             closeModal('loginModal');
             applyRolePermissions();
             filterItems();
             renderFinanceTable();
-            showToast(`¡Bienvenido, ${foundUser.name}! (${foundUser.role === 'ADMIN' ? 'Administrador' : 'Agente Comercial'})`, 'success');
+            showToast(`¡Bienvenido, ${foundUser.name}! (${foundUser.role === 'ADMIN' ? 'Administrador Principal' : 'Agente Comercial'})`, 'success');
         }
 
         function logoutRole() {
@@ -3030,10 +3189,10 @@
                 usersList.push({ name, phone, email, pass, role, lastLogin: new Date().toISOString() });
             }
 
-            localStorage.setItem('alianza_users', JSON.stringify(usersList));
+            saveUsersToCloud();
             closeModal('userEditModal');
             renderUsersTable();
-            showToast('¡Usuario guardado con éxito!');
+            showToast('¡Usuario guardado y sincronizado en la nube con éxito!');
         }
 
         function deleteUser(email) {
@@ -3044,7 +3203,7 @@
             }
             if (confirm(`¿Estás seguro de eliminar el acceso para el usuario ${email}?`)) {
                 usersList = usersList.filter(u => u.email.toLowerCase() !== email.toLowerCase());
-                localStorage.setItem('alianza_users', JSON.stringify(usersList));
+                saveUsersToCloud();
                 renderUsersTable();
                 showToast('Usuario eliminado del sistema');
             }
@@ -3585,6 +3744,20 @@
             document.getElementById('prodIsFeatured').checked = true;
             document.getElementById('productModalTitle').innerText = 'Registrar Nueva Captación';
             toggleCategoryFields();
+
+            // Pre-completar automáticamente los datos del Agente o Administrador en sesión activa
+            const currentAgentName = (currentRole === 'ADMIN')
+                ? (localStorage.getItem('alianza_current_user_name') || 'Adrián Arturo Íñiguez Lucio (Gerencia General)')
+                : (localStorage.getItem('alianza_current_user_name') || localStorage.getItem('alianza_last_agent_name') || '');
+            const currentAgentPhone = (currentRole === 'ADMIN')
+                ? (localStorage.getItem('alianza_last_agent_phone') || '095 919 0794')
+                : (localStorage.getItem('alianza_last_agent_phone') || '');
+
+            const prodAgentNameEl = document.getElementById('prodAgentName');
+            const prodAgentPhoneEl = document.getElementById('prodAgentPhone');
+            if (prodAgentNameEl && currentAgentName) prodAgentNameEl.value = currentAgentName;
+            if (prodAgentPhoneEl && currentAgentPhone) prodAgentPhoneEl.value = currentAgentPhone;
+
             openModal('productModal');
         }
 
@@ -4085,7 +4258,7 @@ ALIANZA ESTRATÉGICA S.A.S.`;
 
             const agentNameInput = document.getElementById('visitAgentName');
             if (agentNameInput && !agentNameInput.value) {
-                agentNameInput.value = (currentRole === 'ADMIN') ? 'A.A.I.L. (Administrador Líder)' : (localStorage.getItem('alianza_last_agent_name') || 'Agente Comercial Autorizado');
+                agentNameInput.value = (currentRole === 'ADMIN') ? 'Adrián Arturo Íñiguez Lucio (Gerencia General)' : (localStorage.getItem('alianza_current_user_name') || localStorage.getItem('alianza_last_agent_name') || 'Agente Comercial Autorizado');
             }
             const agentPhoneInput = document.getElementById('visitAgentPhone');
             if (agentPhoneInput && !agentPhoneInput.value) {
@@ -6584,8 +6757,8 @@ ESQUEMA DE COMISIONES (50/50):
                     <input type="text" id="editUserPhone" required placeholder="Ej. 098 123 4567" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-purple-500">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-1">Correo Electrónico (Identificador Único)</label>
-                    <input type="email" id="editUserEmail" required placeholder="carlos.mendoza@alianzaestrategica2026.com" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Correo Electrónico o Usuario Único</label>
+                    <input type="text" id="editUserEmail" required placeholder="carlos.mendoza@alianzaestrategica2026.com o usuario" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-purple-500">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-300 mb-1">Contraseña Segura</label>
