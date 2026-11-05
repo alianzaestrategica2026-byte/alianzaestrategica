@@ -2239,25 +2239,33 @@
                 name: "Adrián Arturo Íñiguez Lucio (Admin Líder)",
                 email: "adrian.iniguez@alianzaestrategica2026.com",
                 pass: "alianza2026",
-                role: "ADMIN"
+                phone: "095 919 0794",
+                role: "ADMIN",
+                lastLogin: new Date().toISOString()
             },
             {
                 name: "Abg. Carlos Alfredo Íñiguez Rodríguez (Jurídico)",
                 email: "carlos.iniguez@alianzaestrategica2026.com",
                 pass: "juridico2026",
-                role: "ADMIN"
+                phone: "099 216 0967",
+                role: "ADMIN",
+                lastLogin: new Date(Date.now() - 3600000).toISOString()
             },
             {
                 name: "Ing. Carlos Mendoza (Agente Comercial)",
                 email: "carlos.mendoza@alianzaestrategica2026.com",
                 pass: "agente12345@",
-                role: "AGENT"
+                phone: "098 123 4567",
+                role: "AGENT",
+                lastLogin: new Date(Date.now() - 172800000).toISOString() // 2 días atrás
             },
             {
                 name: "Lic. Andrea Pazmiño (Agente Comercial)",
                 email: "andrea.pazmino@alianzaestrategica2026.com",
                 pass: "agente12345@",
-                role: "AGENT"
+                phone: "097 987 6543",
+                role: "AGENT",
+                lastLogin: new Date(Date.now() - 604800000).toISOString() // 7 días atrás
             }
         ];
 
@@ -2724,6 +2732,9 @@
                 return;
             }
 
+            foundUser.lastLogin = new Date().toISOString();
+            localStorage.setItem('alianza_users', JSON.stringify(usersList));
+
             currentRole = foundUser.role; // 'ADMIN' o 'AGENT'
             localStorage.setItem('alianza_role', currentRole);
             localStorage.setItem('alianza_current_user_email', foundUser.email);
@@ -2747,6 +2758,23 @@
             showToast('Sesión cerrada. Regresando a Modo Público.');
         }
 
+        function getTimeElapsed(isoString) {
+            if (!isoString) return 'Nunca';
+            const now = new Date();
+            const past = new Date(isoString);
+            const diffMs = now - past;
+            if (isNaN(diffMs) || diffMs < 0) return 'Recién';
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+            const diffDays = Math.floor(diffMs / 86400000);
+
+            if (diffMins < 1) return 'Hace un momento';
+            if (diffMins < 60) return `Hace ${diffMins} min`;
+            if (diffHours < 24) return `Hace ${diffHours} hora${diffHours > 1 ? 's' : ''}`;
+            if (diffDays === 1) return 'Hace 1 día';
+            return `Hace ${diffDays} días`;
+        }
+
         // FUNCIONES DE GESTIÓN DE USUARIOS (ADMINISTRADOR)
         function openUsersManagementModal() {
             if (currentRole !== 'ADMIN') {
@@ -2763,7 +2791,7 @@
             tbody.innerHTML = '';
 
             if (!usersList || usersList.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="py-4 text-center text-slate-500 italic">No hay usuarios registrados.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="py-4 text-center text-slate-500 italic">No hay usuarios registrados.</td></tr>`;
                 return;
             }
 
@@ -2773,15 +2801,30 @@
                     ? `<span class="bg-purple-950 text-purple-300 border border-purple-500/40 px-2 py-0.5 rounded text-[10px] font-bold">ADMINISTRADOR</span>` 
                     : `<span class="bg-sky-950 text-sky-300 border border-sky-500/40 px-2 py-0.5 rounded text-[10px] font-bold">AGENTE COMERCIAL</span>`;
 
+                const timeElapsed = getTimeElapsed(u.lastLogin);
+                const phoneDisplay = u.phone ? escapeHtml(u.phone) : '<span class="text-slate-500 italic">Sin WhatsApp</span>';
+                const cleanPhone = (u.phone || '').replace(/\D/g, '');
+                const waLink = cleanPhone ? `https://wa.me/${cleanPhone.startsWith('593') ? cleanPhone : '593' + cleanPhone.replace(/^0/, '')}?text=${encodeURIComponent(`Hola ${u.name}, notamos desde el panel de Alianza Estratégica S.A.S. que llevas tiempo sin conectarte al portal. ¿Tienes algún inconveniente o necesitas asistencia con tus captaciones?`)}` : '#';
+
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-900 transition border-b border-slate-800">
-                        <td class="py-3 px-3 font-bold text-white">${escapeHtml(u.name)}</td>
+                        <td class="py-3 px-3 font-bold text-white">
+                            <div>${escapeHtml(u.name)}</div>
+                            <div class="text-[10px] text-emerald-400 mt-0.5"><i class="fa-brands fa-whatsapp"></i> ${phoneDisplay}</div>
+                        </td>
                         <td class="py-3 px-3 text-sky-400 font-mono">${escapeHtml(u.email)}</td>
                         <td class="py-3 px-3 font-mono text-amber-300">${escapeHtml(u.pass)}</td>
                         <td class="py-3 px-3">${roleBadge}</td>
-                        <td class="py-3 px-3 text-center flex justify-center gap-1.5">
-                            <button onclick="openEditUserModal('${escapeHtml(u.email)}')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-sky-300 rounded-lg text-[10px] font-bold transition cursor-pointer" title="Editar Usuario"><i class="fa-solid fa-pen"></i></button>
-                            ${!isSelfAdmin ? `<button onclick="deleteUser('${escapeHtml(u.email)}')" class="px-2.5 py-1 bg-rose-950/60 hover:bg-rose-900 text-rose-300 rounded-lg text-[10px] font-bold transition cursor-pointer" title="Eliminar Usuario"><i class="fa-solid fa-trash-can"></i></button>` : '<span class="text-[9px] text-slate-500 italic px-1">Principal</span>'}
+                        <td class="py-3 px-3">
+                            <div class="text-xs font-extrabold text-slate-200">${timeElapsed}</div>
+                            <div class="text-[10px] text-slate-400 font-mono">${u.lastLogin ? new Date(u.lastLogin).toLocaleString() : 'N/A'}</div>
+                        </td>
+                        <td class="py-3 px-3 text-center">
+                            <div class="flex justify-center items-center gap-1.5 flex-wrap">
+                                ${u.phone ? `<a href="${waLink}" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 rounded-lg text-[10px] font-bold transition flex items-center gap-1 shadow" title="Enviar WhatsApp por inactividad o asistencia"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>` : ''}
+                                <button onclick="openEditUserModal('${escapeHtml(u.email)}')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-sky-300 rounded-lg text-[10px] font-bold transition cursor-pointer" title="Editar Usuario"><i class="fa-solid fa-pen"></i></button>
+                                ${!isSelfAdmin ? `<button onclick="deleteUser('${escapeHtml(u.email)}')" class="px-2.5 py-1 bg-rose-950/60 hover:bg-rose-900 text-rose-300 rounded-lg text-[10px] font-bold transition cursor-pointer" title="Eliminar Usuario"><i class="fa-solid fa-trash-can"></i></button>` : '<span class="text-[9px] text-slate-500 italic px-1">Principal</span>'}
+                            </div>
                         </td>
                     </tr>
                 `;
@@ -2804,6 +2847,7 @@
 
             document.getElementById('editUserOriginalEmail').value = user.email;
             document.getElementById('editUserName').value = user.name;
+            document.getElementById('editUserPhone').value = user.phone || '';
             document.getElementById('editUserEmail').value = user.email;
             document.getElementById('editUserPass').value = user.pass;
             document.getElementById('editUserRole').value = user.role;
@@ -2819,12 +2863,13 @@
 
             const origEmail = document.getElementById('editUserOriginalEmail').value.trim().toLowerCase();
             const name = document.getElementById('editUserName').value.trim();
+            const phone = document.getElementById('editUserPhone').value.trim();
             const email = document.getElementById('editUserEmail').value.trim().toLowerCase();
             const pass = document.getElementById('editUserPass').value.trim();
             const role = document.getElementById('editUserRole').value;
 
-            if (!name || !email || !pass) {
-                showToast('Por favor, completa todos los campos requeridos', 'error');
+            if (!name || !email || !pass || !phone) {
+                showToast('Por favor, completa todos los campos requeridos (incluyendo WhatsApp)', 'error');
                 return;
             }
 
@@ -2832,7 +2877,8 @@
                 // Editando usuario existente
                 const idx = usersList.findIndex(u => u.email.toLowerCase() === origEmail);
                 if (idx !== -1) {
-                    usersList[idx] = { name, email, pass, role };
+                    const existingLogin = usersList[idx].lastLogin || new Date().toISOString();
+                    usersList[idx] = { ...usersList[idx], name, phone, email, pass, role, lastLogin: existingLogin };
                 }
             } else {
                 // Creando nuevo usuario
@@ -2841,7 +2887,7 @@
                     showToast('Ya existe un usuario registrado con este correo electrónico', 'error');
                     return;
                 }
-                usersList.push({ name, email, pass, role });
+                usersList.push({ name, phone, email, pass, role, lastLogin: new Date().toISOString() });
             }
 
             localStorage.setItem('alianza_users', JSON.stringify(usersList));
@@ -6331,10 +6377,11 @@ ESQUEMA DE COMISIONES (50/50):
                     <table class="w-full text-left border-collapse text-xs">
                         <thead class="bg-slate-900 text-slate-400 uppercase text-[10px] font-bold tracking-wider border-b border-slate-800">
                             <tr>
-                                <th class="py-3 px-3 border-r border-slate-800">Nombre del Agente</th>
+                                <th class="py-3 px-3 border-r border-slate-800">Nombre & WhatsApp</th>
                                 <th class="py-3 px-3 border-r border-slate-800">Correo Electrónico (ID)</th>
                                 <th class="py-3 px-3 border-r border-slate-800">Contraseña Registrada</th>
                                 <th class="py-3 px-3 border-r border-slate-800">Rol Asignado</th>
+                                <th class="py-3 px-3 border-r border-slate-800">Última Conexión</th>
                                 <th class="py-3 px-3 text-center">Acciones</th>
                             </tr>
                         </thead>
@@ -6359,6 +6406,10 @@ ESQUEMA DE COMISIONES (50/50):
                 <div>
                     <label class="block text-xs font-bold text-slate-300 mb-1">Nombre Completo del Agente</label>
                     <input type="text" id="editUserName" required placeholder="Ej. Ing. Carlos Mendoza" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-purple-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Número de WhatsApp del Agente</label>
+                    <input type="text" id="editUserPhone" required placeholder="Ej. 098 123 4567" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-purple-500">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-300 mb-1">Correo Electrónico (Identificador Único)</label>
