@@ -6559,12 +6559,6 @@ ALIANZA ESTRATÉGICA S.A.S.`;
         }
 
         function getShareableUrl() {
-            if (window.location.hostname && window.location.hostname.includes('alianzaestrategica2026.com')) {
-                return 'https://www.alianzaestrategica2026.com';
-            }
-            if (window.location.href && window.location.href.startsWith('http')) {
-                return window.location.href.split('?')[0].split('#')[0];
-            }
             return 'https://www.alianzaestrategica2026.com';
         }
 
@@ -6584,19 +6578,17 @@ ALIANZA ESTRATÉGICA S.A.S.`;
         }
 
         function shareDirectWhatsApp() {
-            const url = getShareableUrl();
-            const text = encodeURIComponent(`🏢 *ALIANZA ESTRATÉGICA S.A.S.*
-Excelencia Jurídica, Inmobiliaria y Comercial en El Coca, Orellana — Ecuador.
-Catálogo verificado de Bienes Raíces, Vehículos y Maquinaria Pesada:
-🌐 ${url}`);
-            window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+            const url = 'https://www.alianzaestrategica2026.com';
+            // Al compartir por WhatsApp se envía la URL limpia para que WhatsApp active el scraper de Open Graph con miniatura y tarjeta enriquecida
+            const text = encodeURIComponent(url);
+            window.open('https://api.whatsapp.com/send?text=' + text, '_blank');
         }
 
         async function triggerNativeShare() {
-            const url = getShareableUrl();
+            const url = 'https://www.alianzaestrategica2026.com';
             const shareData = {
-                title: 'Alianza Estratégica S.A.S. — Portal Corporativo',
-                text: 'Catálogo oficial de Bienes Raíces, Vehículos y Maquinaria Pesada con blindaje notarial en El Coca, Orellana.',
+                title: 'Alianza Estratégica S.A.S. — Portal Corporativo & Marketplace',
+                text: 'Excelencia Jurídica, Inmobiliaria y Comercial en la Provincia de Orellana. Bienes raíces, vehículos y maquinaria pesada.',
                 url: url
             };
 
