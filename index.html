@@ -5,27 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="htmlPageTitle">Alianza Estratégica S.A.S. — Portal Corporativo</title>
 
-    <!-- METADATOS OPEN GRAPH DINÁMICOS -->
+    <!-- METADATOS SEO Y GOOGLE SEARCH -->
+    <meta name="description" content="Plataforma web corporativa y marketplace de bienes raíces, vehículos, maquinaria pesada y corretaje notarial en El Coca, Orellana. Alianza Estratégica S.A.S.">
+    <meta name="keywords" content="Alianza Estratégica, Bienes Raíces El Coca, Inmobiliaria Orellana, Vehículos El Coca, Maquinaria Pesada, Asesoría Notarial Ecuador">
+    <meta name="author" content="Alianza Estratégica S.A.S.">
+
+    <!-- METADATOS OPEN GRAPH DINÁMICOS & WHATSAPP / FACEBOOK SHARE -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" id="og-title" content="Alianza Estratégica S.A.S. — Portal Corporativo" />
-    <meta property="og:description" id="og-description" content="Excelencia Jurídica, Inmobiliaria y Comercial en la Provincia de Orellana." />
-    <meta property="og:image" id="og-image" content="/assets/aistudio/image_b5ed78ae.png" />
-    <meta property="og:url" id="og-url" content="https://alianzaestrategica2026.com" />
+    <meta property="og:site_name" content="Alianza Estratégica S.A.S." />
+    <meta property="og:title" id="og-title" content="Alianza Estratégica S.A.S. — Portal Corporativo & Marketplace" />
+    <meta property="og:description" id="og-description" content="Excelencia Jurídica, Inmobiliaria y Comercial en la Provincia de Orellana. Bienes raíces, vehículos y maquinaria pesada." />
+    <meta property="og:image" id="og-image" content="https://www.alianzaestrategica2026.com/og-image.png" />
+    <meta property="og:image:secure_url" content="https://www.alianzaestrategica2026.com/og-image.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+    <meta property="og:image:alt" content="Logotipo Oficial de Alianza Estratégica S.A.S." />
+    <meta property="og:url" id="og-url" content="https://www.alianzaestrategica2026.com" />
 
     <!-- TWITTER CARDS -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" id="twitter-title" content="Alianza Estratégica S.A.S. — Portal Corporativo">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" id="twitter-title" content="Alianza Estratégica S.A.S. — Portal Corporativo & Marketplace">
     <meta name="twitter:description" id="twitter-description" content="Excelencia Jurídica, Inmobiliaria y Comercial en la Provincia de Orellana.">
-    <meta name="twitter:image" id="twitter-image" content="/assets/aistudio/image_b5ed78ae.png">
+    <meta name="twitter:image" id="twitter-image" content="https://www.alianzaestrategica2026.com/og-image.png">
 
+    <!-- ICONOS Y LOGO OFICIAL PARA GOOGLE SEARCH, NAVEGADORES Y PWA -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link id="faviconLink" rel="icon" type="image/png" sizes="192x192" href="/pwa-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+    <link id="appleTouchIconLink" rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link id="dynamicManifestLink" rel="manifest" href="/manifest.json">
+
+    <!-- DATOS ESTRUCTURADOS SCHEMA.ORG (JSON-LD) PARA GOOGLE SEARCH -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "RealEstateAgent",
+      "name": "Alianza Estratégica S.A.S.",
+      "image": "https://www.alianzaestrategica2026.com/logo.png",
+      "logo": "https://www.alianzaestrategica2026.com/logo.png",
+      "@id": "https://www.alianzaestrategica2026.com/#organization",
+      "url": "https://www.alianzaestrategica2026.com",
+      "telephone": "+593959190794",
+      "priceRange": "$$",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Puerto Francisco de Orellana (El Coca)",
+        "addressRegion": "Orellana",
+        "addressCountry": "EC"
+      },
+      "description": "Sociedad mercantil especializada en la comercialización formal de activos inmobiliarios, automotores y maquinaria pesada con blindaje notarial en El Coca, Orellana."
+    }
+    </script>
+
     <meta name="theme-color" content="#080c14">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Alianza S.A.S.">
-    <link id="appleTouchIconLink" rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <link id="faviconLink" rel="icon" type="image/png" href="/pwa-192x192.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1373,17 +1410,33 @@
     <div id="shareModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
         <div class="glass-panel rounded-3xl max-w-sm w-full p-6 space-y-4 shadow-2xl text-center border border-slate-800 text-white">
             <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-                <h3 class="text-base font-extrabold text-white">Compartir Plataforma</h3>
+                <h3 class="text-base font-extrabold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-share-nodes text-sky-400"></i> Compartir Plataforma
+                </h3>
                 <button onclick="closeModal('shareModal')" class="text-slate-400 hover:text-slate-200 cursor-pointer" aria-label="Cerrar"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
-            <p class="text-xs text-slate-300">Enlace oficial del portal:</p>
+
+            <!-- TARJETA PREVIA CON LOGOTIPO OFICIAL DE LA APLICACIÓN -->
+            <div class="bg-slate-900/90 rounded-2xl p-3 border border-sky-500/30 flex items-center gap-3 text-left shadow-inner">
+                <img src="/logo.png" onerror="this.src='/favicon.png'" alt="Logotipo Alianza Estratégica" class="w-14 h-14 rounded-full border-2 border-amber-400 object-cover flex-shrink-0 shadow-md">
+                <div class="min-w-0 flex-1">
+                    <h4 class="text-xs font-black text-white truncate">Alianza Estratégica S.A.S.</h4>
+                    <p class="text-[11px] text-sky-400 font-bold truncate">Portal Corporativo & Marketplace</p>
+                    <p class="text-[10px] text-slate-400 truncate">El Coca, Orellana — Ecuador</p>
+                </div>
+            </div>
+
+            <p class="text-xs text-slate-300">Enlace oficial del portal con miniatura certificada:</p>
             <div class="flex gap-2">
-                <input type="text" id="shareUrlInput" readonly value="https://alianzaestrategica2026-byte.github.io/alianzaestrategica/" class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs font-mono text-sky-400">
+                <input type="text" id="shareUrlInput" readonly value="https://www.alianzaestrategica2026.com" class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs font-mono text-sky-400">
                 <button onclick="copyShareUrl()" class="bg-sky-600 text-white px-3 py-2 rounded-xl text-xs font-bold hover:bg-sky-500 cursor-pointer">Copiar</button>
             </div>
-            <div class="pt-2 flex justify-center gap-2">
-                <button onclick="shareDirectWhatsApp()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 cursor-pointer">
-                    <i class="fa-brands fa-whatsapp"></i> Compartir por WhatsApp
+            <div class="pt-2 flex flex-col gap-2">
+                <button onclick="shareDirectWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs py-2.5 rounded-xl transition shadow flex items-center justify-center gap-2 cursor-pointer hover:scale-105 active:scale-95">
+                    <i class="fa-brands fa-whatsapp text-sm"></i> Compartir por WhatsApp
+                </button>
+                <button onclick="triggerNativeShare()" id="btnNativeShare" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs py-2 rounded-xl border border-slate-700 transition flex items-center justify-center gap-2 cursor-pointer">
+                    <i class="fa-solid fa-arrow-up-right-from-square text-sky-400"></i> Más Opciones de Compartir (Móvil / PC)
                 </button>
             </div>
         </div>
@@ -6491,18 +6544,59 @@ ALIANZA ESTRATÉGICA S.A.S.`;
             setTimeout(() => toast.remove(), 3200);
         }
 
+        function getShareableUrl() {
+            if (window.location.hostname && window.location.hostname.includes('alianzaestrategica2026.com')) {
+                return 'https://www.alianzaestrategica2026.com';
+            }
+            if (window.location.href && window.location.href.startsWith('http')) {
+                return window.location.href.split('?')[0].split('#')[0];
+            }
+            return 'https://www.alianzaestrategica2026.com';
+        }
+
         function copyShareUrl() {
             const input = document.getElementById('shareUrlInput');
-            input.value = window.location.href.includes('http') ? window.location.href : GITHUB_PAGES_URL;
-            input.select();
-            document.execCommand('copy');
-            showToast('¡Enlace copiado al portapapeles!');
+            const targetUrl = getShareableUrl();
+            if (input) input.value = targetUrl;
+            navigator.clipboard.writeText(targetUrl).then(() => {
+                showToast('¡Enlace oficial copiado al portapapeles!');
+            }).catch(() => {
+                if (input) {
+                    input.select();
+                    document.execCommand('copy');
+                }
+                showToast('¡Enlace oficial copiado!');
+            });
         }
 
         function shareDirectWhatsApp() {
-            const url = window.location.href.includes('http') ? window.location.href : GITHUB_PAGES_URL;
-            const text = encodeURIComponent(`Te invito a visitar ALIANZA ESTRATÉGICA S.A.S. (Bienes Raíces, Vehículos y Maquinaria en El Coca): ${url}`);
+            const url = getShareableUrl();
+            const text = encodeURIComponent(`🏢 *ALIANZA ESTRATÉGICA S.A.S.*
+Excelencia Jurídica, Inmobiliaria y Comercial en El Coca, Orellana — Ecuador.
+Catálogo verificado de Bienes Raíces, Vehículos y Maquinaria Pesada:
+🌐 ${url}`);
             window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+        }
+
+        async function triggerNativeShare() {
+            const url = getShareableUrl();
+            const shareData = {
+                title: 'Alianza Estratégica S.A.S. — Portal Corporativo',
+                text: 'Catálogo oficial de Bienes Raíces, Vehículos y Maquinaria Pesada con blindaje notarial en El Coca, Orellana.',
+                url: url
+            };
+
+            if (navigator.share) {
+                try {
+                    await navigator.share(shareData);
+                } catch (err) {
+                    if (err.name !== 'AbortError') {
+                        shareDirectWhatsApp();
+                    }
+                }
+            } else {
+                shareDirectWhatsApp();
+            }
         }
 
         function escapeHtml(text) {
