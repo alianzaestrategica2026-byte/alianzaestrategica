@@ -79,6 +79,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics-compat.js"></script>
 
     <style id="customDynamicStyles">
@@ -377,7 +378,7 @@
                         <div class="w-5 h-5 rounded-full overflow-hidden bg-sky-600 flex items-center justify-center text-[10px] text-white font-bold flex-shrink-0">
                             <i class="fa-solid fa-truck-fast"></i>
                         </div>
-                        <span><strong class="text-white">Expres Segura SA, De Segunda Mano</strong> y aliados comerciales siguen este perfil</span>
+                        <span><strong class="text-white">Expres Segura SA</strong> y aliados comerciales siguen este perfil</span>
                     </div>
                 </div>
 
@@ -476,7 +477,7 @@
         <div class="glass-panel rounded-3xl p-6 mb-8 text-white shadow-2xl relative overflow-hidden">
             <div class="max-w-2xl mx-auto text-center mb-4">
                 <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-1.5">Marketplace de Bienes & Activos</h2>
-                <p class="text-xs sm:text-sm text-slate-400">Consulte el catálogo verificado de ALIANZA ESTRATÉGICA</p>
+                <p class="text-xs sm:text-sm text-slate-400">Consulte el catálogo verificado de ALIANZA ESTRATÉGICA S.A.S. en El Coca y Orellana</p>
                 
                 <div class="mt-3 inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/20 via-sky-500/20 to-amber-500/20 border border-amber-400/50 px-3.5 py-1.5 rounded-full text-xs font-extrabold text-amber-300 shadow-lg animate-bounce-subtle">
                     <span class="flex h-2 w-2 relative">
@@ -487,41 +488,26 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 max-w-4xl mx-auto mb-3">
-                <div class="md:col-span-2 relative">
-                    <input type="text" id="searchInput" value="" autocomplete="off" onkeyup="filterItems()" placeholder="🔍 Buscar por título, código (ej: RE-001), ciudad, sector..." class="w-full pl-11 pr-4 py-3 rounded-2xl bg-slate-950/80 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 border border-sky-500/30 transition shadow-inner">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2.5 max-w-5xl mx-auto mb-3">
+                <div class="sm:col-span-2 relative">
+                    <input type="text" id="searchInput" value="" autocomplete="off" onkeyup="filterItems()" placeholder="🔍 Buscar por título, código (ej: RE-001), sector, descripción..." class="w-full pl-11 pr-4 py-3 rounded-2xl bg-slate-950/80 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 border border-sky-500/30 transition shadow-inner">
                     <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-sky-400"></i>
+                </div>
+                <div class="relative">
+                    <span class="absolute left-3.5 top-3 text-amber-400 pointer-events-none text-xs"><i class="fa-solid fa-map"></i></span>
+                    <select id="provinceFilterSelect" onchange="onProvinceFilterChange()" class="w-full pl-9 pr-8 py-3 rounded-2xl bg-slate-950/90 text-white text-xs font-bold focus:outline-none focus:ring-2 focus:ring-amber-400 border border-slate-700 transition shadow-inner appearance-none cursor-pointer">
+                        <option value="ALL">🗺️ Provincia: Todo el País</option>
+                    </select>
+                    <i class="fa-solid fa-chevron-down absolute right-3.5 top-3.5 text-slate-400 text-xs pointer-events-none"></i>
                 </div>
                 <div class="relative">
                     <span class="absolute left-3.5 top-3 text-rose-400 pointer-events-none text-xs"><i class="fa-solid fa-location-dot"></i></span>
                     <select id="locationFilterSelect" onchange="filterItems()" class="w-full pl-9 pr-8 py-3 rounded-2xl bg-slate-950/90 text-white text-xs font-bold focus:outline-none focus:ring-2 focus:ring-amber-400 border border-slate-700 transition shadow-inner appearance-none cursor-pointer">
-                        <option value="ALL">🌎 Ubicación: Todo el País / Global</option>
-                        <option value="Lago Agrio">📍 Lago Agrio (Sucumbíos)</option>
-                        <option value="El Coca">📍 El Coca (Orellana)</option>
-                        <option value="Joya de los Sachas">📍 Joya de los Sachas (Orellana)</option>
-                        <option value="Quito">📍 Quito (Pichincha)</option>
-                        <option value="Guayaquil">📍 Guayaquil (Guayas)</option>
-                        <option value="Tena">📍 Tena (Napo)</option>
-                        <option value="Puyo">📍 Puyo (Pastaza)</option>
-                        <option value="Ambato">📍 Ambato (Tungurahua)</option>
-                        <option value="Santo Domingo">📍 Santo Domingo (Tsáchilas)</option>
-                        <option value="Cuenca">📍 Cuenca (Azuay)</option>
-                        <option value="Manta">📍 Manta / Portoviejo (Manabí)</option>
-                        <option value="Machala">📍 Machala (El Oro)</option>
-                        <option value="Loja">📍 Loja (Loja)</option>
-                        <option value="Esmeraldas">📍 Esmeraldas (Esmeraldas)</option>
-                        <option value="Ibarra">📍 Ibarra (Imbabura)</option>
-                        <option value="Internacional">🌐 Internacional (Exterior)</option>
+                        <option value="ALL">🏙️ Ciudades: Todas / Global</option>
                     </select>
                     <i class="fa-solid fa-chevron-down absolute right-3.5 top-3.5 text-slate-400 text-xs pointer-events-none"></i>
                 </div>
             </div>
-
-            <!-- CHIPS DE FILTRADO GEOGRÁFICO RÁPIDO -->
-            <div class="flex flex-wrap items-center justify-center gap-1.5 mb-4 text-xs font-bold" id="locationChipsGroup">
-                <span class="text-[11px] text-slate-400 font-semibold mr-1"><i class="fa-solid fa-earth-americas text-sky-400"></i> Ubicación:</span>
-                <button type="button" onclick="setLocationFilter('ALL')" class="loc-chip-btn bg-amber-500 text-slate-950 font-black px-3 py-1 rounded-full transition shadow-md cursor-pointer hover:scale-105">🌎 Todo el País</button>
-             </div>
 
             <!-- BOTONES CATEGORÍAS -->
             <div class="flex flex-wrap justify-center gap-2 text-xs font-bold" id="categoryTabGroup">
@@ -1070,12 +1056,17 @@
                     <h5 class="text-xs font-extrabold text-sky-400 flex items-center gap-1.5"><i class="fa-solid fa-map-location-dot"></i> Posición Geográfica & Precios (Nacional & Internacional)</h5>
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
                         <div>
-                            <label class="block text-[10px] font-bold text-slate-400 mb-0.5">Provincia / Región</label>
-                            <input type="text" id="prodProvincia" placeholder="Ej: Sucumbíos, Orellana" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white">
+                            <label class="block text-[10px] font-bold text-amber-400 mb-0.5"><i class="fa-solid fa-map text-amber-400 mr-1"></i> Provincia (Obligatorio) *</label>
+                            <select id="prodProvincia" onchange="onProdProvinciaChange()" class="w-full bg-slate-950 border border-amber-500/60 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:ring-2 focus:ring-amber-400 cursor-pointer" required>
+                                <option value="">-- Seleccionar Provincia * --</option>
+                            </select>
                         </div>
                         <div>
-                            <label class="block text-[10px] font-bold text-slate-400 mb-0.5">Cantón / Ciudad</label>
-                            <input type="text" id="prodCiudad" placeholder="Ej: Lago Agrio, El Coca, Quito" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white" required>
+                            <label class="block text-[10px] font-bold text-amber-400 mb-0.5"><i class="fa-solid fa-city text-sky-400 mr-1"></i> Cantón / Ciudad (Obligatorio) *</label>
+                            <select id="prodCiudad" onchange="onProdCiudadChange()" class="w-full bg-slate-950 border border-amber-500/60 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:ring-2 focus:ring-amber-400 cursor-pointer" required>
+                                <option value="">-- Seleccionar Ciudad * --</option>
+                            </select>
+                            <input type="text" id="prodCiudadManual" placeholder="Especifique ciudad o parroquia..." class="hidden w-full mt-1.5 bg-slate-950 border border-sky-500/50 rounded-xl px-2.5 py-1 text-[11px] text-white">
                         </div>
                         <div>
                             <label class="block text-[10px] font-bold text-slate-400 mb-0.5">Sector / Barrio</label>
@@ -2125,6 +2116,8 @@
         const OFFICIAL_WA_LINK = "https://wa.me/593959190794";
         const GITHUB_PAGES_URL = "https://alianzaestrategica2026-byte.github.io/alianzaestrategica/";
 
+        // Configuración oficial Firebase - ALIANZA ESTRATÉGICA S.A.S.
+        // Proyecto: alianza-estrategica-coca
         const firebaseConfig = {
             apiKey: "AIzaSyCLQFG1X62E5_WJ6hyCDjoDVkWbja02N3A",
             authDomain: "alianza-estrategica-coca.firebaseapp.com",
@@ -2134,22 +2127,44 @@
             appId: "1:1029575911279:web:1ceb020bb865711ced6a9a",
             measurementId: "G-TGB0C5WEKW"
         };
+        window.firebaseConfig = firebaseConfig;
 
+        let app = null;
         let db = null;
+        let auth = null;
+        let storage = null;
+        let analytics = null;
+
         try {
             if (window.firebase) {
                 if (window.firebase.firestore && typeof window.firebase.firestore.setLogLevel === 'function') {
                     window.firebase.firestore.setLogLevel('silent');
                 }
                 if (!firebase.apps.length) {
-                    firebase.initializeApp(firebaseConfig);
+                    app = firebase.initializeApp(firebaseConfig);
+                } else {
+                    app = firebase.app();
                 }
+                window.firebaseApp = app;
+
                 if (typeof firebase.analytics === 'function') {
-                    try { firebase.analytics(); } catch (e) {}
+                    try {
+                        analytics = firebase.analytics();
+                        window.firebaseAnalytics = analytics;
+                    } catch (e) {}
                 }
                 db = firebase.firestore();
+                window.firestoreDb = db;
+
                 if (firebase.auth) {
-                    firebase.auth().signInAnonymously().catch(() => {});
+                    auth = firebase.auth();
+                    auth.signInAnonymously().catch(() => {});
+                }
+                if (firebase.storage) {
+                    try {
+                        storage = firebase.storage();
+                        window.firebaseStorage = storage;
+                    } catch (e) {}
                 }
             }
         } catch (e) {
@@ -2496,29 +2511,227 @@
         let visitsList = JSON.parse(localStorage.getItem('alianza_visits') || JSON.stringify(DEFAULT_VISITS));
         let stagedVisitPhotoB64 = '';
 
+        // SISTEMA GEOGRÁFICO NACIONAL DE ECUADOR (24 PROVINCIAS Y CIUDADES/CANTONES)
+        const ECUADOR_GEO = [
+            {
+                provincia: "Orellana",
+                ciudades: ["Francisco de Orellana (El Coca)", "La Joya de los Sachas", "Loreto", "Aguarico"]
+            },
+            {
+                provincia: "Sucumbíos",
+                ciudades: ["Nueva Loja (Lago Agrio)", "Shushufindi", "Cáscales", "Cuyabeno", "Gonzalo Pizarro", "Putumayo", "Sucumbíos"]
+            },
+            {
+                provincia: "Pichincha",
+                ciudades: ["Quito (Distrito Metropolitano)", "Rumiñahui (Sangolquí)", "Cayambe", "Mejía (Machachi)", "Pedro Moncayo (Tabacundo)", "San Miguel de Los Bancos", "Pedro Vicente Maldonado", "Puerto Quito"]
+            },
+            {
+                provincia: "Guayas",
+                ciudades: ["Guayaquil", "Samborondón", "Daule", "Durán", "Milagro", "General Villamil (Playas)", "Salitre", "Balzar", "El Empalme", "Naranjal", "Naranjito", "Pedro Carbo", "Santa Lucía", "Yaguachi", "Balao", "Colimes", "Palestina", "Simón Bolívar", "Bucay", "Nobol"]
+            },
+            {
+                provincia: "Napo",
+                ciudades: ["Tena", "Archidona", "El Chaco", "Quijos (Baeza)", "Carlos Julio Arosemena Tola"]
+            },
+            {
+                provincia: "Pastaza",
+                ciudades: ["Puyo", "Mera", "Santa Clara", "Arajuno"]
+            },
+            {
+                provincia: "Tungurahua",
+                ciudades: ["Ambato", "Baños de Agua Santa", "Pelileo", "Píllaro", "Cevallos", "Mocha", "Patate", "Quero", "Tisaleo"]
+            },
+            {
+                provincia: "Azuay",
+                ciudades: ["Cuenca", "Gualaceo", "Paute", "Santa Isabel", "Chordeleg", "Camilo Ponce Enríquez", "Sígsig", "Girón", "San Fernando", "Nabón"]
+            },
+            {
+                provincia: "Manabí",
+                ciudades: ["Manta", "Portoviejo", "Chone", "Montecristi", "Bahía de Caráquez (Sucre)", "Jipijapa", "El Carmen", "Pedernales", "Rocafuerte", "Santa Ana", "Tosagua", "Flavio Alfaro", "Calceta (Bolívar)", "Puerto López", "Jama", "Jaramijó", "San Vicente"]
+            },
+            {
+                provincia: "El Oro",
+                ciudades: ["Machala", "Pasaje", "Santa Rosa", "Huaquillas", "Arenillas", "Piñas", "Zaruma", "Portovelo", "El Guabo", "Atahualpa", "Balsas"]
+            },
+            {
+                provincia: "Santo Domingo de los Tsáchilas",
+                ciudades: ["Santo Domingo", "La Concordia"]
+            },
+            {
+                provincia: "Chimborazo",
+                ciudades: ["Riobamba", "Guano", "Alausí", "Colta", "Chambo", "Cumandá", "Guamote", "Pallatanga", "Penipe", "Chunchi"]
+            },
+            {
+                provincia: "Imbabura",
+                ciudades: ["Ibarra", "Otavalo", "Cotacachi", "Antonio Ante (Atuntaqui)", "Pimampiro", "Urcuquí"]
+            },
+            {
+                provincia: "Loja",
+                ciudades: ["Loja", "Catamayo", "Calvas (Cariamanga)", "Macará", "Saraguro", "Celica", "Chaguarpamba", "Paltas (Catacocha)", "Puyango", "Zapotillo"]
+            },
+            {
+                provincia: "Cotopaxi",
+                ciudades: ["Latacunga", "Pujilí", "Salcedo", "Saquisilí", "La Maná", "Pangua", "Sigchos"]
+            },
+            {
+                provincia: "Esmeraldas",
+                ciudades: ["Esmeraldas", "Atacames", "Quinindé", "San Lorenzo", "Muisne", "Rioverde", "Eloy Alfaro"]
+            },
+            {
+                provincia: "Los Ríos",
+                ciudades: ["Babahoyo", "Quevedo", "Buena Fe", "Ventanas", "Vinces", "Valencia", "Montalvo", "Mocache", "Puebloviejo"]
+            },
+            {
+                provincia: "Morona Santiago",
+                ciudades: ["Macas (Morona)", "Gualaquiza", "Sucúa", "Limón Indanza", "Palora", "Santiago de Méndez", "Tiwintza", "Taisha", "Logroño", "San Juan Bosco"]
+            },
+            {
+                provincia: "Zamora Chinchipe",
+                ciudades: ["Zamora", "Yantzaza", "El Pangui", "Centinela del Cóndor", "Chinchipe (Zumba)", "Nangaritza", "Palanda", "Paquisha"]
+            },
+            {
+                provincia: "Carchi",
+                ciudades: ["Tulcán", "Montúfar (San Gabriel)", "Espejo (El Ángel)", "Mira", "Bolívar", "San Pedro de Huaca"]
+            },
+            {
+                provincia: "Cañar",
+                ciudades: ["Azogues", "Cañar", "La Troncal", "Biblián", "El Tambo", "Déleg", "Suscal"]
+            },
+            {
+                provincia: "Bolívar",
+                ciudades: ["Guaranda", "San Miguel", "Chimbo", "Caluma", "Chillanes", "Echeandía", "Las Naves"]
+            },
+            {
+                provincia: "Santa Elena",
+                ciudades: ["Santa Elena", "Salinas", "La Libertad"]
+            },
+            {
+                provincia: "Galápagos",
+                ciudades: ["Puerto Baquerizo Moreno (San Cristóbal)", "Puerto Ayora (Santa Cruz)", "Puerto Villamil (Isabela)"]
+            }
+        ];
+
         let activeCategory = 'ALL';
+        let activeProvinceFilter = 'ALL';
+        let activeCityFilter = 'ALL';
         let activeLocationFilter = 'ALL';
         let carouselIndex = 0;
 
-        function setLocationFilter(locVal) {
-            activeLocationFilter = locVal || 'ALL';
+        function initGeographicSystem() {
+            populateProvinceFilterSelect();
+            populateCityFilterSelect('ALL');
+            populateProductFormGeo();
+        }
+
+        function populateProvinceFilterSelect() {
+            const sel = document.getElementById('provinceFilterSelect');
+            if (!sel) return;
+            let html = '<option value="ALL">🗺️ Provincia: Todo el País (24 Provincias)</option>';
+            ECUADOR_GEO.forEach(item => {
+                html += `<option value="${item.provincia}">📍 ${item.provincia}</option>`;
+            });
+            html += '<option value="Internacional">🌐 Internacional (Exterior)</option>';
+            sel.innerHTML = html;
+            sel.value = activeProvinceFilter;
+        }
+
+        function populateCityFilterSelect(provFilter = 'ALL') {
             const sel = document.getElementById('locationFilterSelect');
-            if (sel) sel.value = activeLocationFilter;
-
-            document.querySelectorAll('.loc-chip-btn').forEach(btn => {
-                btn.classList.remove('bg-amber-500', 'text-slate-950', 'font-black');
-                btn.classList.add('bg-slate-900', 'border', 'border-slate-700', 'text-slate-300');
-            });
-
-            document.querySelectorAll('.loc-chip-btn').forEach(btn => {
-                const text = btn.innerText || '';
-                if ((locVal === 'ALL' && text.includes('Todo el País')) ||
-                    (locVal !== 'ALL' && text.toLowerCase().includes(locVal.toLowerCase()))) {
-                    btn.classList.add('bg-amber-500', 'text-slate-950', 'font-black');
-                    btn.classList.remove('bg-slate-900', 'border', 'border-slate-700', 'text-slate-300');
+            if (!sel) return;
+            let html = '';
+            if (provFilter === 'ALL' || !provFilter) {
+                html += '<option value="ALL">🏙️ Ciudades: Todas las Ciudades / Global</option>';
+                ECUADOR_GEO.forEach(provObj => {
+                    html += `<optgroup label="📍 ${provObj.provincia}">`;
+                    provObj.ciudades.forEach(c => {
+                        html += `<option value="${c}">${c}</option>`;
+                    });
+                    html += `</optgroup>`;
+                });
+            } else {
+                html += `<option value="ALL">🏙️ Todas las Ciudades de ${provFilter}</option>`;
+                const found = ECUADOR_GEO.find(p => p.provincia.toLowerCase() === provFilter.toLowerCase());
+                if (found) {
+                    found.ciudades.forEach(c => {
+                        html += `<option value="${c}">${c}</option>`;
+                    });
                 }
-            });
+            }
+            sel.innerHTML = html;
+            sel.value = activeCityFilter;
+        }
+
+        function onProvinceFilterChange() {
+            const sel = document.getElementById('provinceFilterSelect');
+            const provVal = sel ? sel.value : 'ALL';
+            setProvinceFilter(provVal);
+        }
+
+        function setProvinceFilter(provVal) {
+            activeProvinceFilter = provVal || 'ALL';
+            activeCityFilter = 'ALL';
+            activeLocationFilter = activeProvinceFilter;
+
+            const provSel = document.getElementById('provinceFilterSelect');
+            if (provSel) provSel.value = activeProvinceFilter;
+
+            populateCityFilterSelect(activeProvinceFilter);
             filterItems();
+        }
+
+        function setLocationFilter(locVal) {
+            setProvinceFilter(locVal);
+        }
+
+        function populateProductFormGeo() {
+            const provSel = document.getElementById('prodProvincia');
+            if (!provSel) return;
+            let html = '<option value="">-- Seleccionar Provincia (Obligatorio) * --</option>';
+            ECUADOR_GEO.forEach(item => {
+                html += `<option value="${item.provincia}">${item.provincia}</option>`;
+            });
+            html += '<option value="Internacional">Internacional (Exterior)</option>';
+            provSel.innerHTML = html;
+        }
+
+        function onProdProvinciaChange() {
+            const provSel = document.getElementById('prodProvincia');
+            const ciudadSel = document.getElementById('prodCiudad');
+            const manualInput = document.getElementById('prodCiudadManual');
+            if (manualInput) {
+                manualInput.classList.add('hidden');
+                manualInput.value = '';
+            }
+            if (!ciudadSel) return;
+
+            const provVal = provSel ? provSel.value : '';
+            if (!provVal) {
+                ciudadSel.innerHTML = '<option value="">-- Seleccione Primero la Provincia * --</option>';
+                return;
+            }
+
+            let html = '<option value="">-- Seleccionar Ciudad / Cantón (Obligatorio) * --</option>';
+            const found = ECUADOR_GEO.find(p => p.provincia.toLowerCase() === provVal.toLowerCase());
+            if (found) {
+                found.ciudades.forEach(c => {
+                    html += `<option value="${c}">${c}</option>`;
+                });
+            }
+            html += '<option value="__OTRA__">✏️ Otra Ciudad / Parroquia (Escribir)...</option>';
+            ciudadSel.innerHTML = html;
+        }
+
+        function onProdCiudadChange() {
+            const ciudadSel = document.getElementById('prodCiudad');
+            const manualInput = document.getElementById('prodCiudadManual');
+            if (!ciudadSel || !manualInput) return;
+            if (ciudadSel.value === '__OTRA__') {
+                manualInput.classList.remove('hidden');
+                manualInput.focus();
+            } else {
+                manualInput.classList.add('hidden');
+                manualInput.value = '';
+            }
         }
         let carouselTimer = null;
         let stagedImages = [];
@@ -2577,6 +2790,7 @@
             const searchInput = document.getElementById('searchInput');
             if (searchInput) searchInput.value = '';
 
+            initGeographicSystem();
             initCloudSync();
             renderAppUI();
             initCarousel();
@@ -3745,6 +3959,14 @@
             document.getElementById('productModalTitle').innerText = 'Registrar Nueva Captación';
             toggleCategoryFields();
 
+            // Inicializar y pre-cargar selectores geográficos obligatorios
+            populateProductFormGeo();
+            const provEl = document.getElementById('prodProvincia');
+            if (provEl) provEl.value = 'Orellana';
+            onProdProvinciaChange();
+            const ciudadEl = document.getElementById('prodCiudad');
+            if (ciudadEl) ciudadEl.value = 'Francisco de Orellana (El Coca)';
+
             // Pre-completar automáticamente los datos del Agente o Administrador en sesión activa
             const currentAgentName = (currentRole === 'ADMIN')
                 ? (localStorage.getItem('alianza_current_user_name') || 'Adrián Arturo Íñiguez Lucio (Gerencia General)')
@@ -3771,8 +3993,44 @@
             document.getElementById('prodStatus').value = item.status || 'DISPONIBLE';
             document.getElementById('prodCode').value = item.code || '';
             document.getElementById('prodTitle').value = item.title || '';
-            document.getElementById('prodProvincia').value = item.provincia || '';
-            document.getElementById('prodCiudad').value = item.ciudad || '';
+
+            // Sincronizar selectores de Provincia y Ciudad obligatorios
+            populateProductFormGeo();
+            const prodProvEl = document.getElementById('prodProvincia');
+            if (prodProvEl && item.provincia) {
+                let matchedProv = '';
+                for (let opt of prodProvEl.options) {
+                    if (opt.value.toLowerCase() === item.provincia.toLowerCase()) {
+                        matchedProv = opt.value;
+                        break;
+                    }
+                }
+                prodProvEl.value = matchedProv || item.provincia;
+            }
+            onProdProvinciaChange();
+
+            const prodCiudadEl = document.getElementById('prodCiudad');
+            if (prodCiudadEl && item.ciudad) {
+                let matchedCity = '';
+                for (let opt of prodCiudadEl.options) {
+                    if (opt.value.toLowerCase() === item.ciudad.toLowerCase() ||
+                        opt.value.toLowerCase().includes(item.ciudad.toLowerCase()) ||
+                        item.ciudad.toLowerCase().includes(opt.value.toLowerCase())) {
+                        matchedCity = opt.value;
+                        break;
+                    }
+                }
+                if (matchedCity) {
+                    prodCiudadEl.value = matchedCity;
+                } else {
+                    const customOpt = document.createElement('option');
+                    customOpt.value = item.ciudad;
+                    customOpt.text = item.ciudad;
+                    customOpt.selected = true;
+                    prodCiudadEl.appendChild(customOpt);
+                }
+            }
+
             document.getElementById('prodParroquia').value = item.parroquia || '';
             document.getElementById('prodSector').value = item.sector || '';
             document.getElementById('prodDireccion').value = item.direccion || '';
@@ -3829,8 +4087,25 @@
             const status = getVal('prodStatus') || 'DISPONIBLE';
             const code = getVal('prodCode') || generateNextCode(category);
             const title = getVal('prodTitle');
-            const provincia = getVal('prodProvincia');
-            const ciudad = getVal('prodCiudad');
+            let provincia = getVal('prodProvincia');
+            let ciudad = getVal('prodCiudad');
+            if (ciudad === '__OTRA__') {
+                ciudad = getVal('prodCiudadManual');
+            }
+
+            if (!provincia || !provincia.trim()) {
+                showToast('⚠️ La Provincia es obligatoria para anclar el activo en el rango geográfico.');
+                document.getElementById('prodProvincia')?.focus();
+                return;
+            }
+            if (!ciudad || !ciudad.trim()) {
+                showToast('⚠️ La Ciudad / Cantón es obligatoria para anclar el activo en el rango geográfico.');
+                document.getElementById('prodCiudad')?.focus();
+                return;
+            }
+            provincia = provincia.trim();
+            ciudad = ciudad.trim();
+
             const sector = getVal('prodSector');
             const direccion = getVal('prodDireccion');
             const priceStr = getVal('prodPrice');
@@ -3871,7 +4146,7 @@
                 ciudad,
                 sector,
                 direccion,
-                location: [sector, ciudad, provincia].filter(Boolean).join(', ') || 'El Coca, Orellana',
+                location: [sector, ciudad, provincia].filter(Boolean).join(', ') || `${ciudad}, ${provincia}`,
                 priceStr,
                 offerPriceStr,
                 desc,
@@ -3947,8 +4222,11 @@
 
         function filterItems() {
             const query = (document.getElementById('searchInput')?.value || '').toLowerCase().trim();
-            const locSelectVal = (document.getElementById('locationFilterSelect')?.value || 'ALL').toLowerCase().trim();
-            const effectiveLoc = (activeLocationFilter !== 'ALL' ? activeLocationFilter : locSelectVal).toLowerCase().trim();
+            const provSelectVal = (document.getElementById('provinceFilterSelect')?.value || 'ALL').trim();
+            const citySelectVal = (document.getElementById('locationFilterSelect')?.value || 'ALL').trim();
+
+            const effectiveProv = (activeProvinceFilter !== 'ALL' ? activeProvinceFilter : provSelectVal).toLowerCase().trim();
+            const effectiveCity = citySelectVal.toLowerCase().trim();
 
             const filtered = inventory.filter(item => {
                 const isVendido = item.status === 'VENDIDO' || item.status === 'SOLD';
@@ -3957,19 +4235,33 @@
 
                 const matchesCat = (activeCategory === 'ALL') || (item.category === activeCategory);
 
-                let matchesLoc = true;
-                if (effectiveLoc !== 'all') {
-                    const itemLocStr = [
-                        item.location || '',
-                        item.ciudad || '',
-                        item.provincia || '',
-                        item.sector || '',
-                        item.parroquia || '',
-                        item.direccion || ''
-                    ].join(' ').toLowerCase();
-                    matchesLoc = itemLocStr.includes(effectiveLoc);
+                // 1. Filtrado por Provincia de Ecuador
+                let matchesProv = true;
+                if (effectiveProv !== 'all' && effectiveProv !== '') {
+                    const itemProv = (item.provincia || '').toLowerCase();
+                    const itemLoc = (item.location || '').toLowerCase();
+                    const itemDesc = (item.desc || '').toLowerCase();
+                    matchesProv = itemProv.includes(effectiveProv) || itemLoc.includes(effectiveProv) || itemDesc.includes(effectiveProv);
                 }
 
+                // 2. Filtrado por Ciudad / Cantón
+                let matchesCity = true;
+                if (effectiveCity !== 'all' && effectiveCity !== '') {
+                    const itemCiudad = (item.ciudad || '').toLowerCase();
+                    const itemLoc = (item.location || '').toLowerCase();
+                    const itemDesc = (item.desc || '').toLowerCase();
+
+                    const cleanCitySearch = effectiveCity.replace(/\(.*?\)/g, '').trim().toLowerCase();
+                    const parenMatch = effectiveCity.match(/\((.*?)\)/);
+                    const alias = parenMatch ? parenMatch[1].toLowerCase().trim() : '';
+
+                    matchesCity = itemCiudad.includes(effectiveCity) ||
+                                  itemLoc.includes(effectiveCity) ||
+                                  (cleanCitySearch && (itemCiudad.includes(cleanCitySearch) || itemLoc.includes(cleanCitySearch) || itemDesc.includes(cleanCitySearch))) ||
+                                  (alias && (itemCiudad.includes(alias) || itemLoc.includes(alias) || itemDesc.includes(alias)));
+                }
+
+                // 3. Filtrado por texto en buscador
                 const matchesQuery = !query || (
                     (item.title || '').toLowerCase().includes(query) ||
                     (item.code || '').toLowerCase().includes(query) ||
@@ -3980,7 +4272,7 @@
                     (item.desc || '').toLowerCase().includes(query)
                 );
 
-                return matchesCat && matchesLoc && matchesQuery;
+                return matchesCat && matchesProv && matchesCity && matchesQuery;
             });
             renderGrid(filtered);
         }
