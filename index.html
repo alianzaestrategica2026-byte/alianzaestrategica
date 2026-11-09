@@ -1513,7 +1513,7 @@
                 </button>
             </div>
             <div class="text-center text-[10px] text-slate-500">
-                Alianza Estratégica S.A.S. • RUC: 22002609**001 • WhatsApp Gerencia: 099 216 0967
+                Alianza Estratégica S.A.S. • RUC: 2200260967001 • WhatsApp Gerencia: 099 216 0967
             </div>
         </div>
     </div>
@@ -2410,47 +2410,94 @@
             }
         ];
 
-        const MAIN_ADMIN_EMAIL = "gerencia@alianzaestrategica.com";
+        const MAIN_ADMIN_EMAIL = "gerencia@alianzaestrategica2026.com";
 
-        // Directorio oficial de usuarios y roles corporativos (Cero credenciales expuestas en frontend)
-        // La autenticación se valida única y estrictamente en Firebase Authentication
-        const DEFAULT_USERS =
+        // Directorio oficial exclusivo: Únicamente el Administrador Principal (Gerencia General)
+        // Todos los usuarios de prueba han sido eliminados. Los nuevos agentes se agregan en blanco mediante '+ Nuevo Usuario'
+        const DEFAULT_USERS = [
+            {
+                name: "Adrián Arturo Íñiguez Lucio (Gerencia General)",
+                email: MAIN_ADMIN_EMAIL,
+                phone: "095 919 0794",
+                role: "ADMIN",
+                lastLogin: new Date().toISOString()
+            }
+        ];
 
-        let usersList = JSON.parse(localStorage.getItem('alianza_users') || 'null');
-        if (!usersList || !Array.isArray(usersList) || usersList.length === 0) {
-            usersList = [...DEFAULT_USERS];
-        } else {
-            // Limpieza proactiva de cualquier propiedad 'pass' residual guardada previamente
-            usersList.forEach(u => { delete u.pass; });
-            let adminFound = usersList.find(u => 
-                (u.email || '').toLowerCase() === MAIN_ADMIN_EMAIL || 
-                (u.email || '').toLowerCase() === 'adrian.iniguez@alianzaestrategica2026.com'
-            );
-            if (adminFound) {
-                adminFound.email = MAIN_ADMIN_EMAIL;
-                adminFound.role = 'ADMIN';
-                adminFound.name = "Adrián Arturo Íñiguez Lucio (Gerencia General)";
-            } else {
-                usersList.unshift({
-                    name: "Adrián Arturo Íñiguez Lucio (Gerencia General)",
-                    email: MAIN_ADMIN_EMAIL,
-                    phone: "095 919 0794",
-                    role: "ADMIN",
-                    lastLogin: new Date().toISOString()
+        // Función estricta para depurar usuarios de prueba y dejar únicamente al Administrador Principal + agentes reales
+        function sanitizeUsersList(list) {
+            const DUMMY_EMAILS = [
+                'carlos.iniguez@alianzaestrategica2026.com',
+                'carlos.mendoza@alianzaestrategica2026.com',
+                'andrea.pazmino@alianzaestrategica2026.com',
+                'gerencia@alianzaestrategica.com',
+                'estrellarivas1008@gmail.com'
+            ];
+            const cleanList = [];
+            let adminIncluded = false;
+
+            if (Array.isArray(list)) {
+                list.forEach(u => {
+                    if (!u || !u.email) return;
+                    const em = u.email.trim().toLowerCase();
+                    // Descartar permanentemente usuarios de prueba
+                    if (DUMMY_EMAILS.includes(em)) return;
+
+                    // Unificar y proteger la cuenta del Administrador Principal
+                    if (em === MAIN_ADMIN_EMAIL || em === 'adrian.iniguez@alianzaestrategica2026.com' || em.startsWith('gerencia@') || (em === 'adriano.aii85@gmail.com' && u.name && u.name.includes('Gerencia'))) {
+                        if (!adminIncluded) {
+                            cleanList.unshift({
+                                name: "Adrián Arturo Íñiguez Lucio (Gerencia General)",
+                                email: MAIN_ADMIN_EMAIL,
+                                phone: "095 919 0794",
+                                role: "ADMIN",
+                                lastLogin: u.lastLogin || new Date().toISOString()
+                            });
+                            adminIncluded = true;
+                        }
+                    } else if (!u.disabled && u.status !== 'REVOKED') {
+                        // Agentes reales agregados de forma legítima
+                        if (!cleanList.some(cu => cu.email.toLowerCase() === em)) {
+                            const clone = { ...u };
+                            delete clone.pass;
+                            cleanList.push(clone);
+                        }
+                    }
                 });
             }
+
+            if (!adminIncluded) {
+                cleanList.unshift({ ...DEFAULT_USERS[0] });
+            }
+
+            return cleanList;
         }
+
+        // Cargar y sanitizar de inmediato el almacenamiento local
+        let usersList = sanitizeUsersList(JSON.parse(localStorage.getItem('alianza_users') || 'null'));
         localStorage.setItem('alianza_users', JSON.stringify(usersList));
 
         function saveUsersToCloud() {
-            // Asegurar que nunca se transmita ni guarde ninguna contraseña en base de datos
-            usersList.forEach(u => { delete u.pass; });
+            // Asegurar que nunca se transmita ninguna contraseña y solo viajen usuarios limpios
+            usersList = sanitizeUsersList(usersList);
             localStorage.setItem('alianza_users', JSON.stringify(usersList));
             if (db) {
                 db.collection('alianza_settings').doc('appUsers').set({
                     users: usersList,
                     updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                }, { merge: true }).catch(err => console.warn("Cloud users save error:", err));
+                }, { merge: false }).catch(err => console.warn("Cloud users save error:", err));
+
+                // Limpiar documentos huérfanos de prueba en Firestore
+                const DUMMY_DOCS = [
+                    'carlos_iniguez_alianzaestrategica2026_com',
+                    'carlos_mendoza_alianzaestrategica2026_com',
+                    'andrea_pazmino_alianzaestrategica2026_com',
+                    'gerencia_alianzaestrategica_com',
+                    'estrellarivas1008_gmail_com'
+                ];
+                DUMMY_DOCS.forEach(docId => {
+                    db.collection('alianza_users').doc(docId).delete().catch(() => {});
+                });
 
                 usersList.forEach(u => {
                     if (u.email) {
@@ -2465,41 +2512,9 @@
 
         function mergeCloudUsersList(cloudUsers) {
             if (!cloudUsers || !Array.isArray(cloudUsers)) return;
-            let updated = false;
-
-            cloudUsers.forEach(cu => {
-                if (!cu || (!cu.email && !cu.phone && !cu.name)) return;
-                const sanitized = { ...cu };
-                delete sanitized.pass;
-                const cuEmail = (sanitized.email || '').trim().toLowerCase();
-                const cuPhone = (sanitized.phone || '').replace(/\D/g, '');
-
-                let existingIdx = -1;
-                if (cuEmail) {
-                    existingIdx = usersList.findIndex(u => (u.email || '').trim().toLowerCase() === cuEmail);
-                }
-                if (existingIdx === -1 && cuPhone) {
-                    existingIdx = usersList.findIndex(u => (u.phone || '').replace(/\D/g, '') === cuPhone);
-                }
-
-                if (existingIdx !== -1) {
-                    if (cuEmail === MAIN_ADMIN_EMAIL || cuEmail === 'adrian.iniguez@alianzaestrategica2026.com') {
-                        usersList[existingIdx].email = MAIN_ADMIN_EMAIL;
-                        usersList[existingIdx].role = 'ADMIN';
-                        usersList[existingIdx].name = "Adrián Arturo Íñiguez Lucio (Gerencia General)";
-                    } else {
-                        usersList[existingIdx] = { ...usersList[existingIdx], ...sanitized };
-                    }
-                } else {
-                    usersList.push(sanitized);
-                }
-                updated = true;
-            });
-
-            if (updated) {
-                localStorage.setItem('alianza_users', JSON.stringify(usersList));
-                renderUsersTable();
-            }
+            usersList = sanitizeUsersList(cloudUsers);
+            localStorage.setItem('alianza_users', JSON.stringify(usersList));
+            renderUsersTable();
         }
 
         let sponsorsList = JSON.parse(localStorage.getItem('alianza_sponsors') || 'null');
@@ -3404,7 +3419,7 @@
             }
 
             filteredUsers.forEach((u, idx) => {
-                const isSelfAdmin = u.email === MAIN_ADMIN_EMAIL || u.email === 'adrian.iniguez@alianzaestrategica2026.com';
+                const isSelfAdmin = (u.email || '').toLowerCase() === MAIN_ADMIN_EMAIL.toLowerCase() || (u.email || '').toLowerCase() === 'adrian.iniguez@alianzaestrategica2026.com' || (u.email || '').toLowerCase() === 'gerencia@alianzaestrategica.com';
                 const roleBadge = u.role === 'ADMIN' 
                     ? `<span class="bg-purple-950 text-purple-300 border border-purple-500/40 px-2 py-0.5 rounded text-[10px] font-bold">ADMINISTRADOR</span>` 
                     : `<span class="bg-sky-950 text-sky-300 border border-sky-500/40 px-2 py-0.5 rounded text-[10px] font-bold">AGENTE COMERCIAL</span>`;
