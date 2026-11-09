@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { initializeApp, getApps, getApp } from 'firebase/app';
 import { 
   getAuth, 
@@ -28,16 +28,26 @@ import {
   ExternalLink,
   Car,
   Home,
+  Truck,
   DollarSign,
   ChevronRight,
-  Sparkles
+  Sparkles,
+  Search,
+  MapPin,
+  X,
+  Star,
+  ChevronLeft,
+  ChevronDown,
+  Layers,
+  ArrowRight,
+  MessageCircle,
+  Tag
 } from 'lucide-react';
 
 /**
- * CONFIGURACIÓN OFICIAL DE CLIENTE PARA FIREBASE
+ * CONFIGURACIÓN OFICIAL SEGURA DE CLIENTE - FIREBASE
  * Proyecto: alianza-estrategica-coca
- * Los identificadores públicos de Firebase son seguros para el cliente web.
- * La seguridad y los roles se validan en Firebase Auth y Security Rules.
+ * Cero credenciales expuestas: autenticación validada estrictamente por Firebase Auth.
  */
 export const firebaseConfig = {
   apiKey: "AIzaSyCLQFG1X62E5_WJ6hyCDjoDVkWbja02N3A",
@@ -49,14 +59,10 @@ export const firebaseConfig = {
   measurementId: "G-TGB0C5WEKW"
 };
 
-// Inicialización de la app principal de Firebase
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 const auth = getAuth(app);
 
-/**
- * Instancia secundaria aislada para crear agentes desde el panel de Gerencia
- * sin cerrar la sesión del Administrador Principal.
- */
+// Instancia aislada para registrar agentes sin desconectar la sesión de Gerencia
 const getSecondaryAuthInstance = () => {
   const secondaryAppName = 'SecondaryAgentCreationApp';
   const existingApp = getApps().find(a => a.name === secondaryAppName);
@@ -64,7 +70,7 @@ const getSecondaryAuthInstance = () => {
   return getAuth(secondaryApp);
 };
 
-// Lista blanca verificada para Gerencia General (Control Total)
+// Correos autorizados con rol de Gerencia General (Control Total)
 const GERENCIA_WHITELIST = [
   'gerencia@alianzaestrategica2026.com',
   'gerencia@alianzaestrategica.com',
@@ -78,43 +84,190 @@ export const isGerenciaUser = (email: string | null | undefined): boolean => {
   return GERENCIA_WHITELIST.includes(cleanEmail) || cleanEmail.startsWith('gerencia@');
 };
 
-// Traductor de respuestas de Firebase a mensajes legibles
 const parseFirebaseError = (errorCode: string): string => {
   switch (errorCode) {
     case 'auth/invalid-credential':
     case 'auth/wrong-password':
     case 'auth/user-not-found':
-      return 'Credenciales incorrectas. Verifique el correo y la contraseña registrados en Firebase.';
+      return 'Credenciales incorrectas. Verifique el correo y la contraseña registrados en el sistema.';
     case 'auth/invalid-email':
       return 'El formato del correo electrónico ingresado no es válido.';
     case 'auth/user-disabled':
       return 'Esta cuenta ha sido deshabilitada por la administración.';
     case 'auth/too-many-requests':
-      return 'Acceso temporalmente bloqueado por demasiados intentos fallidos. Intente nuevamente en unos minutos.';
+      return 'Acceso temporalmente bloqueado por demasiados intentos fallidos. Intente más tarde.';
     case 'auth/email-already-in-use':
       return 'Este correo ya se encuentra registrado en Firebase Auth.';
     case 'auth/weak-password':
       return 'La contraseña debe contener al menos 6 caracteres.';
-    case 'auth/network-request-failed':
-      return 'Error de red o conexión. Verifique su acceso a internet.';
     default:
       return 'Ocurrió un error al procesar la solicitud de autenticación.';
   }
 };
 
+// Interfaz para los productos del Marketplace
+export interface ProductItem {
+  id: string;
+  code: string;
+  category: 'RE' | 'AR' | 'VH' | 'MQ' | 'LQ';
+  categoryLabel: string;
+  title: string;
+  priceUSD: number;
+  priceLabel: string;
+  location: string;
+  sector: string;
+  province: string;
+  description: string;
+  status: 'DISPONIBLE' | 'RESERVADO' | 'VENDIDO';
+  isFeatured: boolean;
+  imageUrl: string;
+  details: {
+    metros2?: string;
+    habitaciones?: string;
+    banos?: string;
+    ano?: string;
+    kilometraje?: string;
+    horasUso?: string;
+  };
+}
+
+// Catálogo verificado de Alianza Estratégica S.A.S.
+const INITIAL_INVENTORY: ProductItem[] = [
+  {
+    id: 'prod_1',
+    code: 'RE-001',
+    category: 'RE',
+    categoryLabel: 'Bienes Raíces Venta',
+    title: '🏡 Casa y Terreno Residencial en El Coca',
+    priceUSD: 45000,
+    priceLabel: '$45,000 USD',
+    location: 'El Coca, Orellana',
+    sector: 'Sector 6 de Diciembre',
+    province: 'Orellana',
+    description: 'Propiedad con cerramiento perimetral, escrituras legalizadas al día y servicios básicos instalados. Ideal para residencia familiar o proyecto comercial con alta plusvalía.',
+    status: 'DISPONIBLE',
+    isFeatured: true,
+    imageUrl: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1200&q=80',
+    details: { metros2: '280 m²', habitaciones: '3', banos: '2' }
+  },
+  {
+    id: 'prod_2',
+    code: 'VH-001',
+    category: 'VH',
+    categoryLabel: 'Vehículos',
+    title: '🚗 Camioneta Toyota Hilux 4x4 Diésel',
+    priceUSD: 28500,
+    priceLabel: '$28,500 USD',
+    location: 'El Coca, Orellana',
+    sector: 'Barrio Central',
+    province: 'Orellana',
+    description: 'Camioneta en óptimas condiciones mecánicas, tracción 4x4 operativa, mantenimiento preventivo al día, cero gravámenes en la ANT y lista para transferencia notarial.',
+    status: 'DISPONIBLE',
+    isFeatured: true,
+    imageUrl: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80',
+    details: { ano: '2019', kilometraje: '85,000 km' }
+  },
+  {
+    id: 'prod_3',
+    code: 'MQ-001',
+    category: 'MQ',
+    categoryLabel: 'Maquinaria Pesada',
+    title: '🚜 Retroexcavadora Caterpillar 420F',
+    priceUSD: 62000,
+    priceLabel: '$62,000 USD',
+    location: 'Puerto Francisco de Orellana',
+    sector: 'Vía Auca Km 4',
+    province: 'Orellana',
+    description: 'Equipo de construcción en excelentes condiciones operativas, sistema hidráulico verificado, cabina climatizada y documentación de importación completa con factura notariada.',
+    status: 'DISPONIBLE',
+    isFeatured: true,
+    imageUrl: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=800&q=80',
+    details: { horasUso: '4,200 hrs', ano: '2017' }
+  },
+  {
+    id: 'prod_4',
+    code: 'AR-001',
+    category: 'AR',
+    categoryLabel: 'Arriendos',
+    title: '🏢 Local Comercial Céntrico en El Coca',
+    priceUSD: 650,
+    priceLabel: '$650 USD / mes',
+    location: 'El Coca, Orellana',
+    sector: 'Av. 9 de Octubre',
+    province: 'Orellana',
+    description: 'Local comercial con amplio frente sobre vía principal, baño privado, cortina metálica y medidores independientes. Alto flujo peatonal y vehicular.',
+    status: 'DISPONIBLE',
+    isFeatured: false,
+    imageUrl: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80',
+    details: { metros2: '75 m²', banos: '1' }
+  },
+  {
+    id: 'prod_5',
+    code: 'RE-002',
+    category: 'RE',
+    categoryLabel: 'Bienes Raíces Venta',
+    title: '🌱 Finca Agrícola de 15 Hectáreas en Orellana',
+    priceUSD: 38000,
+    priceLabel: '$38,000 USD',
+    location: 'Sacha / Joya de los Sachas',
+    sector: 'Vía a San Carlos',
+    province: 'Orellana',
+    description: 'Terreno plano fértil con vertiente natural de agua, apto para cultivo de cacao, plátano o ganadería. Títulos de propiedad inscritos en el Registro de la Propiedad.',
+    status: 'DISPONIBLE',
+    isFeatured: true,
+    imageUrl: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80',
+    details: { metros2: '150,000 m²' }
+  },
+  {
+    id: 'prod_6',
+    code: 'LQ-001',
+    category: 'LQ',
+    categoryLabel: 'Oportunidad / Segunda Mano',
+    title: '⚙️ Generador Eléctrico Diésel 25 KVA Insonorizado',
+    priceUSD: 4800,
+    priceLabel: '$4,800 USD',
+    location: 'El Coca, Orellana',
+    sector: 'Parque Industrial',
+    province: 'Orellana',
+    description: 'Generador trifásico industrial para campamento petrolero o finca comercial. Tanque integrado, encendido automático y mantenimiento al día.',
+    status: 'VENDIDO',
+    isFeatured: false,
+    imageUrl: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
+    details: { horasUso: '1,100 hrs', ano: '2021' }
+  }
+];
+
 export default function App() {
+  // Estado de usuario y autenticación
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [authChecking, setAuthChecking] = useState<boolean>(true);
 
-  // Formulario de login
+  // Modal de inicio de sesión seguro
+  const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loginLoading, setLoginLoading] = useState(false);
   const [loginError, setLoginError] = useState('');
 
-  // Navegación cuando no está logueado
-  const [activeView, setActiveView] = useState<'portal' | 'login'>('login');
+  // Modal de Ficha Técnica Detallada
+  const [selectedProduct, setSelectedProduct] = useState<ProductItem | null>(null);
+
+  // Modal para Vender / Consignar Activo
+  const [showConsignarModal, setShowConsignarModal] = useState<boolean>(false);
+  const [consignarNombre, setConsignarNombre] = useState('');
+  const [consignarTelefono, setConsignarTelefono] = useState('');
+  const [consignarTipo, setConsignarTipo] = useState('Inmueble (Casa/Terreno)');
+  const [consignarDetalles, setConsignarDetalles] = useState('');
+
+  // Filtros del Marketplace
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
+  const [selectedProvince, setSelectedProvince] = useState<string>('ALL');
+
+  // Carrusel de activos destacados
+  const featuredItems = useMemo(() => INITIAL_INVENTORY.filter(item => item.isFeatured), []);
+  const [carouselIndex, setCarouselIndex] = useState(0);
 
   // Pestañas activas para el Panel de Gerencia
   const [adminTab, setAdminTab] = useState<'agentes' | 'calculadora' | 'catalogo' | 'senadi'>('agentes');
@@ -127,21 +280,33 @@ export default function App() {
   const [creandoAgente, setCreandoAgente] = useState(false);
   const [mensajeAgente, setMensajeAgente] = useState<{ tipo: 'ok' | 'error'; texto: string } | null>(null);
 
-  // Matriz de comisiones 50/50
+  // Calculadora 50/50
   const [calcPrecio, setCalcPrecio] = useState<number>(45000);
   const [calcPorcentaje, setCalcPorcentaje] = useState<number>(4);
 
+  // Rotación suave del carrusel cada 5 segundos
+  useEffect(() => {
+    if (featuredItems.length === 0) return;
+    const interval = setInterval(() => {
+      setCarouselIndex((prev) => (prev + 1) % featuredItems.length);
+    }, 5500);
+    return () => clearInterval(interval);
+  }, [featuredItems.length]);
+
+  // Escucha de sesión Firebase Auth
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
       setAuthChecking(false);
       if (user) {
+        setShowLoginModal(false);
         setLoginError('');
       }
     });
     return () => unsubscribe();
   }, []);
 
+  // Manejo de login seguro
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoginError('');
@@ -151,6 +316,7 @@ export default function App() {
       await signInWithEmailAndPassword(auth, loginEmail.trim(), loginPassword);
       setLoginEmail('');
       setLoginPassword('');
+      setShowLoginModal(false);
     } catch (err: any) {
       console.error('Error de autenticación:', err);
       setLoginError(parseFirebaseError(err?.code || ''));
@@ -159,27 +325,28 @@ export default function App() {
     }
   };
 
+  // Cierre de sesión
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      setActiveView('login');
-      setMensajeAgente(null);
+      setAdminTab('agentes');
     } catch (err) {
       console.error('Error al cerrar sesión:', err);
     }
   };
 
+  // Crear agente seguro
   const handleCrearAgente = async (e: React.FormEvent) => {
     e.preventDefault();
     setMensajeAgente(null);
 
     if (!nuevoAgenteEmail || !nuevoAgentePassword) {
-      setMensajeAgente({ tipo: 'error', texto: 'Por favor complete todos los campos requeridos.' });
+      setMensajeAgente({ tipo: 'error', texto: 'Complete todos los campos requeridos.' });
       return;
     }
 
     if (nuevoAgentePassword.length < 6) {
-      setMensajeAgente({ tipo: 'error', texto: 'La contraseña provisional debe tener al menos 6 caracteres.' });
+      setMensajeAgente({ tipo: 'error', texto: 'La clave temporal debe tener mínimo 6 caracteres.' });
       return;
     }
 
@@ -191,7 +358,7 @@ export default function App() {
 
       setMensajeAgente({ 
         tipo: 'ok', 
-        texto: `¡Agente ${nuevoAgenteNombre || nuevoAgenteEmail} registrado con éxito en Firebase Auth! Ya puede acceder con estas credenciales.` 
+        texto: `¡Agente ${nuevoAgenteNombre || nuevoAgenteEmail} creado en Firebase Auth! Ya puede acceder con estas credenciales.` 
       });
 
       setNuevoAgenteNombre('');
@@ -206,758 +373,815 @@ export default function App() {
     }
   };
 
+  // Envío de consignación vía WhatsApp
+  const handleEnviarConsignacion = (e: React.FormEvent) => {
+    e.preventDefault();
+    const texto = `Hola Alianza Estratégica S.A.S. 👋%0A%0ADeseo consignar mi activo para venta con asesoría notarial:%0A• Nombre: ${consignarNombre}%0A• Contacto: ${consignarTelefono}%0A• Tipo de Activo: ${consignarTipo}%0A• Detalles: ${consignarDetalles}`;
+    window.open(`https://wa.me/593959190794?text=${texto}`, '_blank');
+    setShowConsignarModal(false);
+    setConsignarNombre('');
+    setConsignarTelefono('');
+    setConsignarDetalles('');
+  };
+
+  // Filtrado de productos en tiempo real
+  const filteredProducts = useMemo(() => {
+    return INITIAL_INVENTORY.filter(item => {
+      // Búsqueda por texto
+      const matchesSearch = searchQuery === '' || 
+        item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.code.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.sector.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.location.toLowerCase().includes(searchQuery.toLowerCase());
+
+      // Filtro de categoría
+      const matchesCat = selectedCategory === 'ALL' || item.category === selectedCategory || (selectedCategory === 'SOLD' && item.status === 'VENDIDO');
+
+      // Filtro de provincia
+      const matchesProv = selectedProvince === 'ALL' || item.province.toLowerCase() === selectedProvince.toLowerCase();
+
+      return matchesSearch && matchesCat && matchesProv;
+    });
+  }, [searchQuery, selectedCategory, selectedProvince]);
+
   const comisionTotal = (calcPrecio * calcPorcentaje) / 100;
   const comisionEmpresa = comisionTotal * 0.50;
   const comisionAgente = comisionTotal * 0.50;
 
-  if (authChecking) {
-    return (
-      <div className="min-h-screen bg-[#080c14] flex flex-col items-center justify-center text-white px-4">
-        <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-sky-500 to-amber-500 p-0.5 animate-pulse mb-4 shadow-[0_0_30px_rgba(56,189,248,0.4)]">
-          <div className="w-full h-full bg-slate-950 rounded-2xl flex items-center justify-center">
-            <ShieldCheck className="w-8 h-8 text-sky-400" />
-          </div>
-        </div>
-        <h2 className="text-xl font-bold tracking-tight text-slate-100">Alianza Estratégica S.A.S.</h2>
-        <p className="text-xs text-slate-400 mt-1 flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-sky-400 animate-ping"></span>
-          Validando credenciales de seguridad con Firebase Auth...
-        </p>
-      </div>
-    );
-  }
-
-  if (!currentUser) {
-    return (
-      <div className="min-h-screen bg-[#080c14] text-slate-100 flex flex-col font-sans">
-        <header className="border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md sticky top-0 z-40 px-4 py-3">
-          <div className="max-w-6xl mx-auto flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 via-sky-500 to-blue-600 p-0.5 shadow-md">
-                <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
-                  <ShieldCheck className="w-5 h-5 text-amber-400" />
-                </div>
-              </div>
-              <div>
-                <h1 className="text-sm font-extrabold tracking-tight text-white flex items-center gap-1.5">
-                  ALIANZA ESTRATÉGICA S.A.S.
-                  <span className="text-[10px] bg-sky-950 text-sky-300 border border-sky-500/30 px-2 py-0.5 rounded-full font-semibold">Oficial</span>
-                </h1>
-                <p className="text-[11px] text-slate-400">El Coca, Orellana — Ecuador • RUC: 2200260962001</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setActiveView(activeView === 'login' ? 'portal' : 'login')}
-                className={`text-xs font-bold px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 cursor-pointer ${
-                  activeView === 'login'
-                    ? 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700'
-                    : 'bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-500 hover:to-blue-500 text-white shadow-lg shadow-sky-600/20'
-                }`}
-              >
-                {activeView === 'login' ? (
-                  <>
-                    <Building2 className="w-3.5 h-3.5 text-sky-400" />
-                    <span>Ver Información Institucional</span>
-                  </>
-                ) : (
-                  <>
-                    <Lock className="w-3.5 h-3.5 text-amber-300" />
-                    <span>Acceso al Sistema</span>
-                  </>
-                )}
-              </button>
-            </div>
-          </div>
-        </header>
-
-        {activeView === 'login' ? (
-          <main className="flex-1 flex items-center justify-center p-4 py-12 relative overflow-hidden">
-            <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-sky-600/10 rounded-full blur-3xl pointer-events-none"></div>
-
-            <div className="w-full max-w-md bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl backdrop-blur-xl relative z-10">
-              <div className="text-center mb-6">
-                <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-slate-950 border border-sky-500/30 mb-3 shadow-[0_0_20px_rgba(56,189,248,0.2)]">
-                  <Lock className="w-6 h-6 text-sky-400" />
-                </div>
-                <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">Acceso Corporativo Seguro</h2>
-                <p className="text-xs text-slate-400 mt-1">
-                  Autenticación exclusiva para Gerencia y Agentes Comerciales
-                </p>
-                <div className="inline-flex items-center gap-1.5 bg-sky-950/80 border border-sky-500/30 text-sky-300 text-[11px] px-3 py-1 rounded-full font-semibold mt-3">
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                  Módulo Oficial Firebase Authentication
-                </div>
-              </div>
-
-              {loginError && (
-                <div className="mb-5 p-3.5 rounded-2xl bg-rose-950/60 border border-rose-500/40 text-rose-200 text-xs flex items-start gap-2.5">
-                  <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
-                  <div>
-                    <span className="font-bold block">Error de autenticación</span>
-                    <span className="text-rose-200/90">{loginError}</span>
-                  </div>
-                </div>
-              )}
-
-              <form onSubmit={handleLogin} className="space-y-4">
-                <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1.5 flex items-center justify-between">
-                    <span>Correo Institucional</span>
-                    <span className="text-[10px] text-slate-400">Firebase Auth</span>
-                  </label>
-                  <div className="relative">
-                    <Mail className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" />
-                    <input
-                      type="email"
-                      value={loginEmail}
-                      onChange={(e) => setLoginEmail(e.target.value)}
-                      placeholder="gerencia@alianzaestrategica2026.com"
-                      required
-                      className="w-full pl-10 pr-4 py-2.5 bg-slate-950/90 border border-slate-700 rounded-xl text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1.5 flex items-center justify-between">
-                    <span>Contraseña Registrada</span>
-                    <span className="text-[10px] text-slate-400">Cifrado de extremo a extremo</span>
-                  </label>
-                  <div className="relative">
-                    <KeyRound className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" />
-                    <input
-                      type={showPassword ? 'text' : 'password'}
-                      value={loginPassword}
-                      onChange={(e) => setLoginPassword(e.target.value)}
-                      placeholder="••••••••••••"
-                      required
-                      className="w-full pl-10 pr-10 py-2.5 bg-slate-950/90 border border-slate-700 rounded-xl text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3.5 top-3 text-slate-400 hover:text-slate-200 cursor-pointer"
-                    >
-                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                    </button>
-                  </div>
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={loginLoading}
-                  className="w-full mt-2 bg-gradient-to-r from-sky-600 via-blue-600 to-sky-700 hover:from-sky-500 hover:to-blue-500 text-white font-extrabold py-3 px-4 rounded-xl text-xs sm:text-sm shadow-xl shadow-sky-600/25 transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
-                >
-                  {loginLoading ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                      <span>Verificando credenciales...</span>
-                    </>
-                  ) : (
-                    <>
-                      <ShieldCheck className="w-4 h-4 text-emerald-300" />
-                      <span>Ingresar al Sistema Seguro</span>
-                    </>
-                  )}
-                </button>
-              </form>
-
-              <div className="mt-6 pt-5 border-t border-slate-800 text-[11px] text-slate-400 space-y-2">
-                <div className="flex items-center gap-2 text-slate-300 font-semibold">
-                  <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <span>Seguridad y Cero Exposición de Contraseñas</span>
-                </div>
-                <p className="text-slate-400 leading-relaxed">
-                  Cero credenciales en texto plano. Todo usuario debe estar creado directamente en la consola de Firebase Authentication del proyecto <span className="text-sky-300 font-mono">alianza-estrategica-coca</span>.
-                </p>
-                <div className="pt-2 flex items-center justify-between text-[10px] text-slate-400">
-                  <span>SSL / TLS 256-bit</span>
-                  <span>ID: 1029575911279</span>
-                </div>
-              </div>
-            </div>
-          </main>
-        ) : (
-          <main className="flex-1 max-w-6xl mx-auto w-full p-4 py-8 space-y-8">
-            <section className="bg-slate-900/60 border border-slate-800 rounded-3xl p-6 sm:p-10 text-center relative overflow-hidden">
-              <span className="text-xs font-extrabold uppercase tracking-widest text-amber-400 bg-amber-950/50 border border-amber-500/30 px-3.5 py-1 rounded-full inline-block mb-3">
-                Sociedad por Acciones Simplificada • R.U.C. 2200260962001
-              </span>
-              <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight max-w-3xl mx-auto">
-                Comercialización Formal de Activos con Blindaje Notarial
-              </h2>
-              <p className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto mt-3">
-                Intermediación transparente de Bienes Raíces, Vehículos y Maquinaria Pesada en El Coca y toda la Amazonía Ecuatoriana.
-              </p>
-              
-              <div className="flex flex-wrap items-center justify-center gap-3 mt-6">
-                <button
-                  type="button"
-                  onClick={() => setActiveView('login')}
-                  className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-6 py-3 rounded-2xl text-xs sm:text-sm shadow-xl transition flex items-center gap-2 cursor-pointer hover:scale-105"
-                >
-                  <Lock className="w-4 h-4 text-slate-950" />
-                  <span>Acceso de Gerencia y Agentes</span>
-                </button>
-                <a
-                  href="https://wa.me/593959190794?text=Hola%20Alianza%20Estrat%C3%A9gica,%20deseo%20m%C3%A1s%20informaci%C3%B3n"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-slate-800 hover:bg-slate-700 text-white font-bold px-5 py-3 rounded-2xl text-xs sm:text-sm border border-slate-700 transition flex items-center gap-2 cursor-pointer"
-                >
-                  <Phone className="w-4 h-4 text-emerald-400" />
-                  <span>WhatsApp Oficial (095 919 0794)</span>
-                </a>
-              </div>
-            </section>
-          </main>
-        )}
-
-        <footer className="border-t border-slate-800/80 bg-slate-950 text-slate-400 text-xs py-6 px-4">
-          <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
-            <div>
-              <p className="text-slate-300 font-bold">ALIANZA ESTRATÉGICA S.A.S. — Todos los derechos reservados © 2026</p>
-              <p className="text-[11px] text-slate-500">Puerto Francisco de Orellana (El Coca), Orellana, Ecuador</p>
-            </div>
-            <div className="text-[11px] text-slate-400">
-              <span>Trámite SENADI Signos Distintivos Nº 314215 • Clase 35 Niza</span>
-            </div>
-          </div>
-        </footer>
-      </div>
-    );
-  }
-
-  // Si está autenticado
-  const isAdmin = isGerenciaUser(currentUser.email);
+  const isAdmin = currentUser ? isGerenciaUser(currentUser.email) : false;
 
   return (
-    <div className="min-h-screen bg-[#080c14] text-slate-100 flex flex-col font-sans">
-      <header className="border-b border-slate-800/80 bg-slate-950/90 backdrop-blur-md sticky top-0 z-40 px-4 py-2.5">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 to-sky-500 p-0.5 shadow-md">
-              <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
+    <div className="min-h-screen bg-[#080c14] text-slate-100 flex flex-col font-sans selection:bg-sky-500 selection:text-white">
+      {/* 1. TOPBAR INSTITUCIONAL */}
+      <header className="border-b border-slate-800/80 bg-slate-950/90 backdrop-blur-md sticky top-0 z-40 px-3 sm:px-6 py-2.5 transition">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
+          {/* Logo y Nombre */}
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-500 via-sky-500 to-blue-600 p-0.5 shadow-lg shadow-sky-500/20 shrink-0">
+              <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center">
                 <ShieldCheck className="w-5 h-5 text-amber-400" />
               </div>
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-xs sm:text-sm font-black text-white">ALIANZA ESTRATÉGICA S.A.S.</span>
-                <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold flex items-center gap-1 ${
+                <span className="text-xs sm:text-sm font-black tracking-tight text-white flex items-center gap-1">
+                  ALIANZA ESTRATÉGICA S.A.S.
+                  <span className="text-[10px] bg-sky-950 text-sky-400 border border-sky-500/30 px-2 py-0.2 rounded-full font-bold hidden sm:inline-block">Verificado</span>
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-400 hidden sm:flex items-center gap-1">
+                <MapPin className="w-3 h-3 text-sky-400" />
+                <span>El Coca, Orellana — Ecuador • R.U.C. 2200260962001</span>
+              </p>
+            </div>
+          </div>
+
+          {/* Botones de Acción de Cabecera */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setShowConsignarModal(true)}
+              className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black px-3 py-1.5 rounded-xl text-xs shadow-md transition flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95"
+            >
+              <Tag className="w-3.5 h-3.5 text-slate-950" />
+              <span className="hidden sm:inline">Vender Activo</span>
+              <span className="sm:hidden">Consignar</span>
+            </button>
+
+            {currentUser ? (
+              <div className="flex items-center gap-2">
+                <span className={`text-[11px] px-2.5 py-1 rounded-xl font-bold flex items-center gap-1.5 ${
                   isAdmin 
                     ? 'bg-amber-950 text-amber-300 border border-amber-500/40' 
                     : 'bg-sky-950 text-sky-300 border border-sky-500/40'
                 }`}>
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                  {isAdmin ? 'Gerencia General (Control Total)' : 'Agente Comercial Autorizado'}
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span className="hidden md:inline">{currentUser.email}</span>
+                  <span className="md:hidden">{isAdmin ? 'Gerente' : 'Agente'}</span>
                 </span>
+                <button
+                  onClick={handleLogout}
+                  title="Cerrar Sesión"
+                  className="bg-rose-950/80 hover:bg-rose-900 text-rose-200 border border-rose-500/30 p-2 rounded-xl text-xs font-bold transition flex items-center gap-1 cursor-pointer"
+                >
+                  <LogOut className="w-3.5 h-3.5 text-rose-400" />
+                  <span className="hidden sm:inline">Salir</span>
+                </button>
               </div>
-              <p className="text-[11px] text-slate-400 flex items-center gap-1.5">
-                <Mail className="w-3 h-3 text-sky-400" />
-                <span className="font-mono text-slate-300">{currentUser.email}</span>
-                <span className="text-slate-600">•</span>
-                <span className="text-[10px] text-emerald-400 font-semibold">Firebase Auth Validado</span>
-              </p>
-            </div>
+            ) : (
+              <button
+                onClick={() => setShowLoginModal(true)}
+                className="bg-slate-900 hover:bg-slate-800 text-sky-300 border border-sky-500/40 px-3 py-1.5 rounded-xl text-xs font-bold transition shadow flex items-center gap-1.5 cursor-pointer hover:scale-105"
+              >
+                <Lock className="w-3.5 h-3.5 text-amber-300" />
+                <span>Acceso Seguro</span>
+              </button>
+            )}
           </div>
-
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="bg-rose-950/80 hover:bg-rose-900 text-rose-200 border border-rose-500/30 px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow"
-          >
-            <LogOut className="w-3.5 h-3.5 text-rose-400" />
-            <span>Cerrar Sesión</span>
-          </button>
         </div>
       </header>
 
-      {isAdmin ? (
-        <main className="flex-1 max-w-7xl mx-auto w-full p-4 sm:p-6 space-y-6">
-          <section className="bg-gradient-to-r from-slate-900 via-slate-900/90 to-sky-950 border border-slate-800 rounded-3xl p-5 sm:p-6 shadow-xl flex flex-wrap items-center justify-between gap-4">
-            <div className="space-y-1">
-              <span className="text-[10px] font-extrabold uppercase tracking-widest text-amber-400 bg-amber-950/70 border border-amber-500/30 px-2.5 py-0.5 rounded-full">
-                Panel Maestro de Administración
-              </span>
-              <h2 className="text-xl sm:text-2xl font-black text-white">
-                Bienvenido, Gerente General
-              </h2>
-              <p className="text-xs text-slate-300">
-                Sesión iniciada con Firebase Auth. Gestión de agentes colaboradores, comisiones 50/50 y blindaje legal.
-              </p>
+      {/* 2. SI HAY UN USUARIO AUTENTICADO: SECCIÓN DASHBOARD SUPERIOR */}
+      {currentUser && (
+        <section className="bg-slate-950 border-b border-slate-800 px-4 py-4">
+          <div className="max-w-7xl mx-auto space-y-4">
+            <div className="flex flex-wrap items-center justify-between gap-3 bg-gradient-to-r from-slate-900 via-sky-950 to-slate-900 border border-sky-500/30 rounded-2xl p-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-400/50 flex items-center justify-center text-amber-400">
+                  <ShieldCheck className="w-6 h-6" />
+                </div>
+                <div>
+                  <h2 className="text-sm sm:text-base font-black text-white">
+                    {isAdmin ? 'Panel Maestro de Gerencia (A.A.I.L.)' : 'Panel de Agente Comercial Autorizado'}
+                  </h2>
+                  <p className="text-xs text-slate-300">
+                    Sesión activa protegida por Firebase Authentication.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <a
+                  href="https://chat.whatsapp.com/LWnH4P4Q4LuLDnRSLNXRYn?s=cl&p=a&iam=2"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold px-3 py-1.5 rounded-xl text-xs transition flex items-center gap-1.5"
+                >
+                  <Phone className="w-3.5 h-3.5" />
+                  <span>Grupo WhatsApp Agentes</span>
+                </a>
+              </div>
             </div>
 
-            <a
-              href="https://chat.whatsapp.com/LWnH4P4Q4LuLDnRSLNXRYn?s=cl&p=a&iam=2"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold px-3.5 py-2 rounded-xl text-xs shadow-md transition flex items-center gap-1.5 cursor-pointer"
-            >
-              <Phone className="w-3.5 h-3.5" />
-              <span>Grupo Oficial WA Agentes</span>
-              <ExternalLink className="w-3 h-3 opacity-70" />
-            </a>
-          </section>
+            {isAdmin && (
+              <div className="flex items-center gap-2 overflow-x-auto pb-1">
+                <button
+                  onClick={() => setAdminTab('agentes')}
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
+                    adminTab === 'agentes' ? 'bg-amber-500 text-slate-950 font-black' : 'bg-slate-900 text-slate-300 border border-slate-800'
+                  }`}
+                >
+                  <UserPlus className="w-3.5 h-3.5" />
+                  <span>Crear Agente (Firebase)</span>
+                </button>
+                <button
+                  onClick={() => setAdminTab('calculadora')}
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
+                    adminTab === 'calculadora' ? 'bg-amber-500 text-slate-950 font-black' : 'bg-slate-900 text-slate-300 border border-slate-800'
+                  }`}
+                >
+                  <Calculator className="w-3.5 h-3.5" />
+                  <span>Matriz Financiera 50/50</span>
+                </button>
+                <button
+                  onClick={() => setAdminTab('senadi')}
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
+                    adminTab === 'senadi' ? 'bg-amber-500 text-slate-950 font-black' : 'bg-slate-900 text-slate-300 border border-slate-800'
+                  }`}
+                >
+                  <FileText className="w-3.5 h-3.5" />
+                  <span>Trámites SENADI</span>
+                </button>
+              </div>
+            )}
 
-          <div className="flex items-center gap-2 border-b border-slate-800 pb-2 overflow-x-auto">
-            <button
-              onClick={() => setAdminTab('agentes')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 cursor-pointer whitespace-nowrap ${
-                adminTab === 'agentes'
-                  ? 'bg-amber-500 text-slate-950 shadow-md font-extrabold'
-                  : 'bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800'
-              }`}
-            >
-              <UserPlus className="w-3.5 h-3.5" />
-              <span>Gestión de Agentes (Firebase)</span>
-            </button>
-            <button
-              onClick={() => setAdminTab('calculadora')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 cursor-pointer whitespace-nowrap ${
-                adminTab === 'calculadora'
-                  ? 'bg-amber-500 text-slate-950 shadow-md font-extrabold'
-                  : 'bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800'
-              }`}
-            >
-              <Calculator className="w-3.5 h-3.5" />
-              <span>Matriz Financiera 50/50</span>
-            </button>
-            <button
-              onClick={() => setAdminTab('catalogo')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 cursor-pointer whitespace-nowrap ${
-                adminTab === 'catalogo'
-                  ? 'bg-amber-500 text-slate-950 shadow-md font-extrabold'
-                  : 'bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800'
-              }`}
-            >
-              <Briefcase className="w-3.5 h-3.5" />
-              <span>Activos y Captaciones</span>
-            </button>
-            <button
-              onClick={() => setAdminTab('senadi')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 cursor-pointer whitespace-nowrap ${
-                adminTab === 'senadi'
-                  ? 'bg-amber-500 text-slate-950 shadow-md font-extrabold'
-                  : 'bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800'
-              }`}
-            >
-              <FileText className="w-3.5 h-3.5" />
-              <span>Registro Legal & SENADI</span>
-            </button>
-          </div>
-
-          {adminTab === 'agentes' && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="bg-slate-900/80 border border-slate-800 rounded-3xl p-5 sm:p-6 shadow-xl">
-                <div className="flex items-center gap-2.5 mb-4">
-                  <div className="w-9 h-9 rounded-xl bg-amber-950 border border-amber-500/30 flex items-center justify-center text-amber-400">
-                    <UserPlus className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-black text-white">Registrar Nuevo Agente Comercial</h3>
-                    <p className="text-[11px] text-slate-400">Crea credenciales oficiales directas en Firebase Authentication</p>
-                  </div>
-                </div>
-
+            {/* Submódulo: Crear Agentes */}
+            {isAdmin && adminTab === 'agentes' && (
+              <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5">
+                <h3 className="text-xs font-bold text-amber-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                  <UserPlus className="w-4 h-4 text-amber-400" />
+                  Registrar Cuenta Oficial para Agente Colaborador
+                </h3>
                 {mensajeAgente && (
-                  <div className={`mb-4 p-3.5 rounded-2xl text-xs flex items-start gap-2.5 ${
-                    mensajeAgente.tipo === 'ok' 
-                      ? 'bg-emerald-950/70 border border-emerald-500/40 text-emerald-200' 
-                      : 'bg-rose-950/70 border border-rose-500/40 text-rose-200'
+                  <div className={`mb-3 p-2.5 rounded-xl text-xs flex items-center gap-2 ${
+                    mensajeAgente.tipo === 'ok' ? 'bg-emerald-950 text-emerald-200 border border-emerald-500/40' : 'bg-rose-950 text-rose-200 border border-rose-500/40'
                   }`}>
-                    {mensajeAgente.tipo === 'ok' ? (
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                    ) : (
-                      <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
-                    )}
+                    {mensajeAgente.tipo === 'ok' ? <CheckCircle2 className="w-4 h-4" /> : <AlertCircle className="w-4 h-4" />}
                     <span>{mensajeAgente.texto}</span>
                   </div>
                 )}
-
-                <form onSubmit={handleCrearAgente} className="space-y-3.5">
-                  <div>
-                    <label className="block text-xs font-bold text-slate-300 mb-1">Nombre Completo del Agente</label>
-                    <input
-                      type="text"
-                      value={nuevoAgenteNombre}
-                      onChange={(e) => setNuevoAgenteNombre(e.target.value)}
-                      placeholder="Ej: Ing. Carlos Mendoza"
-                      className="w-full px-3.5 py-2 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold text-slate-300 mb-1">
-                      Correo Electrónico (Credencial de Acceso) *
-                    </label>
-                    <input
-                      type="email"
-                      value={nuevoAgenteEmail}
-                      onChange={(e) => setNuevoAgenteEmail(e.target.value)}
-                      placeholder="agente.ventas@alianzaestrategica2026.com"
-                      required
-                      className="w-full px-3.5 py-2 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold text-slate-300 mb-1">
-                      Contraseña Temporal / Asignada (Mínimo 6 caracteres) *
-                    </label>
-                    <input
-                      type="text"
-                      value={nuevoAgentePassword}
-                      onChange={(e) => setNuevoAgentePassword(e.target.value)}
-                      placeholder="AlianzaAgente2026*"
-                      required
-                      className="w-full px-3.5 py-2 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400 font-mono"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold text-slate-300 mb-1">Número de WhatsApp del Agente</label>
-                    <input
-                      type="tel"
-                      value={nuevoAgenteTelefono}
-                      onChange={(e) => setNuevoAgenteTelefono(e.target.value)}
-                      placeholder="098 123 4567"
-                      className="w-full px-3.5 py-2 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400"
-                    />
-                  </div>
-
+                <form onSubmit={handleCrearAgente} className="grid grid-cols-1 sm:grid-cols-4 gap-3">
+                  <input
+                    type="text"
+                    value={nuevoAgenteNombre}
+                    onChange={(e) => setNuevoAgenteNombre(e.target.value)}
+                    placeholder="Nombre del Agente"
+                    className="bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"
+                  />
+                  <input
+                    type="email"
+                    value={nuevoAgenteEmail}
+                    onChange={(e) => setNuevoAgenteEmail(e.target.value)}
+                    placeholder="correo.agente@ejemplo.com"
+                    required
+                    className="bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"
+                  />
+                  <input
+                    type="text"
+                    value={nuevoAgentePassword}
+                    onChange={(e) => setNuevoAgentePassword(e.target.value)}
+                    placeholder="Clave provisional (mín 6 car)"
+                    required
+                    className="bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white font-mono"
+                  />
                   <button
                     type="submit"
                     disabled={creandoAgente}
-                    className="w-full mt-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black py-2.5 px-4 rounded-xl text-xs shadow-lg transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                    className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-4 py-2 rounded-xl text-xs transition disabled:opacity-50 cursor-pointer"
                   >
-                    {creandoAgente ? (
-                      <>
-                        <div className="w-3.5 h-3.5 border-2 border-slate-950/30 border-t-slate-950 rounded-full animate-spin"></div>
-                        <span>Registrando en Firebase Auth...</span>
-                      </>
-                    ) : (
-                      <>
-                        <UserPlus className="w-4 h-4 text-slate-950" />
-                        <span>Crear Cuenta de Agente en Firebase</span>
-                      </>
-                    )}
+                    {creandoAgente ? 'Creando...' : '+ Crear en Firebase'}
                   </button>
                 </form>
+              </div>
+            )}
 
-                <div className="mt-4 p-3 bg-slate-950/80 rounded-2xl border border-slate-800 text-[11px] text-slate-400 space-y-1">
-                  <p className="font-bold text-slate-300 flex items-center gap-1.5">
-                    <ShieldCheck className="w-3.5 h-3.5 text-sky-400" />
-                    Arquitectura Segura Multisesión:
-                  </p>
-                  <p>
-                    La creación de agentes se ejecuta en un contexto de Firebase aislado, lo que garantiza que tu sesión como Administrador Principal nunca se cierre al dar de alta nuevos colaboradores.
-                  </p>
+            {/* Submódulo: Calculadora 50/50 */}
+            {isAdmin && adminTab === 'calculadora' && (
+              <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 flex flex-wrap items-center justify-between gap-4">
+                <div className="space-y-1">
+                  <span className="text-xs text-slate-400">Precio Activo (USD):</span>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="number"
+                      value={calcPrecio}
+                      onChange={(e) => setCalcPrecio(Number(e.target.value))}
+                      className="bg-slate-950 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white font-bold w-32"
+                    />
+                    <span className="text-xs text-slate-400">Comisión %:</span>
+                    <input
+                      type="number"
+                      value={calcPorcentaje}
+                      onChange={(e) => setCalcPorcentaje(Number(e.target.value))}
+                      className="bg-slate-950 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white font-bold w-16"
+                    />
+                  </div>
+                </div>
+                <div className="flex items-center gap-4 text-xs">
+                  <div>
+                    <span className="text-slate-400 block">Comisión Total:</span>
+                    <span className="text-sm font-black text-amber-400">${comisionTotal.toFixed(2)}</span>
+                  </div>
+                  <div>
+                    <span className="text-sky-300 block">50% Empresa:</span>
+                    <span className="text-sm font-black text-sky-400">${comisionEmpresa.toFixed(2)}</span>
+                  </div>
+                  <div>
+                    <span className="text-emerald-300 block">50% Agente:</span>
+                    <span className="text-sm font-black text-emerald-400">${comisionAgente.toFixed(2)}</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Submódulo: SENADI */}
+            {isAdmin && adminTab === 'senadi' && (
+              <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 text-xs space-y-1">
+                <p className="text-amber-400 font-bold">Trámites Oficiales de Propiedad Intelectual SENADI:</p>
+                <p className="text-slate-300">• <strong>Signos Distintivos (Marca Mixta):</strong> Formulario 314215 (Clase 35 Niza - Intermediación y Marketplace). Solicitante: Adrián Arturo Íñiguez Lucio. Patrocinio: Abg. Carlos Alfredo Íñiguez Rodríguez.</p>
+                <p className="text-slate-300">• <strong>Derecho de Autor:</strong> Registro de Soporte Lógico / Plataforma Web y Comercio Electrónico.</p>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* 3. HERO / PORTADA CORPORATIVA PÚBLICA */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-slate-950 via-[#080c14] to-[#080c14] border-b border-slate-800/60 px-4 py-8 sm:py-12">
+        <div className="max-w-5xl mx-auto text-center space-y-4">
+          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/20 via-sky-500/20 to-amber-500/20 border border-amber-400/40 px-4 py-1.5 rounded-full text-xs font-extrabold text-amber-300 shadow-md">
+            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <span>Marketplace Oficial de Bienes, Vehículos y Maquinaria Pesada</span>
+          </div>
+
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-tight">
+            Comercialización Formal con <span className="bg-gradient-to-r from-sky-400 via-sky-200 to-amber-300 bg-clip-text text-transparent">Blindaje Notarial</span>
+          </h1>
+
+          <p className="text-xs sm:text-sm md:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
+            Compra, vende y consigna Inmuebles, Automotores y Maquinaria Pesada en El Coca, Orellana y toda la Amazonía Ecuatoriana con saneamiento jurídico garantizado.
+          </p>
+
+          {/* Calificación y Métricas */}
+          <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-slate-400 pt-2">
+            <div className="flex items-center gap-1 text-amber-400">
+              <Star className="w-4 h-4 fill-amber-400" />
+              <Star className="w-4 h-4 fill-amber-400" />
+              <Star className="w-4 h-4 fill-amber-400" />
+              <Star className="w-4 h-4 fill-amber-400" />
+              <Star className="w-4 h-4 fill-amber-400" />
+              <span className="text-white font-bold ml-1">5.0 (Respaldo Legal)</span>
+            </div>
+            <span>•</span>
+            <span className="flex items-center gap-1 text-emerald-400 font-semibold">
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              Cero Riesgo de Fraudes
+            </span>
+            <span>•</span>
+            <span className="text-sky-300 font-semibold">
+              Patrocinio Abg. Carlos Alfredo Íñiguez Rodríguez
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. CARRUSEL DE ACTIVOS VIP / DESTACADOS */}
+      {featuredItems.length > 0 && (
+        <section className="max-w-7xl mx-auto w-full px-4 pt-6">
+          <div className="bg-slate-900/80 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl relative">
+            <div className="p-3.5 bg-gradient-to-r from-slate-950 via-slate-900 to-sky-950 border-b border-slate-800 flex items-center justify-between text-xs font-bold text-amber-400">
+              <span className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-amber-400" />
+                OPORTUNIDADES VIP DESTACADAS
+              </span>
+              <span className="text-[11px] text-sky-400 font-semibold bg-sky-950/80 border border-sky-500/30 px-2.5 py-0.5 rounded-full">
+                {carouselIndex + 1} de {featuredItems.length}
+              </span>
+            </div>
+
+            <div className="relative h-64 sm:h-80 md:h-96 w-full overflow-hidden bg-slate-950">
+              <img
+                src={featuredItems[carouselIndex].imageUrl}
+                alt={featuredItems[carouselIndex].title}
+                className="w-full h-full object-cover transition-all duration-700 hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent p-5 sm:p-8 flex flex-col justify-end">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs font-mono font-black bg-amber-500 text-slate-950 px-2.5 py-0.5 rounded-md shadow">
+                    {featuredItems[carouselIndex].code}
+                  </span>
+                  <span className="text-xs font-bold bg-sky-950/90 text-sky-300 border border-sky-400/40 px-2.5 py-0.5 rounded-md">
+                    {featuredItems[carouselIndex].categoryLabel}
+                  </span>
+                </div>
+                <h3 className="text-lg sm:text-2xl font-black text-white leading-tight drop-shadow-md">
+                  {featuredItems[carouselIndex].title}
+                </h3>
+                <p className="text-sm sm:text-base font-black text-amber-400 mt-1">
+                  {featuredItems[carouselIndex].priceLabel} — <span className="text-slate-300 font-medium text-xs sm:text-sm">{featuredItems[carouselIndex].location}</span>
+                </p>
+
+                <div className="mt-3 flex items-center gap-2">
+                  <button
+                    onClick={() => setSelectedProduct(featuredItems[carouselIndex])}
+                    className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-4 py-2 rounded-xl text-xs transition flex items-center gap-1.5 cursor-pointer shadow-lg"
+                  >
+                    <span>Ver Ficha Técnica</span>
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </button>
+                  <a
+                    href={`https://wa.me/593959190794?text=Hola%20Alianza%20Estrat%C3%A9gica,%20deseo%20informaci%C3%B3n%20sobre%20el%20activo%20${featuredItems[carouselIndex].code}%20-%20${encodeURIComponent(featuredItems[carouselIndex].title)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-2 rounded-xl text-xs transition flex items-center gap-1.5 shadow"
+                  >
+                    <Phone className="w-3.5 h-3.5" />
+                    <span>Consultar por WhatsApp</span>
+                  </a>
                 </div>
               </div>
 
-              <div className="space-y-4">
-                <div className="bg-slate-900/80 border border-slate-800 rounded-3xl p-5 sm:p-6 shadow-xl">
-                  <h3 className="text-sm font-black text-white flex items-center gap-2 mb-2">
-                    <Users className="w-4 h-4 text-sky-400" />
-                    Plantilla de Notificación para el Agente
-                  </h3>
-                  <p className="text-xs text-slate-400 mb-3">
-                    Copia y envía este mensaje por WhatsApp o correo una vez registrado el agente:
-                  </p>
+              {/* Botones de navegación del carrusel */}
+              <button
+                onClick={() => setCarouselIndex((prev) => (prev - 1 + featuredItems.length) % featuredItems.length)}
+                className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white w-9 h-9 rounded-full flex items-center justify-center backdrop-blur-md border border-white/20 transition cursor-pointer"
+                aria-label="Anterior"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                onClick={() => setCarouselIndex((prev) => (prev + 1) % featuredItems.length)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white w-9 h-9 rounded-full flex items-center justify-center backdrop-blur-md border border-white/20 transition cursor-pointer"
+                aria-label="Siguiente"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+        </section>
+      )}
 
-                  <div className="bg-slate-950 border border-slate-800 rounded-2xl p-3.5 text-xs font-mono text-slate-300 leading-relaxed whitespace-pre-line select-all">
-                    {`¡Hola! Bienvenido al equipo comercial de ALIANZA ESTRATÉGICA S.A.S. 🏢🤝
+      {/* 5. BUSCADOR & FILTROS DEL MARKETPLACE */}
+      <main className="max-w-7xl mx-auto w-full px-4 py-8 flex-1">
+        <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-5 sm:p-6 mb-8 shadow-xl">
+          <div className="max-w-2xl mx-auto text-center mb-5">
+            <h2 className="text-xl sm:text-2xl font-black text-white">Catálogo de Activos y Oportunidades</h2>
+            <p className="text-xs text-slate-400 mt-1">Explora propiedades, vehículos y maquinaria listos para escriturar e inspeccionar</p>
+          </div>
 
-Tus credenciales oficiales de acceso han sido dadas de alta:
-• Portal Web: https://alianzaestrategica2026.com
-• Correo: ${nuevoAgenteEmail || '[Correo del agente]'}
-• Clave provisional: ${nuevoAgentePassword || '[Contraseña asignada]'}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-4xl mx-auto mb-4">
+            <div className="sm:col-span-2 relative">
+              <Search className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="🔍 Buscar por código (ej: RE-001), título, sector o ciudad..."
+                className="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400 transition"
+              />
+            </div>
+            <div>
+              <select
+                value={selectedProvince}
+                onChange={(e) => setSelectedProvince(e.target.value)}
+                className="w-full px-3 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white font-bold focus:outline-none focus:ring-2 focus:ring-amber-400 transition cursor-pointer"
+              >
+                <option value="ALL">🗺️ Ubicación: Todas</option>
+                <option value="Orellana">Orellana (El Coca / Sachas)</option>
+                <option value="Sucumbíos">Sucumbíos (Lago Agrio)</option>
+                <option value="Napo">Napo (Tena)</option>
+                <option value="Pichincha">Pichincha (Quito)</option>
+              </select>
+            </div>
+          </div>
 
-Comisión: 50% de la comisión total pactada por cada captación o cierre.
-Únete al grupo de coordinación en WhatsApp:
-https://chat.whatsapp.com/LWnH4P4Q4LuLDnRSLNXRYn`}
+          {/* Botones de Categorías */}
+          <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
+            {[
+              { id: 'ALL', label: 'Todos' },
+              { id: 'RE', label: 'Bienes Raíces (RE)' },
+              { id: 'AR', label: 'Arriendos (AR)' },
+              { id: 'VH', label: 'Vehículos (VH)' },
+              { id: 'MQ', label: 'Maquinaria (MQ)' },
+              { id: 'LQ', label: 'Segunda Mano (LQ)' },
+              { id: 'SOLD', label: 'Vendidos 💸' }
+            ].map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedCategory(cat.id)}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer ${
+                  selectedCategory === cat.id
+                    ? 'bg-amber-500 text-slate-950 font-black shadow-md'
+                    : 'bg-slate-950 text-slate-300 hover:bg-slate-800 border border-slate-800'
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* 6. REJILLA DE TARJETAS DE PRODUCTOS */}
+        {filteredProducts.length === 0 ? (
+          <div className="text-center py-16 bg-slate-900/40 border border-slate-800 rounded-3xl p-6">
+            <Search className="w-10 h-10 text-slate-600 mx-auto mb-3" />
+            <h3 className="text-base font-bold text-slate-300">No se encontraron activos con esos criterios</h3>
+            <p className="text-xs text-slate-500 mt-1">Prueba con otra palabra o selecciona "Todos".</p>
+            <button
+              onClick={() => { setSearchQuery(''); setSelectedCategory('ALL'); setSelectedProvince('ALL'); }}
+              className="mt-4 bg-slate-800 text-amber-400 border border-slate-700 px-4 py-2 rounded-xl text-xs font-bold transition"
+            >
+              Restablecer Filtros
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredProducts.map((item) => (
+              <div
+                key={item.id}
+                className="bg-slate-900/90 border border-slate-800 rounded-3xl overflow-hidden shadow-xl flex flex-col justify-between group hover:border-slate-700 transition"
+              >
+                <div>
+                  <div className="relative h-52 w-full overflow-hidden bg-slate-950">
+                    <img
+                      src={item.imageUrl}
+                      alt={item.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                    />
+                    <div className="absolute top-3 left-3 flex items-center gap-1.5">
+                      <span className="text-[10px] font-mono font-black bg-amber-500 text-slate-950 px-2.5 py-0.5 rounded-md shadow">
+                        {item.code}
+                      </span>
+                      <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-md shadow ${
+                        item.status === 'VENDIDO' ? 'bg-rose-600 text-white' : 'bg-emerald-600 text-white'
+                      }`}>
+                        {item.status}
+                      </span>
+                    </div>
                   </div>
 
-                  <div className="mt-4 flex items-center gap-2">
+                  <div className="p-5 space-y-3">
+                    <span className="text-[10px] font-bold text-sky-400 uppercase tracking-wider block">
+                      {item.categoryLabel}
+                    </span>
+                    <h3 className="text-base font-black text-white group-hover:text-amber-400 transition leading-snug">
+                      {item.title}
+                    </h3>
+                    <p className="text-xs text-slate-400 flex items-center gap-1">
+                      <MapPin className="w-3.5 h-3.5 text-rose-400 shrink-0" />
+                      <span>{item.location} • {item.sector}</span>
+                    </p>
+                    <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
+                      {item.description}
+                    </p>
+
+                    {/* Especificaciones Técnicas */}
+                    <div className="flex flex-wrap items-center gap-2 text-[11px] text-slate-300 pt-1">
+                      {item.details.metros2 && (
+                        <span className="bg-slate-950 px-2 py-1 rounded-md border border-slate-800">📐 {item.details.metros2}</span>
+                      )}
+                      {item.details.habitaciones && (
+                        <span className="bg-slate-950 px-2 py-1 rounded-md border border-slate-800">🛏️ {item.details.habitaciones} Hab</span>
+                      )}
+                      {item.details.ano && (
+                        <span className="bg-slate-950 px-2 py-1 rounded-md border border-slate-800">📅 Año {item.details.ano}</span>
+                      )}
+                      {item.details.kilometraje && (
+                        <span className="bg-slate-950 px-2 py-1 rounded-md border border-slate-800">🛣️ {item.details.kilometraje}</span>
+                      )}
+                      {item.details.horasUso && (
+                        <span className="bg-slate-950 px-2 py-1 rounded-md border border-slate-800">⏱️ {item.details.horasUso}</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-5 pt-0 border-t border-slate-800/80 mt-4 flex items-center justify-between">
+                  <div>
+                    <span className="text-[10px] text-slate-400 block font-semibold">Valor Negociable:</span>
+                    <span className="text-lg font-black text-amber-400">{item.priceLabel}</span>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setSelectedProduct(item)}
+                      className="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-2 rounded-xl text-xs font-bold transition cursor-pointer"
+                    >
+                      Ficha
+                    </button>
                     <a
-                      href={`https://wa.me/?text=${encodeURIComponent(
-                        `Bienvenido a ALIANZA ESTRATÉGICA S.A.S. Tus credenciales han sido generadas. Acceso: https://alianzaestrategica2026.com con el correo: ${nuevoAgenteEmail}`
-                      )}`}
+                      href={`https://wa.me/593959190794?text=Hola%20Alianza%20Estrat%C3%A9gica,%20deseo%20m%C3%A1s%20detalles%20del%20activo%20${item.code}%20-%20${encodeURIComponent(item.title)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-1.5 transition"
+                      className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-3 py-2 rounded-xl text-xs transition flex items-center gap-1 cursor-pointer"
                     >
-                      <Phone className="w-3.5 h-3.5" />
-                      <span>Compartir por WhatsApp</span>
+                      <Phone className="w-3 h-3" />
+                      <span>WhatsApp</span>
                     </a>
                   </div>
                 </div>
-
-                <div className="bg-slate-900/80 border border-slate-800 rounded-3xl p-5 shadow-xl space-y-2">
-                  <h4 className="text-xs font-bold text-amber-400 uppercase tracking-wider">Políticas de Agentes Oficiales</h4>
-                  <ul className="text-xs text-slate-300 space-y-1.5 list-disc pl-4">
-                    <li>Los agentes autorizados pueden registrar visitas y postular captaciones en el catálogo.</li>
-                    <li>Ningún agente está autorizado a recibir dinero en efectivo de clientes. Toda reserva se efectúa a la cuenta bancaria de la empresa.</li>
-                    <li>La formalización y contratos de compraventa se firman bajo la supervisión de Gerencia y patrocinio jurídico notarial.</li>
-                  </ul>
-                </div>
               </div>
+            ))}
+          </div>
+        )}
+      </main>
+
+      {/* 7. MODAL DE ACCESO SEGURO (FIREBASE AUTH) */}
+      {showLoginModal && (
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+          <div className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl relative">
+            <button
+              onClick={() => { setShowLoginModal(false); setLoginError(''); }}
+              className="absolute top-4 right-4 text-slate-400 hover:text-white p-1 rounded-lg cursor-pointer"
+              aria-label="Cerrar"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="text-center mb-6">
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-slate-950 border border-sky-500/30 mb-2 shadow-lg">
+                <Lock className="w-5 h-5 text-sky-400" />
+              </div>
+              <h3 className="text-xl font-black text-white">Acceso al Sistema Seguro</h3>
+              <p className="text-xs text-slate-400 mt-1">Exclusivo para Gerencia y Agentes Autorizados</p>
             </div>
-          )}
 
-          {adminTab === 'calculadora' && (
-            <div className="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 shadow-xl space-y-6">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-emerald-950 border border-emerald-500/40 flex items-center justify-center text-emerald-400">
-                  <Calculator className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="text-base font-black text-white">Matriz de Distribución de Comisiones 50% / 50%</h3>
-                  <p className="text-xs text-slate-400">Cálculo transparente de ingresos brutos por cada cierre de venta</p>
+            {loginError && (
+              <div className="mb-4 p-3 rounded-2xl bg-rose-950/70 border border-rose-500/40 text-rose-200 text-xs flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
+                <span>{loginError}</span>
+              </div>
+            )}
+
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-300 mb-1">Correo Autorizado</label>
+                <div className="relative">
+                  <Mail className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" />
+                  <input
+                    type="email"
+                    value={loginEmail}
+                    onChange={(e) => setLoginEmail(e.target.value)}
+                    placeholder="correo@ejemplo.com"
+                    required
+                    autoComplete="username"
+                    className="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                  />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-4 bg-slate-950/60 p-4 rounded-2xl border border-slate-800">
-                  <div>
-                    <label className="block text-xs font-bold text-slate-300 mb-1">
-                      Precio de Venta del Activo (USD)
-                    </label>
-                    <div className="relative">
-                      <DollarSign className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
-                      <input
-                        type="number"
-                        value={calcPrecio}
-                        onChange={(e) => setCalcPrecio(Number(e.target.value))}
-                        className="w-full pl-9 pr-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-sm font-bold text-white focus:outline-none focus:ring-2 focus:ring-amber-400"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold text-slate-300 mb-1">
-                      Porcentaje de Comisión Pactada (%)
-                    </label>
-                    <div className="flex items-center gap-2">
-                      {[3, 4, 5, 6].map((pct) => (
-                        <button
-                          key={pct}
-                          type="button"
-                          onClick={() => setCalcPorcentaje(pct)}
-                          className={`flex-1 py-1.5 rounded-xl text-xs font-bold cursor-pointer transition ${
-                            calcPorcentaje === pct
-                              ? 'bg-amber-500 text-slate-950 font-black'
-                              : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
-                          }`}
-                        >
-                          {pct}%
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800 flex flex-col justify-between">
-                    <span className="text-[11px] font-bold text-slate-400 uppercase">Comisión Bruta Total</span>
-                    <span className="text-2xl font-black text-amber-400 mt-2">
-                      ${comisionTotal.toLocaleString('en-US', { minimumFractionDigits: 2 })}
-                    </span>
-                    <span className="text-[10px] text-slate-500 mt-1">100% de la intermediación</span>
-                  </div>
-
-                  <div className="bg-sky-950/40 p-4 rounded-2xl border border-sky-500/30 flex flex-col justify-between">
-                    <span className="text-[11px] font-bold text-sky-300 uppercase">50% Alianza Estratégica</span>
-                    <span className="text-2xl font-black text-sky-400 mt-2">
-                      ${comisionEmpresa.toLocaleString('en-US', { minimumFractionDigits: 2 })}
-                    </span>
-                    <span className="text-[10px] text-sky-300/70 mt-1">Ingreso empresa / soporte legal</span>
-                  </div>
-
-                  <div className="bg-emerald-950/40 sm:col-span-2 p-4 rounded-2xl border border-emerald-500/30 flex items-center justify-between">
-                    <div>
-                      <span className="text-[11px] font-bold text-emerald-300 uppercase block">50% Agente Captador / Cerrador</span>
-                      <span className="text-xs text-slate-300">Pago inmediato tras liquidación notarial</span>
-                    </div>
-                    <span className="text-2xl font-black text-emerald-400">
-                      ${comisionAgente.toLocaleString('en-US', { minimumFractionDigits: 2 })}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {adminTab === 'catalogo' && (
-            <div className="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 shadow-xl space-y-4">
-              <div className="flex items-center justify-between flex-wrap gap-2">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-sky-950 border border-sky-500/40 flex items-center justify-center text-sky-400">
-                    <Briefcase className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h3 className="text-base font-black text-white">Catálogo de Activos & Oportunidades</h3>
-                    <p className="text-xs text-slate-400">Monitoreo de bienes consignados con saneamiento en El Coca y Orellana</p>
-                  </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-300 mb-1">Contraseña Registrada</label>
+                <div className="relative">
+                  <KeyRound className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" />
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    value={loginPassword}
+                    onChange={(e) => setLoginPassword(e.target.value)}
+                    placeholder="••••••••••••"
+                    required
+                    autoComplete="current-password"
+                    className="w-full pl-10 pr-10 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3.5 top-3 text-slate-400 hover:text-slate-200 cursor-pointer"
+                  >
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-                <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800">
-                  <span className="text-[10px] font-bold text-amber-400 bg-amber-950/60 px-2 py-0.5 rounded">RE-001 • Bien Raíz</span>
-                  <h4 className="text-sm font-bold text-white mt-2">Casa y Terreno en El Coca</h4>
-                  <p className="text-xs text-slate-400 mt-1">Sector 6 de Diciembre. Escrituras al día.</p>
-                  <p className="text-sm font-black text-amber-400 mt-2">$45,000 USD</p>
-                </div>
-
-                <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800">
-                  <span className="text-[10px] font-bold text-sky-400 bg-sky-950/60 px-2 py-0.5 rounded">VH-002 • Automotor</span>
-                  <h4 className="text-sm font-bold text-white mt-2">Camioneta Toyota Hilux 4x4</h4>
-                  <p className="text-xs text-slate-400 mt-1">Diésel, único dueño, matrícula al día.</p>
-                  <p className="text-sm font-black text-sky-400 mt-2">$28,500 USD</p>
-                </div>
-
-                <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800">
-                  <span className="text-[10px] font-bold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded">MQ-003 • Maquinaria</span>
-                  <h4 className="text-sm font-bold text-white mt-2">Retroexcavadora Caterpillar 420F</h4>
-                  <p className="text-xs text-slate-400 mt-1">Horómetro verificado, lista para operar.</p>
-                  <p className="text-sm font-black text-emerald-400 mt-2">$62,000 USD</p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {adminTab === 'senadi' && (
-            <div className="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 shadow-xl space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-purple-950 border border-purple-500/40 flex items-center justify-center text-purple-400">
-                  <FileText className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="text-base font-black text-white">Estado de Trámites Oficiales SENADI</h3>
-                  <p className="text-xs text-slate-400">Protección de Propiedad Intelectual en Ecuador</p>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-                <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-amber-400">Signos Distintivos (Marca Mixta)</span>
-                    <span className="text-[10px] bg-amber-950 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded font-mono">
-                      Formulario 314215
-                    </span>
-                  </div>
-                  <p className="text-xs text-slate-300">
-                    <strong>Denominación:</strong> ALIANZA ESTRATÉGICA (Clase 35 Niza - Intermediación Comercial, Publicidad y Marketplace).
-                  </p>
-                  <p className="text-xs text-slate-400">
-                    <strong>Solicitante:</strong> Adrián Arturo Íñiguez Lucio (RUC 2200260962001).
-                  </p>
-                  <p className="text-xs text-slate-400">
-                    <strong>Abogado Patrocinador:</strong> Abg. Carlos Alfredo Íñiguez Rodríguez (Matrícula 07-2026-129).
-                  </p>
-                  <div className="text-[11px] text-emerald-400 flex items-center gap-1 font-semibold pt-1">
-                    <CheckCircle2 className="w-3.5 h-3.5" />
-                    Expediente completo y listo para pago oficial de tasa ($208 USD).
-                  </div>
-                </div>
-
-                <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-sky-400">Derecho de Autor (Software)</span>
-                    <span className="text-[10px] bg-sky-950 text-sky-300 border border-sky-500/30 px-2 py-0.5 rounded font-mono">
-                      Programas de Ordenador
-                    </span>
-                  </div>
-                  <p className="text-xs text-slate-300">
-                    <strong>Obra:</strong> Plataforma Web y Sistema de Comercio Electrónico Alianza Estratégica.
-                  </p>
-                  <p className="text-xs text-slate-400">
-                    <strong>Autor y Titular:</strong> Adrián Arturo Íñiguez Lucio.
-                  </p>
-                  <p className="text-xs text-slate-400">
-                    <strong>Depósito Técnico:</strong> Código fuente TypeScript/React, arquitectura Firebase y manual descriptivo.
-                  </p>
-                  <div className="text-[11px] text-sky-400 flex items-center gap-1 font-semibold pt-1">
-                    <Sparkles className="w-3.5 h-3.5" />
-                    En proceso de depósito de soporte lógico en plataforma SENADI.
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-        </main>
-      ) : (
-        <main className="flex-1 max-w-5xl mx-auto w-full p-4 sm:p-6 space-y-6">
-          <section className="bg-gradient-to-r from-slate-900 via-sky-950 to-slate-900 border border-sky-500/30 rounded-3xl p-6 shadow-xl space-y-3">
-            <div className="flex items-center gap-2 text-sky-300 text-xs font-bold">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
-              <span>PANEL DE AGENTE COMERCIAL AUTORIZADO</span>
-            </div>
-            <h2 className="text-2xl font-black text-white">
-              Bienvenido, {currentUser.email}
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl">
-              Tienes acceso a la red comercial de Alianza Estratégica S.A.S. para postular captaciones y coordinar visitas con acompañamiento notarial.
-            </p>
-
-            <div className="pt-2 flex flex-wrap items-center gap-3">
-              <a
-                href="https://chat.whatsapp.com/LWnH4P4Q4LuLDnRSLNXRYn?s=cl&p=a&iam=2"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold px-4 py-2.5 rounded-xl text-xs shadow-lg transition flex items-center gap-2 cursor-pointer"
+              <button
+                type="submit"
+                disabled={loginLoading}
+                className="w-full bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-500 hover:to-blue-500 text-white font-black py-2.5 px-4 rounded-xl text-xs shadow-lg transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
               >
-                <Phone className="w-4 h-4" />
-                <span>Unirse al Grupo Oficial de Agentes en WhatsApp</span>
-                <ExternalLink className="w-3.5 h-3.5 opacity-80" />
-              </a>
-            </div>
-          </section>
+                {loginLoading ? 'Verificando con Firebase...' : 'Ingresar al Sistema Seguro'}
+              </button>
+            </form>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-slate-900/80 border border-slate-800 rounded-3xl p-5 shadow-lg space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-amber-950 border border-amber-500/30 flex items-center justify-center text-amber-400">
-                <Home className="w-5 h-5" />
-              </div>
-              <h3 className="text-sm font-bold text-white">Registrar Nueva Captación</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                ¿Tienes un inmueble, vehículo o maquinaria para consignar? Envía los datos directamente a Gerencia para revisión de gravámenes y publicación.
-              </p>
-              <a
-                href="https://wa.me/593959190794?text=Estimada%20Gerencia,%20soy%20agente%20autorizado%20y%20tengo%20una%20nueva%20captaci%C3%B3n%20para%20consignar."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-400 hover:text-amber-300"
-              >
-                <span>Enviar datos de captación a Gerencia</span>
-                <ChevronRight className="w-3.5 h-3.5" />
-              </a>
+            <div className="mt-5 pt-4 border-t border-slate-800 text-[10px] text-slate-500 text-center space-y-1">
+              <p>Seguridad Cifrada SSL / TLS 256-bit • Firebase Authentication</p>
             </div>
+          </div>
+        </div>
+      )}
 
-            <div className="bg-slate-900/80 border border-slate-800 rounded-3xl p-5 shadow-lg space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-emerald-950 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-                <Calculator className="w-5 h-5" />
+      {/* 8. MODAL DE FICHA TÉCNICA DETALLADA */}
+      {selectedProduct && (
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+          <div className="w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button
+              onClick={() => setSelectedProduct(null)}
+              className="absolute top-4 right-4 text-slate-400 hover:text-white p-1 rounded-lg cursor-pointer"
+              aria-label="Cerrar"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-mono font-black bg-amber-500 text-slate-950 px-2.5 py-1 rounded-md">
+                  {selectedProduct.code}
+                </span>
+                <span className="text-xs font-bold text-sky-400 bg-sky-950 border border-sky-500/30 px-2.5 py-1 rounded-md">
+                  {selectedProduct.categoryLabel}
+                </span>
               </div>
-              <h3 className="text-sm font-bold text-white">Estructura de Comisión 50% / 50%</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Por cada negocio formalizado, recibes el 50% de la comisión total acordada con el cliente vendedor. Pago directo vía transferencia bancaria tras la firma de escrituras o traspaso.
-              </p>
-              <div className="text-[11px] text-emerald-400 font-semibold flex items-center gap-1">
-                <CheckCircle2 className="w-3.5 h-3.5" />
-                <span>Garantía de liquidación notarial formal</span>
+
+              <h2 className="text-xl font-black text-white">{selectedProduct.title}</h2>
+              <p className="text-2xl font-black text-amber-400">{selectedProduct.priceLabel}</p>
+
+              <div className="rounded-2xl overflow-hidden h-64 bg-slate-950 border border-slate-800">
+                <img
+                  src={selectedProduct.imageUrl}
+                  alt={selectedProduct.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              <div className="p-4 bg-slate-950 rounded-2xl border border-slate-800 space-y-2 text-xs">
+                <h4 className="font-bold text-slate-300 uppercase tracking-wider text-[11px]">Descripción Notarial del Activo:</h4>
+                <p className="text-slate-400 leading-relaxed">{selectedProduct.description}</p>
+                <p className="text-slate-400"><strong>Ubicación:</strong> {selectedProduct.location} ({selectedProduct.sector})</p>
+                <div className="pt-2 text-emerald-400 flex items-center gap-1.5 font-semibold">
+                  <ShieldCheck className="w-4 h-4" />
+                  <span>Saneamiento notarial y títulos revisados por el estudio jurídico patrocinador.</span>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center justify-end gap-3 pt-2">
+                <button
+                  onClick={() => setSelectedProduct(null)}
+                  className="px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:text-white"
+                >
+                  Cerrar
+                </button>
+                <a
+                  href={`https://wa.me/593959190794?text=Estimada%20Gerencia%20de%20Alianza%20Estrat%C3%A9gica,%20solicito%20inspecci%C3%B3n%20para%20el%20activo%20${selectedProduct.code}%20-%20${encodeURIComponent(selectedProduct.title)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-emerald-600 hover:bg-emerald-500 text-white font-black px-5 py-2.5 rounded-xl text-xs transition flex items-center gap-2 shadow-lg"
+                >
+                  <Phone className="w-4 h-4" />
+                  <span>Coordinar Visita por WhatsApp</span>
+                </a>
               </div>
             </div>
           </div>
-        </main>
+        </div>
       )}
 
-      <footer className="border-t border-slate-800/80 bg-slate-950 text-slate-500 text-[11px] py-4 px-4 text-center mt-auto">
-        <p>ALIANZA ESTRATÉGICA S.A.S. • Sistema de Autenticación Firebase Auth • Francisco de Orellana (El Coca), Ecuador</p>
+      {/* 9. MODAL PARA CONSIGNAR ACTIVO (VENDER / ARRENDAR) */}
+      {showConsignarModal && (
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+          <div className="w-full max-w-lg bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl relative">
+            <button
+              onClick={() => setShowConsignarModal(false)}
+              className="absolute top-4 right-4 text-slate-400 hover:text-white p-1 rounded-lg cursor-pointer"
+              aria-label="Cerrar"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="mb-4">
+              <span className="text-[10px] font-bold text-amber-400 uppercase tracking-wider bg-amber-950/60 px-2 py-0.5 rounded">
+                Consignación Formal
+              </span>
+              <h3 className="text-lg font-black text-white mt-1">Consignar Activo con Alianza Estratégica</h3>
+              <p className="text-xs text-slate-400 mt-0.5">Vende tu casa, terreno, vehículo o maquinaria con respaldo notarial</p>
+            </div>
+
+            <form onSubmit={handleEnviarConsignacion} className="space-y-3 text-xs">
+              <div>
+                <label className="block font-bold text-slate-300 mb-1">Nombre Completo del Propietario *</label>
+                <input
+                  type="text"
+                  value={consignarNombre}
+                  onChange={(e) => setConsignarNombre(e.target.value)}
+                  placeholder="Ej: Ing. Carlos Pérez"
+                  required
+                  className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white"
+                />
+              </div>
+
+              <div>
+                <label className="block font-bold text-slate-300 mb-1">Número de Teléfono / WhatsApp *</label>
+                <input
+                  type="tel"
+                  value={consignarTelefono}
+                  onChange={(e) => setConsignarTelefono(e.target.value)}
+                  placeholder="095 919 0794"
+                  required
+                  className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white"
+                />
+              </div>
+
+              <div>
+                <label className="block font-bold text-slate-300 mb-1">Tipo de Activo *</label>
+                <select
+                  value={consignarTipo}
+                  onChange={(e) => setConsignarTipo(e.target.value)}
+                  className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-bold"
+                >
+                  <option value="Inmueble (Casa/Terreno/Finca)">🏡 Inmueble (Casa / Terreno / Finca)</option>
+                  <option value="Vehículo (Auto/Camioneta/Camión)">🚗 Vehículo (Camioneta / Camión / Auto)</option>
+                  <option value="Maquinaria Pesada">🚜 Maquinaria Pesada (Excavadora / Retro)</option>
+                  <option value="Arriendo Comercial o Residencial">🏢 Arriendo Comercial o Residencial</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block font-bold text-slate-300 mb-1">Detalles del Activo y Precio Esperado *</label>
+                <textarea
+                  value={consignarDetalles}
+                  onChange={(e) => setConsignarDetalles(e.target.value)}
+                  placeholder="Describe ubicación, metros, año o valor aproximado..."
+                  required
+                  rows={3}
+                  className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black py-2.5 px-4 rounded-xl text-xs shadow-lg transition flex items-center justify-center gap-2 cursor-pointer mt-2"
+              >
+                <Phone className="w-4 h-4 text-slate-950" />
+                <span>Enviar Consignación por WhatsApp Oficial</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* 10. FOOTER CORPORATIVO */}
+      <footer className="border-t border-slate-800/80 bg-slate-950 text-slate-400 text-xs py-8 px-4 mt-auto">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left">
+          <div className="space-y-1.5">
+            <h4 className="text-white font-black text-sm">ALIANZA ESTRATÉGICA S.A.S.</h4>
+            <p className="text-[11px] text-slate-400">Sociedad por Acciones Simplificada • R.U.C. 2200260962001</p>
+            <p className="text-[11px] text-slate-500">Puerto Francisco de Orellana (El Coca), Orellana, Ecuador</p>
+          </div>
+
+          <div className="space-y-1 text-[11px]">
+            <h5 className="text-slate-300 font-bold uppercase tracking-wider text-[10px]">Patrocinio & Legal</h5>
+            <p className="text-slate-400">Asesoría Notarial: Abg. Carlos Alfredo Íñiguez Rodríguez</p>
+            <p className="text-slate-400">Matrícula Profesional: 07-2026-129</p>
+            <p className="text-amber-400">Trámite SENADI Signos Distintivos Nº 314215 • Clase 35 Niza</p>
+          </div>
+
+          <div className="flex flex-col items-center md:items-end justify-center gap-2">
+            <button
+              onClick={() => setShowLoginModal(true)}
+              className="text-sky-400 hover:text-sky-300 font-bold flex items-center gap-1.5 cursor-pointer text-xs"
+            >
+              <Lock className="w-3.5 h-3.5" />
+              <span>Acceso al Sistema Gerencial y Agentes</span>
+            </button>
+            <span className="text-[10px] text-slate-500">Autenticación Blindada Firebase Auth</span>
+          </div>
+        </div>
       </footer>
     </div>
   );
