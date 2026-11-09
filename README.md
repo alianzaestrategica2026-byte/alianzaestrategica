@@ -4,7 +4,7 @@ Bienvenido al repositorio oficial de ALIANZA ESTRATÉGICA S.A.S., plataforma int
 
 📌 Estructura Directiva & Patrocinio Legal
 
-Gerente General & Representante Legal: Adrián Arturo Íñiguez Lucio
+Gerente General & Representante Legal: Adrian Arturo Iñiguez Lucio
 Patrocinio Jurídico Externo: Abg. Carlos Alfredo Íñiguez Rodríguez
 Lema Corporativo: "Excelencia Jurídica, Confianza Profesional"
 
