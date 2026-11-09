@@ -1513,7 +1513,7 @@
                 </button>
             </div>
             <div class="text-center text-[10px] text-slate-500">
-                Alianza Estratégica S.A.S. • RUC: 2200260967001 • WhatsApp Gerencia: 099 216 0967
+                Alianza Estratégica S.A.S. • RUC: 22002609**001 • WhatsApp Gerencia: 099 216 0967
             </div>
         </div>
     </div>
@@ -2414,36 +2414,7 @@
 
         // Directorio oficial de usuarios y roles corporativos (Cero credenciales expuestas en frontend)
         // La autenticación se valida única y estrictamente en Firebase Authentication
-        const DEFAULT_USERS = [
-            {
-                name: "Adrián Arturo Íñiguez Lucio (Gerencia General)",
-                email: MAIN_ADMIN_EMAIL,
-                phone: "095 919 0794",
-                role: "ADMIN",
-                lastLogin: new Date().toISOString()
-            },
-            {
-                name: "Abg. Carlos Alfredo Íñiguez Rodríguez (Jurídico)",
-                email: "carlos.iniguez@alianzaestrategica2026.com",
-                phone: "099 216 0967",
-                role: "ADMIN",
-                lastLogin: new Date(Date.now() - 3600000).toISOString()
-            },
-            {
-                name: "Ing. Carlos Mendoza (Agente Comercial)",
-                email: "carlos.mendoza@alianzaestrategica2026.com",
-                phone: "098 123 4567",
-                role: "AGENT",
-                lastLogin: new Date(Date.now() - 172800000).toISOString()
-            },
-            {
-                name: "Lic. Andrea Pazmiño (Agente Comercial)",
-                email: "andrea.pazmino@alianzaestrategica2026.com",
-                phone: "097 987 6543",
-                role: "AGENT",
-                lastLogin: new Date(Date.now() - 604800000).toISOString()
-            }
-        ];
+        const DEFAULT_USERS =
 
         let usersList = JSON.parse(localStorage.getItem('alianza_users') || 'null');
         if (!usersList || !Array.isArray(usersList) || usersList.length === 0) {
