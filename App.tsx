@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApps } from 'firebase/app';
 import { 
   getAuth, 
   signInWithEmailAndPassword, 
@@ -20,8 +20,13 @@ const firebaseConfig = {
   measurementId: "G-TGB0CSMEKW"
 };
 
-const app = initializeApp(firebaseConfig);
+// Inicializar la aplicación principal de Firebase
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
 const auth = getAuth(app);
+
+// Inicialización secundaria para crear agentes sin cerrar la sesión del Gerente actual
+const secondaryApp = initializeApp(firebaseConfig, "SecondaryApp");
+const secondaryAuth = getAuth(secondaryApp);
 
 export default function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -46,7 +51,12 @@ export default function App() {
     try {
       await signInWithEmailAndPassword(auth, email, password);
     } catch (err: any) {
-      setError('Correo o contraseña incorrectos. Verifica tus datos.');
+      console.error(err);
+      if (err.code === 'auth/invalid-credential' || err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
+        setError('Correo o contraseña incorrectos. Si acabas de crear el usuario en Firebase, verifica que las credenciales coincidan.');
+      } else {
+        setError('Error al iniciar sesión: ' + err.message);
+      }
     }
   };
 
@@ -58,7 +68,8 @@ export default function App() {
     e.preventDefault();
     setMensajeAgente('');
     try {
-      await createUserWithEmailAndPassword(auth, nuevoAgenteEmail, nuevoAgentePassword);
+      // Se utiliza la auth secundaria para no cerrar la sesión del Administrador/Gerente
+      await createUserWithEmailAndPassword(secondaryAuth, nuevoAgenteEmail, nuevoAgentePassword);
       setMensajeAgente(`¡Agente ${nuevoAgenteEmail} creado con éxito!`);
       setNuevoAgenteEmail('');
       setNuevoAgentePassword('');
@@ -81,6 +92,7 @@ export default function App() {
                 value={email} 
                 onChange={(e) => setEmail(e.target.value)} 
                 required 
+                placeholder="ej. gerencia@allianceestrategica2026.com"
                 style={{ width: '100%', padding: '12px', boxSizing: 'border-box', background: '#0f172a', border: '1px solid #334155', color: '#fff', borderRadius: '6px' }}
               />
             </div>
@@ -94,7 +106,7 @@ export default function App() {
                 style={{ width: '100%', padding: '12px', boxSizing: 'border-box', background: '#0f172a', border: '1px solid #334155', color: '#fff', borderRadius: '6px' }}
               />
             </div>
-            {error && <p style={{ color: '#f87171', fontSize: '14px', marginBottom: '15px' }}>{error}</p>}
+            {error && <p style={{ color: '#f87171', fontSize: '14px', marginBottom: '15px', lineHeight: '1.4' }}>{error}</p>}
             <button type="submit" style={{ width: '100%', padding: '12px', background: '#0284c7', color: '#fff', border: 'none', borderRadius: '6px', fontWeight: 'bold', cursor: 'pointer' }}>
               Iniciar Sesión
             </button>
@@ -104,7 +116,8 @@ export default function App() {
     );
   }
 
-  const esGerente = user.email && user.email.includes('gerencia');
+  // Comprobación flexible del rol de gerencia (puede evaluar si incluye 'gerencia' o tu correo corporativo)
+  const esGerente = user.email && (user.email.includes('gerencia') || user.email.includes('carllos-alfredo88') || user.email.includes('admin'));
 
   return (
     <div style={{ padding: '40px', fontFamily: 'sans-serif', maxWidth: '800px', margin: '0 auto', background: '#f8fafc', minHeight: '100vh' }}>
