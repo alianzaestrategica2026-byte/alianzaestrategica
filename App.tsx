@@ -70,18 +70,15 @@ const getSecondaryAuthInstance = () => {
   return getAuth(secondaryApp);
 };
 
-// Correos autorizados con rol de Gerencia General (Control Total)
+// Correo exclusivo autorizado con rol de Administrador Principal (Gerencia General - Control Total)
 const GERENCIA_WHITELIST = [
-  'gerencia@alianzaestrategica2026.com',
-  'gerencia@alianzaestrategica.com',
-  'adriano.aii85@gmail.com',
-  'alianzaestrategica2026@gmail.com'
+  'gerencia@alianzaestrategica2026.com'
 ];
 
 export const isGerenciaUser = (email: string | null | undefined): boolean => {
   if (!email) return false;
   const cleanEmail = email.trim().toLowerCase();
-  return GERENCIA_WHITELIST.includes(cleanEmail) || cleanEmail.startsWith('gerencia@');
+  return GERENCIA_WHITELIST.includes(cleanEmail);
 };
 
 const parseFirebaseError = (errorCode: string): string => {
@@ -280,7 +277,7 @@ export default function App() {
   const [creandoAgente, setCreandoAgente] = useState(false);
   const [mensajeAgente, setMensajeAgente] = useState<{ tipo: 'ok' | 'error'; texto: string } | null>(null);
 
-  // Calculadora 50/50
+  // Calculadora 40/60
   const [calcPrecio, setCalcPrecio] = useState<number>(45000);
   const [calcPorcentaje, setCalcPorcentaje] = useState<number>(4);
 
@@ -405,8 +402,8 @@ export default function App() {
   }, [searchQuery, selectedCategory, selectedProvince]);
 
   const comisionTotal = (calcPrecio * calcPorcentaje) / 100;
-  const comisionEmpresa = comisionTotal * 0.50;
-  const comisionAgente = comisionTotal * 0.50;
+  const comisionEmpresa = comisionTotal * 0.40;
+  const comisionAgente = comisionTotal * 0.60;
 
   const isAdmin = currentUser ? isGerenciaUser(currentUser.email) : false;
 
@@ -530,7 +527,7 @@ export default function App() {
                   }`}
                 >
                   <Calculator className="w-3.5 h-3.5" />
-                  <span>Matriz Financiera 50/50</span>
+                  <span>Matriz Financiera 40/60</span>
                 </button>
                 <button
                   onClick={() => setAdminTab('senadi')}
@@ -594,7 +591,7 @@ export default function App() {
               </div>
             )}
 
-            {/* Submódulo: Calculadora 50/50 */}
+            {/* Submódulo: Calculadora 40/60 */}
             {isAdmin && adminTab === 'calculadora' && (
               <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 flex flex-wrap items-center justify-between gap-4">
                 <div className="space-y-1">
@@ -621,11 +618,11 @@ export default function App() {
                     <span className="text-sm font-black text-amber-400">${comisionTotal.toFixed(2)}</span>
                   </div>
                   <div>
-                    <span className="text-sky-300 block">50% Empresa:</span>
+                    <span className="text-sky-300 block">40% Empresa:</span>
                     <span className="text-sm font-black text-sky-400">${comisionEmpresa.toFixed(2)}</span>
                   </div>
                   <div>
-                    <span className="text-emerald-300 block">50% Agente:</span>
+                    <span className="text-emerald-300 block">60% Agente (30% Cap + 30% Ven):</span>
                     <span className="text-sm font-black text-emerald-400">${comisionAgente.toFixed(2)}</span>
                   </div>
                 </div>
