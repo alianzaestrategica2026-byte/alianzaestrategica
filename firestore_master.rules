@@ -1,0 +1,80 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // =========================================================================
+    // REGLAS DE SEGURIDAD BLINDADAS - ALIANZA ESTRATÉGICA S.A.S.
+    // =========================================================================
+
+    // Verifica si la solicitud proviene de un usuario autenticado en Firebase Auth
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Verifica si el usuario autenticado pertenece a la Whitelist de Gerencia General
+    function isAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.email.lower() == 'gerencia@alianzaestrategica2026.com' ||
+        request.auth.token.email.lower() == 'adrian.iniguez@alianzaestrategica2026.com' ||
+        request.auth.token.email.lower() == 'adriano.aii85@gmail.com' ||
+        request.auth.token.email.lower() == 'gerencia@alianzaestrategica.com' ||
+        request.auth.token.email.lower().matches('^gerencia@.*')
+      );
+    }
+
+    // -------------------------------------------------------------------------
+    // 1. Catálogo e Inventario de Activos (Marketplace Público)
+    // -------------------------------------------------------------------------
+    // - Lectura: 100% pública para clientes y visitantes del marketplace.
+    // - Creación: Permitida para Agentes Comerciales autenticados y Administradores.
+    // - Modificación / Eliminación / Liquidación: Exclusivo para Gerencia General.
+    match /alianza_inventory/{itemId} {
+      allow read: if true;
+      allow create: if isAuthenticated();
+      allow update, delete: if isAdmin();
+    }
+
+    // -------------------------------------------------------------------------
+    // 2. Configuración Global Corporativa (Logos, Banners, Dossier)
+    // -------------------------------------------------------------------------
+    // - Lectura: Pública para renderizar la identidad visual del portal.
+    // - Modificación: Exclusivo para Gerencia General.
+    match /alianza_settings/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // -------------------------------------------------------------------------
+    // 3. Directorio de Usuarios y Roles (Credenciales de Colaboradores)
+    // -------------------------------------------------------------------------
+    // - Lectura: Permitida únicamente para usuarios con sesión activa verificada.
+    // - Creación, Edición y Revocación: Exclusivo para Gerencia General.
+    match /alianza_users/{userId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+
+    // -------------------------------------------------------------------------
+    // 4. Auspiciantes y Aliados Estratégicos
+    // -------------------------------------------------------------------------
+    // - Lectura: Pública para mostrar patrocinadores y alianzas notariales.
+    // - Modificación: Exclusivo para Gerencia General.
+    match /alianza_sponsors/{sponsorId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // -------------------------------------------------------------------------
+    // 5. Colección auxiliar de configuración
+    // -------------------------------------------------------------------------
+    match /settings/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Regla de cierre por defecto: Bloquear cualquier otra colección no autorizada
+    match /{document=**} {
+      allow read, write: if isAdmin();
+    }
+  }
+}
